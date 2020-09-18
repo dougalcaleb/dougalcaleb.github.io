@@ -1,8 +1,5 @@
-// DATE ARCHIVED: 09/18/2020 10:06 AM
-// REASON: ATTEMPTING TO REWRITE SWIPE FUNCTIONALITY, BUGGY IN CHROME
-// WORKING: YES
-
 // VERSION 1.1.2
+console.log("Javascript Instant Carousel v1.1.2 | DEV BUILD");
 
 /*
 - Link this script to an HTML file
