@@ -1,0 +1,25 @@
+1.1.2:
+FEATURES:
+- Added an option for auto-generating HTML or auto-generating reference clone
+  - Now, only carousel.js and one HTML tag are required for getting a carousel running immediately! 
+  - Custom carousels are still supported with additional styling
+- Updated help
+FIXES:
+- When scrollType=2 and infinite=true, scrolling immediately to the end caused a visual bug with incorrect movement
+- Some undefined variables fixed. There is now less chance that it will stick between slides when swiping rapidly
+- Renamed all generic functions to have the prefix "carousel_", to facilitate multiple carousels on one page
+1.0.0:
+FEATURES:
+- 3 types of scrolling
+  - Static
+  - Overlapping
+  - Fade
+- Automatically creates new pages with just an image URL supplied
+- Supports a minimum of 2 pages, no maximum
+- Support for custom buttons as well as arrow keys
+- Infinite and limited scrolling
+- Swiping for mobile and click-drag for mouse
+- Autoscroll
+- Highly customizable
+FIXES:
+N/A

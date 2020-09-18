@@ -1,0 +1,27 @@
+var carousel = {
+
+// NOT EDITABLE
+
+"order": [],		// includes 3 variables that show the current page [1], left [0] and right [0]
+"static": [],		// includes all other page ids in order to be cycled through order
+"scrollTimeout": null,	// used to hold a timeout value
+"scrollTrans": 0,	// set to btnScrollTrans*1000; converted to ms for use in intervals
+"scrollInt": null,	// used to hold a interval value for autoscrolling
+"allowed": true,	// determines whether the user can or cannot interact with the slider
+"falsePages": null,	// true if user supplied fewer pages than natively supported
+"last": 0,		// equal to length of pages-1
+"style": null,		// holds the stylesheet created for transitions
+
+// FOR SWIPE/DRAG
+
+"sx": 0, "sy": 0,	// start x and y pos
+"ex": 0, "ey": 0,	// end x and y pos
+"x": 0, "y": 0,		// current x and y pos
+"dx": 0, "dy": 0,	// delta x and delta y
+"t": false,		// using touch (set to true) or mouse
+"lastMove": null,	// logs touches, since once the end touch event fires, event.touches is no longer populated
+"t": false,		// is using a touchscreen
+"dragging": false	// is dragging
+"canSnap": false	// user has swiped far enough to advence to the next slide
+
+};
