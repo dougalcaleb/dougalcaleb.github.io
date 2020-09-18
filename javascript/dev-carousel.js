@@ -1,3 +1,7 @@
+// DATE ARCHIVED: 09/18/2020 10:06 AM
+// REASON: ATTEMPTING TO REWRITE SWIPE FUNCTIONALITY, BUGGY IN CHROME
+// WORKING: YES
+
 // VERSION 1.1.2
 
 /*
@@ -624,12 +628,14 @@ function carousel_setAutoScroll() {
 
 // if touchscreen is used, a better method is used to track touches
 function carousel_setTouch(event) {
+    event.preventDefault();
     carousel.t = true;
     carousel_tStart(event);
 }
 
 // called once when touch or click starts
 function carousel_tStart(event) {
+    event.preventDefault();
     carousel.dragging = true;
 
     // remove transitions to eliminate delayed movement
@@ -655,24 +661,24 @@ function carousel_tStart(event) {
         carousel.sy = event.clientY;
     }
 
-    document.addEventListener("mousemove", carousel_follow);
-    document.addEventListener("touchmove", carousel_follow);
+    document.addEventListener("mousemove", carousel_follow, false);
+    document.addEventListener("touchmove", carousel_follow, false);
 }
 
 // called repeatedly while dragging
 function carousel_follow(event) {
+    event.preventDefault();
     if (carousel.dragging) {
 
-        document.addEventListener("mouseup", carousel_tEnd);
-        document.addEventListener("touchend", carousel_tEnd);
+        document.addEventListener("mouseup", carousel_tEnd, false);
+        document.addEventListener("touchend", carousel_tEnd, false);
+        document.addEventListener("touchcancel", carousel_tCancel, false);
 
-        // capture touches, cannot capture once touch has already ended
-        // carousel.lastMove = event.touches;
+        // capture movements
         if (carousel.t) {
             carousel.x = event.changedTouches[0].clientX;
             carousel.y = event.changedTouches[0].clientY;
             console.log(event.touches);
-            // console.log(event.changedTouches);
         } else {
             carousel.x = event.clientX;
             carousel.y = event.clientY;
@@ -700,6 +706,7 @@ function carousel_follow(event) {
             carousel.dy = (carousel.y-carousel.sy)*carousel.swipeScale;
         }
 
+        // get distance values
         var rawDist = (Math.pow(carousel.dx, 2) + Math.pow(carousel.dy, 2));
         var dist = Math.sqrt(rawDist);
 
@@ -714,8 +721,8 @@ function carousel_follow(event) {
         document.querySelector(".carousel-image-"+carousel.order[0]).style.left = "calc(-100% + "+carousel.dx+"px)";
         document.querySelector(".carousel-image-"+carousel.order[1]).style.left = carousel.dx+"px";
         document.querySelector(".carousel-image-"+carousel.order[2]).style.left = "calc(100% + "+carousel.dx+"px)";
-
     } else {
+        // if not dragging, restore correct values
         document.querySelector(".carousel-image-"+carousel.order[0]).classList.add("carousel-transition");
         document.querySelector(".carousel-image-"+carousel.order[1]).classList.add("carousel-transition");
         document.querySelector(".carousel-image-"+carousel.order[2]).classList.add("carousel-transition");
@@ -727,6 +734,7 @@ function carousel_follow(event) {
 
 // called once when the touch or click ends
 function carousel_tEnd(event) {
+    event.preventDefault();
     document.querySelector("body").removeEventListener("mouseup", carousel_tEnd);
     document.querySelector("body").removeEventListener("touchend", carousel_tEnd);
     carousel.dragging = false;
@@ -746,6 +754,10 @@ function carousel_tEnd(event) {
 
     document.removeEventListener("mousemove", carousel_follow);
     document.removeEventListener("touchmove", carousel_follow);
+}
+
+function carousel_tCancel(event) {
+    event.preventDefault();
 }
 
 // snap to a new slide once touch or click ends
