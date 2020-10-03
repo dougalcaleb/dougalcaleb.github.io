@@ -1,0 +1,117 @@
+body {
+    margin: 0;
+    background: #111;
+}
+
+* {
+    user-select: none;
+}
+
+
+/* Styles for not using default css */
+
+
+.carousel-wrap {
+    height: 40vw;
+    width: 100%;
+    position: absolute;
+    margin: auto;
+    right: 0;
+    left: 0;
+    top: 80px;
+}
+
+.carousel-image {
+    background-position: center center;
+}
+
+.carousel-nav {
+    height: 50px;
+    width: 400px;
+    position: absolute;
+    bottom: 0;
+    margin: auto;
+    left: 0;
+    right: 0;
+    z-index: 10;
+}
+
+.carousel-btnL {
+    height: 50px;
+    width: 50px;
+    left: 0;
+    position: absolute;
+}
+
+.carousel-btnR {
+    height: 50px;
+    width: 50px;
+    right: 0;
+    position: absolute;
+}
+
+.carousel-bubbles {
+    position: absolute;
+    margin: auto;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+    width: 300px;
+    padding-top: 19px;
+    display: flex;
+    justify-content: space-around;
+}
+
+.carousel-btn {
+    background: rgba(138, 138, 138, 0);
+    height: 100%;
+    width: 40px;
+    position: absolute;
+    z-index: 100;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.carousel-btn:hover {
+    background: rgba(138, 138, 138, 0.3);
+}
+
+.carousel-btn svg {
+    color: #d8d8d8;
+    cursor: pointer;
+    height: 30px;
+    width: 30px;
+    margin: auto;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    position: absolute;
+}
+
+.carousel-bubble {
+    height: 8px;
+    width: 8px;
+    border-radius: 100%;
+    border: 2px solid white;
+    display: inline-block;
+    transition: 0.2s;
+    cursor: pointer;
+}
+
+.carousel-active-bubble {
+    background: white;
+}
+
+.carousel-inactive-bubble {
+    background: transparent;
+}
+
+.carousel-svg-l {
+    right: 0;
+}
+
+.carousel-svg-r {
+    left: 0;
+}

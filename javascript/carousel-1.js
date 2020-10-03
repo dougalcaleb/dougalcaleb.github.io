@@ -49,8 +49,8 @@ var carousel = {
 "mainId": ".carousel-wrap",     // class of the main slider body. autoGenHtml generates inside of this element
 "bottomSafeZone": 50,           // distance from the bottom to not have the swipe overlay (safe zone for nav)
 "safeUnits": "px",              // units for bottomSafeZone
-"defaultStyle": true,           // automatically includes elements styles from the reference file. Overrides autoGenHtml (sets to true)
-"autoGenHtml": true,            // generates a basic HTML structure, identical to the reference. Includes no styles
+"defaultStyle": false,          // automatically includes elements styles from the reference file. Overrides autoGenHtml (sets to true)
+"autoGenHtml": false,            // generates a basic HTML structure, identical to the reference. Includes no styles
 
 // BEHAVIORS
 
