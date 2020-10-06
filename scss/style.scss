@@ -122,3 +122,99 @@ nav {
 .carousel-wrap {
     top: 80px;
 }
+
+.carousel-btn:hover {
+    background: rgba(138, 138, 138, 0.3);
+}
+
+.burger {
+    // background: orange;
+    position: absolute;
+    margin: auto;
+    top: 0;
+    bottom: 0;
+    height: 40px;
+    width: 40px;
+    right: 50px;
+    display: none;
+    z-index: 10;
+    .burg {
+        position: absolute;
+        width: 25px;
+        height: 3px;
+        margin: auto;
+        left: 0;
+        right: 0;
+        background: white;
+        transition: 0.2s;
+    }
+}
+
+.burg1 {
+    top: -18px;
+    bottom: 0;
+}
+.burg2 {
+    top: 0px;
+    bottom: 0;
+}
+.burg3 {
+    bottom: -18px;
+    top: 0;
+}
+
+.burg1-active {
+    // transform: rotate(225deg);
+    transform: rotate(45deg);
+    top: 0;
+    bottom: 0;
+}
+.burg2-active {
+    // top: 10px;
+    // bottom: -10px;
+    opacity: 0;
+}
+.burg3-active {
+    // transform: rotate(-225deg);
+    transform: rotate(-45deg);
+    bottom: 0px;
+    top: 0px;
+}
+
+.mobile-nav {
+    height: 100%;
+    width: 60%;
+    // right: 0;
+    left: 80px;
+    background: ext.$header-gray;
+    // background: orange;
+    position: absolute;
+    display: flex;
+    justify-content: space-evenly;
+    transition: 0.3s;
+    opacity: 0;
+    visibility: hidden;
+    z-index: 5;
+    .nav-btn {
+        height: 100%;
+        width: 60px;
+        // background: green;
+        position: relative;
+        transition: 0.2s;
+        svg {
+            height: 30px;
+            @extend %center;
+            color: ext.$accent;
+        }
+        &:hover {
+            background: ext.$bg-gray;
+        }
+    }
+}
+
+.mobile-nav-active {
+    // right: 60px;
+    left: 40px;
+    opacity: 1;
+    visibility: visible;
+}

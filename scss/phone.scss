@@ -5,11 +5,12 @@
         display: none;
     }
     header h1 {
-        width: 100%;
+        width: 70%;
         line-height: 60px;
         text-align: center;
-        left: 0;
-        right: 0;
+        left: 20px;
+        font-size: 25px;
+        // right: 0;
     }
     nav {
         left: 0;
@@ -42,7 +43,7 @@
                 height: 40px;
                 width: 10px;
                 position: absolute;
-                left: 15px;
+                left: 20px;
                 background: ext.$accent;
                 // @extend %center-y;
             }
@@ -58,13 +59,19 @@
                 height: 40px;
                 width: 10px;
                 position: absolute;
-                right: 15px;
+                right: 20px;
                 background: ext.$accent;
                 // @extend %center-y;
             }
         }
     }
+    .burger {
+        display: inline;
+    }
     .carousel-wrap {
         top: 60px;
+    }
+    .carousel-btn:hover {
+        background: transparent;
     }
 }

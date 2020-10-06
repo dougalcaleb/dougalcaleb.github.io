@@ -24,6 +24,10 @@ $name - variable
   }
 
   .carousel-wrap {
-    top: 60px;
+    top: 80px;
+  }
+
+  .carousel-btn:hover {
+    background: transparent;
   }
 }
