@@ -1,5 +1,7 @@
 var mobileMenu = false;
 
+alert(screen.width);
+
 document.querySelector(".burger").addEventListener("click", function() {
     if (mobileMenu) {
         document.querySelector(".mobile-nav").classList.remove("mobile-nav-active");
