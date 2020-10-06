@@ -1,0 +1,25 @@
+@use "ext" as ext;
+
+@media screen and (max-width: 1100px) {
+    .nav-text {
+        display: none;
+    }
+    nav {
+        width: 300px;
+        right: 60px;
+        .nav-btn {
+            padding-left: 10px;
+            padding-right: 10px;
+            width: 100px;
+            svg {
+                // @extend %center;
+                left: 0;
+                right: 0;
+            }
+        }
+        
+    }
+    .carousel-wrap {
+        top: 60px;
+    }
+}

@@ -1,11 +1,10 @@
-// VERSION 1.1.3
-console.log("Using Javascript Instant Carousel v1.1.3");
+console.log("Using Javascript Instant Carousel v1.2.1");
 
 /*
 - Link this script to an HTML file
 - Do NOT add transitions to slides via CSS
 - To have 2+ in a single page, replace all instances if 'carousel' with 'carousel1' (or similar) to differentiate variables
-- This program makes use of functions.js v1.0.2
+- This program version requires functions.js v1.1.6 minimum
 
 AUTO-GENERATING REQUIREMENTS:
     - HTML element ".carousel-wrap"
@@ -50,7 +49,7 @@ var carousel = {
 "bottomSafeZone": 50,           // distance from the bottom to not have the swipe overlay (safe zone for nav)
 "safeUnits": "px",              // units for bottomSafeZone
 "defaultStyle": false,          // automatically includes elements styles from the reference file. Overrides autoGenHtml (sets to true)
-"autoGenHtml": false,            // generates a basic HTML structure, identical to the reference. Includes no styles
+"autoGenHtml": false,           // generates a basic HTML structure, identical to the reference. Includes no styles
 
 // BEHAVIORS
 
@@ -111,6 +110,16 @@ var carousel = {
 
 };
 
+// Values for mobile devices. Styles in here override main values, except for breakpoint
+
+var carouselMobile = {
+    "breakpoint": 700,          // width in px to use these styles
+    "swipeDist": 50
+};
+
+
+
+
 function carousel_setListeners() {
     document.querySelector(".carousel-btnR").addEventListener("click", carousel_btnRClicked);
     document.querySelector(".carousel-btnL").addEventListener("click", carousel_btnLClicked);
@@ -151,7 +160,6 @@ function carousel_createPages() {
 
         document.querySelector(".carousel-swipe-overlay").addEventListener("mousedown", carousel_tStart, false);
         document.querySelector(".carousel-swipe-overlay").addEventListener("touchstart", carousel_setTouch, false);
-        // document.querySelector(".carousel-swipe-overlay").addEventListener("touchstart", carousel_tStart);
     }
 
     // create a style ".carousel-transition" for use in movements (does not need to be edited by the user)
@@ -168,7 +176,7 @@ function carousel_createPages() {
     if (carousel.createInternalStyles) {
         carousel.style2 = document.createElement("style");
         carousel.style2.setAttribute("type", "text/css");
-        carousel.style2.innerHTML = ".carousel-image {height: 100%; width: 100%; background-position: calc(center + 300px) center; background-size: cover; top: 0; position: absolute;} .carousel-page-wrap {height: 100%; width: 100%; top: 0; left: 0; position: absolute;} .carousel-wrap {overflow: hidden;}";
+        carousel.style2.innerHTML = ".carousel-image {height: 100%; width: 100%; background-position: calc(center + 300px) center; background-size: cover; top: 0; position: absolute;} .carousel-page-wrap {height: 101%; width: 100%; top: 0; left: 0; position: absolute;} .carousel-wrap {overflow: hidden;}";
         document.getElementsByTagName("head")[0].appendChild(carousel.style2);
     }
 
@@ -221,16 +229,18 @@ function carousel_createPages() {
                 var bub = document.createElement("DIV");
                 bub.classList.add("carousel-bubble");
                 bub.classList.add("carousel-bubble-"+a);
+                bub.classList.add("carousel-inactive-bubble");
                 document.querySelector(".carousel-bubbles").appendChild(bub);
                 document.querySelector(".carousel-bubble-"+a).addEventListener("click", carousel_bubbleNav);
                 document.querySelector(".carousel-bubble-0").classList.add("carousel-active-bubble");
+                document.querySelector(".carousel-bubble-0").classList.remove("carousel-inactive-bubble");
             }
         }
     }
 }
 
 // specific event for when the navigate right button is physically clicked, right arrow pressed, or swiped; throttling handled
-function carousel_btnRClicked() { 
+function carousel_btnRClicked() {
     carousel_resetScrollTimeout();
     if (carousel.allowed) {
         carousel_btnR();
@@ -538,7 +548,7 @@ function carousel_goToPage(place) {
         posDist -= carousel.falsePages;
     }
     if (posDist === 0) {
-        console.log("Displacement of 0. Quitting.");
+        // console.log("Displacement of 0. Quitting.");
         return;
     }
 
@@ -649,16 +659,15 @@ function carousel_tStart(event) {
 
     document.addEventListener("mousemove", carousel_follow, false);
     document.addEventListener("touchmove", carousel_follow, false);
+
+    document.addEventListener("mouseup", carousel_tEnd, false);
+    document.addEventListener("touchend", carousel_tEnd, false);
+    document.addEventListener("touchcancel", carousel_tCancel, false);
 }
 
 // called repeatedly while dragging
 function carousel_follow(event) {
     if (carousel.dragging) {
-
-        document.addEventListener("mouseup", carousel_tEnd, false);
-        document.addEventListener("touchend", carousel_tEnd, false);
-        document.addEventListener("touchcancel", carousel_tCancel, false);
-
         // capture movements
         if (carousel.t) {
             carousel.x = event.changedTouches[0].clientX;
@@ -718,7 +727,7 @@ function carousel_follow(event) {
 
 // called once when the touch or click ends
 function carousel_tEnd(event) {
-    event.preventDefault();
+    // event.preventDefault();
     carousel.dragging = false;
 
     // log the end of touch position
@@ -741,9 +750,9 @@ function carousel_tEnd(event) {
 // when touch is canceled, handle it
 function carousel_tCancel(event) {
     event.preventDefault();
-    document.querySelector("body").removeEventListener("mouseup", carousel_tEnd, false);
-    document.querySelector("body").removeEventListener("touchend", carousel_tEnd, false);
-    document.querySelector("body").removeEventListener("touchcancel", carousel_tCancel, false);
+    document.removeEventListener("mouseup", carousel_tEnd, false);
+    document.removeEventListener("touchend", carousel_tEnd, false);
+    document.removeEventListener("touchcancel", carousel_tCancel, false);
 }
 
 // snap to a new slide once touch or click ends
@@ -810,6 +819,20 @@ function carousel_setupVariables() {
 
     carousel.scrollTrans = (carousel.btnScrollTrans * 1000);
 
+    // substitute mobile variables for normal
+
+    if (screen.width <= carouselMobile.breakpoint) {
+        var c = Object.entries(carousel);
+        var cm = Object.entries(carouselMobile);
+        for (let a = 1; a < obj_length(carouselMobile); a++) {
+            for (let b = 0; b < obj_length(carousel); b++) {
+                if (c[b][0] == cm[a][0]) {
+                    carousel[""+c[b][0]] = cm[a][1];
+                }
+            }
+        }
+    }
+
     // based on scroll type, edit variables and styles
     switch (carousel.scrollType) {
         case 0: // static
@@ -863,7 +886,7 @@ function carousel_setupStructure() {
     if (carousel.defaultStyle) {
         carousel.style3 = document.createElement("style");
         carousel.style3.setAttribute("type", "text/css");
-        carousel.style3.innerHTML = ".carousel-wrap {height: 700px; width: 1250px; position: absolute; margin: auto; right: 0; left: 0; top: 20px;} .carousel-nav {height: 50px; width: 400px; position: absolute; bottom: 0; margin: auto; left: 0; right: 0; z-index: 10;} .carousel-btnL {height: 50px; width: 50px; left: 0; position: absolute;} .carousel-btnR {height: 50px; width: 50px; right: 0; position: absolute;} .carousel-bubbles {position: absolute; margin: auto; left: 0; right: 0; bottom: 0; top: 0; width: 300px; padding-top: 19px; display: flex; justify-content: space-around;} .carousel-btn svg {filter: invert(100%); cursor: pointer; height: 30px; width: 30px; margin: auto; top: 0; bottom: 0; position: absolute;} .carousel-bubble {height: 8px; width: 8px;	border-radius: 100%; border: 2px solid white; display: inline-block; transition: 0.2s; cursor: pointer;} .carousel-active-bubble {background: white;} .carousel-inactive-bubble {background: transparent;} .carousel-svg-l {right: 0;} .carousel-svg-r {left: 0;}";
+        carousel.style3.innerHTML = ".carousel-wrap {height: 700px; width: 1250px; position: absolute; margin: auto; right: 0; left: 0; top: 20px;} .carousel-nav {height: 50px; width: 400px; position: absolute; bottom: 0; margin: auto; left: 0; right: 0; z-index: 10;} .carousel-btnL {height: 50px; width: 50px; left: 0; position: absolute;} .carousel-btnR {height: 50px; width: 50px; right: 0; position: absolute;} .carousel-bubbles {position: absolute; margin: auto; left: 0; right: 0; bottom: 0; top: 0; width: 300px; display: flex; justify-content: space-around;} .carousel-btn svg {filter: invert(100%); cursor: pointer; height: 30px; width: 30px; margin: auto; top: 0; bottom: 0; position: absolute;} .carousel-bubble {height: 8px; width: 8px; align-self: center; border-radius: 100%; border: 2px solid white; display: inline-block; transition: 0.2s; cursor: pointer;} .carousel-active-bubble {background: white;} .carousel-inactive-bubble {background: transparent;} .carousel-svg-l {right: 0;} .carousel-svg-r {left: 0;}";
         document.getElementsByTagName("head")[0].appendChild(carousel.style3);
         
     }
