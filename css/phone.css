@@ -10,11 +10,11 @@ $name - variable
   }
 
   header h1 {
-    width: 100%;
+    width: 70%;
     line-height: 60px;
     text-align: center;
-    left: 0;
-    right: 0;
+    left: 20px;
+    font-size: 25px;
   }
 
   nav {
@@ -49,7 +49,7 @@ $name - variable
     height: 40px;
     width: 10px;
     position: absolute;
-    left: 15px;
+    left: 20px;
     background: #5415b7;
   }
   header .rAccent {
@@ -64,11 +64,19 @@ $name - variable
     height: 40px;
     width: 10px;
     position: absolute;
-    right: 15px;
+    right: 20px;
     background: #5415b7;
+  }
+
+  .burger {
+    display: inline;
   }
 
   .carousel-wrap {
     top: 60px;
+  }
+
+  .carousel-btn:hover {
+    background: transparent;
   }
 }

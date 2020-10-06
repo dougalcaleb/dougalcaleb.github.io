@@ -4,6 +4,15 @@
 $name - variable
 
 */
+.mobile-nav .nav-btn svg {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+}
+
 header h1, header .lAccent:after, header .rAccent:after, nav .nav-btn svg {
   position: absolute;
   top: 0;
@@ -119,4 +128,94 @@ nav .nav-btn svg {
 
 .carousel-wrap {
   top: 80px;
+}
+
+.carousel-btn:hover {
+  background: rgba(138, 138, 138, 0.3);
+}
+
+.burger {
+  position: absolute;
+  margin: auto;
+  top: 0;
+  bottom: 0;
+  height: 40px;
+  width: 40px;
+  right: 50px;
+  display: none;
+  z-index: 10;
+}
+.burger .burg {
+  position: absolute;
+  width: 25px;
+  height: 3px;
+  margin: auto;
+  left: 0;
+  right: 0;
+  background: white;
+  transition: 0.2s;
+}
+
+.burg1 {
+  top: -18px;
+  bottom: 0;
+}
+
+.burg2 {
+  top: 0px;
+  bottom: 0;
+}
+
+.burg3 {
+  bottom: -18px;
+  top: 0;
+}
+
+.burg1-active {
+  transform: rotate(45deg);
+  top: 0;
+  bottom: 0;
+}
+
+.burg2-active {
+  opacity: 0;
+}
+
+.burg3-active {
+  transform: rotate(-45deg);
+  bottom: 0px;
+  top: 0px;
+}
+
+.mobile-nav {
+  height: 100%;
+  width: 60%;
+  left: 80px;
+  background: #232323;
+  position: absolute;
+  display: flex;
+  justify-content: space-evenly;
+  transition: 0.3s;
+  opacity: 0;
+  visibility: hidden;
+  z-index: 5;
+}
+.mobile-nav .nav-btn {
+  height: 100%;
+  width: 60px;
+  position: relative;
+  transition: 0.2s;
+}
+.mobile-nav .nav-btn svg {
+  height: 30px;
+  color: #5415b7;
+}
+.mobile-nav .nav-btn:hover {
+  background: #111111;
+}
+
+.mobile-nav-active {
+  left: 40px;
+  opacity: 1;
+  visibility: visible;
 }
