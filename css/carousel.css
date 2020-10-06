@@ -1,6 +1,5 @@
 body {
     margin: 0;
-    background: #111;
 }
 
 * {
@@ -12,20 +11,22 @@ body {
 
 
 .carousel-wrap {
-    height: 40vw;
+    height: 60vh;
     width: 100%;
     position: absolute;
     margin: auto;
     right: 0;
     left: 0;
-    top: 80px;
+    /* top: 80px; */
+    background: #111;
 }
 
 .carousel-image {
     background-position: center center;
+    /* background-size: auto 100%; */
 }
 
-.carousel-nav {
+/* .carousel-nav {
     height: 50px;
     width: 400px;
     position: absolute;
@@ -34,17 +35,17 @@ body {
     left: 0;
     right: 0;
     z-index: 10;
-}
+} */
 
 .carousel-btnL {
-    height: 50px;
+    /* height: 50px; */
     width: 50px;
     left: 0;
     position: absolute;
 }
 
 .carousel-btnR {
-    height: 50px;
+    /* height: 50px; */
     width: 50px;
     right: 0;
     position: absolute;
@@ -55,17 +56,25 @@ body {
     margin: auto;
     left: 0;
     right: 0;
-    bottom: 0;
-    top: 0;
-    width: 300px;
-    padding-top: 19px;
+    bottom: 5px;
+    width: calc(100% - 80px);
+    max-width: 400px;
+    /* width: 400px; */
+    /* box-sizing: border-box; */
+    /* background: orange; */
+    height: 30px;
+    /* padding-top: 19px; */
     display: flex;
-    justify-content: space-around;
+    justify-content: space-evenly;
+    /* flex-direction: column; */
+    align-items: stretch;
 }
 
 .carousel-btn {
     background: rgba(138, 138, 138, 0);
     height: 100%;
+    /* top: 0;
+    bottom: 0; */
     width: 40px;
     position: absolute;
     z-index: 100;
@@ -91,23 +100,34 @@ body {
 }
 
 .carousel-bubble {
-    height: 8px;
-    width: 8px;
-    border-radius: 100%;
-    border: 2px solid white;
-    display: inline-block;
+    height: 5px;
+    width: 40vw;
+    margin-left: 5px;
+    margin-right: 5px;
+    /* border-radius: 100%; */
+    /* border: 2px solid white; */
+    background: white;
+    /* display: inline-block; */
+    /* position: relative; */
     transition: 0.2s;
     cursor: pointer;
+    align-self: flex-end;
 }
 
 .carousel-active-bubble {
+    /* border-top: 0px solid #00000000; */
+    /* height: 20px; */
     background: white;
+    margin-bottom: 5px;
 }
 
 .carousel-inactive-bubble {
-    background: transparent;
+    /* background: transparent */
+    /* height: 5px; */
+    /* border-top: 15px solid red; */
+    margin-bottom: 0px;
+    background: #ddd;
 }
-
 .carousel-svg-l {
     right: 0;
 }

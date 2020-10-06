@@ -1,0 +1,70 @@
+@use "ext" as ext;
+
+@media screen and (max-width: 700px) {
+    .nav-text {
+        display: none;
+    }
+    header h1 {
+        width: 100%;
+        line-height: 60px;
+        text-align: center;
+        left: 0;
+        right: 0;
+    }
+    nav {
+        left: 0;
+        right: 0;
+        margin: auto;
+        width: 70%;
+        display: none;
+        .nav-btn {
+            padding-left: 10px;
+            padding-right: 10px;
+            width: 100px;
+            svg {
+                // @extend %center;
+                left: 0;
+                right: 0;
+            }
+        }
+    }
+    header {
+        height: 60px;
+    
+        .lAccent {
+            height: 60px;
+            width: 10px;
+            position: absolute;
+            left: 0;
+            background: ext.$accent;
+            &:after {
+                content: "";
+                height: 40px;
+                width: 10px;
+                position: absolute;
+                left: 15px;
+                background: ext.$accent;
+                // @extend %center-y;
+            }
+        }
+        .rAccent {
+            height: 60px;
+            width: 10px;
+            position: absolute;
+            right: 0;
+            background: ext.$accent;
+            &:after {
+                content: "";
+                height: 40px;
+                width: 10px;
+                position: absolute;
+                right: 15px;
+                background: ext.$accent;
+                // @extend %center-y;
+            }
+        }
+    }
+    .carousel-wrap {
+        top: 60px;
+    }
+}

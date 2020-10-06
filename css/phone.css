@@ -1,0 +1,74 @@
+/*
+%name - reusable styles (used @extend %name)
+@mixin name - function (used @include name(param))
+$name - variable
+
+*/
+@media screen and (max-width: 700px) {
+  .nav-text {
+    display: none;
+  }
+
+  header h1 {
+    width: 100%;
+    line-height: 60px;
+    text-align: center;
+    left: 0;
+    right: 0;
+  }
+
+  nav {
+    left: 0;
+    right: 0;
+    margin: auto;
+    width: 70%;
+    display: none;
+  }
+  nav .nav-btn {
+    padding-left: 10px;
+    padding-right: 10px;
+    width: 100px;
+  }
+  nav .nav-btn svg {
+    left: 0;
+    right: 0;
+  }
+
+  header {
+    height: 60px;
+  }
+  header .lAccent {
+    height: 60px;
+    width: 10px;
+    position: absolute;
+    left: 0;
+    background: #5415b7;
+  }
+  header .lAccent:after {
+    content: "";
+    height: 40px;
+    width: 10px;
+    position: absolute;
+    left: 15px;
+    background: #5415b7;
+  }
+  header .rAccent {
+    height: 60px;
+    width: 10px;
+    position: absolute;
+    right: 0;
+    background: #5415b7;
+  }
+  header .rAccent:after {
+    content: "";
+    height: 40px;
+    width: 10px;
+    position: absolute;
+    right: 15px;
+    background: #5415b7;
+  }
+
+  .carousel-wrap {
+    top: 60px;
+  }
+}
