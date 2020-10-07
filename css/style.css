@@ -246,12 +246,19 @@ MAIN SECTION
 .sec-head {
   width: 100%;
   background: #232323;
-  height: 40px;
+  height: 50px;
   text-align: center;
   font-family: "Secular One", "Raleway", "Miriam Libre", sans-serif;
   font-size: 20px;
   color: white;
-  line-height: 40px;
+  line-height: 50px;
+}
+
+.link-head {
+  position: absolute;
+  height: 10px;
+  width: 100%;
+  top: -80px;
 }
 
 /*
@@ -260,7 +267,7 @@ HIGHLIGHTS
 =================
 */
 .highlight-wrap {
-  background: orange;
+  background: #111111;
   width: 100%;
   padding: 40px;
   box-sizing: border-box;
@@ -270,7 +277,7 @@ HIGHLIGHTS
 .highlight-wrap .highlight {
   height: 40vh;
   width: 30vh;
-  background: purple;
+  background: #d8d8d8;
   margin: 5px;
 }
 
@@ -279,6 +286,22 @@ HIGHLIGHTS
 PORTFOLIO
 =================
 */
+.portfolio-wrap {
+  background: #111111;
+  width: 100%;
+  padding: 40px;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+}
+.portfolio-wrap .port-card {
+  height: 30vh;
+  width: 30vh;
+  background: #d8d8d8;
+  margin: 5px;
+}
+
 /*
 =================
 LINKEDIN
