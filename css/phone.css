@@ -94,4 +94,8 @@ $name - variable
   .highlight-wrap .highlight {
     align-self: center;
   }
+
+  .link-head {
+    top: -60px;
+  }
 }

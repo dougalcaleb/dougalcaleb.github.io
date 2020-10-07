@@ -251,12 +251,20 @@ MAIN SECTION
 .sec-head {
     width: 100%;
     background: ext.$header-gray;
-    height: 40px;
+    height: 50px;
     text-align: center;
     font-family: "Secular One", "Raleway", "Miriam Libre", sans-serif;
     font-size: 20px;
     color: white;
-    line-height: 40px;
+    line-height: 50px;
+}
+
+.link-head {
+    position: absolute;
+    height: 10px;
+    width: 100%;
+    // background: green;
+    top: -80px;
 }
 
 /*
@@ -266,7 +274,7 @@ HIGHLIGHTS
 */
 
 .highlight-wrap {
-    background: orange;
+    background: ext.$bg-gray;
     width: 100%;
     padding: 40px;
     box-sizing: border-box;
@@ -275,7 +283,7 @@ HIGHLIGHTS
     .highlight {
         height: 40vh;
         width: 30vh;
-        background: purple;
+        background: ext.$light-gray;
         margin: 5px;
     }
 }
@@ -285,6 +293,22 @@ HIGHLIGHTS
 PORTFOLIO
 =================
 */
+
+.portfolio-wrap {
+    background: ext.$bg-gray;
+    width: 100%;
+    padding: 40px;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    .port-card {
+        height: 30vh;
+        width: 30vh;
+        background: ext.$light-gray;
+        margin: 5px;
+    }
+}
 
 /*
 =================
