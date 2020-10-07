@@ -26,6 +26,7 @@ header h1, header .lAccent:after, header .rAccent:after, nav .nav-btn svg {
 
 body {
   margin: 0;
+  overflow: auto;
 }
 
 /*
@@ -94,6 +95,11 @@ header .rAccent:after {
   background: #5415b7;
 }
 
+/*
+=================
+DESKTOP NAV
+=================
+*/
 nav {
   height: 80px;
   width: 700px;
@@ -126,14 +132,11 @@ nav .nav-btn svg {
   color: #5415b7;
 }
 
-.carousel-wrap {
-  top: 80px;
-}
-
-.carousel-btn:hover {
-  background: rgba(138, 138, 138, 0.3);
-}
-
+/*
+=================
+MOBILE NAV
+=================
+*/
 .burger {
   position: absolute;
   margin: auto;
@@ -156,32 +159,32 @@ nav .nav-btn svg {
   transition: 0.2s;
 }
 
-.burg1 {
+.burg0 {
   top: -18px;
   bottom: 0;
 }
 
-.burg2 {
+.burg1 {
   top: 0px;
   bottom: 0;
 }
 
-.burg3 {
+.burg2 {
   bottom: -18px;
   top: 0;
 }
 
-.burg1-active {
+.burg0-active {
   transform: rotate(45deg);
   top: 0;
   bottom: 0;
 }
 
-.burg2-active {
+.burg1-active {
   opacity: 0;
 }
 
-.burg3-active {
+.burg2-active {
   transform: rotate(-45deg);
   bottom: 0px;
   top: 0px;
@@ -193,11 +196,11 @@ nav .nav-btn svg {
   left: 80px;
   background: #232323;
   position: absolute;
-  display: flex;
   justify-content: space-evenly;
   transition: 0.3s;
   opacity: 0;
   visibility: hidden;
+  display: none;
   z-index: 5;
 }
 .mobile-nav .nav-btn {
@@ -218,4 +221,86 @@ nav .nav-btn svg {
   left: 40px;
   opacity: 1;
   visibility: visible;
+}
+
+/*
+============================================================================
+
+MAIN SECTION
+
+============================================================================
+*/
+.main {
+  background: orange;
+  position: absolute;
+  top: calc(80vh + 80px);
+  width: 100%;
+}
+
+.main-sec {
+  width: 100%;
+  position: relative;
+  box-sizing: border-box;
+}
+
+.sec-head {
+  width: 100%;
+  background: #232323;
+  height: 40px;
+  text-align: center;
+  font-family: "Secular One", "Raleway", "Miriam Libre", sans-serif;
+  font-size: 20px;
+  color: white;
+  line-height: 40px;
+}
+
+/*
+=================
+HIGHLIGHTS
+=================
+*/
+.highlight-wrap {
+  background: orange;
+  width: 100%;
+  padding: 40px;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-evenly;
+}
+.highlight-wrap .highlight {
+  height: 40vh;
+  width: 30vh;
+  background: purple;
+  margin: 5px;
+}
+
+/*
+=================
+PORTFOLIO
+=================
+*/
+/*
+=================
+LINKEDIN
+=================
+*/
+/*
+=================
+ABOUT
+=================
+*/
+/*
+============================================================================
+
+CAROUSEL DESKTOP VALUES
+
+============================================================================
+*/
+.carousel-wrap {
+  top: 80px;
+  height: 80vh;
+}
+
+.carousel-btn:hover {
+  background: rgba(138, 138, 138, 0.3);
 }
