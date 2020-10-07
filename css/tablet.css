@@ -10,15 +10,18 @@ $name - variable
   }
 
   nav {
-    width: 300px;
-    right: 60px;
+    width: 400px;
+    right: 40px;
   }
-  nav .nav-btn {
-    padding-left: 10px;
-    padding-right: 10px;
-    width: 100px;
+  nav a {
+    height: 80px;
   }
-  nav .nav-btn svg {
+  nav a .nav-btn {
+    padding: 0;
+    width: 25%;
+    height: 100%;
+  }
+  nav a .nav-btn svg {
     left: 0;
     right: 0;
   }

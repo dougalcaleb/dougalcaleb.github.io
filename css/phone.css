@@ -10,11 +10,11 @@ $name - variable
   }
 
   header h1 {
-    width: 300px;
+    width: 50%;
     line-height: 60px;
     text-align: left;
     left: 50px;
-    font-size: 25px;
+    font-size: 6vw;
   }
 
   nav {
@@ -24,12 +24,17 @@ $name - variable
     width: 70%;
     display: none;
   }
-  nav .nav-btn {
+  nav a {
+    height: 100%;
+    width: 25%;
+  }
+  nav a .nav-btn {
     padding-left: 10px;
     padding-right: 10px;
-    width: 100px;
+    width: 100%;
+    height: 100%;
   }
-  nav .nav-btn svg {
+  nav a .nav-btn svg {
     left: 0;
     right: 0;
   }
@@ -97,5 +102,14 @@ $name - variable
 
   .link-head {
     top: -60px;
+  }
+
+  .portfolio-wrap {
+    padding-left: 5px;
+    padding-right: 5px;
+  }
+  .portfolio-wrap .port-card {
+    width: 40vw;
+    height: 40vw;
   }
 }
