@@ -10,10 +10,10 @@ $name - variable
   }
 
   header h1 {
-    width: 70%;
+    width: 300px;
     line-height: 60px;
-    text-align: center;
-    left: 20px;
+    text-align: left;
+    left: 50px;
     font-size: 25px;
   }
 
@@ -72,11 +72,26 @@ $name - variable
     display: inline;
   }
 
+  .mobile-nav {
+    display: flex;
+  }
+
   .carousel-wrap {
     top: 60px;
   }
 
   .carousel-btn:hover {
     background: transparent;
+  }
+
+  .main {
+    top: calc(60vh + 60px);
+  }
+
+  .highlight-wrap {
+    flex-direction: column;
+  }
+  .highlight-wrap .highlight {
+    align-self: center;
   }
 }

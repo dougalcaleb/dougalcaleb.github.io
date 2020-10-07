@@ -5,6 +5,7 @@
 }
 body {
     margin: 0;
+    overflow: auto;
 }
 
 /*
@@ -83,6 +84,12 @@ header {
     }
 }
 
+/*
+=================
+DESKTOP NAV
+=================
+*/
+
 nav {
     // background: orange;
     height: 80px;
@@ -119,13 +126,11 @@ nav {
     }
 }
 
-.carousel-wrap {
-    top: 80px;
-}
-
-.carousel-btn:hover {
-    background: rgba(138, 138, 138, 0.3);
-}
+/*
+=================
+MOBILE NAV
+=================
+*/
 
 .burger {
     // background: orange;
@@ -150,31 +155,31 @@ nav {
     }
 }
 
-.burg1 {
+.burg0 {
     top: -18px;
     bottom: 0;
 }
-.burg2 {
+.burg1 {
     top: 0px;
     bottom: 0;
 }
-.burg3 {
+.burg2 {
     bottom: -18px;
     top: 0;
 }
 
-.burg1-active {
+.burg0-active {
     // transform: rotate(225deg);
     transform: rotate(45deg);
     top: 0;
     bottom: 0;
 }
-.burg2-active {
+.burg1-active {
     // top: 10px;
     // bottom: -10px;
     opacity: 0;
 }
-.burg3-active {
+.burg2-active {
     // transform: rotate(-225deg);
     transform: rotate(-45deg);
     bottom: 0px;
@@ -189,11 +194,11 @@ nav {
     background: ext.$header-gray;
     // background: orange;
     position: absolute;
-    display: flex;
     justify-content: space-evenly;
     transition: 0.3s;
     opacity: 0;
     visibility: hidden;
+    display: none;
     z-index: 5;
     .nav-btn {
         height: 100%;
@@ -217,4 +222,96 @@ nav {
     left: 40px;
     opacity: 1;
     visibility: visible;
+}
+
+/*
+============================================================================
+
+MAIN SECTION
+
+============================================================================
+*/
+
+.main {
+    background: orange;
+    position: absolute;
+    top: calc(80vh + 80px);
+    width: 100%;
+}
+
+.main-sec {
+    width: 100%;
+    // background: ext.$bg-gray;
+    position: relative;
+    // padding: 5px;
+    box-sizing: border-box;
+    // border-bottom: 10px solid ext.$accent;
+}
+
+.sec-head {
+    width: 100%;
+    background: ext.$header-gray;
+    height: 40px;
+    text-align: center;
+    font-family: "Secular One", "Raleway", "Miriam Libre", sans-serif;
+    font-size: 20px;
+    color: white;
+    line-height: 40px;
+}
+
+/*
+=================
+HIGHLIGHTS
+=================
+*/
+
+.highlight-wrap {
+    background: orange;
+    width: 100%;
+    padding: 40px;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: space-evenly;
+    .highlight {
+        height: 40vh;
+        width: 30vh;
+        background: purple;
+        margin: 5px;
+    }
+}
+
+/*
+=================
+PORTFOLIO
+=================
+*/
+
+/*
+=================
+LINKEDIN
+=================
+*/
+
+/*
+=================
+ABOUT
+=================
+*/
+
+
+/*
+============================================================================
+
+CAROUSEL DESKTOP VALUES
+
+============================================================================
+*/
+
+.carousel-wrap {
+    top: 80px;
+    height: 80vh;
+}
+
+.carousel-btn:hover {
+    background: rgba(138, 138, 138, 0.3);
 }

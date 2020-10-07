@@ -25,9 +25,14 @@ $name - variable
 
   .carousel-wrap {
     top: 80px;
+    height: 60vh;
   }
 
   .carousel-btn:hover {
     background: transparent;
+  }
+
+  .main {
+    top: calc(60vh + 80px);
   }
 }
