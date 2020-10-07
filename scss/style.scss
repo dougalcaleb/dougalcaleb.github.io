@@ -8,6 +8,11 @@ body {
     overflow: auto;
 }
 
+a {
+    text-decoration: none;
+    display: block;
+}
+
 /*
 ============================================================================
 
@@ -38,7 +43,7 @@ header {
     position: fixed;
     background: ext.$header-gray;
     z-index: 99999;
-    box-shadow: 0px 4px 20px #333;
+    box-shadow: 0px 4px 20px #222;
 
     h1 {
         color: #eee;
@@ -48,6 +53,7 @@ header {
         left: 70px;
         @extend %center-y;
         line-height: 80px;
+        transition: 0.2s;
     }
 
     .lAccent {
@@ -99,7 +105,7 @@ nav {
     display: flex;
     justify-content: space-evenly;
     right: 50px;
-    .nav-btn {
+    a {.nav-btn {
         padding: 10px;
         padding-left: 55px;
         text-align: right;
@@ -123,7 +129,7 @@ nav {
             left: 5px;
             color: ext.$accent;
         }
-    }
+    }}
 }
 
 /*
@@ -188,7 +194,8 @@ MOBILE NAV
 
 .mobile-nav {
     height: 100%;
-    width: 60%;
+    max-width: 60%;
+    // width: 50%;
     // right: 0;
     left: 80px;
     background: ext.$header-gray;
@@ -200,21 +207,26 @@ MOBILE NAV
     visibility: hidden;
     display: none;
     z-index: 5;
-    .nav-btn {
+    a {
         height: 100%;
-        width: 60px;
-        // background: green;
         position: relative;
-        transition: 0.2s;
-        svg {
-            height: 30px;
-            @extend %center;
-            color: ext.$accent;
+        width: 25%;
+        .nav-btn {
+            height: 100%;
+            width: 60px;
+            // background: green;
+            position: relative;
+            transition: 0.2s;
+            svg {
+                height: 30px;
+                @extend %center;
+                color: ext.$accent;
+            }
+            &:hover {
+                background: ext.$bg-gray;
+            }
         }
-        &:hover {
-            background: ext.$bg-gray;
-        }
-    }
+    } 
 }
 
 .mobile-nav-active {

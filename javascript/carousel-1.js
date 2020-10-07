@@ -56,9 +56,9 @@ var carousel = {
 "scrollType": 0,                // 0: static scroll | 1: overlapping scroll | 2: fade
 "subtype": 0,                   // 0: No subtypes | 1: 0-right overlap 1-left overlap 2-both top | 2: No subtypes
 "radioBubbles": true,           // enables generating of radio bubbles
-"autoScroll": false,            // scroll slider automatically
-"autoScrollSpeed": 5000,        // time in miliseconds between scrolling between pages when autoScroll is true
-"autoScrollTimeout": 15000,     // time in miliseconds to resume autoscroll after user interaction with navigation
+"autoScroll": true,             // scroll slider automatically
+"autoScrollSpeed": 7000,        // time in miliseconds between scrolling between pages when autoScroll is true
+"autoScrollTimeout": 10000,     // time in miliseconds to resume autoscroll after user interaction with navigation
 "autoScrollDir": "r",           // determines the direction the autoscroll scrolls (r or l)
 "btnScrollTrans": 0.2,          // time in seconds to change the transition to when a radio button is clicked. Not used on scrollType 2
 "transition": 0.3,              // time in seconds for transitions between slides
@@ -69,12 +69,12 @@ var carousel = {
 "infinite": true,               // enables infinite scrolling
 "swipe": true,                  // enables touch or click-drag scrolling. Only available with type 0
 "swipeDist": 300,               // distance swiped required to advance the slider instead of snapping back
-"swipeScale": 1.0,              // multiplier for movement when swiping
-"resist": 0.95,                 // resistance multiplier after dragging past the end when enableSwipe is true (0=none 1=stop)
+"swipeScale": 2.0,              // multiplier for movement when swiping
+"resist": 0.9,                  // resistance multiplier after dragging past the end when enableSwipe is true (0=none 1=stop)
 "rtl": false,                   // flips direction of slides
 "fadeInOffset": 20,             // movement of the slide from the right when scrollType is 2
 "fadeOutOffset": -20,           // movement of the slide from the left when scrollType is 2
-"fadeOffsetUnits": "px",        // units for fadeOffset
+"fadeOffsetUnits": "px",        // units for fadeInOffset / fadeOutOffset
 
 // NO EDITING RECOMMENDED
 

@@ -5,19 +5,23 @@
         display: none;
     }
     nav {
-        width: 300px;
-        right: 60px;
-        .nav-btn {
-            padding-left: 10px;
-            padding-right: 10px;
-            width: 100px;
-            svg {
-                // @extend %center;
-                left: 0;
-                right: 0;
+        width: 400px;
+        right: 40px;
+        a {
+            height: 80px;
+            .nav-btn {
+                // padding-left: 10px;
+                // padding-right: 10px;
+                padding: 0;
+                width: 25%;
+                height: 100%;
+                svg {
+                    // @extend %center;
+                    left: 0;
+                    right: 0;
+                }
             }
         }
-        
     }
     .carousel-wrap {
         top: 80px;
