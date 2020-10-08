@@ -262,11 +262,11 @@ MAIN SECTION
 
 .sec-head {
     width: 100%;
-    background: ext.$header-gray;
+    background: ext.$accent-blue;
     height: 50px;
     text-align: center;
     font-family: "Secular One", "Raleway", "Miriam Libre", sans-serif;
-    font-size: 20px;
+    font-size: 25px;
     color: white;
     line-height: 50px;
 }
@@ -324,9 +324,36 @@ PORTFOLIO
 
 /*
 =================
-LINKEDIN
+SOCIAL
 =================
 */
+
+.social {
+    background: ext.$bg-gray;
+}
+
+.social-sec {
+    height: 20vw;
+    width: 100%;
+    position: relative;
+    .social-logo {
+        @extend %center-y;
+        left: 50px;
+        height: 8vw;
+        width: 8vw;
+        color: white;
+    }
+}
+
+.soc-0 {
+    background: rgba(255,255,255,0);
+}
+.soc-1 {
+    background: rgba(255, 255, 255, 0.05);
+}
+.soc-2 {
+    background: rgba(255,255,255,0);
+}
 
 /*
 =================

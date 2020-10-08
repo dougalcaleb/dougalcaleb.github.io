@@ -4,6 +4,12 @@
 $name - variable
 
 */
+/*
+possible additional accents:
+#1598bf - light blue
+#1ac8ed
+
+*/
 @media screen and (max-width: 700px) {
   .nav-text {
     display: none;
@@ -111,5 +117,15 @@ $name - variable
   .portfolio-wrap .port-card {
     width: 40vw;
     height: 40vw;
+  }
+
+  .social-sec .social-logo {
+    left: 15px;
+  }
+
+  .sec-head {
+    height: 40px;
+    font-size: 20px;
+    line-height: 44px;
   }
 }

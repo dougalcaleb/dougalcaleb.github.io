@@ -69,7 +69,7 @@ var carousel = {
 "infinite": true,               // enables infinite scrolling
 "swipe": true,                  // enables touch or click-drag scrolling. Only available with type 0
 "swipeDist": 300,               // distance swiped required to advance the slider instead of snapping back
-"swipeScale": 2.0,              // multiplier for movement when swiping
+"swipeScale": 1.2,              // multiplier for movement when swiping
 "resist": 0.9,                  // resistance multiplier after dragging past the end when enableSwipe is true (0=none 1=stop)
 "rtl": false,                   // flips direction of slides
 "fadeInOffset": 20,             // movement of the slide from the right when scrollType is 2
