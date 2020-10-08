@@ -4,6 +4,12 @@
 $name - variable
 
 */
+/*
+possible additional accents:
+#1598bf - light blue
+#1ac8ed
+
+*/
 .mobile-nav a .nav-btn svg {
   position: absolute;
   left: 0;
@@ -13,7 +19,7 @@ $name - variable
   margin: auto;
 }
 
-header h1, header .lAccent:after, header .rAccent:after, nav a .nav-btn svg {
+header h1, header .lAccent:after, header .rAccent:after, nav a .nav-btn svg, .social-sec .social-logo {
   position: absolute;
   top: 0;
   bottom: 0;
@@ -256,11 +262,11 @@ MAIN SECTION
 
 .sec-head {
   width: 100%;
-  background: #232323;
+  background: #0576b3;
   height: 50px;
   text-align: center;
   font-family: "Secular One", "Raleway", "Miriam Libre", sans-serif;
-  font-size: 20px;
+  font-size: 25px;
   color: white;
   line-height: 50px;
 }
@@ -315,9 +321,37 @@ PORTFOLIO
 
 /*
 =================
-LINKEDIN
+SOCIAL
 =================
 */
+.social {
+  background: #111111;
+}
+
+.social-sec {
+  height: 20vw;
+  width: 100%;
+  position: relative;
+}
+.social-sec .social-logo {
+  left: 50px;
+  height: 8vw;
+  width: 8vw;
+  color: white;
+}
+
+.soc-0 {
+  background: rgba(255, 255, 255, 0);
+}
+
+.soc-1 {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.soc-2 {
+  background: rgba(255, 255, 255, 0);
+}
+
 /*
 =================
 ABOUT
