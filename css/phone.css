@@ -111,8 +111,8 @@ possible additional accents:
   }
 
   .portfolio-wrap {
-    padding-left: 5px;
-    padding-right: 5px;
+    padding-left: calc((100% - 80vw)/2 - 10px);
+    padding-right: calc((100% - 80vw)/2 - 10px);
   }
   .portfolio-wrap .port-card {
     width: 40vw;

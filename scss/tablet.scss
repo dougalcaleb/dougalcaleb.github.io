@@ -10,8 +10,8 @@
         a {
             height: 80px;
             .nav-btn {
-                // padding-left: 10px;
-                // padding-right: 10px;
+                padding-left: 10px;
+                padding-right: 10px;
                 padding: 0;
                 width: 25%;
                 height: 100%;
@@ -32,5 +32,12 @@
     }
     .main {
         top: calc(60vh + 80px);
+    }
+    .social-sec {
+        height: 20vw;
+    }
+    .portfolio-wrap {
+        padding-left: calc((100% - 60vh)/2 - 10px);
+        padding-right: calc((100% - 60vh)/2 - 10px);
     }
 }

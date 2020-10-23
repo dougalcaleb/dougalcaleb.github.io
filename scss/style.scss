@@ -105,7 +105,7 @@ nav {
     display: flex;
     justify-content: space-evenly;
     right: 50px;
-    a {.nav-btn {
+    a { .nav-btn {
         padding: 10px;
         padding-left: 55px;
         text-align: right;
@@ -309,7 +309,11 @@ PORTFOLIO
 .portfolio-wrap {
     background: ext.$bg-gray;
     width: 100%;
+    // padding-top: 40px;
+    // padding-bottom: 40px;
     padding: 40px;
+    // padding-left: calc((100% - 60vh)/2);
+    // padding-right: calc((100% - 60vh)/2 - );
     box-sizing: border-box;
     display: flex;
     justify-content: space-evenly;
@@ -333,7 +337,7 @@ SOCIAL
 }
 
 .social-sec {
-    height: 20vw;
+    height: 15vw;
     width: 100%;
     position: relative;
     .social-logo {
