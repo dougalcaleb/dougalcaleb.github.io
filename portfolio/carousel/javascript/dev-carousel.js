@@ -1,4 +1,4 @@
-console.log("Using Javascript Instant Carousel v1.2.1");
+console.log("Using Javascript Instant Carousel v1.2.2");
 
 /*
 - Link this script to an HTML file
@@ -39,83 +39,107 @@ EDITING PAGES:
 - All types of nav indicators are supported, not only the bubbles in the reference
 */
 
+// Todo:
+/*
+- Add a "multiple" type (like slick)
+- Add multiple carousels linking
+- Remove necessity for nav buttons
+- Add option for velocity page movement or movement delta or both
+*/
+
 var carousel = {
 
 // ELEMENTS
 
-"pages": ["images/portfolio/todoapp.png","images/portfolio/bubbles.png","images/portfolio/2dgame.png","images/portfolio/bidapp.png","images/portfolio/lander.png","images/portfolio/carousel.png"],
-"navBtns": ["<svg viewBox='0 0 24 24' class='carousel-svg-l'><path fill='currentColor' d='M19,3H5A2,2 0 0,0 3,5V19C3,20.11 3.9,21 5,21H19C20.11,21 21,20.11 21,19V5A2,2 0 0,0 19,3M15.71,16.59L14.29,18L8.29,12L14.29,6L15.71,7.41L11.12,12L15.71,16.59Z'/></svg>", "<svg viewBox='0 0 24 24' class='carousel-svg-r'><path fill='currentColor' d='M19,3H5A2,2 0 0,0 3,5V19C3,20.11 3.9,21 5,21H19C20.11,21 21,20.11 21,19V5A2,2 0 0,0 19,3M9.71,18L8.29,16.59L12.88,12L8.29,7.41L9.71,6L15.71,12L9.71,18Z'/></svg>"],
-"mainId": ".carousel-wrap",     // class of the main slider body. autoGenHtml generates inside of this element
-"bottomSafeZone": 50,           // distance from the bottom to not have the swipe overlay (safe zone for nav)
-"safeUnits": "px",              // units for bottomSafeZone
-"defaultStyle": false,          // automatically includes elements styles from the reference file. Overrides autoGenHtml (sets to true)
-"autoGenHtml": false,           // generates a basic HTML structure, identical to the reference. Includes no styles
+pages: ["images/carousel/numbers/1.png","images/carousel/numbers/2.png","images/carousel/numbers/3.png","images/carousel/numbers/4.png","images/carousel/numbers/5.png","images/carousel/numbers/6.png"],
+navBtns: ["<svg viewBox='0 0 24 24' class='carousel-svg-l'><path fill='currentColor' d='M19,3H5A2,2 0 0,0 3,5V19C3,20.11 3.9,21 5,21H19C20.11,21 21,20.11 21,19V5A2,2 0 0,0 19,3M15.71,16.59L14.29,18L8.29,12L14.29,6L15.71,7.41L11.12,12L15.71,16.59Z'/></svg>", "<svg viewBox='0 0 24 24' class='carousel-svg-r'><path fill='currentColor' d='M19,3H5A2,2 0 0,0 3,5V19C3,20.11 3.9,21 5,21H19C20.11,21 21,20.11 21,19V5A2,2 0 0,0 19,3M9.71,18L8.29,16.59L12.88,12L8.29,7.41L9.71,6L15.71,12L9.71,18Z'/></svg>"],
+mainId: ".carousel-wrap",     // class of the main slider body. autoGenHtml generates inside of this element
+bottomSafeZone: 50,           // distance from the bottom to not have the swipe overlay (safe zone for nav)
+safeUnits: "px",              // units for bottomSafeZone
+autoGenHtml: true,            // generates a basic HTML structure, identical to the reference. Includes no styles
+defaultStyle: true,           // automatically includes elements styles from the reference file. Overrides autoGenHtml (sets to true)
 
 // BEHAVIORS
 
-"scrollType": 0,                // 0: static scroll | 1: overlapping scroll | 2: fade
-"subtype": 0,                   // 0: No subtypes | 1: 0-right overlap 1-left overlap 2-both top | 2: No subtypes
-"radioBubbles": true,           // enables generating of radio bubbles
-"autoScroll": true,             // scroll slider automatically
-"autoScrollSpeed": 7000,        // time in miliseconds between scrolling between pages when autoScroll is true
-"autoScrollTimeout": 10000,     // time in miliseconds to resume autoscroll after user interaction with navigation
-"autoScrollDir": "r",           // determines the direction the autoscroll scrolls (r or l)
-"btnScrollTrans": 0.2,          // time in seconds to change the transition to when a radio button is clicked. Not used on scrollType 2
-"transition": 0.3,              // time in seconds for transitions between slides
-"throttle": true,               // enables user interaction throttling
-"throttleTimeout": 300,         // interval to throttle navigation by the user in ms
-"throttleMatchTrans": false,    // sets throttleTimeout to cover the transition time. Overrides explicit throttleTimeout value
-"useKeys": true,                // enables using l/r arrow keys to navigate
-"infinite": true,               // enables infinite scrolling
-"swipe": true,                  // enables touch or click-drag scrolling. Only available with type 0
-"swipeDist": 300,               // distance swiped required to advance the slider instead of snapping back
-"swipeScale": 1.2,              // multiplier for movement when swiping
-"resist": 0.9,                  // resistance multiplier after dragging past the end when enableSwipe is true (0=none 1=stop)
-"rtl": false,                   // flips direction of slides
-"fadeInOffset": 20,             // movement of the slide from the right when scrollType is 2
-"fadeOutOffset": -20,           // movement of the slide from the left when scrollType is 2
-"fadeOffsetUnits": "px",        // units for fadeInOffset / fadeOutOffset
+scrollType: 0,                // 0: static scroll | 1: overlapping scroll | 2: fade
+subtype: 0,                   // 0: No subtypes | 1: 0-right overlap 1-left overlap 2-both top | 2: No subtypes
+radioBubbles: true,           // enables generating of radio bubbles
+autoScroll: false,            // scroll slider automatically
+autoScrollSpeed: 5000,        // time in miliseconds between scrolling between pages when autoScroll is true
+autoScrollTimeout: 15000,     // time in miliseconds to resume autoscroll after user interaction with navigation
+autoScrollDir: "r",           // determines the direction the autoscroll scrolls (r or l)
+btnScrollTrans: 0.2,          // time in seconds to change the transition to when a radio button is clicked. Not used on scrollType 2
+transition: 0.3,              // time in seconds for transitions between slides
+throttle: true,               // enables user interaction throttling
+throttleTimeout: 300,         // interval to throttle navigation by the user in ms
+throttleMatchTrans: false,    // sets throttleTimeout to cover the transition time. Overrides explicit throttleTimeout value
+useKeys: true,                // enables using l/r arrow keys to navigate
+infinite: true,               // enables infinite scrolling
+swipe: true,                  // enables touch or click-drag scrolling. Only available with type 0
+swipeDist: 300,               // distance swiped required to advance the slider instead of snapping back
+swipeScale: 1.0,              // multiplier for movement when swiping
+resist: 0.95,                 // resistance multiplier after dragging past the end when enableSwipe is true (0=none 1=stop)
+rtl: false,                   // flips direction of slides
+fadeInOffset: 20,             // movement of the slide from the right when scrollType is 2
+fadeOutOffset: -20,           // movement of the slide from the left when scrollType is 2
+fadeOffsetUnits: "px",        // units for fadeOffset
 
 // NO EDITING RECOMMENDED
 
-"allowOtherSwipe": false,       // allows swiping on all types (NOT STABLE)
-"createInternalStyles": true,   // creates some styles automatically that will not change based on appearance
+allowOtherSwipe: false,       // allows swiping on all types (NOT STABLE)
+createInternalStyles: true,   // creates some styles automatically that will not change based on appearance
 
 //  |                  |
 //  |   NOT EDITABLE   |
 //  V                  V
 
-"order": [],
-"static": [],
-"scrollTimeout": null,
-"scrollTrans": 0,
-"scrollInt": null,
-"allowed": true,
-"falsePages": null,
-"last": 0,
-"style1": null,
-"style2": null,
-"style3": null,
+order: [],
+static: [],
+scrollTimeout: null,
+scrollTrans: 0,
+scrollInt: null,
+allowed: true,
+falsePages: null,
+last: 0,
+style1: null,
+style2: null,
+style3: null,
 
 // FOR SWIPE/DRAG
 
-"sx": 0, "sy": 0,
-"ex": 0, "ey": 0,
-"x": 0, "y": 0,
-"dx": 0, "dy": 0,
-"lastMove": null,
-"t": false,
-"dragging": false,
-"canSnap": false
+sx: 0, sy: 0,
+ex: 0, ey: 0,
+x: 0, y: 0,
+dx: 0, dy: 0,
+lastMove: null,
+t: false,
+dragging: false,
+canSnap: false
 
 };
 
 // Values for mobile devices. Styles in here override main values, except for breakpoint
 
 var carouselMobile = {
-    "breakpoint": 700,          // width in px to use these styles
-    "swipeDist": 50
+    breakpoint: 700,          // width in px to start using these styles
+    swipeDist: 50
 };
+
+var carousels = {};
+
+// THIS NEEDS TO:
+/*
+    - Create a new object with desired settings
+    - Create a corresponding carousel on the page
+    - Apply its own styles
+    - 
+
+*/
+class Carousel {
+    constructor(properties) {
+        
+    }
+}
 
 
 
@@ -176,7 +200,7 @@ function carousel_createPages() {
     if (carousel.createInternalStyles) {
         carousel.style2 = document.createElement("style");
         carousel.style2.setAttribute("type", "text/css");
-        carousel.style2.innerHTML = ".carousel-image {height: 100%; width: 100%; background-position: calc(center + 300px) center; background-size: cover; top: 0; position: absolute;} .carousel-page-wrap {height: 101%; width: 100%; top: 0; left: 0; position: absolute;} .carousel-wrap {overflow: hidden;}";
+        carousel.style2.innerHTML = ".carousel-image {height: 100%; width: 100%; background-position: calc(center + 300px) center; background-size: cover; top: 0; position: absolute;} .carousel-page-wrap {height: 100%; width: 100%; top: 0; left: 0; position: absolute;} .carousel-wrap {overflow: hidden;}";
         document.getElementsByTagName("head")[0].appendChild(carousel.style2);
     }
 
@@ -229,11 +253,9 @@ function carousel_createPages() {
                 var bub = document.createElement("DIV");
                 bub.classList.add("carousel-bubble");
                 bub.classList.add("carousel-bubble-"+a);
-                bub.classList.add("carousel-inactive-bubble");
                 document.querySelector(".carousel-bubbles").appendChild(bub);
                 document.querySelector(".carousel-bubble-"+a).addEventListener("click", carousel_bubbleNav);
                 document.querySelector(".carousel-bubble-0").classList.add("carousel-active-bubble");
-                document.querySelector(".carousel-bubble-0").classList.remove("carousel-inactive-bubble");
             }
         }
     }

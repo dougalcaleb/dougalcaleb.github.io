@@ -65,7 +65,7 @@ header {
   position: fixed;
   background: #232323;
   z-index: 99999;
-  box-shadow: 0px 4px 20px #222;
+  box-shadow: 0px 4px 20px #111;
 }
 header h1 {
   color: #eee;
@@ -315,8 +315,79 @@ PORTFOLIO
 .portfolio-wrap .port-card {
   height: 30vh;
   width: 30vh;
-  background: #d8d8d8;
   margin: 5px;
+  border: 5px solid #0576b3;
+  box-sizing: border-box;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  cursor: pointer;
+}
+.portfolio-wrap .port-card:hover .port-card-title, .portfolio-wrap .port-card:hover .port-card-overlay {
+  opacity: 1;
+  letter-spacing: 1px;
+}
+.portfolio-wrap .port-card .port-card-title {
+  width: 100%;
+  text-align: center;
+  font-family: "Raleway";
+  font-weight: 600;
+  color: white;
+  z-index: 3;
+  transition: 0.2s;
+  opacity: 0;
+}
+.portfolio-wrap .port-card .port-card-overlay {
+  height: 100%;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  z-index: 2;
+  position: absolute;
+  transition: 0.2s;
+  opacity: 0;
+}
+
+.port0 {
+  background: url("../images/portfolio/todoapp.png");
+  background-size: cover;
+  background-position: center center;
+}
+
+.port1 {
+  background: url("../images/portfolio/");
+  background-size: cover;
+  background-position: center center;
+}
+
+.port2 {
+  background: url("../images/portfolio/bidapp.png");
+  background-size: cover;
+  background-position: center center;
+}
+
+.port3 {
+  background: url("../images/portfolio/bubbles.png");
+  background-size: cover;
+  background-position: center center;
+}
+
+.port4 {
+  background: url("../images/portfolio/2dgame.png");
+  background-size: cover;
+  background-position: center center;
+}
+
+.port5 {
+  background: url("../images/portfolio/lander.png");
+  background-size: cover;
+  background-position: center center;
+}
+
+.port6 {
+  background: url("../images/portfolio/carousel.png");
+  background-size: cover;
+  background-position: center center;
 }
 
 /*

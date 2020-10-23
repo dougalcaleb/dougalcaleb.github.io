@@ -1,0 +1,72 @@
+var player = {
+    // Editable
+    // FEATURES
+    "canMove": true,		// Determines whether player can move or not
+    "sprintToggle": true,	// If true, shift toggles sprinting. If false, player sprints only when shift is pressed
+    "sprintNerfsAccel": false,	// If true, movement acceleration is set equal to player.sprintAccel
+    "deceleration": true,	// When enabled, the player has x-axis movement deceleration when landed
+    "airDeceleration": true,	// When enabled, the player has x-axis movement deceleration when in the air
+    "movementAccel": true,	// When enabled, the player has x-axis movement acceleration when landed
+    "jetpack": true,		// When enabled, the jetpack can be used
+    "jetTrail": true,		// Toggles the fire trail being shown
+    "fallDamage": true,		// Enables or disables fall damage
+    "shieldAbsorbsHit": true,	// When enabled, a single impulse of damage, if exceeding the HP of the shield, will negate the rest of the damage
+    "airJumpNegatesDecel": true,// When enabled, the player can "wall jump" off of the air
+    // GROUND MOVEMENT VALUES
+    "movementSpeed": 5,		// Maximum landed walking speed
+    "sprintSpeed": 8,		// Maximum landed speed when sprinting
+    "decel": 0.4,		// Defines the rate at which the player decelerates when landed. Lower = slower
+    "sprintAccel": 0.8,		// Defines the movement acceleration multiplier when player.sprintNerfsAccel is true
+    "moveAccel": 1,		// Speed of player acceleration when landed on the x-axis. Added once per frame to player.xVel until player.moveSpeed is reached
+    // AIR MOVEMENT VALUES
+    "inAirMovement": 0.8,	// Defines the multiplier for air movement when in the air
+    "inAirDecel": 0.1,		// Rate of deceleration while in the air. Added or subtracted once per active frame to player.xVel
+    "maxSpeedDecel": 0.1,	// Speed of deceleration when approaching maximum jetpack velocity
+    // JETPACK VALUES
+    "packFuel": 500,		// Amount of fuel the jetpack has stored. Defines the number of frames that the jetpack can be active for
+    "packPower": 0.6,		// Acceleration power against gravity of the jetpack. Added once per active frame to player.yVel
+    "packMax": 5,		// Maximum y-velocity of the jetpack
+    "packRecharge": 20,		// Speed at which the jetpack recharges. Defines the number of milliseconds before 1 fuel is added back
+    "packRechargeDelay": 5000,	// Delay after the jetpack is unused before it begins to recharge in milliseconds
+    "packDecelTime": 10,	// Number of frames before reaching max velocity where deceleration begins
+    // HEALTH
+    "maxHP": 100,		// Maximum amount of health
+    "hp": 100,			// Current amount of health
+    "maxShield": 50,		// Maximum amount of shield. Should not exceed maximum health
+    "shield": 20,		// Current amount of shield
+    "shieldRecharge": 300,	// Speed at which shield recharges. Defines the number of milliseconds before 1 shield is added back
+    "shieldRechargeDelay": 10000,  // Delay after shield damage is taken before it begins to recharge in milliseconds
+    "damageMult": 1,		// Overall damage multiplier
+    "fallDamageMult": 1,	// Damage multiplier for fall damage
+    "fallDamageThresh": 20,	// Minimum y-velocity required before fall damage takes effect
+    // GENERAL VALUES
+    "gravity": 0.35,		// Strength of gravity, subtracted from y-velocity once per frame when applicable. Higher = stronger
+    "maxFall": 40,		// Maximum y-velocity for falling
+    "jumps": 2,			// Maximum number of jumps available to the player
+    "jumpSpeed": 8,		// Initial y-velocity when jumping
+    "trailSpeed": 0.2,		// Time for jetpack fire trail to fade in seconds
+    "trailLength": 2,		// Time for jetpack fire trail to be deleted, in some unit of measurement
+    "h": 208,			// Height of the player sprite
+    "w": 30,			// Width of the player sprite
+    "startX": 0,		// Starting x value for the player
+    "startY": 208,		// Starting y value for the player
+    // Non - editable
+    "xVel": 0,			// Used to define x-axis velocity
+    "yVel": 0,			// Used to define y-axis velocity
+    "x": 0,			// Used to define x-axis position
+    "y": 0,			// Used to define y-axis position
+    "jumpsLeft": null,		// Used to keep track of the number of jumps used/left
+    "moveSpeed": null,		// Current movement speed of the player. Set to player.movementSpeed initially
+    "landed": true,		// Current grounded state of the player
+    "jumping": false,		// Current jumping state of the player
+    "jetting": false,		// Current jetpacking state of the player
+    "fuelLeft": null,		// Current amount of fuel left in the jetpack
+    "packCharge1": null,	// Used as an interval for recharging the jetpack
+    "packCharge2": null,	// Used as a timeout for recharging the jetpack
+    "shieldCharge1": null, 	// Used as an interval for recharging the shield
+    "shieldCharge2": null,	// Used as a timeout for recharging the jetpack
+    "packSoftMax": null,	// Limit where the jetpack begins to decelerate as player reaches max velocity
+    "canJump": true,		// Defines whether the user has released the jump button. Prevents accidental jump spam, wasting jumps
+    "isOnPlat": 1,		// Used as a true/false to determine whether the player is landed on a platform. As a result of this variable being set many times in a single frame, this is an integer because it is less resource intensive than a boolean
+    "floorLevel": 0		// Y-value of the platform below the player
+};
