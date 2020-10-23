@@ -4,6 +4,12 @@
 $name - variable
 
 */
+/*
+possible additional accents:
+#1598bf - light blue
+#1ac8ed
+
+*/
 @media screen and (max-width: 1100px) {
   .nav-text {
     display: none;
@@ -17,6 +23,8 @@ $name - variable
     height: 80px;
   }
   nav a .nav-btn {
+    padding-left: 10px;
+    padding-right: 10px;
     padding: 0;
     width: 25%;
     height: 100%;
@@ -37,5 +45,14 @@ $name - variable
 
   .main {
     top: calc(60vh + 80px);
+  }
+
+  .social-sec {
+    height: 20vw;
+  }
+
+  .portfolio-wrap {
+    padding-left: calc((100% - 60vh)/2 - 10px);
+    padding-right: calc((100% - 60vh)/2 - 10px);
   }
 }

@@ -95,8 +95,10 @@
         top: -60px;
     }
     .portfolio-wrap {
-        padding-left: 5px;
-        padding-right: 5px;
+        // padding-left: 5px;
+        // padding-right: 5px;
+        padding-left: calc((100% - 80vw)/2 - 10px);
+        padding-right: calc((100% - 80vw)/2 - 10px);
         .port-card {
             width: 40vw;
             height: 40vw;
@@ -109,5 +111,8 @@
         height: 40px;
         font-size: 20px;
         line-height: 44px;
+    }
+    .mobile-nav a .nav-btn svg {
+        // color: ext.$accent-blue;
     }
 }
