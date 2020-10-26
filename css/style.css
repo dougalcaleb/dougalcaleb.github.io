@@ -323,6 +323,7 @@ PORTFOLIO
   flex-direction: column;
   justify-content: center;
   cursor: pointer;
+  transition: 0.2s;
 }
 .portfolio-wrap .port-card:hover .port-card-title, .portfolio-wrap .port-card:hover .port-card-overlay {
   opacity: 1;
@@ -386,6 +387,12 @@ PORTFOLIO
 
 .port6 {
   background: url("../images/portfolio/carousel.png");
+  background-size: cover;
+  background-position: center center;
+}
+
+.port7 {
+  background: url("../images/portfolio/stormcenter.png");
   background-size: cover;
   background-position: center center;
 }
