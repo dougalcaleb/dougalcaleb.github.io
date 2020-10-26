@@ -64,6 +64,14 @@ let mouse = document.querySelector(".forcefield");
 
 
 document.addEventListener("mousemove", function(event) {
+    pointFollow(event);
+}, false);
+document.addEventListener("touchmove", function(event) {
+    touchFollow(event);
+}, false);
+
+
+function pointFollow(event) {
     // get the nearest bubble
     stepx = Math.round((event.clientX - wrapSizeX)/(bubbles.size+bubbles.space));
     stepy = Math.round((event.clientY - wrapSizeY)/(bubbles.size+bubbles.space));
@@ -91,7 +99,37 @@ document.addEventListener("mousemove", function(event) {
 
     // determine how many bubbles in each direction from the center bubble to check
     offset = ((mousescan.span-1)/2);
-}, false);
+}
+
+function touchFollow(event) {
+    // get the nearest bubble
+    stepx = Math.round((event.touches[0].clientX - wrapSizeX)/(bubbles.size+bubbles.space));
+    stepy = Math.round((event.touches[0].clientY - wrapSizeY)/(bubbles.size+bubbles.space));
+
+    // position forcefield visual to follow mouse
+    mouse.style.left = (event.touches[0].clientX - (forcefield.size/2))+"px";
+    mouse.style.top = (event.touches[0].clientY - (forcefield.size/2))+"px";
+
+    // set vars for mouse velocity calculations, calculate velocity
+    forcefield.x2 = JSON.parse(JSON.stringify(forcefield.x1));
+    forcefield.y2 = JSON.parse(JSON.stringify(forcefield.y1));
+
+    forcefield.x1 = {pos: event.touches[0].clientX, time: Date.now()};
+    forcefield.y1 = {pos: event.touches[0].clientY, time: Date.now()};
+
+    forcefield.velocity = Math.sqrt(Math.pow((forcefield.x1.pos-forcefield.x2.pos), 2) + Math.pow((forcefield.y1.pos-forcefield.y2.pos), 2)) / (forcefield.x1.time - forcefield.x2.time);
+    if (forcefield.velocity < forcefield.vmin) {
+        forcefield.velocity = (forcefield.vmin/1);
+    }
+    
+    mousescan.mx = event.touches[0].clientX;
+    mousescan.my = event.touches[0].clientY;
+
+    // readout.innerHTML = `x: ${stepx} | y: ${stepy} <br/> mox: ${(mousescan.mx - wrapSizeX)} | moy: ${(mousescan.my - wrapSizeY)} <br/>v: ${forcefield.velocity.toFixed(5)}`;
+
+    // determine how many bubbles in each direction from the center bubble to check
+    offset = ((mousescan.span-1)/2);
+}
 
 function addMovingBubble(v, ax, ay,  id, x, y, dx, dy) {
     if (v && ax && ay && id && !movingBubbles[id]) {
@@ -257,6 +295,13 @@ function createBubbles() {
     }
 }
 
+function setup() {
+    if (!JSON.parse(sessionStorage.getItem("hasreloaded"))) {
+        location.reload();
+        sessionStorage.setItem("hasreloaded", true);
+    }
+}
+
 createBubbles();
+setup();
 window.requestAnimationFrame(animateBubble);
-location.reload();
