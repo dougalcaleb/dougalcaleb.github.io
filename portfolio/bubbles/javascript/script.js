@@ -259,3 +259,4 @@ function createBubbles() {
 
 createBubbles();
 window.requestAnimationFrame(animateBubble);
+location.reload();
