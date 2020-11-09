@@ -14,6 +14,8 @@ let parGTotal;
 
 let colpos = 0, aligned = false;
 
+alert("Your screen size is: x: "+screen.width+" by Y: "+screen.height);
+
 //! KNOWN ISSUES
 /*
     - On Spanish Oaks, scorecard exceeds its wrap size and can be scrolled vertically
