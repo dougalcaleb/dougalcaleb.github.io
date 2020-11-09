@@ -300,8 +300,12 @@ function setup() {
         location.reload();
         sessionStorage.setItem("hasreloaded", true);
     }
+    if (screen.width <= 400) {
+        bubbles.size = 3;
+        bubbles.space = 3;
+    }
 }
 
-createBubbles();
 setup();
+createBubbles();
 window.requestAnimationFrame(animateBubble);
