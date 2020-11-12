@@ -11,16 +11,13 @@ let cellHeight = 5;
 let cellHeightUnits = "vh";
 let retrievalAttempts = 3;
 let parGTotal;
+let showingSettings = false;
 
 let colpos = 0, aligned = false;
 
-alert("Your screen size is: x: "+screen.width+" by Y: "+screen.height);
-
 //! KNOWN ISSUES
 /*
-    - On Spanish Oaks, scorecard exceeds its wrap size and can be scrolled vertically
-    - On smaller screens, "COURSES NEAR YOU" and "Thanksgiving Point" wraps and breaks container
-    - the header is frikin ugly, fix pls
+    
 */
 
 // TODO:
@@ -28,10 +25,15 @@ alert("Your screen size is: x: "+screen.width+" by Y: "+screen.height);
     - Easy Buttons on scorecard to reduce keyboard necessity
     - Restrict scorecard page scrolling
     - Improve desktop view
-    - VISUAL OVERHAUL
+    - Redesign message screen
+    - Course name above scorecard
 
     Extras:
     - Row swapping when a user's name is changed to a different row
+    
+    Settings:
+    ✔ Preserve cached data between sessions
+    ✔ Auto-select a course
 */
 
 //? CRITERIA
@@ -103,10 +105,29 @@ document.querySelector(".align").addEventListener("click", alignCols);
 
 document.querySelector(".dismiss").addEventListener("click", hideMessage);
 
+document.querySelector(".settings").addEventListener("click", function() {
+    if (!showingSettings) {
+        document.querySelector(".course-select").classList.add("select-moveout");
+        document.querySelector(".settingsWrap").classList.add("settings-movein");
+        showingSettings = true;
+    } else {
+        document.querySelector(".course-select").classList.remove("select-moveout");
+        document.querySelector(".settingsWrap").classList.remove("settings-movein");
+        showingSettings = false;
+    }
+});
+
+document.querySelector(".persistentCourse").addEventListener("input", function() {
+    let editSettings = JSON.parse(localStorage.getItem("settings"));
+    editSettings.tg_select_value = this.value;
+    localStorage.setItem("settings", JSON.stringify(editSettings));
+});
+
 document.querySelector(".player0").children[0].addEventListener("blur", function() {updateScores(0, "NAME");});
 document.querySelector(".player1").children[0].addEventListener("blur", function() {updateScores(1, "NAME");});
 document.querySelector(".player2").children[0].addEventListener("blur", function() {updateScores(2, "NAME");});
 document.querySelector(".player3").children[0].addEventListener("blur", function() {updateScores(3, "NAME");});
+
 
 
 // Gives header shadow when not scrolled to the top
@@ -119,10 +140,20 @@ window.onscroll = function() {
 };
 
 // Sends a request to the golf API to retrive initial data for course selection
-function grabCourses() {
+function grabCourses(isSavedData = false) {
+    // If the user has enabled persistent cache, look for pre-loaded data from localStorage and place it in sessionStorage for use in this session
+    if (isSavedData && localStorage.getItem("courses")) {
+        sessionStorage.setItem("courses", localStorage.getItem("courses"));
+        let setCourseData = JSON.parse(sessionStorage.getItem("courses"));
+        for (let a = 0; a < setCourseData.courses.length; a++) {
+            let lookup = JSON.parse(localStorage.getItem("course-"+setCourseData.courses[a].id));
+            if (lookup) {
+                sessionStorage.setItem("course-"+setCourseData.courses[a].id, localStorage.getItem("course-"+setCourseData.courses[a].id));
+            }
+        }
+    }
     // The user has not loaded this site in this session, so send a request for data
     if (!sessionStorage.getItem("courses")) {
-        console.log("No data cached. Retrieving...");
         xhr.open("GET", url, true);
         xhr.responseType = "text";
         xhr.send();
@@ -131,6 +162,13 @@ function grabCourses() {
                 courseData = JSON.parse(xhr.responseText);
                 cacheData("courses", courseData);
                 setCards();
+                // Add options to the select input for persistent course
+                for (let a = 0; a < courseData.courses.length; a++) {
+                    let newOption = document.createElement("OPTION");
+                    document.querySelector(".persistentCourse").appendChild(newOption);
+                    newOption.setAttribute("value", a);
+                    newOption.innerText = courseData.courses[a].name;
+                }
             }
         };
     // If there is data cached (user has not left the session), get that instead of sending another request. Reduces network usage
@@ -143,6 +181,13 @@ function grabCourses() {
             }
         }
         setCards();
+        // Add options to the select input for persistent course
+        for (let a = 0; a < courseData.courses.length; a++) {
+            let newOption = document.createElement("OPTION");
+            document.querySelector(".persistentCourse").appendChild(newOption);
+            newOption.setAttribute("value", a);
+            newOption.innerText = courseData.courses[a].name;
+        }
     }
 }
 
@@ -243,6 +288,10 @@ function loadBasicInfo(id, display = true) {
 function cacheData(name, data) {
     data = JSON.stringify(data);
     sessionStorage.setItem(name, data);
+    let settings = JSON.parse(localStorage.getItem("settings"));
+    if (settings.tg_preserve) {
+        localStorage.setItem(name, data);
+    }
 }
 
 // Fired when a card is selected. Determines what happens based on what data about the course has been retrieved
@@ -274,7 +323,7 @@ function generateScorecard() {
         newcol = document.createElement("DIV");
         newcol.classList.add("data-col", "data-col-"+a);
         databody.appendChild(newcol);
-        newcol.style.left = (oncol*26)+"vw";
+        newcol.style.left = (oncol*25)+"vw";
         oncol++;
         if (a == 8) {
             newcol.classList.add("no-seperator-col");
@@ -332,9 +381,9 @@ function generateScorecard() {
     newcol = document.createElement("DIV");
     newcol.classList.add("data-col", "special-col", "no-seperator-col", "data-col-OUT");
     databody.appendChild(newcol);
-    newcol.style.left = (oncol*26)+"vw";
+    newcol.style.left = (oncol*25)+"vw";
     oncol++;
-    for (let b = 0; b < 11; b++) {
+    for (let b = 0; b < teeCount+7; b++) {
         newcell = document.createElement("DIV");
         newcell.classList.add("r"+b);
         newcol.appendChild(newcell);
@@ -354,7 +403,7 @@ function generateScorecard() {
         newcol = document.createElement("DIV");
         newcol.classList.add("data-col", "data-col-"+(c+9));
         databody.appendChild(newcol);
-        newcol.style.left = (oncol*26)+"vw";
+        newcol.style.left = (oncol*25)+"vw";
         oncol++;
         if (c == 8) {
             newcol.classList.add("no-seperator-col");
@@ -411,9 +460,9 @@ function generateScorecard() {
     newcol = document.createElement("DIV");
     newcol.classList.add("data-col", "special-col", "no-seperator-col", "data-col-IN");
     databody.appendChild(newcol);
-    newcol.style.left = (oncol*26)+"vw";
+    newcol.style.left = (oncol*25)+"vw";
     oncol++;
-    for (let d = 0; d < 11; d++) {
+    for (let d = 0; d < teeCount+7; d++) {
         newcell = document.createElement("DIV");
         newcell.classList.add("r"+d);
         newcol.appendChild(newcell);
@@ -434,9 +483,9 @@ function generateScorecard() {
     newcol = document.createElement("DIV");
     newcol.classList.add("data-col", "data-col-TOT");
     databody.appendChild(newcol);
-    newcol.style.left = (oncol*26)+"vw";
+    newcol.style.left = (oncol*25)+"vw";
     oncol++;
-    for (let e = 0; e < 11; e++) {
+    for (let e = 0; e < teeCount+7; e++) {
         newcell = document.createElement("DIV");
         newcell.classList.add("r"+e);
         newcol.appendChild(newcell);
@@ -455,9 +504,9 @@ function generateScorecard() {
     newcol = document.createElement("DIV");
     newcol.classList.add("data-col", "data-col-HCP");
     databody.appendChild(newcol);
-    newcol.style.left = (oncol*26)+"vw";
+    newcol.style.left = (oncol*25)+"vw";
     oncol++;
-    for (let f = 0; f < 11; f++) {
+    for (let f = 0; f < teeCount+7; f++) {
         newcell = document.createElement("DIV");
         newcell.classList.add("r"+f);
         newcol.appendChild(newcell);
@@ -497,9 +546,9 @@ function generateScorecard() {
     newcol = document.createElement("DIV");
     newcol.classList.add("data-col", "data-col-NET");
     databody.appendChild(newcol);
-    newcol.style.left = (oncol*26)+"vw";
+    newcol.style.left = (oncol*25)+"vw";
     oncol++;
-    for (let g = 0; g < 11; g++) {
+    for (let g = 0; g < teeCount+7; g++) {
         newcell = document.createElement("DIV");
         newcell.classList.add("r"+g);
         newcol.appendChild(newcell);
@@ -669,6 +718,66 @@ function updateScores(pId, col) {
     }
 }
 
+function startSettings() {
+    if (!localStorage.getItem("settings")) {
+        let newSettings = {};
+        newSettings = JSON.stringify(newSettings);
+        localStorage.setItem("settings", newSettings);
+    }
+    for (let a = 0; a < document.querySelectorAll(".settingsBtn").length; a++) {
+        document.querySelectorAll(".toggle")[a].addEventListener("click", function() {
+            if (this.classList.contains("toggle-enabled")) {
+                this.classList.remove("toggle-enabled");
+                this.classList.add("toggle-disabled");
+            } else {
+                this.classList.add("toggle-enabled");
+                this.classList.remove("toggle-disabled");
+            }
+        });
+    }
+    document.querySelector(".tg_preserve").addEventListener("click", function() {
+        let settings = JSON.parse(localStorage.getItem("settings"));
+        if (settings.tg_preserve == true) {
+            settings.tg_preserve = false;
+            settings = JSON.stringify(settings);
+            localStorage.setItem("settings", settings);
+        } else {
+            settings.tg_preserve = true;
+            settings = JSON.stringify(settings);
+            localStorage.setItem("settings", settings);
+        }
+    });
+    document.querySelector(".tg_select").addEventListener("click", function() {
+        let settings = JSON.parse(localStorage.getItem("settings"));
+        if (settings.tg_select == true) {
+            document.querySelector(".persistentCourse").style.display = "none";
+            settings.tg_select = false;
+            settings = JSON.stringify(settings);
+            localStorage.setItem("settings", settings);
+        } else {
+            document.querySelector(".persistentCourse").style.display = "inline";
+            settings.tg_select = true;
+            settings = JSON.stringify(settings);
+            localStorage.setItem("settings", settings);
+        }
+    });
+
+    let setVis = JSON.parse(localStorage.getItem("settings"));
+    let savedData = false;
+    document.querySelector(".persistentCourse").style.display = "none";
+    if (setVis.tg_select) {
+        document.querySelector(".tg_select").classList.add(setVis.tg_select ? "toggle-enabled" : "toggle-disabled");
+        document.querySelector(".tg_select").classList.remove(setVis.tg_select ? "toggle-disabled" : "toggle-enabled");
+        document.querySelector(".persistentCourse").style.display = "inline";
+    }
+    if (setVis.tg_preserve) {
+        document.querySelector(".tg_preserve").classList.add(setVis.tg_preserve ? "toggle-enabled" : "toggle-disabled");
+        document.querySelector(".tg_preserve").classList.remove(setVis.tg_preserve ? "toggle-disabled" : "toggle-enabled");
+        savedData = true;
+    }
+    grabCourses(savedData);
+}
+
 function message(header, text) {
     document.querySelector(".message").children[0].children[0].innerText = header;
     document.querySelector(".message").children[0].children[1].innerText = text;
@@ -715,7 +824,7 @@ function getMutedColor(hexcolor, muteAmount = 3) {
 
 // Keeps track of the scroll position of the scorecard
 document.querySelector(".databody").onscroll = function() {
-    colpos = Math.floor(this.scrollLeft / (window.innerWidth/(100/26)));
+    colpos = Math.floor(this.scrollLeft / (window.innerWidth/(100/25)));
 };
 
 function navL() {
@@ -736,11 +845,12 @@ function navR() {
 function alignCols() {
     document.querySelector(".databody").scrollTo({
         top: 0,
-        left: (colpos * window.innerWidth/(100/26)),
+        left: (colpos * window.innerWidth/4),
         behavior: "smooth"
     });
 }
 
 
 
-grabCourses();
+// grabCourses();
+startSettings();
