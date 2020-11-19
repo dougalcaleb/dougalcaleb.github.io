@@ -931,12 +931,15 @@ function alignCols() {
     });
 }
 
-if (JSON.parse(localStorage.getItem("settings")).tg_clear) {
-    let preserveSettings = JSON.parse(localStorage.getItem("settings"));
-    localStorage.clear();
-    sessionStorage.clear();
-    localStorage.setItem("settings", JSON.stringify(preserveSettings));
+if (localStorage.getItem("settings")) {
+    if (JSON.parse(localStorage.getItem("settings")).tg_clear) {
+        let preserveSettings = JSON.parse(localStorage.getItem("settings"));
+        localStorage.clear();
+        sessionStorage.clear();
+        localStorage.setItem("settings", JSON.stringify(preserveSettings));
+    }
 }
+
 
 // grabCourses();
 startSettings();
