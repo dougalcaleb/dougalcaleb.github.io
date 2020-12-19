@@ -397,6 +397,12 @@ PORTFOLIO
   background-position: center center;
 }
 
+.port8 {
+  background: url("../images/portfolio/triangles.png");
+  background-size: cover;
+  background-position: center center;
+}
+
 /*
 =================
 SOCIAL
