@@ -43,7 +43,7 @@ var carousel = {
 
 // ELEMENTS
 
-"pages": ["images/portfolio/todoapp.png","images/portfolio/bubbles.png","images/portfolio/2dgame.png","images/portfolio/bidapp.png","images/portfolio/lander.png","images/portfolio/carousel.png"],
+"pages": ["images/portfolio/triangles.png","images/portfolio/todoapp.png","images/portfolio/bubbles.png","images/portfolio/2dgame.png","images/portfolio/bidapp.png","images/portfolio/lander.png","images/portfolio/carousel.png"],
 "navBtns": ["<svg viewBox='0 0 24 24' class='carousel-svg-l'><path fill='currentColor' d='M19,3H5A2,2 0 0,0 3,5V19C3,20.11 3.9,21 5,21H19C20.11,21 21,20.11 21,19V5A2,2 0 0,0 19,3M15.71,16.59L14.29,18L8.29,12L14.29,6L15.71,7.41L11.12,12L15.71,16.59Z'/></svg>", "<svg viewBox='0 0 24 24' class='carousel-svg-r'><path fill='currentColor' d='M19,3H5A2,2 0 0,0 3,5V19C3,20.11 3.9,21 5,21H19C20.11,21 21,20.11 21,19V5A2,2 0 0,0 19,3M9.71,18L8.29,16.59L12.88,12L8.29,7.41L9.71,6L15.71,12L9.71,18Z'/></svg>"],
 "mainId": ".carousel-wrap",     // class of the main slider body. autoGenHtml generates inside of this element
 "bottomSafeZone": 50,           // distance from the bottom to not have the swipe overlay (safe zone for nav)
