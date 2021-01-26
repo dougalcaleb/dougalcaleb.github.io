@@ -76,6 +76,9 @@ body {
    border-bottom-right-radius: 5px;
    height: 20%;
    overflow: auto;
+   &:nth-child(odd) {
+      background: #1e1e1e;
+   }
    .auto-hint {
       @extend %center;
       text-align: center;
@@ -185,7 +188,7 @@ body {
 
 .help-modal {
    height: 40%;
-   width: 30%;
+   width: 50%;
    position: fixed;
    right: 5px;
    bottom: 45px;
