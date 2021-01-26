@@ -76,9 +76,6 @@ body {
    border-bottom-right-radius: 5px;
    height: 20%;
    overflow: auto;
-   &:nth-child(odd) {
-      background: #1e1e1e;
-   }
    .auto-hint {
       @extend %center;
       text-align: center;
@@ -89,7 +86,6 @@ body {
    }
    .auto-row {
       width: 100%;
-      background: #171717;
       display: flex;
       color: #ccc;
       div {
@@ -122,6 +118,13 @@ body {
          width: 20px;
       }
    }
+}
+
+.auto-row:nth-child(odd) {
+   background: #000;
+}
+.auto-row:nth-child(even) {
+   background: #171717;
 }
 
 .settings-modal {
