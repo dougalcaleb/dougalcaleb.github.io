@@ -93,9 +93,6 @@ $name - variable
    height: 20%;
    overflow: auto;
  }
- .autocomplete:nth-child(odd) {
-   background: #1e1e1e;
- }
  .autocomplete .auto-hint {
    text-align: center;
    height: 50px;
@@ -105,7 +102,6 @@ $name - variable
  }
  .autocomplete .auto-row {
    width: 100%;
-   background: #171717;
    display: flex;
    color: #ccc;
  }
@@ -136,6 +132,14 @@ $name - variable
    color: white;
    height: 20px;
    width: 20px;
+ }
+ 
+ .auto-row:nth-child(odd) {
+   background: #000;
+ }
+ 
+ .auto-row:nth-child(even) {
+   background: #171717;
  }
  
  .settings-modal {
