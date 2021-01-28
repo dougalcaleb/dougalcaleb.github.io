@@ -154,3 +154,38 @@ header .header-name p .bold {
 header .header-name p .light {
   font-weight: 300;
 }
+
+@media screen and (max-width: 1050px) {
+  .landing-card .lander-content .lander-left-wrap {
+    display: none;
+  }
+  .landing-card .lander-content .lander-right-wrap {
+    align-content: center;
+    text-align: center;
+  }
+  .landing-card .lander-content .lander-right-wrap .lander-right-content h1 {
+    margin: 0;
+    font-size: 6vh;
+  }
+  .landing-card .lander-content .lander-right-wrap .lander-right-content p {
+    width: 50%;
+    left: 0;
+    right: 0;
+    margin: auto;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    line-height: 2.6vw;
+    font-size: 2vh;
+  }
+
+  header .header-name {
+    display: none;
+  }
+  header .header-nav {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+}
