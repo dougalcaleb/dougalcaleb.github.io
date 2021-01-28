@@ -1,0 +1,156 @@
+/*
+%name - reusable styles (used @extend %name)
+@mixin name - function (used @include name(param))
+$name - variable
+
+*/
+/*
+possible additional accents:
+#1598bf - light blue
+#1ac8ed
+
+*/
+* {
+  user-select: none;
+}
+
+body {
+  margin: 0;
+  overflow: hidden;
+}
+
+a {
+  text-decoration: none;
+  display: block;
+}
+
+.background {
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  z-index: -5;
+}
+
+.landing-card {
+  height: 80%;
+  width: 90%;
+  background: #1c1c1c;
+  bottom: 0;
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin: auto;
+  border-top-left-radius: 70px;
+  border-top-right-radius: 70px;
+  max-width: 2000px;
+}
+.landing-card .lander-content {
+  position: relative;
+  height: calc(100% - 120px);
+  width: 100%;
+  display: flex;
+}
+.landing-card .lander-content .lander-right-wrap {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.landing-card .lander-content .lander-right-wrap .lander-right-content {
+  height: 50%;
+  font-family: "Roboto";
+  font-weight: 500;
+}
+.landing-card .lander-content .lander-right-wrap .lander-right-content h1 {
+  font-size: 3vw;
+  color: #f2f2f2;
+  margin: 15px;
+  margin-left: 0;
+}
+.landing-card .lander-content .lander-right-wrap .lander-right-content p {
+  color: #9b9b9b;
+  width: 60%;
+  font-size: 1vw;
+  line-height: 1.6vw;
+}
+.landing-card .lander-content .lander-right-wrap .lander-right-content button {
+  background: none;
+  border: 3px solid #008ecc;
+  font-family: "Miriam Libre";
+  color: #f2f2f2;
+  padding: 10px;
+  padding-left: 30px;
+  padding-right: 30px;
+  border-radius: 25px;
+  margin-right: 15px;
+  font-size: 0.9em;
+  outline: none;
+  cursor: pointer;
+}
+.landing-card .lander-content .lander-left-wrap {
+  flex: 1;
+  position: relative;
+}
+.landing-card .lander-content .lander-left-wrap img {
+  position: absolute;
+  height: 80%;
+  margin: auto;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+header {
+  height: 100px;
+  width: calc(100% - 160px);
+  position: relative;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  display: flex;
+  margin: auto;
+  left: 0;
+  right: 0;
+}
+header .header-nav {
+  height: inherit;
+  position: relative;
+  flex: 3;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+header .header-nav .nav-btn {
+  font-family: "Miriam Libre";
+  font-weight: 700;
+  color: white;
+  font-size: 25px;
+  margin-left: 25px;
+  cursor: pointer;
+}
+header .header-name {
+  height: inherit;
+  position: relative;
+  display: flex;
+  align-items: center;
+  flex: 1;
+}
+header .header-name img {
+  height: 60px;
+  border-radius: 100%;
+}
+header .header-name p {
+  margin-left: 30px;
+  font-family: "Roboto";
+  color: #f2f2f2;
+  font-size: 30px;
+}
+header .header-name p .bold {
+  font-weight: 700;
+}
+header .header-name p .light {
+  font-weight: 300;
+}
