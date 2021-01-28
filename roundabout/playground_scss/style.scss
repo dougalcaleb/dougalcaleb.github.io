@@ -86,7 +86,6 @@ body {
    }
    .auto-row {
       width: 100%;
-      background: #171717;
       display: flex;
       color: #ccc;
       div {
@@ -119,6 +118,13 @@ body {
          width: 20px;
       }
    }
+}
+
+.auto-row:nth-child(odd) {
+   background: #000;
+}
+.auto-row:nth-child(even) {
+   background: #171717;
 }
 
 .settings-modal {
@@ -184,8 +190,8 @@ body {
 
 
 .help-modal {
-   height: 30%;
-   width: 30%;
+   height: 40%;
+   width: 50%;
    position: fixed;
    right: 5px;
    bottom: 45px;
