@@ -3,3 +3,10 @@
 @mixin name - function (used @include name(param))
 $name - variable
 */
+* {
+  user-select: none;
+}
+
+body {
+  margin: 0;
+}
