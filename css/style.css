@@ -46,13 +46,13 @@ a {
   margin: auto;
   border-top-left-radius: 70px;
   border-top-right-radius: 70px;
-  max-width: 2000px;
 }
 .landing-card .lander-content {
-  position: relative;
-  height: calc(100% - 120px);
+  position: absolute;
+  height: calc(80% - 120px);
   width: 100%;
   display: flex;
+  bottom: 0;
 }
 .landing-card .lander-content .lander-right-wrap {
   flex: 1;
@@ -61,12 +61,12 @@ a {
   justify-content: center;
 }
 .landing-card .lander-content .lander-right-wrap .lander-right-content {
-  height: 50%;
+  height: 100%;
   font-family: "Roboto";
   font-weight: 500;
 }
 .landing-card .lander-content .lander-right-wrap .lander-right-content h1 {
-  font-size: 3vw;
+  font-size: min(4vw, 80px);
   color: #f2f2f2;
   margin: 15px;
   margin-left: 0;
@@ -74,8 +74,9 @@ a {
 .landing-card .lander-content .lander-right-wrap .lander-right-content p {
   color: #9b9b9b;
   width: 60%;
-  font-size: 1vw;
-  line-height: 1.6vw;
+  font-size: 2vmin;
+  line-height: 3vmin;
+  margin-top: 0;
 }
 .landing-card .lander-content .lander-right-wrap .lander-right-content button {
   background: none;
@@ -97,7 +98,7 @@ a {
 }
 .landing-card .lander-content .lander-left-wrap img {
   position: absolute;
-  height: 80%;
+  height: 100%;
   margin: auto;
   left: 0;
   right: 0;
@@ -156,6 +157,10 @@ header .header-name p .light {
 }
 
 @media screen and (max-width: 1050px) {
+  .landing-card {
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+  }
   .landing-card .lander-content .lander-left-wrap {
     display: none;
   }
@@ -178,14 +183,36 @@ header .header-name p .light {
     font-size: 2vh;
   }
 
+  header {
+    flex-direction: column-reverse;
+    align-items: center;
+    height: 200px;
+    width: 100%;
+    margin: 0;
+    align-items: center;
+  }
   header .header-name {
-    display: none;
+    padding-left: 10px;
+    padding-right: 10px;
+    width: 80%;
+    justify-content: center;
+  }
+  header .header-name p {
+    width: auto;
+    display: flex;
+    font-size: 5vmin;
   }
   header .header-nav {
     position: relative;
     display: flex;
-    justify-content: center;
+    justify-content: space-evenly;
     align-items: center;
     flex-wrap: wrap;
+    width: 100%;
+    flex: 1;
+  }
+  header .header-nav .nav-btn {
+    font-size: 3vmin;
+    margin: 0;
   }
 }
