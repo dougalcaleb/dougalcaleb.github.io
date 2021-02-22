@@ -49,8 +49,6 @@ const autoSettings = [
 	["swipeMultiplier", "number", "1"],
 	["swipeResistance", "number", "0.95"],
 	["pagesToShow", "integer", "1"],
-	["--enlargeCenter", "integer", "100"],
-	["--sizeFalloff", "integer", "0"],
 	["pageSpacing", "integer", "0"],
 	["pageSpacingUnits", "string", '"px"'],
 	["spacingMode", "string", '"fill"'],
@@ -228,6 +226,7 @@ function checkForUpdate() {
          document.querySelector(".code-toggle").style.color = "#fff700";
          console.error(e);
       }
+      document.querySelector(".rbt-v").innerHTML = `Roundabout version: ${carousel.VERSION}`;
 		updated = true;
 	}
 }
