@@ -1,93 +1,112 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <title>Roundabout Playground</title>
-    <link rel="stylesheet" type="text/css" href="css/playground_style.css">
+	<head>
+		<title>Roundabout Playground</title>
+		<link rel="stylesheet" type="text/css" href="css/playground_style.css" />
 
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-   <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;600&display=swap" rel="stylesheet">
+		<link rel="preconnect" href="https://fonts.gstatic.com" />
+		<link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;600&display=swap" rel="stylesheet" />
 
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-</head>
-<body>
+      <link href="css/roundabout-style.css" rel="stylesheet" type="text/css" />
 
-   <div class="code-toggle">&lt;/&gt;</div>
-   
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+	</head>
+	<body>
+		<div class="code-toggle">&lt;/&gt;</div>
 
-<div class="code-editor">
-   <textarea class="code" cols="30" rows="10" spellcheck="false">new Roundabout({
+		<div class="code-editor">
+			<textarea class="code" cols="30" rows="10" spellcheck="false">
+new Roundabout({
     
-});</textarea>
-   <div class="autocomplete-header">
-      <div class="name">Setting name</div>
-      <div class="type">Data type</div>
-      <div class="default">Default value</div>
-   </div>
-   <div class="autocomplete">
-      <p class="auto-hint">Start typing above. Any matching settings will appear here.</p>
-   </div>
-</div>
+});</textarea
+			>
+			<div class="autocomplete-header">
+				<div class="name">Setting name</div>
+				<div class="type">Data type</div>
+				<div class="default">Default value</div>
+			</div>
+			<div class="autocomplete">
+				<p class="auto-hint">Start typing above. Any matching settings will appear here.</p>
+			</div>
+		</div>
 
-<div class="tools">
-   <div class="settings">
-      <svg viewBox="0 0 24 24">
-         <path fill="currentColor" d="M12,15.5A3.5,3.5 0 0,1 8.5,12A3.5,3.5 0 0,1 12,8.5A3.5,3.5 0 0,1 15.5,12A3.5,3.5 0 0,1 12,15.5M19.43,12.97C19.47,12.65 19.5,12.33 19.5,12C19.5,11.67 19.47,11.34 19.43,11L21.54,9.37C21.73,9.22 21.78,8.95 21.66,8.73L19.66,5.27C19.54,5.05 19.27,4.96 19.05,5.05L16.56,6.05C16.04,5.66 15.5,5.32 14.87,5.07L14.5,2.42C14.46,2.18 14.25,2 14,2H10C9.75,2 9.54,2.18 9.5,2.42L9.13,5.07C8.5,5.32 7.96,5.66 7.44,6.05L4.95,5.05C4.73,4.96 4.46,5.05 4.34,5.27L2.34,8.73C2.21,8.95 2.27,9.22 2.46,9.37L4.57,11C4.53,11.34 4.5,11.67 4.5,12C4.5,12.33 4.53,12.65 4.57,12.97L2.46,14.63C2.27,14.78 2.21,15.05 2.34,15.27L4.34,18.73C4.46,18.95 4.73,19.03 4.95,18.95L7.44,17.94C7.96,18.34 8.5,18.68 9.13,18.93L9.5,21.58C9.54,21.82 9.75,22 10,22H14C14.25,22 14.46,21.82 14.5,21.58L14.87,18.93C15.5,18.67 16.04,18.34 16.56,17.94L19.05,18.95C19.27,19.03 19.54,18.95 19.66,18.73L21.66,15.27C21.78,15.05 21.73,14.78 21.54,14.63L19.43,12.97Z" />
-     </svg>
-   </div>
-   <div class="info">
-      <svg viewBox="0 0 24 24">
-         <path fill="currentColor" d="M15.07,11.25L14.17,12.17C13.45,12.89 13,13.5 13,15H11V14.5C11,13.39 11.45,12.39 12.17,11.67L13.41,10.41C13.78,10.05 14,9.55 14,9C14,7.89 13.1,7 12,7A2,2 0 0,0 10,9H8A4,4 0 0,1 12,5A4,4 0 0,1 16,9C16,9.88 15.64,10.67 15.07,11.25M13,19H11V17H13M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12C22,6.47 17.5,2 12,2Z" />
-     </svg>
-   </div>
-</div>
+		<div class="tools">
+			<div class="settings">
+				<svg viewBox="0 0 24 24">
+					<path
+						fill="currentColor"
+						d="M12,15.5A3.5,3.5 0 0,1 8.5,12A3.5,3.5 0 0,1 12,8.5A3.5,3.5 0 0,1 15.5,12A3.5,3.5 0 0,1 12,15.5M19.43,12.97C19.47,12.65 19.5,12.33 19.5,12C19.5,11.67 19.47,11.34 19.43,11L21.54,9.37C21.73,9.22 21.78,8.95 21.66,8.73L19.66,5.27C19.54,5.05 19.27,4.96 19.05,5.05L16.56,6.05C16.04,5.66 15.5,5.32 14.87,5.07L14.5,2.42C14.46,2.18 14.25,2 14,2H10C9.75,2 9.54,2.18 9.5,2.42L9.13,5.07C8.5,5.32 7.96,5.66 7.44,6.05L4.95,5.05C4.73,4.96 4.46,5.05 4.34,5.27L2.34,8.73C2.21,8.95 2.27,9.22 2.46,9.37L4.57,11C4.53,11.34 4.5,11.67 4.5,12C4.5,12.33 4.53,12.65 4.57,12.97L2.46,14.63C2.27,14.78 2.21,15.05 2.34,15.27L4.34,18.73C4.46,18.95 4.73,19.03 4.95,18.95L7.44,17.94C7.96,18.34 8.5,18.68 9.13,18.93L9.5,21.58C9.54,21.82 9.75,22 10,22H14C14.25,22 14.46,21.82 14.5,21.58L14.87,18.93C15.5,18.67 16.04,18.34 16.56,17.94L19.05,18.95C19.27,19.03 19.54,18.95 19.66,18.73L21.66,15.27C21.78,15.05 21.73,14.78 21.54,14.63L19.43,12.97Z"
+					/>
+				</svg>
+			</div>
+			<div class="info">
+				<svg viewBox="0 0 24 24">
+					<path
+						fill="currentColor"
+						d="M15.07,11.25L14.17,12.17C13.45,12.89 13,13.5 13,15H11V14.5C11,13.39 11.45,12.39 12.17,11.67L13.41,10.41C13.78,10.05 14,9.55 14,9C14,7.89 13.1,7 12,7A2,2 0 0,0 10,9H8A4,4 0 0,1 12,5A4,4 0 0,1 16,9C16,9.88 15.64,10.67 15.07,11.25M13,19H11V17H13M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12C22,6.47 17.5,2 12,2Z"
+					/>
+				</svg>
+			</div>
+		</div>
 
-<div class="help-modal">
-   <ul class="parent-ul">
-      <li>This tool helps with tinkering around with <a href="https://github.com/dougalcaleb/roundabout" target="_blank">Roundabout</a> carousels.</li><br/>
-      <li>Watch the color of the icon on the code editor toggler:
-         <ul>
-            <li>Green: your settings have been read correctly and sent to the Roundabout constructor successfully.</li>
-            <li>Yellow: Your settings were parsed, but they were invalid for Roundabout. Check the <a href="https://github.com/dougalcaleb/roundabout#jump-to" target="_blank">documentation</a> to make sure you're using the settings correctly.</li>
-            <li>Red: there was an error while parsing that needs to be fixed. Make sure your code is in strict JSON format.</li>
-         </ul>
-      </li><br/>
-      <li>Profiles can be saved and loaded in settings for easy switching between favorites.</li><br/>
-      <li>The Developer Console (Ctrl/Cmd + Shift + I) has logs of Roundabout's status.</li><br/>
-      <li>Background images are provided at the path: "./images/numbers/&lt;0 through 15&gt;.png"
-         <ul>
-            <li>i.e. "./images/numbers/3.png"</li>
-         </ul>
-      </li>
-   </ul>
-</div>
-<div class="settings-modal">
-   <div class="setting">
-      Apply changes to Roundabout:
-      <div class="apply-close setting-button button-active">On editor close</div>
-      <div class="apply-delay setting-button">After <input type="number" value="1000" max="4" min="0" class="delay-input"> ms</div>
-   </div>
-   <div class="setting">
-      Save and load settings profiles:
-      <div class="setting-flex">
-         <div class="setting-left">
-            <input type="text" placeholder="Profile name" class="name-input">
-            <div class="save-button setting-button">Save</div>
-         </div>
-         <div class="setting-right">
-            <select class="profile-list">
-            </select>
-            <div class="load-button setting-button">Load</div>
-            <div class="delete-button setting-button">Delete</div>
-         </div>
-      </div>
-      
-   </div>
-</div>
+		<div class="help-modal">
+			<ul class="parent-ul">
+				<li>
+					This tool helps with tinkering around with
+					<a href="https://github.com/dougalcaleb/roundabout" target="_blank">Roundabout</a> carousels.
+				</li>
+				<br />
+				<li>
+					Watch the color of the icon on the code editor toggler:
+					<ul>
+						<li>Green: your settings have been read correctly and sent to the Roundabout constructor successfully.</li>
+						<li>
+							Yellow: Your settings were parsed, but they were invalid for Roundabout. Check the
+							<a href="https://github.com/dougalcaleb/roundabout#jump-to" target="_blank">documentation</a> to make sure you're using the
+							settings correctly.
+						</li>
+						<li>Red: there was an error while parsing that needs to be fixed. Make sure your code is in strict JSON format.</li>
+					</ul>
+				</li>
+				<br />
+				<li>Profiles can be saved and loaded in settings for easy switching between favorites.</li>
+				<br />
+				<li>The Developer Console (Ctrl/Cmd + Shift + I) has logs of Roundabout's status.</li>
+				<br />
+				<li>
+					Background images are provided at the path: "./images/numbers/&lt;0 through 15&gt;.png"
+					<ul>
+						<li>i.e. "./images/numbers/3.png"</li>
+					</ul>
+				</li>
+            <br/>
+				<li class="rbt-v">Roundabout version: ^1.2.0</li>
+			</ul>
+		</div>
+		<div class="settings-modal">
+			<div class="setting">
+				Apply changes to Roundabout:
+				<div class="apply-close setting-button button-active">On editor close</div>
+				<div class="apply-delay setting-button">After <input type="number" value="1000" max="4" min="0" class="delay-input" /> ms</div>
+			</div>
+			<div class="setting">
+				Save and load settings profiles:
+				<div class="setting-flex">
+					<div class="setting-left">
+						<input type="text" placeholder="Profile name" class="name-input" />
+						<div class="save-button setting-button">Save</div>
+					</div>
+					<div class="setting-right">
+						<select class="profile-list"></select>
+						<div class="load-button setting-button">Load</div>
+						<div class="delete-button setting-button">Delete</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
 
-</body>
-
-<script src="javascript/roundabout.min.js"></script>
-<script src="javascript/playground.js"></script>
-
+	<script src="javascript/roundabout.min.js"></script>
+	<script src="javascript/playground.js"></script>
 </html>
