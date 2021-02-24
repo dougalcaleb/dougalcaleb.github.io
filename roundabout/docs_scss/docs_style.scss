@@ -5,4 +5,150 @@
 }
 body {
 	margin: 0;
+	background: #333;
+}
+
+header {
+	height: 80px;
+	width: 100%;
+	box-shadow: 0px 8px 6px #2a2a2a;
+	background: #444;
+	position: fixed;
+	top: 0;
+	display: flex;
+	align-items: center;
+	z-index: 999;
+   .links {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      height: inherit;
+      a div {
+         height: inherit;
+         padding-left: 10px;
+         padding-right: 10px;
+         color: white;
+         font-weight: bold;
+         display: flex;
+         align-items: center;
+         text-align: center;
+      }
+   }
+	.version {
+		right: 50px;
+		position: absolute;
+		height: 60px;
+		// width: 200px;
+		border: none;
+		outline: none;
+		background: inherit;
+		color: #eee;
+		font-size: 25px;
+		cursor: pointer;
+		transition: 0.2s;
+		padding-left: 20px;
+		padding-right: 20px;
+		option {
+			border: none;
+			outline: none;
+		}
+		&:hover {
+			background: rgb(79, 79, 79);
+		}
+	}
+	.title {
+		margin: none;
+		position: relative;
+		left: 50px;
+		.name {
+			font-family: "Miriam Libre", sans-serif;
+			font-weight: 700;
+			color: white;
+			font-size: 30px;
+		}
+		.desc {
+			font-family: "Roboto";
+			font-weight: 300;
+			color: #ddd;
+			font-size: 25px;
+			margin-left: 15px;
+		}
+	}
+}
+
+nav {
+	position: absolute;
+	width: 15%;
+	background: rgb(71, 71, 71);
+   padding: 5px;
+   box-sizing: border-box;
+	height: calc(100% - 80px);
+	bottom: 0;
+	overflow: auto;
+   z-index: 1000;
+   border-right: 5px solid rgb(71, 71, 71);
+   box-shadow: 8px 0px 6px #2a2a2a;
+   clip-path: polygon(0 0, 150% 0, 150% 100%, 0 100%);
+	&::-webkit-scrollbar {
+		width: 5px;
+      margin-right: 5px;
+	}
+
+	&::-webkit-scrollbar-track {
+		background: transparent;
+	}
+
+	&::-webkit-scrollbar-thumb {
+		background: #222;
+		width: 5px;
+		border-radius: 10px;
+	}
+
+	&::-webkit-scrollbar-button {
+		display: none;
+	}
+}
+
+.spec {
+	position: absolute;
+	width: 85%;
+	// background: orange;
+	right: 0;
+	height: calc(100% - 80px);
+	box-sizing: border-box;
+	bottom: 0;
+   .info {
+      width: 90%;
+      margin: auto;
+      position: relative;
+   }
+	.basic {
+		width: 90%;
+		// border-bottom: 3px solid purple;
+		margin: auto;
+		position: relative;
+      background: rgb(0, 0, 78);
+      padding: 10px;
+      box-sizing: border-box;
+      border-radius: 10px;
+		.title {
+			font-family: monospace, "Miriam Libre", sans-serif;
+			font-weight: 700;
+			font-size: 60px;
+			color: white;
+			margin-top: 20px;
+			margin-bottom: 20px;
+		}
+		.basic-info {
+			width: 50%;
+			position: relative;
+			// background: orange;
+			display: flex;
+			align-items: center;
+			padding-bottom: 20px;
+			div {
+				flex: 1;
+			}
+		}
+	}
 }
