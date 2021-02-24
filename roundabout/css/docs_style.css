@@ -9,14 +9,98 @@ $name - variable
 
 body {
   margin: 0;
-  background: #333;
+  background: #444;
+  padding-bottom: 10px;
+}
+
+a {
+  text-decoration: none;
+}
+
+.example {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+footer {
+  height: 50px;
+  width: 100%;
+  position: relative;
+}
+
+.spec {
+  position: absolute;
+  width: 80vw;
+  right: 0;
+  height: calc(100% - 80px);
+  box-sizing: border-box;
+  bottom: 0;
+  background: #444;
+}
+.spec .info {
+  width: 90%;
+  margin: auto;
+  position: relative;
+  top: 50px;
+  color: #ddd;
+  font-family: "Roboto", "Miriam Libre", sans-serif;
+  line-height: 25px;
+}
+.spec .info img {
+  width: 100%;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+}
+.spec .info .desc {
+  background: #555;
+  border-radius: 10px;
+  border-bottom: 3px solid #006b8c;
+  padding: 10px;
+  text-align: justify;
+  color: #111;
+  font-family: "Miriam Libre", "Roboto", sans-serif;
+  font-weight: 700;
+  font-size: 1vw;
+  margin-bottom: 10px;
+}
+.spec .basic {
+  width: 90%;
+  border-bottom: 3px solid #006b8c;
+  margin: auto;
+  position: relative;
+  background: #555;
+  padding: 5px;
+  padding-left: 25px;
+  box-sizing: border-box;
+  border-radius: 10px;
+  top: 25px;
+}
+.spec .basic .title {
+  font-family: monospace, "Miriam Libre", sans-serif;
+  font-weight: 700;
+  font-size: 60px;
+  color: #00b7ff;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+.spec .basic .basic-info {
+  width: 50%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding-bottom: 20px;
+  font-family: "Roboto Mono", monospace;
+  color: white;
+}
+.spec .basic .basic-info div {
+  flex: 1;
 }
 
 header {
   height: 80px;
   width: 100%;
-  box-shadow: 0px 8px 6px #2a2a2a;
-  background: #444;
+  background: #2b2b2b;
   position: fixed;
   top: 0;
   display: flex;
@@ -28,37 +112,23 @@ header .links {
   align-items: center;
   justify-content: flex-end;
   height: inherit;
+  position: absolute;
+  right: 50px;
 }
 header .links a div {
   height: inherit;
   padding-left: 10px;
   padding-right: 10px;
   color: white;
-  font-weight: bold;
   display: flex;
   align-items: center;
   text-align: center;
+  font-family: "Roboto Mono";
+  font-weight: 500;
 }
-header .version {
-  right: 50px;
-  position: absolute;
-  height: 60px;
-  border: none;
-  outline: none;
-  background: inherit;
-  color: #eee;
-  font-size: 25px;
-  cursor: pointer;
-  transition: 0.2s;
-  padding-left: 20px;
-  padding-right: 20px;
-}
-header .version option {
-  border: none;
-  outline: none;
-}
-header .version:hover {
-  background: #4f4f4f;
+header .links a div svg {
+  margin-right: 8px;
+  margin-left: 20px;
 }
 header .title {
   margin: none;
@@ -80,18 +150,56 @@ header .title .desc {
 }
 
 nav {
-  position: absolute;
-  width: 15%;
-  background: #474747;
+  position: fixed;
+  width: 20vw;
+  background: #2b2b2b;
   padding: 5px;
   box-sizing: border-box;
   height: calc(100% - 80px);
   bottom: 0;
   overflow: auto;
   z-index: 1000;
-  border-right: 5px solid #474747;
-  box-shadow: 8px 0px 6px #2a2a2a;
+  color: #ccc;
+  font-family: "Roboto Mono";
+  font-size: 1vw;
+  border-right: 5px solid #2b2b2b;
   clip-path: polygon(0 0, 150% 0, 150% 100%, 0 100%);
+}
+nav .setup {
+  width: 100%;
+  position: relative;
+  background: #424242;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  padding: 5px;
+  box-sizing: border-box;
+}
+nav .setup .sort-order {
+  background: #333;
+  position: relative;
+  text-align: center;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  cursor: pointer;
+  transition: 0.2s;
+  font-family: "Roboto";
+  border-bottom: 3px solid #006b8c;
+  border-radius: 5px;
+}
+nav .setup .sort-order:hover {
+  background: #494949;
+}
+nav .settings .category-title {
+  color: #eee;
+  margin-bottom: 10px;
+  font-size: 1.5vw;
+}
+nav .settings a {
+  color: #ccc;
+}
+nav .settings a div {
+  margin-bottom: 10px;
+  padding-left: 5px;
 }
 nav::-webkit-scrollbar {
   width: 5px;
@@ -101,51 +209,10 @@ nav::-webkit-scrollbar-track {
   background: transparent;
 }
 nav::-webkit-scrollbar-thumb {
-  background: #222;
+  background: #666;
   width: 5px;
   border-radius: 10px;
 }
 nav::-webkit-scrollbar-button {
   display: none;
-}
-
-.spec {
-  position: absolute;
-  width: 85%;
-  right: 0;
-  height: calc(100% - 80px);
-  box-sizing: border-box;
-  bottom: 0;
-}
-.spec .info {
-  width: 90%;
-  margin: auto;
-  position: relative;
-}
-.spec .basic {
-  width: 90%;
-  margin: auto;
-  position: relative;
-  background: #00004e;
-  padding: 10px;
-  box-sizing: border-box;
-  border-radius: 10px;
-}
-.spec .basic .title {
-  font-family: monospace, "Miriam Libre", sans-serif;
-  font-weight: 700;
-  font-size: 60px;
-  color: white;
-  margin-top: 20px;
-  margin-bottom: 20px;
-}
-.spec .basic .basic-info {
-  width: 50%;
-  position: relative;
-  display: flex;
-  align-items: center;
-  padding-bottom: 20px;
-}
-.spec .basic .basic-info div {
-  flex: 1;
 }

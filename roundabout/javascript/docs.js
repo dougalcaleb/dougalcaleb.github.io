@@ -39,13 +39,19 @@ let settings = [
    {name: "uiEnabled", category: "General"},
 ];
 
+let sortOrder = "c";
 
-
-function generate() {
-   settings.forEach((setting) => {
-      
-   });
-}
+document.querySelector(".sort-order").addEventListener("click", () => {
+   if (sortOrder == "c") {
+      document.querySelector(".sort-order").innerHTML = "Sort: alphabetical";
+      sortOrder = "a";
+   } else {
+      document.querySelector(".sort-order").innerHTML = "Sort: by category";
+      sortOrder = "c";
+   }
+   document.querySelector(".settings").innerHTML = "";
+   sort(sortOrder);
+});
 
 function sort(method) {
    let table = document.querySelector(".settings");
@@ -65,9 +71,12 @@ function sort(method) {
          let cat = document.createElement("div");
          cat.innerHTML = `${category[0].category.toUpperCase()}`;
          table.appendChild(cat);
+         cat.classList.add("category-title")
          category.forEach(setting => {
-            let newtr = document.createElement("div");
-            newtr.innerHTML = `${setting.name}`;
+            let newtr = document.createElement("a");
+            newtr.setAttribute("href", `pages/${setting.name}.html`);
+            newtr.setAttribute("target", "_blank");
+            newtr.innerHTML = `<div>${setting.name}</div>`;
             table.appendChild(newtr);
          });
       });
@@ -77,11 +86,13 @@ function sort(method) {
          sorted.push(setting.name);
       });
       sorted.forEach(setting => {
-         let newtr = document.createElement("div");
-         newtr.innerHTML = setting;
+         let newtr = document.createElement("a");
+         newtr.setAttribute("href", `pages/${setting}.html`);
+         newtr.setAttribute("target", "_blank");
+         newtr.innerHTML = `<div>${setting}</div>`;
          table.appendChild(newtr);
       });
    }      
 }
 
-sort("a");
+sort(sortOrder);
