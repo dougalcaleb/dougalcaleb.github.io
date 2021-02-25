@@ -77,6 +77,10 @@ window.addEventListener("message", (event) => {
       sendMessage();
    });
    i.src = '/roundabout/helper.html';
+
+   document.querySelectorAll("div.code").forEach(element => {
+      element.setAttribute("contenteditable", "true");
+   });
 })();
 
 document.querySelector(".sort-order").addEventListener("click", () => {
