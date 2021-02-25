@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>autoscroll | Roundabout Docs</title>
+		<title>autoscrollDirection | Roundabout Docs</title>
 		<link rel="stylesheet" type="text/css" href="../css/docs_style.css" />
 		<link rel="stylesheet" type="text/css" href="../css/roundabout-style.css" />
 
@@ -48,15 +48,14 @@
 
       <section class="spec">
          <div class="basic">
-            <h1 class="title">autoscroll</h1>
+            <h1 class="title">autoscrollDirection</h1>
             <div class="basic-info">
-               <div class="type"><span class="deemp">Type:</span> <span class="normal">boolean</span></div>
-               <div class="default"><span class="deemp">Default:</span> <span class="normal">false</span></div>
+               <div class="type"><span class="deemp">Type:</span> <span class="normal">string</span></div>
+               <div class="default"><span class="deemp">Default:</span> <span class="normal">"right"</span></div>
             </div>
          </div>
          <div class="info">
-            <div class="desc">Determines if the autoscroll will be active.</div>
-            Turning on autoscroll will automatically scroll your carousel in one direction over an interval. A scroll will be equivalent to a user clicking the appropriate button, except that throttling does not apply. This setting has several related settings:
+            <div class="desc">Determines which direction the autoscroll will go.</div>
             <!-- 
                <li>
                   <ul>
@@ -64,38 +63,18 @@
                   </ul>
                </li>
              -->
+            Possible values:
             <ul>
-               <li>autoscrollDirection
-                  <ul>
-                     <li>Sets the direction of the scroll</li>
-                  </ul>
-               </li>
-               <li>autoscrollPauseOnHover
-                  <ul>
-                     <li>Pauses autoscroll when the user hovers over the carousel</li>
-                  </ul>
-               </li>
-               <li>autoscrollSpeed
-                  <ul>
-                     <li>Sets the interval of the scroll</li>
-                  </ul>
-               </li>
-               <li>autoscrollStartAfter
-                  <ul>
-                     <li>Sets the time to wait after the page loads until autoscroll starts</li>
-                  </ul>
-               </li>
-               <li>autoscrollTimeout
-                  <ul>
-                     <li>Sets the time it takes to resume autoscroll after user interaction</li>
-                  </ul>
-               </li>
-               <li>scrollBy
-                  <ul>
-                     <li>Determines the number of pages to scroll on one click</li>
-                  </ul>
-               </li>
+               <li>"right"</li>
+               <li>"left"</li>
             </ul>
+
+            The carousel on this page has an extra setting edited for demonstration:
+             <ul>
+               <li><span class="code">autoscroll: true</span></li>
+            </ul>
+
+            The below carousel has been given an <span class="code">autoscrollDirection</span> value of <span class="code">left</span>.
             <div class="roundabout-example"></div>
             <footer></footer>
          </div>
@@ -106,5 +85,5 @@
 	<script src="../javascript/docs.js"></script>
 	<!-- <script src="../javascript/roundabout.min.js"></script> -->
 	<script src="../javascript/roundabout-1.3.0-u.js"></script>
-	<script src="javascript/autoscroll-settings.js"></script>
+	<script src="javascript/autoscrollDirection-settings.js"></script>
 </html>
