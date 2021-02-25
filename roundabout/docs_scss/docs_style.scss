@@ -11,7 +11,7 @@ body {
 a {
 	text-decoration: none;
 }
-.example {
+.roundabout-example {
    margin-top: 10px;
    margin-bottom: 10px;
 }
@@ -46,7 +46,11 @@ div.code {
    font-family: monospace;
    padding: 5px;
    padding-left: 15px;
-   line-height: 18px;
+   outline: none;
+   border: none;
+   line-height: 17px;
+   margin-top: 10px;
+   margin-bottom: 10px;
 }
 
 // light blue: rgb(0,183,255)
