@@ -76,13 +76,13 @@
                </ul>
              -->
 
-             This array holds a list of objects that will override default settings and settings changed in higher breakpoints to help accomodate different screen sizes.
+             This array holds a list of objects that will override both default settings and settings changed in higher breakpoints to help accomodate different screen sizes.
              <br/><br/>
              Each object, along with its settings to override, must contain a <span class="code">width</span> property that defines at which width, measured in pixels, (window width for desktop, screen width for mobile) to apply the contained settings.
              <br/><br/>
              Note that these settings only apply when the page loads, unless <span class="code">listenForResize</span> is enabled.
              <br/><br/>
-             For example, the snippet below contains two additional breakpoints - one at 1200 pixels, and one at 800 pixels. When the screen is wider than 1200 pixels, the default settings that were passed in with your Roundabout constructor will be applied.
+             For example, the snippet below contains two additional breakpoints - one at 1200 pixels, and one at 800 pixels. When the screen is smaller than 1200 pixels but larger than 800 pixels, it will only show 2 pages. When smaller than 800 pixels, it will reduce to 1 page and the navigation will be disabled. When the screen is wider than 1200 pixels, the default settings that were passed in with the constructor will be applied.
              <br/><br/>
              <div class="code">
                breakpoints: [<br/>
@@ -100,7 +100,7 @@
              <br/>
              
 
-             The carousel on this page has an few extra setting edited for demonstration:
+             The carousel on this page has a few extra settings edited for demonstration:
              <ul>
                <li><span class="code">pagesToShow: 3</span></li>
                <li><span class="code">listenForResize: true</span></li>
