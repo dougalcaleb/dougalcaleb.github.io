@@ -89,11 +89,13 @@ div.code {
   border-radius: 10px;
   border-bottom: 3px solid #006b8c;
   padding: 10px;
+  padding-left: 25px;
+  padding-right: 25px;
   text-align: justify;
   color: #111;
   font-family: "Miriam Libre", "Roboto", sans-serif;
   font-weight: 700;
-  font-size: 1vw;
+  font-size: min(1.8vh, 2vw);
   margin-bottom: 10px;
 }
 .spec .basic {
@@ -141,6 +143,7 @@ header {
   display: flex;
   align-items: center;
   z-index: 999;
+  box-shadow: 0px 5px 8px #333;
 }
 header .links {
   display: flex;
@@ -199,6 +202,7 @@ nav {
   font-size: 1vw;
   border-right: 5px solid #2b2b2b;
   clip-path: polygon(0 0, 150% 0, 150% 100%, 0 100%);
+  box-shadow: 5px 0px 8px #333;
 }
 nav .setup {
   width: 100%;
@@ -228,9 +232,18 @@ nav .setup div:hover {
   background: #494949;
 }
 nav .settings .category-title {
-  color: #eee;
+  color: #00b7ff;
   margin-bottom: 10px;
   font-size: 2vh;
+  background: #3e3e3e;
+  text-align: center;
+}
+nav .settings .section-title {
+  font-size: 1.5vh;
+  color: #eee;
+  margin-bottom: 10px;
+  background: #3e3e3e;
+  text-align: center;
 }
 nav .settings a {
   color: #ccc;
