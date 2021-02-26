@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>breakpoints | Roundabout Docs</title>
+		<title>pages | Roundabout Docs</title>
 		<link rel="stylesheet" type="text/css" href="../css/docs_style.css" />
 		<link rel="stylesheet" type="text/css" href="../css/roundabout-style.css" />
 
@@ -58,14 +58,14 @@
 
 		<section class="spec">
 			<div class="basic">
-				<h1 class="title">breakpoints</h1>
+				<h1 class="title">pages</h1>
 				<div class="basic-info">
 					<div class="type"><span class="deemp">Type:</span> <span class="normal">array</span></div>
-					<div class="default"><span class="deemp">Default:</span> <span class="normal">[{width: 500, swipeThreshold: 50}]</span></div>
+					<div class="default"><span class="deemp">Default:</span> <span class="normal">[]</span></div>
 				</div>
 			</div>
 			<div class="info">
-				<div class="desc">Describes the settings to override when the screen reaches certain widths.</div>
+				<div class="desc">Sets the list of pages to generate.</div>
 				<!-- 
                <ul>
                   <li>
@@ -75,38 +75,60 @@
                   </li>
                </ul>
              -->
-
-             This array holds a list of objects that will override both default settings and settings changed in higher breakpoints to help accomodate different screen sizes.
+             This setting is required for all carousels.
              <br/><br/>
-             Each object, along with its settings to override, must contain a <span class="code">width</span> property that defines at which width, measured in pixels, (window width for desktop, screen width for mobile) to apply the contained settings.
-             <br/><br/>
-             Note that these settings only apply when the page loads, unless <span class="code">listenForResize</span> is enabled.
-             <br/><br/>
-             For example, the snippet below contains two additional breakpoints - one at 1200 pixels, and one at 800 pixels. When the screen is smaller than 1200 pixels but larger than 800 pixels, it will only show 2 pages. When smaller than 800 pixels, it will reduce to 1 page and the navigation will be disabled. When the screen is wider than 1200 pixels, the default settings that were passed in with the constructor will be applied.
-             <br/><br/>
-             <div class="code">
-               breakpoints: [<br/>
+             This array contains a list of objects that denote individual pages. Each object can define any of the following properties:
+             <ul>
+               <li><span class="code">backgroundImage</span>
+                  <ul>
+                     <li>Type: string</li>
+                     <li>Sets the CSS background-image property. Further styling can be done in the provided stylesheet. This must be set in order to enable lazy loading of any type.</li>
+                  </ul>
+               </li>
+               <li><span class="code">html</span>
+                  <ul>
+                     <li>Type: string</li>
+                     <li>Defines the HTML elements to insert into the page.</li>
+                  </ul>
+               </li>
+               <li><span class="code">css</span>
+                  <ul>
+                     <li>Type: string</li>
+                     <li>Defines the CSS to apply to the page. This setting is available purely for organizational purposes - styles can be applied to elements in any page by an external stylesheet. Additionally, the styles defined here do not apply exclusively to the elements in the corresponding page. Make use of selectors appropriately.</li>
+                  </ul>
+               </li>
+            </ul>
+            The carousel below contains these pages:
+            <div class="code">
+               pages: [<br/>
                   &nbsp;&nbsp;{<br/>
-                  &nbsp;&nbsp;&nbsp;&nbsp;width: 1200,<br/>
-                  &nbsp;&nbsp;&nbsp;&nbsp;pagesToShow: 2<br/>
+                  &nbsp;&nbsp;&nbsp;&nbsp;backgroundImage: "../images/numbers/0.png",<br/>
+                  &nbsp;&nbsp;&nbsp;&nbsp;html: "&lt;button class='exampleButton'&gt;Hello World!&lt;/button&gt;",<br/>
+                  &nbsp;&nbsp;&nbsp;&nbsp;css: ".exampleButton { position: relative; left: 25px; top: 25px; z-index: 3 }"<br/>
                   &nbsp;&nbsp;},<br/>
                   &nbsp;&nbsp;{<br/>
-                  &nbsp;&nbsp;&nbsp;&nbsp;width: 800,<br/>
-                  &nbsp;&nbsp;&nbsp;&nbsp;pagesToShow: 1,<br/>
-                  &nbsp;&nbsp;&nbsp;&nbsp;navigation: false<br/>
+                  &nbsp;&nbsp;&nbsp;&nbsp;backgroundImage: "../images/numbers/1.png"<br/>
+                  &nbsp;&nbsp;},<br/>
+                  &nbsp;&nbsp;{<br/>
+                  &nbsp;&nbsp;&nbsp;&nbsp;backgroundImage: "../images/numbers/2.png"<br/>
+                  &nbsp;&nbsp;},<br/>
+                  &nbsp;&nbsp;{<br/>
+                  &nbsp;&nbsp;&nbsp;&nbsp;backgroundImage: "../images/numbers/3.png"<br/>
+                  &nbsp;&nbsp;},<br/>
+                  &nbsp;&nbsp;{<br/>
+                  &nbsp;&nbsp;&nbsp;&nbsp;backgroundImage: "../images/numbers/4.png"<br/>
+                  &nbsp;&nbsp;},<br/>
+                  &nbsp;&nbsp;{<br/>
+                  &nbsp;&nbsp;&nbsp;&nbsp;backgroundImage: "../images/numbers/5.png"<br/>
                   &nbsp;&nbsp;}<br/>
-               ]<br/>
-             </div>
-             <br/>
-             
-
-             The carousel on this page has a few extra settings edited for demonstration:
+               ]
+            </div>
+            Note that when an element needs to be interactible, it must have a <span class="code">z-index</span> CSS property of 3 or greater. By default, they are placed underneath the swipe detector element, both to prevent swiping from being interrupted and to prevent annoying text selection. Setting them at z:3 or higher places them on top instead.
+             <!-- The carousel on this page has a few extra settings edited for demonstration:
              <ul>
-               <li><span class="code">pagesToShow: 3</span></li>
-               <li><span class="code">listenForResize: true</span></li>
-            </ul>
+               <li><span class="code">setting: value</span></li>
+            </ul> -->
             <!-- The below carousel has been given an <span class="code">setting</span> value of <span class="code">value</span>. -->
-            The code snippet above is also used in the carousel below.
             <div class="roundabout-example"></div>
 				<footer></footer>
 			</div>
@@ -117,5 +139,5 @@
 	<script src="../javascript/docs.js"></script>
 	<!-- <script src="../javascript/roundabout.min.js"></script> -->
 	<script src="../javascript/roundabout-1.3.0-u.js"></script>
-	<script src="javascript/breakpoints-settings.js"></script>
+	<script src="javascript/pages-settings.js"></script>
 </html>

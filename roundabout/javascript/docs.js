@@ -122,6 +122,33 @@ document.querySelector(".tab-behavior").addEventListener("click", () => {
 function sort(method) {
    // console.log(`Sorting with methos ${method}`);
    let table = document.querySelector(".settings");
+
+   let gs = document.createElement("div");
+   gs.innerHTML = `GETTING STARTED`;
+   table.appendChild(gs);
+   gs.classList.add("category-title");
+
+   let newGs = document.createElement("a");
+   newGs.setAttribute("href", `/roundabout/setup.html`);
+   if (!sameTab) {
+      newGs.setAttribute("target", "_blank");
+   }
+   newGs.innerHTML = `<div>Setup</div>`;
+   table.appendChild(newGs);
+
+   newGs = document.createElement("a");
+   newGs.setAttribute("href", `/roundabout/pages/styling.html`);
+   if (!sameTab) {
+      newGs.setAttribute("target", "_blank");
+   }
+   newGs.innerHTML = `<div>Custom Styling</div>`;
+   table.appendChild(newGs);
+   
+   gs = document.createElement("div");
+   gs.innerHTML = `SETTINGS`;
+   table.appendChild(gs);
+   gs.classList.add("category-title");
+
    if (method == "c") {
       let sorted = [[], []];
       settings.forEach(setting => {
@@ -138,7 +165,7 @@ function sort(method) {
          let cat = document.createElement("div");
          cat.innerHTML = `${category[0].category.toUpperCase()}`;
          table.appendChild(cat);
-         cat.classList.add("category-title");
+         cat.classList.add("section-title");
          category.forEach(setting => {
             let newtr = document.createElement("a");
             newtr.setAttribute("href", `/roundabout/pages/${setting.name}.html`);
