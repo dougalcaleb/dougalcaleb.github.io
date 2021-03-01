@@ -1,8 +1,6 @@
 let htmlcode = document.querySelectorAll(".html-codeblock");
 let jscode = document.querySelectorAll(".js-codeblock");
 
-//! NEXTHTML HAS AN HTML PARSE PROBLEM (PROPS)
-
 jscode.forEach(block => {
    let lines = block.innerHTML.split("<br>");
    let finalBlock = "";
@@ -113,15 +111,15 @@ htmlcode.forEach(block => {
 
          // Format tag name
          if (startTag) {
-            inProgress = inProgress.replace(`${tag}`, `<span class="code-blue-d">${tag}</span>`)
+            inProgress = inProgress.replace(`${tag}`, `<span class="code-blue-d">${tag}</span>`);
          }
          if (endTag) {
-            inProgress = inProgress.replace(new RegExp(`&lt;/</span>${tag}<span class="code-gray">&gt;</span>$`, "gim"), `&lt;/</span><span class="code-blue-d">${tag}</span><span class="code-gray">&gt;</span>`)
+            inProgress = inProgress.replace(new RegExp(`&lt;/</span>${tag}<span class="code-gray">&gt;</span>$`, "gim"), `&lt;/</span><span class="code-blue-d">${tag}</span><span class="code-gray">&gt;</span>`);
          }
 
          // Format properties
          if (props) {
-            let pairs = props.trim().split(" ");
+            let pairs = props.replaceAll(new RegExp(`"\\s(\\S*)=`, "gmi"), `"REPLACE_PROPS--HERE$1=`).trim().split("REPLACE_PROPS--HERE");
             pairs.forEach(pair => {
                let parts = pair.split("=");
                if (parts.length == 2) {
