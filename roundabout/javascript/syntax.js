@@ -1,7 +1,6 @@
 let htmlcode = document.querySelectorAll(".html-codeblock");
 let jscode = document.querySelectorAll(".js-codeblock");
 
-//! BREAKPOINTS, LISTENFORRESIZE HAS A JS PARSE PROBLEM (SETTINGS)
 //! NEXTHTML HAS AN HTML PARSE PROBLEM (PROPS)
 
 jscode.forEach(block => {
@@ -27,7 +26,7 @@ jscode.forEach(block => {
             if (line.includes(`"`) || line.includes("`") || line.includes("[") || line.includes("{")) {
                inProgress = inProgress.replace(new RegExp("^\\s*(\\S*):", "gmi"), `<span class="code-blue-l">$1</span>:`);
             } else {
-               inProgress = inProgress.replace(new RegExp("^\\s*(\\S*):(.*),", "gmi"), `<span class="code-blue-l">$1</span>:<span class="code-green">$2</span>,`);
+               inProgress = inProgress.replace(new RegExp("^\\s*(\\S*):([^,]*)(,?)", "gmi"), `<span class="code-blue-l">$1</span>:<span class="code-green">$2</span>$3`);
             }
          }
       }
