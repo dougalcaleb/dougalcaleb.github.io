@@ -15,7 +15,9 @@
 	<body>
 		<iframe frameborder="0" class="ls-helper" id="ls-helper"></iframe>
 		<header>
-			<a href="/roundabout/docs.html"><p class="title"><span class="name">Roundabout</span> <span class="desc">DOCS</span></p></a>
+			<a href="/roundabout/docs.html"
+				><p class="title"><span class="name">Roundabout</span> <span class="desc">DOCS</span></p></a
+			>
 			<!-- <select name="version" class="version">
 				<option value="1.2.0">v1.2.0</option>
 				<option value="1.1.0">v1.1.0</option>
@@ -75,13 +77,86 @@
                   </li>
                </ul>
              -->
+				The main focus of Roundabout is quick and easy setup, with the freedom to customize extensively.
+				<br /><br />
+				To add Roundabout to your project, first <a href="https://github.com/dougalcaleb/roundabout" class="link" target="_blank">download the plugin</a> and link
+				<span class="code">roundabout.min.js</span> to your HTML. Create another JavaScript file (or use the provided
+				<span class="code">roundabout-settings</span>) to contain your settings, linked <i>after</i> <span class="code">roundabout.min.js</span>.
+				<br /><br />
+				Finally, link <span class="code">roundabout-style.css</span> to the same HTML page as before. Your HTML should then look like this:
 
-             <!-- The carousel on this page has a few extra settings edited for demonstration:
+            <span class="code-comment"></span>
+            <span class="code-blue-d"></span>
+            <span class="code-blue-l"></span>
+            <span class="code-white"></span>
+            <span class="code-orange"></span>
+            <span class="code-gray"></span>
+
+
+            <div class="code html-codeblock">
+					&lt;!DOCTYPE html&gt;<br/>
+               &lt;html&gt;<br/>
+               &nbsp;&nbsp;&lt;head&gt;<br/>
+               &nbsp;&nbsp;&nbsp;&nbsp;&lt;!-- ... --&gt;<br/>
+               &nbsp;&nbsp;<br/>
+               &nbsp;&nbsp;&nbsp;&nbsp;&lt;link href="path/to/roundabout-style.css" rel="stylesheet" type="text/css" /&gt;<br/>
+               &nbsp;&nbsp;&lt;/head&gt;<br/>
+               &nbsp;&nbsp;&lt;body&gt;<br/>
+               &nbsp;&nbsp;&nbsp;&nbsp;&lt;!-- ... --&gt;<br/>
+               &nbsp;&nbsp;<br/>
+               &nbsp;&nbsp;&nbsp;&nbsp;&lt;script src="path/to/roundabout.min.js"&gt;&lt;/script&gt;<br/>
+               &nbsp;&nbsp;&nbsp;&nbsp;&lt;script src="path/to/roundabout-settings.js"&gt;&lt;/script&gt;<br/>
+               &nbsp;&nbsp;&lt;/body&gt;<br/>
+               &lt;/html&gt;
+				</div>
+				Creating a new carousel is done with an object constructor, passed an object containing all of your settings. It does not need to be
+				stored in a variable, except when using the scripting module (coming soon).
+				<div class="code js-codeblock">
+					new Roundabout = ({<br />
+					&nbsp;&nbsp;// include your settings here...<br />
+					});
+				</div>
+				Multiple carousels can be created on one page by defining multiple constructors. Be sure to give them unique CSS selectors with the
+				<span class="code">id</span> property so that they can be interacted with individually.
+				<div class="code js-codeblock">
+					new Roundabout = ({<br />
+					&nbsp;&nbsp;id: "#carouselNumberOne"<br />
+					&nbsp;&nbsp;// ...<br />
+					});<br />
+					<br />
+					new Roundabout = ({<br />
+					&nbsp;&nbsp;id: "#carouselNumberTwo"<br />
+					&nbsp;&nbsp;// ...<br />
+					});
+				</div>
+				Note that the only required setting is <span class="code">pages</span>. If you have more than one carousel on a webpage,
+				<span class="code">id</span> is also required. <br /><br />
+				Here's an example of a simple carousel you can get up and running quickly:
+				<div class="code js-codeblock">
+					new Roundabout = ({<br />
+					&nbsp;&nbsp;parent: "#myCarouselWrap",<br />
+					&nbsp;&nbsp;autoscroll: true,<br />
+					&nbsp;&nbsp;pages: [<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;{<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;backgroundImage: "../images/myFirstPage.png",<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;html: `&lt;button class="example-button"&gt;Example Button&lt;/button&gt;`,<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;css: `.example-button { background: white; border-radius: 5px; border: 2px solid blue; }`<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;},<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;{<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;backgroundImage: "../images/mySecondPage.png"<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;},<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;{<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;backgroundImage: "../images/myThirdPage.png"<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;}<br />
+					&nbsp;&nbsp;]<br />
+					});
+				</div>
+				<!-- The carousel on this page has a few extra settings edited for demonstration:
              <ul>
                <li><span class="code">setting: value</span></li>
             </ul> -->
-            <!-- The below carousel has been given an <span class="code">setting</span> value of <span class="code">value</span>. -->
-            <!-- <div class="roundabout-example"></div> -->
+				<!-- The below carousel has been given an <span class="code">setting</span> value of <span class="code">value</span>. -->
+				<!-- <div class="roundabout-example"></div> -->
 				<footer></footer>
 			</div>
 		</section>
@@ -91,5 +166,6 @@
 	<script src="./javascript/docs.js"></script>
 	<!-- <script src="../javascript/roundabout.min.js"></script> -->
 	<script src="./javascript/roundabout-1.3.0-u.js"></script>
-	<script src="javascript/setting-settings.js"></script>
+	<!-- <script src="javascript/setting-settings.js"></script> -->
+	<script src="javascript/syntax.js"></script>
 </html>
