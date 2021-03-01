@@ -40,6 +40,8 @@ let settings = [
    {name: "uiEnabled", category: "General"},
 ];
 
+const VERSION = "v1.3.0-U-DEV";
+
 let sortOrder = "c";
 let sameTab = true;
 
@@ -78,9 +80,15 @@ window.addEventListener("message", (event) => {
    });
    i.src = '/roundabout/helper.html';
 
-   document.querySelectorAll("div.code").forEach(element => {
-      element.setAttribute("contenteditable", "true");
-   });
+   // document.querySelectorAll("div.code").forEach(element => {
+   //    element.setAttribute("contenteditable", "true");
+   //    element.setAttribute("spellcheck", "false");
+   // });
+
+   let v = document.createElement("span");
+   v.innerText = VERSION;
+   v.classList.add("version");
+   document.querySelector(".title").appendChild(v);
 })();
 
 document.querySelector(".sort-order").addEventListener("click", () => {

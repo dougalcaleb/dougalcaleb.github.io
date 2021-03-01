@@ -4,7 +4,7 @@
 $name - variable
 */
 * {
-  user-select: none;
+  user-select: text;
 }
 
 body {
@@ -58,6 +58,31 @@ div.code {
   line-height: 17px;
   margin-top: 10px;
   margin-bottom: 10px;
+  overflow-x: auto;
+  white-space: nowrap;
+  color: #ddd;
+}
+div.code::-webkit-scrollbar {
+  height: 5px;
+  margin-right: 5px;
+  cursor: default;
+}
+div.code::-webkit-scrollbar-track {
+  background: transparent;
+  cursor: default;
+}
+div.code::-webkit-scrollbar-thumb {
+  background: #666;
+  height: 5px;
+  border-radius: 10px;
+  cursor: default;
+}
+div.code::-webkit-scrollbar-button {
+  display: none;
+}
+
+.link {
+  color: #00b7ff;
 }
 
 .spec {
@@ -186,6 +211,13 @@ header .title .desc {
   font-size: 25px;
   margin-left: 15px;
 }
+header .title .version {
+  font-family: "Roboto";
+  font-weight: 300;
+  color: #919191;
+  font-size: 25px;
+  margin-left: 15px;
+}
 
 nav {
   position: fixed;
@@ -267,4 +299,36 @@ nav::-webkit-scrollbar-thumb {
 }
 nav::-webkit-scrollbar-button {
   display: none;
+}
+
+.code-blue-d {
+  color: #358cd5;
+}
+
+.code-blue-l {
+  color: #9cdcfe;
+}
+
+.code-white {
+  color: #dddddd;
+}
+
+.code-orange {
+  color: #d6905a;
+}
+
+.code-comment {
+  color: #6a9955;
+}
+
+.code-gray {
+  color: #808080;
+}
+
+.code-tan {
+  color: #ffe7a3;
+}
+
+.code-green {
+  color: #94ce9b;
 }
