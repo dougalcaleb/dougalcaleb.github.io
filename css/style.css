@@ -86,7 +86,7 @@ a {
   padding: 10px;
   padding-left: 30px;
   padding-right: 30px;
-  border-radius: 25px;
+  border-radius: 15px;
   margin-right: 15px;
   font-size: 0.9em;
   outline: none;
@@ -156,7 +156,7 @@ header .header-name p .light {
   font-weight: 300;
 }
 
-@media screen and (max-width: 1050px) {
+@media screen and (max-width: calc(device-width * 0.75)) {
   .landing-card {
     border-top-left-radius: 20px;
     border-top-right-radius: 20px;
