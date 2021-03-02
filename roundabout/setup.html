@@ -84,15 +84,6 @@
 				<span class="code">roundabout-settings</span>) to contain your settings, linked <i>after</i> <span class="code">roundabout.min.js</span>.
 				<br /><br />
 				Finally, link <span class="code">roundabout-style.css</span> to the same HTML page as before. Your HTML should then look like this:
-
-            <span class="code-comment"></span>
-            <span class="code-blue-d"></span>
-            <span class="code-blue-l"></span>
-            <span class="code-white"></span>
-            <span class="code-orange"></span>
-            <span class="code-gray"></span>
-
-
             <div class="code html-codeblock">
 					&lt;!DOCTYPE html&gt;<br/>
                &lt;html&gt;<br/>
@@ -109,6 +100,8 @@
                &nbsp;&nbsp;&lt;/body&gt;<br/>
                &lt;/html&gt;
 				</div>
+            Once you have that, you're all set! Define your settings, and you have a carousel up and running in no time at all.
+            <br/><br/>
 				Creating a new carousel is done with an object constructor, passed an object containing all of your settings. It does not need to be
 				stored in a variable, except when using the scripting module (coming soon).
 				<div class="code js-codeblock">
@@ -151,6 +144,9 @@
 					&nbsp;&nbsp;]<br />
 					});
 				</div>
+            Included is a <span class="code">roundabout-settings.js</span> file, which contains a simple template for a new carousel.
+            <br/><br/>
+            Settings do not need to be declared in any specific order.
 				<!-- The carousel on this page has a few extra settings edited for demonstration:
              <ul>
                <li><span class="code">setting: value</span></li>

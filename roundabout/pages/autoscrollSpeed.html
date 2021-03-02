@@ -77,6 +77,8 @@
              -->
              When the carousel's autoscroll is active, this setting determines the amount of time (measured in milliseconds) that it will pause before continuing to scroll to the next page.
              <br/><br/>
+             Warning: due to the inaccurate nature of JavaScript's timing system, <span class="code">autoscrollSpeed</span> should not be set to the same as <span class="code">transition</span> to get a constant movement effect. The transitions WILL break.
+            <br/><br/>
              The carousel on this page has an extra setting edited for demonstration:
              <ul>
                <li><span class="code">autoscroll: true</span></li>

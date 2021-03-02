@@ -117,7 +117,8 @@ let roundabout = {
 
 		type: "normal",
 		infinite: true,
-		keys: true,
+      keys: true,
+      buttons: true,
 
 		swipe: true,
 		swipeThreshold: 300,
@@ -147,7 +148,6 @@ let roundabout = {
 
 		throttle: true,
 		throttleTimeout: 300,
-		throttleMatchTransition: false,
 		throttleKeys: true,
 		throttleSwipe: true,
 		throttleButtons: true,
@@ -397,9 +397,9 @@ class Roundabout {
 	}
 
 	scrollTo(page) {
-		if (this.scrollIsAllowed && this.throttleNavigation) {
+		if (this.scrollIsAllowed && this.throttleNavigation && this.navigation) {
 			this.setActiveBtn(page);
-		} else if (!this.throttleNavigation) {
+		} else if (!this.throttleNavigation && this.navigation) {
 			this.setActiveBtn(page);
 		}
 		if (this.lazyLoad == "hidden") {
@@ -459,7 +459,7 @@ class Roundabout {
 			.classList.remove(`roundabout-${this.uniqueId}-inactive-nav-btn`, `roundabout-inactive-nav-btn`);
 	}
 
-	nextHandler(parent, from, distance) {
+   nextHandler(parent, from, distance) {
 		let sd;
 		if (from == "snap") {
 			sd = 1;
@@ -753,7 +753,7 @@ class Roundabout {
 			if (dir > 0) {
 				parent.previousHandler(parent, "snap");
 				parent.positionWrap(false, 1);
-			} else if (dir < 0) {
+         } else if (dir < 0) {
 				parent.nextHandler(parent, "snap");
 				parent.positionWrap(false, -1);
 			}
@@ -799,10 +799,14 @@ class Roundabout {
    defaultHTML(r) {
 		let newCarousel = document.createElement("DIV");
 		let ui = ``;
-		let swipe = ``;
-		if (this.uiEnabled) {
-			ui = `<div class="roundabout-${this.uniqueId}-ui roundabout-ui"><div class="roundabout-${this.uniqueId}-btn-next roundabout-btn-next roundabout-scroll-btn">${this.nextHTML}</div><div class="roundabout-${this.uniqueId}-btn-prev roundabout-btn-prev roundabout-scroll-btn">${this.prevHTML}</div></div>`;
-		}
+      let swipe = ``;
+      let buttons = ``;
+      if (this.buttons) {
+         buttons = `<div class="roundabout-${this.uniqueId}-btn-next roundabout-btn-next roundabout-scroll-btn">${this.nextHTML}</div><div class="roundabout-${this.uniqueId}-btn-prev roundabout-btn-prev roundabout-scroll-btn">${this.prevHTML}</div>`;
+      }
+      if (this.uiEnabled) {
+			ui = `<div class="roundabout-${this.uniqueId}-ui roundabout-ui">${buttons}</div>`;
+      }
 		if (this.swipe) {
 			swipe = `<div class="roundabout-${this.uniqueId}-swipe-overlay roundabout-swipe-overlay"></div>`;
 		}
@@ -984,7 +988,7 @@ class Roundabout {
             this.orderedPages = [];
             try {
                this.initialActions(true);
-					this.setListeners();
+					// this.setListeners();
 				} catch (e) {
 					console.error(`Error while attempting to regenerate Roundabout with id ${this.id}:`);
 					console.error(e);
@@ -1040,12 +1044,13 @@ class Roundabout {
 			if (this.allowInternalHTML) {
 				this.defaultHTML(r);
 			}
-			if (this.throttleMatchTransition) {
-				this.throttleTimeout = this.transition;
-			}
 			if (this.autoscroll) {
 				this.setAutoScroll(this, true);
-			}
+         }
+         if (!this.uiEnabled) {
+            this.navigation = false;
+            this.swipe = false;
+         }
 			try {
 				this.generatePages();
 			} catch (e) {
@@ -1063,8 +1068,8 @@ class Roundabout {
 
 	// Sets all required eventListeners for the carousel
 	setListeners() {
-		if (this.uiEnabled) {
-			document.querySelector(`.roundabout-${this.uniqueId}-btn-next`).addEventListener("click", () => {
+		if (this.uiEnabled && this.buttons) {
+         document.querySelector(`.roundabout-${this.uniqueId}-btn-next`).addEventListener("click", () => {
 				this.nextHandler(this);
 			});
 			document.querySelector(`.roundabout-${this.uniqueId}-btn-prev`).addEventListener("click", () => {
