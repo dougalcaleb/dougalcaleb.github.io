@@ -6,6 +6,7 @@ let settings = [
    {name: "autoscrollStartAfter", category: "Behavioral"},
    {name: "autoscrollTimeout", category: "Behavioral"},
    {name: "breakpoints", category: "General"},
+   {name: "buttons", category: "General"},
    {name: "id", category: "General"},
    {name: "infinite", category: "Behavioral"},
    {name: "keys", category: "Behavioral"},
