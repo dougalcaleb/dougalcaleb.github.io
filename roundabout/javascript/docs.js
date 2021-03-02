@@ -31,7 +31,7 @@ let settings = [
    {name: "throttle", category: "Behavioral"},
    {name: "throttleButtons", category: "Behavioral"},
    {name: "throttleKeys", category: "Behavioral"},
-   {name: "throttleMatchTransition", category: "Behavioral"},
+   // {name: "throttleMatchTransition", category: "Behavioral"},
    {name: "throttleNavigation", category: "Behavioral"},
    {name: "throttleSwipe", category: "Behavioral"},
    {name: "throttleTimeout", category: "Behavioral"},

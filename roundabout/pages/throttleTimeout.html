@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>throttleButtons | Roundabout Docs</title>
+		<title>throttleTimeout | Roundabout Docs</title>
 		<link rel="stylesheet" type="text/css" href="../css/docs_style.css" />
 		<link rel="stylesheet" type="text/css" href="../css/roundabout-style.css" />
 
@@ -58,14 +58,17 @@
 
 		<section class="spec">
 			<div class="basic">
-				<h1 class="title">throttleButtons</h1>
+				<h1 class="title">throttleTimeout</h1>
 				<div class="basic-info">
-					<div class="type"><span class="deemp">Type:</span> <span class="normal">boolean</span></div>
-					<div class="default"><span class="deemp">Default:</span> <span class="normal">true</span></div>
+					<div class="type"><span class="deemp">Type:</span> <span class="normal">integer</span></div>
+					<div class="default"><span class="deemp">Default:</span> <span class="normal">300</span></div>
 				</div>
 			</div>
 			<div class="info">
-				<div class="desc">Determines if the previous and next buttons will be throttled.</div>
+				<div class="desc">Sets the time to disallow user interaction after one interaction.</div>
+            This defines the timeout (in milliseconds) after a single user interaction until more interactions are allowed. Only applies if <span class="code">throttle</span> is enabled.
+            <br/><br/>
+            It is highly recommended to always give this setting the same value as <span class="code">transition</span>.
 				<!-- 
                <ul>
                   <li>
@@ -80,7 +83,7 @@
              <ul>
                <li><span class="code">setting: value</span></li>
             </ul> -->
-            The below carousel has been given a <span class="code">throttleButtons</span> value of <span class="code">true</span>.
+            The below carousel has been given a <span class="code">throttleTimeout</span> value of <span class="code">1000</span>.
             <div class="roundabout-example"></div>
 				<footer></footer>
 			</div>
@@ -91,5 +94,5 @@
 	<script src="../javascript/docs.js"></script>
 	<!-- <script src="../javascript/roundabout.min.js"></script> -->
 	<script src="../javascript/roundabout-1.3.0-u.js"></script>
-	<script src="javascript/throttleItems-settings.js"></script>
+	<script src="javascript/throttleTimeout-settings.js"></script>
 </html>

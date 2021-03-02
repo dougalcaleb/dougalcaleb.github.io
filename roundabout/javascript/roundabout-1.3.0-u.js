@@ -147,7 +147,7 @@ let roundabout = {
 
 		throttle: true,
 		throttleTimeout: 300,
-		throttleMatchTransition: true,
+		throttleMatchTransition: false,
 		throttleKeys: true,
 		throttleSwipe: true,
 		throttleButtons: true,
