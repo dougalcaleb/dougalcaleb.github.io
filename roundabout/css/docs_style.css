@@ -85,6 +85,10 @@ div.code::-webkit-scrollbar-button {
   color: #00b7ff;
 }
 
+.secondCarousel {
+  margin-top: 25px;
+}
+
 .spec {
   position: absolute;
   width: 80vw;
