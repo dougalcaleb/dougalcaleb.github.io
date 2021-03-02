@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>autoscrollPauseOnHover | Roundabout Docs</title>
+		<title>scrollBy | Roundabout Docs</title>
 		<link rel="stylesheet" type="text/css" href="../css/docs_style.css" />
 		<link rel="stylesheet" type="text/css" href="../css/roundabout-style.css" />
 
@@ -58,14 +58,14 @@
 
 		<section class="spec">
 			<div class="basic">
-				<h1 class="title">autoscrollPauseOnHover</h1>
+				<h1 class="title">scrollBy</h1>
 				<div class="basic-info">
-					<div class="type"><span class="deemp">Type:</span> <span class="normal">boolean</span></div>
-					<div class="default"><span class="deemp">Default:</span> <span class="normal">false</span></div>
+					<div class="type"><span class="deemp">Type:</span> <span class="normal">integer</span></div>
+					<div class="default"><span class="deemp">Default:</span> <span class="normal">1</span></div>
 				</div>
 			</div>
 			<div class="info">
-				<div class="desc">Allows for a user to pause the movement of the carousel when hovering with a mouse.</div>
+				<div class="desc">Defines the number of pages that should be scrolled on a single click on the previous/next buttons.</div>
 				<!-- 
                <ul>
                   <li>
@@ -75,19 +75,18 @@
                   </li>
                </ul>
              -->
-             Note that this value does nothing for mobile devices. Instead, when a mobile user interacts with a Roundabout carousel, a timeout equivalent to <span class="code">autoscrollTimeout</span> will be triggered before the carousel resumes scrolling.
-             <br/></br/>
-             After a user's mouse leaves the carousel, a timeout equivalent to <span class="code">autoscrollTimeout</span> will trigger, and the carousel will resume autoscroll once the timer expires.
+             When either the previous or next button is clicked, the carousel will scroll by the number of pages this specifies.
+             <br/></br>
+             This does not affect the number of pages scrolled by the nav bar, or by swiping. Autoscroll and keypresses are affected.
              <br/><br/>
-             The carousel on this page has a few extra settings edited for demonstration:
+             Note that this must be less than or equal to <span class="code">pagesToShow</span>.
+             <br/><br/>
+             The carousel on this page has an extra setting edited for demonstration:
              <ul>
-               <li><span class="code">autoscroll: true</span></li>
-               <li><span class="code">autoscrollStartAfter: 1000</span></li>
-               <li><span class="code">autoscrollSpeed: 2000</span></li>
-               <li><span class="code">autoscrollTimeout: 4000</span></li>
+               <li><span class="code">pagesToShow: 2</span></li>
             </ul>
-            The below carousel has been given an <span class="code">autoscrollPauseOnHover</span> value of <span class="code">true</span>.
-				<div class="roundabout-example"></div>
+            <!-- The below carousel has been given an <span class="code">setting</span> value of <span class="code">value</span>. -->
+            <div class="roundabout-example"></div>
 				<footer></footer>
 			</div>
 		</section>
@@ -97,5 +96,5 @@
 	<script src="../javascript/docs.js"></script>
 	<!-- <script src="../javascript/roundabout.min.js"></script> -->
 	<script src="../javascript/roundabout-1.3.0-u.js"></script>
-	<script src="javascript/autoscrollPauseOnHover-settings.js"></script>
+	<script src="javascript/scrollBy-settings.js"></script>
 </html>
