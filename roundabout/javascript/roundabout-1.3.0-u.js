@@ -84,7 +84,6 @@ Misc
 // To do:
 /*
 -  Mouse/touch swipe
--  Settings for background images (position/size)
 */
 
 //? Ideas:
