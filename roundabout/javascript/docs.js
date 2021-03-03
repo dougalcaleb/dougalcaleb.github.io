@@ -41,7 +41,7 @@ let settings = [
    {name: "uiEnabled", category: "General"},
 ];
 
-const VERSION = "v1.3.0-U-DEV";
+const VERSION = "v1.3.1";
 
 let sortOrder = "c";
 let sameTab = true;
