@@ -90,15 +90,20 @@ new Roundabout({
 				<div class="apply-close setting-button button-active">On editor close</div>
 				<div class="apply-delay setting-button">After <input type="number" value="1000" max="4" min="0" class="delay-input" /> ms</div>
 			</div>
+         <div class="setting">
+            Console:
+            <div class="clear-before setting-button button-active">Clear console before render</div>
+            <div class="dont-clear setting-button">Do not clear console</div>
+         </div>
 			<div class="setting">
 				Save and load settings profiles:
 				<div class="setting-flex">
 					<div class="setting-left">
-						<input type="text" placeholder="Profile name" class="name-input" />
+						<input type="text" placeholder="Profile name to save" class="name-input" />
 						<div class="save-button setting-button">Save</div>
 					</div>
 					<div class="setting-right">
-						<select class="profile-list"></select>
+						<select class="profile-list">Select profile to load</select>
 						<div class="load-button setting-button">Load</div>
 						<div class="delete-button setting-button">Delete</div>
 					</div>
