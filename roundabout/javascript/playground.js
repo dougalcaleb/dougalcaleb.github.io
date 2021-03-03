@@ -16,54 +16,60 @@ const tabPairs = [
 ];
 // [name, type, default]
 const autoSettings = [
-	["pages", "array", "[]"],
-	["id", "string", '".myCarousel"'],
-	["type", "string", '"normal"'],
-	["infinite", "boolean", "true"],
-	["parent", "string", '"body"'],
-	["navigation", "boolean", "true"],
-	["navigationTrim", "boolean", "true"],
-	["navigationBehavior", "string", '"nearest"'],
 	["autoscroll", "boolean", "false"],
-	["autoscrollSpeed", "integer", "5000"],
-	["autoscrollTimeout", "integer", "15000"],
-	["autoscrollPauseOnHover", "boolean", "false"],
-	["autoscrollStartAfter", "integer", "5000"],
 	["autoscrollDirection", "string", '"right"'],
-	["transition", "integer", "300"],
-	["transitionFunction", "string", '"ease"'],
-	["throttle", "boolean", "true"],
-	["throttleTimeout", "integer", "300"],
-	["throttleMatchTransition", "boolean", "true"],
-	["throttleKeys", "boolean", "true"],
-	["throttleSwipe", "boolean", "true"],
-	["throttleButtons", "boolean", "true"],
-	["throttleNavigation", "boolean", "true"],
-	["lazyLoad", "string", '"none"'],
-	["uiEnabled", "boolean", "true"],
-	["nextHTML", "string", "&lt;SVG Arrow&gt;"],
-	["prevHTML", "string", "&lt;SVG Arrow&gt;"],
+	["autoscrollPauseOnHover", "boolean", "false"],
+	["autoscrollSpeed", "integer", "5000"],
+	["autoscrollStartAfter", "integer", "5000"],
+   ["autoscrollTimeout", "integer", "15000"],
+   ["breakpoints", "array", "[{width: 500, swipeThreshold: 50}]"],
+   ["buttons", "boolean", "true"],
+	["id", "string", '".myCarousel"'],
+	["infinite", "boolean", "true"],
 	["keys", "boolean", "true"],
-	["swipe", "boolean", "true"],
-	["swipeThreshold", "integer", "300"],
-	["swipeMultiplier", "number", "1"],
-	["swipeResistance", "number", "0.95"],
-	["pagesToShow", "integer", "1"],
+   ["lazyLoad", "string", '"none"'],
+   ["listenForResize", "boolean", "false"],
+	["navigation", "boolean", "true"],
+	["navigationBehavior", "string", '"nearest"'],
+	["navigationTrim", "boolean", "true"],
+	["nextHTML", "string", "&lt;SVG Right Arrow&gt;"],
+	["pages", "array", "[]"],
 	["pageSpacing", "integer", "0"],
+	["pageSpacingMode", "string", '"fill"'],
 	["pageSpacingUnits", "string", '"px"'],
-	["spacingMode", "string", '"fill"'],
+	["pagesToShow", "integer", "1"],
+	["parent", "string", '"body"'],
+	["prevHTML", "string", "&lt;SVG Left Arrow&gt;"],
 	["scrollBy", "integer", "1"],
 	["showWrappedPage", "boolean", "false"],
-	["mobile", "object", "{swipeThreshold:50}"],
-	["mobileBreakpoint", "integer", "700"],
+	["swipe", "boolean", "true"],
+	["swipeMultiplier", "number", "1"],
+	["swipeResistance", "number", "0.95"],
+	["swipeThreshold", "integer", "300"],
+	["throttle", "boolean", "true"],
+	["throttleButtons", "boolean", "true"],
+	["throttleKeys", "boolean", "true"],
+	["throttleNavigation", "boolean", "true"],
+	["throttleSwipe", "boolean", "true"],
+	["throttleTimeout", "integer", "300"],
+	["transition", "integer", "300"],
+	["transitionFunction", "string", '"ease"'],
+   ["uiEnabled", "boolean", "true"],
+   // ====
    ["html", "string", '""'],
    ["css", "string", '""'],
    ["backgroundImage", "string", '""']
+   
+	// ["type", "string", '"normal"'],
+	// ["throttleMatchTransition", "boolean", "true"],
+	// ["mobile", "object", "{swipeThreshold:50}"],
+	// ["mobileBreakpoint", "integer", "700"],
 ];
 const accepted = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", "_", "-"];
 const tabSize = 4;
 let updateSpeed = 1000;
 let updateMethod = "onclose";
+let clearConsole = true;
 // Variables
 let tabs = 1;
 let updated = true;
@@ -101,18 +107,18 @@ input.addEventListener("keydown", (e) => {
 			tabPairs.forEach((char) => {
 				if (checkForChar(0, char[0])) {
 					pairCorrection = -1;
-					console.log(`Found ${char[0]}. Not tabbing.`);
+					// console.log(`Found ${char[0]}. Not tabbing.`);
 				}
 				if (checkForChar(0, char[1])) {
 					pairCorrection = -1;
-					console.log(`Found ${char[1]}. Not tabbing.`);
+					// console.log(`Found ${char[1]}. Not tabbing.`);
 				}
 			});
 			for (let a = 0; a < tabSize * tabs; a++) {
 				insertAtCursor(" ", false);
 			}
 			let result = calcTabs(pairCorrection);
-			console.log(`New tab distance is ${result}`);
+			// console.log(`New tab distance is ${result}`);
 			lastWasPair = false;
 		}, 0);
 		// return;
@@ -216,6 +222,9 @@ function checkForUpdate() {
 		// if (document.querySelector(".roundabout-error-message")) {
 		// 	document.querySelector(".roundabout-error-message").remove();
 		// }
+      if (clearConsole) {
+         console.clear();
+      }
 		roundabout.usedIds = [];
       roundabout.on = -1;
       console.log("Attempting to render new Roundabout carousel...");
@@ -226,7 +235,11 @@ function checkForUpdate() {
          document.querySelector(".code-toggle").style.color = "#fff700";
          console.error(e);
       }
-      document.querySelector(".rbt-v").innerHTML = `Roundabout version: ${carousel.VERSION}`;
+      try {
+         document.querySelector(".rbt-v").innerHTML = `Roundabout version: ${carousel.VERSION}`;
+      } catch (e) {
+         console.log("Could not get version. There might be a settings error.")
+      }
 		updated = true;
 	}
 }
@@ -346,6 +359,17 @@ document.querySelector(".apply-delay").addEventListener("click", () => {
    document.querySelector(".apply-close").classList.remove("button-active");
 });
 
+document.querySelector(".clear-before").addEventListener("click", () => {
+   clearConsole = true;
+   document.querySelector(".clear-before").classList.add("button-active");
+   document.querySelector(".dont-clear").classList.remove("button-active");
+});
+document.querySelector(".dont-clear").addEventListener("click", () => {
+   clearConsole = false;
+   document.querySelector(".dont-clear").classList.add("button-active");
+   document.querySelector(".clear-before").classList.remove("button-active");
+});
+
 document.querySelector(".save-button").addEventListener("click", () => {
    if (!document.querySelector(".name-input").value) {
       return;
@@ -393,6 +417,28 @@ function populateSaves() {
       profiles.default = `new Roundabout({
     
 });`;
+      profiles.hasPages = `new Roundabout({
+    "pages": [
+      {
+         "backgroundImage": "./images/numbers/0.png"
+      },
+      {
+         "backgroundImage": "./images/numbers/1.png"
+      },
+      {
+         "backgroundImage": "./images/numbers/2.png"
+      },
+      {
+         "backgroundImage": "./images/numbers/3.png"
+      },
+      {
+         "backgroundImage": "./images/numbers/4.png"
+      },
+      {
+         "backgroundImage": "./images/numbers/5.png"
+      }
+    ]
+});`
    }
    localStorage.setItem("Roundabout_Playground_Saves", JSON.stringify(profiles));
 }
