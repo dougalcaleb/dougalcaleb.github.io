@@ -146,7 +146,7 @@ function sort(method) {
    table.appendChild(newGs);
 
    newGs = document.createElement("a");
-   newGs.setAttribute("href", `/roundabout/pages/styling.html`);
+   newGs.setAttribute("href", `/roundabout/styling.html`);
    if (!sameTab) {
       newGs.setAttribute("target", "_blank");
    }
