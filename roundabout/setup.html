@@ -107,28 +107,53 @@
 				Creating a new carousel is done with an object constructor, passed an object containing all of your settings. It does not need to be
 				stored in a variable, except when using the scripting module (coming soon).
 				<div class="code js-codeblock">
-					new Roundabout = ({<br />
+					new Roundabout({<br />
 					&nbsp;&nbsp;// include your settings here...<br />
 					});
 				</div>
+            <br/>
+            <b> <i>-- Some other things to note: --</i> </b>
+            <br/><br/>
+				The only required setting is <span class="code">pages</span>. If you have more than one carousel on a single page,
+				<span class="code">id</span> is also required.
+            <br/><br/>
 				Multiple carousels can be created on one page by defining multiple constructors. Be sure to give them unique CSS selectors with the
 				<span class="code">id</span> property so that they can be interacted with individually.
 				<div class="code js-codeblock">
-					new Roundabout = ({<br />
+					new Roundabout({<br />
 					&nbsp;&nbsp;id: "#carouselNumberOne"<br />
 					&nbsp;&nbsp;// ...<br />
 					});<br />
 					<br />
-					new Roundabout = ({<br />
+					new Roundabout({<br />
 					&nbsp;&nbsp;id: "#carouselNumberTwo"<br />
 					&nbsp;&nbsp;// ...<br />
 					});
 				</div>
-				Note that the only required setting is <span class="code">pages</span>. If you have more than one carousel on a webpage,
-				<span class="code">id</span> is also required. <br /><br />
-				Here's an example of a simple carousel you can get up and running quickly:
+            <br/>
+            Setting the element to generate inside of is done with the <span class="code">parent</span> setting. Make sure that this element has a unique class or ID, and that you don't use the same selector for your carousel's ID. 
+            <br/><br/>
+            For example, to place a carousel inside of a specific element on a webpage, your HTML could look something like this:
+            <div class="code html-codeblock">
+               &lt;!-- ... --&gt;<br/>
+               <br/>
+               &lt;div class="example-element"&gt;<br/>
+                  &nbsp;&nbsp;&lt;section class="carousel-goes-here">&lt;/section&gt;<br/>
+                  &nbsp;&nbsp;&lt;div class="example-carousel-description"&gt;This is a description for the carousel above.&lt;/div&gt;<br/>
+               &lt;/div&gt;
+            </div>
+            To use this <span class="code">section</span> element, the settings should look something like this: 
+            <div class="code js-codeblock">
+               new Roundabout({<br/>
+                  &nbsp;&nbsp;parent: ".carousel-goes-here",<br/>
+                  &nbsp;&nbsp;// ...<br/>
+               });
+            </div>
+            This will generate the new carousel inside the <span class="code">section</span> tag that has the class <span class="code">"carousel-goes-here"</span>.
+            <br/><br/>
+				Here's an example of a simple carousel's settings. You will need an HTML element with the ID <span class="code">myCarouselWrap</span>. Additionally, make sure that the file paths are correct relative to your HTML.
 				<div class="code js-codeblock">
-					new Roundabout = ({<br />
+					new Roundabout({<br />
 					&nbsp;&nbsp;parent: "#myCarouselWrap",<br />
 					&nbsp;&nbsp;autoscroll: true,<br />
 					&nbsp;&nbsp;pages: [<br />
@@ -146,6 +171,7 @@
 					&nbsp;&nbsp;]<br />
 					});
 				</div>
+            <br/>
             Included is a <span class="code">roundabout-settings.js</span> file, which contains a simple template for a new carousel.
             <br/><br/>
             Settings do not need to be declared in any specific order.
