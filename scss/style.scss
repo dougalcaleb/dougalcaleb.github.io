@@ -6,112 +6,180 @@
 body {
 	margin: 0;
 	overflow: hidden;
-   position: relative;
-   height: 100%;
+	position: relative;
+	height: 100%;
 }
+
 p {
-   margin: auto;
+	margin: auto;
 }
 
 nav {
-   height: 100%;
-   width: 10vw;
-   position: fixed;
-   z-index: 9999;
-   background: ext.$dark-gray;
-   .navigation {
-      .nav-btn {
-         &::before {
-            content: "";
-            width: 15px;
-            position: absolute;
+	height: 100%;
+	width: 10vw;
+	position: fixed;
+	z-index: 9999;
+	background: ext.$dark-gray;
+	.navigation-wrap {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		width: inherit;
+		height: calc(100% - 15vw);
+		top: 0;
+		// background: purple;
+		.navigation {
+			position: relative;
+			margin: auto;
+			top: 0;
+			bottom: 0;
+			// background: orange;
+			width: inherit;
+			.nav-btn {
+				font-family: "Ubuntu", sans-serif;
+				font-weight: 700;
+				color: #ddd;
+				position: relative;
+				font-size: 1vw;
+				border-top: 2px solid #505050;
+				text-align: center;
+				padding-top: 20px;
+				padding-bottom: 20px;
+            cursor: pointer;
+			}
+         &:last-child {
+            border-bottom: 2px solid #505050;
          }
-      }
-   }
-   .picture {
-      height: 10vw;
+		}
+	}
+
+   .socials {
+      bottom: 0;
+      position: absolute;
       width: 10vw;
+      height: 5vw;
+      border-top-left-radius: 20px;
+		border-top-right-radius: 20px;
+      display: flex;
+      justify-content: space-evenly;
+      align-items: center;
       background: ext.$black;
-      position: relative;
-      border-bottom-left-radius: 20px;
-      border-bottom-right-radius: 20px;
-      img {
-         position: absolute;
-         margin: auto;
-         left: 0;
-         top: 0;
-         right: 0;
-         bottom: 0;
-         height: 7vw;
-         width: 7vw;
+      svg {
+         color: #ccc;
+         width: 2vw;
       }
-      
    }
+
+	.picture {
+		height: 10vw;
+		width: 10vw;
+		background: ext.$black;
+		position: relative;
+		border-bottom-left-radius: 20px;
+		border-bottom-right-radius: 20px;
+		img {
+			position: absolute;
+			margin: auto;
+			left: 0;
+			top: 0;
+			right: 0;
+			bottom: 0;
+			height: 7vw;
+			width: 7vw;
+		}
+	}
 }
 
 .land-page {
-   background: ext.$gray;
-   height: 100vh;
-   width: 90vw;
-   top: 0;
-   left: 10vw;
-   position: relative;
-   display: flex;
-   justify-content: center;
-   .intro {
-      position: relative;
-      top: 0;
-      bottom: 0;
-      margin: auto;
-      width: 40%;
-      // height: 50vh;
-      // background: orange;
-      // display: flex;
-      // align-items: center;
-      // flex-direction: column;
-      .desc {
-         font-family: "Miriam Libre", 'Courier New', Courier, monospace;
-         font-weight: 700;
-         color: #bbb;
-         font-size: 3vw;
-      }
-   }
+	background: ext.$gray;
+	height: 100vh;
+	width: 90vw;
+	top: 0;
+	left: 10vw;
+	position: relative;
+	// display: flex;
+	// justify-content: center;
+	background-image: url("../images/backgrounds/dark texture.png");
+	.intro-wrap {
+		// background: green;
+		display: flex;
+		justify-content: center;
+		flex-direction: column;
+		align-items: flex-start;
+		height: 100%;
+		z-index: 5;
+		.intro {
+			position: absolute;
+			z-index: 5;
+			// top: 0;
+			// bottom: 0;
+			// margin: auto;
+			left: 40px;
+			// width: 40%;
+			// height: 50vh;
+			// background: orange;
+			// display: flex;
+			// align-items: center;
+			// flex-direction: column;
+			.desc {
+				font-family: "Miriam Libre", "Courier New", Courier, monospace;
+				font-weight: 700;
+				color: #ccc;
+				font-size: max(3vw, 6vh);
+				text-shadow: 5px 5px 1px #333;
+			}
+		}
+	}
 
-   .showcase {
-      // background: purple;
-      height: 50vh;
-      width: 50vh;
-      position: relative;
-      top: 0;
-      bottom: 0;
-      margin: auto;
-   }
+	.showcase {
+		// background: purple;
+		height: 50vh;
+		width: 50vh;
+		position: absolute;
+		top: 0;
+		bottom: 0;
+		margin: auto;
+		right: 15px;
+		z-index: 1;
+	}
 }
 
 .land-btn {
-   border: 3px solid ext.$dark-blue;
-   border-radius: 5px;
-   color: ext.$light-blue;
-   position: relative;
-   font-family: "Ubuntu", sans-serif;
-   font-weight: 700;
-   padding: 5px;
-   padding-left: 25px;
-   padding-right: 25px;
-   cursor: pointer;
-   background: transparent;
-   outline: none;
-   margin-top: 25px;
+	border: 3px solid ext.$dark-blue;
+	border-radius: 5px;
+	color: ext.$light-blue;
+	position: relative;
+	font-family: "Ubuntu", sans-serif;
+	font-weight: 700;
+	padding: 5px;
+	padding-left: 25px;
+	padding-right: 25px;
+	cursor: pointer;
+	background: transparent;
+	outline: none;
+	margin-top: 25px;
+	font-size: max(1vw, 2vh);
+	margin-right: 15px;
 }
 
 .active-nav-btn {
-   &::before {
-      background: ext.$light-blue;
-   }
+	&::before {
+		content: "";
+		width: 8px;
+		height: 100%;
+		left: -30px;
+		position: absolute;
+		background: ext.$light-blue;
+	}
 }
 
 .inactive-nav-btn {
-   &::before {
-      background: ext.$dark-blue;
-   }
+	&::before {
+		content: "";
+		width: 8px;
+		height: 100%;
+		left: -40px;
+		position: absolute;
+		background: ext.$dark-blue;
+	}
 }
