@@ -18,6 +18,13 @@ let bubbles = {
 	ygrav: true,      // toggles y-axis point gravity
 };
 
+let frames = {
+   lastFrame: 0,
+   currentFrame: 0,
+   delta: 0,
+   baseTime: 16.66,
+}
+
 let mousescan = {
 	color: "green",   // color of the scan visual
 	span: 5,          // number of bubbles the scan spans. must be odd
@@ -58,7 +65,7 @@ let movingNum = 0;
 let wrapSizeX, wrapSizeY;
 let stepx, stepy, offset;
 
-let wrap = document.querySelector(".wrap");
+let wrap = document.querySelector(".showcase");
 let readout = document.querySelector(".readout");
 let mouse = document.querySelector(".forcefield");
 
@@ -70,8 +77,8 @@ document.addEventListener(
 		stepy = Math.round((event.clientY - wrapSizeY) / (bubbles.size + bubbles.space));
 
 		// position forcefield visual to follow mouse
-		mouse.style.left = event.clientX - forcefield.size / 2 + "px";
-		mouse.style.top = event.clientY - forcefield.size / 2 + "px";
+		// mouse.style.left = event.clientX - forcefield.size / 2 + "px";
+		// mouse.style.top = event.clientY - forcefield.size / 2 + "px";
 
 		// set vars for mouse velocity calculations, calculate velocity
 		forcefield.x2 = JSON.parse(JSON.stringify(forcefield.x1));
@@ -222,8 +229,17 @@ function animateBubble() {
 		document.querySelector(".bubble-" + movingBubbles[property].id).style.left = addX + "px";
 		document.querySelector(".bubble-" + movingBubbles[property].id).style.top = addY + "px";
 
-		movingBubbles[property].x += movingBubbles[property].xvel;
-		movingBubbles[property].y += movingBubbles[property].yvel;
+		movingBubbles[property].x += (movingBubbles[property].xvel * frames.delta);
+      movingBubbles[property].y += (movingBubbles[property].yvel * frames.delta);
+      
+      if (movingBubbles[property].yvel == Infinity || movingBubbles[property].yvel == -Infinity) {
+         movingBubbles[property].yvel = 0;
+         movingBubbles[property].y = movingBubbles[property].sy;
+      }
+      if (movingBubbles[property].xvel == Infinity || movingBubbles[property].xvel == -Infinity) {
+         movingBubbles[property].xvel = 0;
+         movingBubbles[property].x = movingBubbles[property].sx;
+      }
 
 		// once a bubble has stopped moving, make sure it is done changing, then delete its object
 
@@ -235,7 +251,10 @@ function animateBubble() {
 			document.querySelector(".bubble-" + movingBubbles[property].id).style.top = movingBubbles[property].sy + "px";
 			delete movingBubbles[property];
 		}
-	}
+   }
+   frames.lastFrame = frames.currentFrame;
+   frames.currentFrame = Date.now();
+   frames.delta = (frames.currentFrame - frames.lastFrame) / frames.baseTime;
 	window.requestAnimationFrame(animateBubble);
 }
 
@@ -245,14 +264,14 @@ function createBubbles() {
 	wrap.style.height = bubbles.y * bubbles.size + bubbles.space * (bubbles.y - 1) + "px";
 	wrap.style.width = bubbles.x * bubbles.size + bubbles.space * (bubbles.x - 1) + "px";
 	forcefield.size = mousescan.span * (bubbles.size + bubbles.space);
-	mouse.style.height = forcefield.size + "px";
-	mouse.style.width = forcefield.size + "px";
+	// mouse.style.height = forcefield.size + "px";
+	// mouse.style.width = forcefield.size + "px";
 	wrapSizeX = wrap.getBoundingClientRect().x;
 	wrapSizeY = wrap.getBoundingClientRect().y;
 	mousescan.hyp = forcefield.size / 2 + bubbles.size;
-	if (forcefield.visible) {
-		mouse.style.border = "1px solid gray";
-	}
+	// if (forcefield.visible) {
+	// 	mouse.style.border = "1px solid gray";
+	// }
 	// let x = 0,
 	// 	y = 0;
 	for (let a = 0; a < bubbles.activeBubbles.length; a++) {

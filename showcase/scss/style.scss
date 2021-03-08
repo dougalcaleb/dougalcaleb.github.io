@@ -1,19 +1,19 @@
-@use "ext";
+// @use "ext";
 
-* {
-    user-select: none;
-}
-body {
-    margin: 0;
-    overflow: hidden;
-}
+// * {
+//     user-select: none;
+// }
+// body {
+//     margin: 0;
+//     overflow: hidden;
+// }
 
-.wrap {
-    @extend %center;
-    z-index: 5;
-   //  transform: rotate(90deg);
-    // background: gray;
-}
+// .wrap {
+//     @extend %center;
+//     z-index: 5;
+//    //  transform: rotate(90deg);
+//     // background: gray;
+// }
 
 .bubble {
     position: absolute;
@@ -28,19 +28,19 @@ body {
     // }
 }
 
-.mousescan {
-    position: absolute;
-}
+// .mousescan {
+//     position: absolute;
+// }
 
-.readout {
-    font-family: monospace;
-}
+// .readout {
+//     font-family: monospace;
+// }
 
-.forcefield {
-    position: absolute;
-    // border: 1px solid gray;
-    border-radius: 100%;
-    // filter: blur(100%);
-    // background: green;
-    opacity: 0.3;
-}
+// .forcefield {
+//     position: absolute;
+//     // border: 1px solid gray;
+//     border-radius: 100%;
+//     // filter: blur(100%);
+//     // background: green;
+//     opacity: 0.3;
+// }
