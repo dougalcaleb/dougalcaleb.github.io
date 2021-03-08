@@ -6,17 +6,18 @@ $name - variable
 */
 
 /*
-possible additional accents:
-#1598bf - light blue
-#1ac8ed
+
 
 */
 
-$header-gray: #232323;
-$bg-gray: #111111;
-$light-gray: #d8d8d8;
-$accent: #5415b7;
-$accent-blue: #0576b3;
+$gray: #282828;
+$dark-gray: #191919;
+$black: #070707;
+$dark-blue: rgb(0,107,140);
+$light-blue: rgb(0,183,255);
+
+$radius: 5px;
+
 
 %center {
 	position: absolute;
