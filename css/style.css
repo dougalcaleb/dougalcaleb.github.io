@@ -35,7 +35,7 @@ nav .navigation-wrap {
   flex-direction: column;
   justify-content: center;
   width: inherit;
-  height: calc(100% - 15vw);
+  height: calc(100% - 20vw);
   top: 0;
 }
 nav .navigation-wrap .navigation {
@@ -56,6 +56,50 @@ nav .navigation-wrap .navigation .nav-btn {
   padding-top: 20px;
   padding-bottom: 20px;
   cursor: pointer;
+}
+nav .navigation-wrap .navigation .nav-btn::before {
+  content: "";
+  height: 100%;
+  position: absolute;
+  top: 0;
+  width: 0%;
+  background: #006b8c;
+  transition: 0.2s;
+  right: 50%;
+  z-index: -1;
+}
+nav .navigation-wrap .navigation .nav-btn::after {
+  content: "";
+  height: 100%;
+  top: 0;
+  position: absolute;
+  width: 0%;
+  background: #006b8c;
+  transition: 0.2s;
+  left: 50%;
+  z-index: -1;
+}
+nav .navigation-wrap .navigation .nav-btn:hover::before {
+  content: "";
+  height: 100%;
+  position: absolute;
+  top: 0;
+  width: 50%;
+  background: #006b8c;
+  transition: 0.2s;
+  right: 50%;
+  z-index: -1;
+}
+nav .navigation-wrap .navigation .nav-btn:hover::after {
+  content: "";
+  height: 100%;
+  top: 0;
+  position: absolute;
+  width: 50%;
+  background: #006b8c;
+  transition: 0.2s;
+  left: 50%;
+  z-index: -1;
 }
 nav .navigation-wrap .navigation:last-child {
   border-bottom: 2px solid #505050;
@@ -151,22 +195,4 @@ nav .picture img {
   margin-top: 25px;
   font-size: max(1vw, 2vh);
   margin-right: 15px;
-}
-
-.active-nav-btn::before {
-  content: "";
-  width: 8px;
-  height: 100%;
-  left: -30px;
-  position: absolute;
-  background: #00b7ff;
-}
-
-.inactive-nav-btn::before {
-  content: "";
-  width: 8px;
-  height: 100%;
-  left: -40px;
-  position: absolute;
-  background: #006b8c;
 }
