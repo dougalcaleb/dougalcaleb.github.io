@@ -25,7 +25,7 @@ nav {
 		flex-direction: column;
 		justify-content: center;
 		width: inherit;
-		height: calc(100% - 15vw);
+		height: calc(100% - 20vw);
 		top: 0;
 		// background: purple;
 		.navigation {
@@ -45,30 +45,76 @@ nav {
 				text-align: center;
 				padding-top: 20px;
 				padding-bottom: 20px;
-            cursor: pointer;
+				cursor: pointer;
+				&::before {
+					content: "";
+					height: 100%;
+					position: absolute;
+					top: 0;
+					width: 0%;
+					background: ext.$dark-blue;
+					transition: 0.2s;
+					right: 50%;
+					z-index: -1;
+				}
+				&::after {
+					content: "";
+					height: 100%;
+               top: 0;
+					position: absolute;
+					width: 0%;
+					background: ext.$dark-blue;
+					transition: 0.2s;
+					left: 50%;
+               z-index: -1;
+				}
+				&:hover {
+					&::before {
+						content: "";
+						height: 100%;
+						position: absolute;
+						top: 0;
+						width: 50%;
+						background: ext.$dark-blue;
+						transition: 0.2s;
+						right: 50%;
+						z-index: -1;
+					}
+					&::after {
+						content: "";
+						height: 100%;
+                  top: 0;
+						position: absolute;
+						width: 50%;
+						background: ext.$dark-blue;
+						transition: 0.2s;
+						left: 50%;
+                  z-index: -1;
+					}
+				}
 			}
-         &:last-child {
-            border-bottom: 2px solid #505050;
-         }
+			&:last-child {
+				border-bottom: 2px solid #505050;
+			}
 		}
 	}
 
-   .socials {
-      bottom: 0;
-      position: absolute;
-      width: 10vw;
-      height: 5vw;
-      border-top-left-radius: 20px;
+	.socials {
+		bottom: 0;
+		position: absolute;
+		width: 10vw;
+		height: 5vw;
+		border-top-left-radius: 20px;
 		border-top-right-radius: 20px;
-      display: flex;
-      justify-content: space-evenly;
-      align-items: center;
-      background: ext.$black;
-      svg {
-         color: #ccc;
-         width: 2vw;
-      }
-   }
+		display: flex;
+		justify-content: space-evenly;
+		align-items: center;
+		background: ext.$black;
+		svg {
+			color: #ccc;
+			width: 2vw;
+		}
+	}
 
 	.picture {
 		height: 10vw;
@@ -162,24 +208,24 @@ nav {
 	margin-right: 15px;
 }
 
-.active-nav-btn {
-	&::before {
-		content: "";
-		width: 8px;
-		height: 100%;
-		left: -30px;
-		position: absolute;
-		background: ext.$light-blue;
-	}
-}
+// .active-nav-btn {
+// 	&::before {
+// 		content: "";
+// 		width: 8px;
+// 		height: 100%;
+// 		left: -30px;
+// 		position: absolute;
+// 		background: ext.$light-blue;
+// 	}
+// }
 
-.inactive-nav-btn {
-	&::before {
-		content: "";
-		width: 8px;
-		height: 100%;
-		left: -40px;
-		position: absolute;
-		background: ext.$dark-blue;
-	}
-}
+// .inactive-nav-btn {
+// 	&::before {
+// 		content: "";
+// 		width: 8px;
+// 		height: 100%;
+// 		left: -40px;
+// 		position: absolute;
+// 		background: ext.$dark-blue;
+// 	}
+// }
