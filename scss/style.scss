@@ -32,6 +32,20 @@ nav {
       height: 10vw;
       width: 10vw;
       background: ext.$black;
+      position: relative;
+      border-bottom-left-radius: 20px;
+      border-bottom-right-radius: 20px;
+      img {
+         position: absolute;
+         margin: auto;
+         left: 0;
+         top: 0;
+         right: 0;
+         bottom: 0;
+         height: 7vw;
+         width: 7vw;
+      }
+      
    }
 }
 
@@ -49,9 +63,9 @@ nav {
       top: 0;
       bottom: 0;
       margin: auto;
-      width: 50%;
+      width: 40%;
       // height: 50vh;
-      background: orange;
+      // background: orange;
       // display: flex;
       // align-items: center;
       // flex-direction: column;
@@ -64,7 +78,7 @@ nav {
    }
 
    .showcase {
-      background: purple;
+      // background: purple;
       height: 50vh;
       width: 50vh;
       position: relative;

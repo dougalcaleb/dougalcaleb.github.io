@@ -4,9 +4,9 @@ let bubbles = {
 	x: 40,            // bubble count on x axis
 	y: 40,            // bubble count on y axis
    activeBubbles: places,
-	size: 6,          // size of bubbles in px
-	space: 6,         // space between bubbles in px
-	color: "orange",  // normal color of bubbles
+	size: 12,          // size of bubbles in px
+	space: 12,         // space between bubbles in px
+	color: "rgb(0,183,255)",  // normal color of bubbles
 	active: "purple", // debug color
 	radius: "100%",   // bubble corner rounding
 	vshutoff: 2,      // at less than this velocity, it is set to 0 to avoid vibrating bubbles
