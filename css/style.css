@@ -30,10 +30,51 @@ nav {
   z-index: 9999;
   background: #191919;
 }
-nav .navigation .nav-btn::before {
-  content: "";
-  width: 15px;
+nav .navigation-wrap {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: inherit;
+  height: calc(100% - 15vw);
+  top: 0;
+}
+nav .navigation-wrap .navigation {
+  position: relative;
+  margin: auto;
+  top: 0;
+  bottom: 0;
+  width: inherit;
+}
+nav .navigation-wrap .navigation .nav-btn {
+  font-family: "Ubuntu", sans-serif;
+  font-weight: 700;
+  color: #ddd;
+  position: relative;
+  font-size: 1vw;
+  border-top: 2px solid #505050;
+  text-align: center;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  cursor: pointer;
+}
+nav .navigation-wrap .navigation:last-child {
+  border-bottom: 2px solid #505050;
+}
+nav .socials {
+  bottom: 0;
   position: absolute;
+  width: 10vw;
+  height: 5vw;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  background: #070707;
+}
+nav .socials svg {
+  color: #ccc;
+  width: 2vw;
 }
 nav .picture {
   height: 10vw;
@@ -61,29 +102,37 @@ nav .picture img {
   top: 0;
   left: 10vw;
   position: relative;
+  background-image: url("../images/backgrounds/dark texture.png");
+}
+.land-page .intro-wrap {
   display: flex;
   justify-content: center;
+  flex-direction: column;
+  align-items: flex-start;
+  height: 100%;
+  z-index: 5;
 }
-.land-page .intro {
-  position: relative;
-  top: 0;
-  bottom: 0;
-  margin: auto;
-  width: 40%;
+.land-page .intro-wrap .intro {
+  position: absolute;
+  z-index: 5;
+  left: 40px;
 }
-.land-page .intro .desc {
+.land-page .intro-wrap .intro .desc {
   font-family: "Miriam Libre", "Courier New", Courier, monospace;
   font-weight: 700;
-  color: #bbb;
-  font-size: 3vw;
+  color: #ccc;
+  font-size: max(3vw, 6vh);
+  text-shadow: 5px 5px 1px #333;
 }
 .land-page .showcase {
   height: 50vh;
   width: 50vh;
-  position: relative;
+  position: absolute;
   top: 0;
   bottom: 0;
   margin: auto;
+  right: 15px;
+  z-index: 1;
 }
 
 .land-btn {
@@ -100,12 +149,24 @@ nav .picture img {
   background: transparent;
   outline: none;
   margin-top: 25px;
+  font-size: max(1vw, 2vh);
+  margin-right: 15px;
 }
 
 .active-nav-btn::before {
+  content: "";
+  width: 8px;
+  height: 100%;
+  left: -30px;
+  position: absolute;
   background: #00b7ff;
 }
 
 .inactive-nav-btn::before {
+  content: "";
+  width: 8px;
+  height: 100%;
+  left: -40px;
+  position: absolute;
   background: #006b8c;
 }
