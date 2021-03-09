@@ -8,6 +8,13 @@ $name - variable
 
 
 */
+.land-page .continue-wrap .continue, .land-page .continue-wrap svg {
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin: auto;
+}
+
 * {
   user-select: none;
 }
@@ -148,6 +155,29 @@ nav .picture img {
   position: relative;
   background-image: url("../images/backgrounds/dark texture.png");
 }
+.land-page .continue-wrap .continue {
+  bottom: 40px;
+  border: none;
+  border-radius: 5px;
+  color: #006b8c;
+  font-family: "Ubuntu", sans-serif;
+  font-weight: 700;
+  padding: 5px;
+  padding-left: 25px;
+  padding-right: 25px;
+  cursor: pointer;
+  background: transparent;
+  outline: none;
+  margin-top: 25px;
+  font-size: max(1vw, 2vh);
+  z-index: 5;
+  animation: 1s pop ease;
+}
+.land-page .continue-wrap svg {
+  bottom: 10px;
+  color: #006b8c;
+  height: 30px;
+}
 .land-page .intro-wrap {
   display: flex;
   justify-content: center;
@@ -195,4 +225,27 @@ nav .picture img {
   margin-top: 25px;
   font-size: max(1vw, 2vh);
   margin-right: 15px;
+}
+
+@keyframes pop {
+  0% {
+    bottom: -50px;
+  }
+  40% {
+    bottom: 100px;
+  }
+  100% {
+    bottom: 40px;
+  }
+}
+@keyframes float {
+  0% {
+    bottom: 40px;
+  }
+  50% {
+    bottom: 50px;
+  }
+  100% {
+    bottom: 40px;
+  }
 }

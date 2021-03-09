@@ -7,3 +7,7 @@
 //    document.querySelector(".background").style.backgroundPosition = "center center";
 //    document.querySelector(".background").style.backgroundSize = "cover";
 // }
+
+setTimeout(() => {
+   document.querySelector(".continue").style.animation = "2s float ease infinite";
+}, 1000);
