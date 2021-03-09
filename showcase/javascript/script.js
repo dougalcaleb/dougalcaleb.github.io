@@ -33,7 +33,7 @@ let frames = {
 
    lastFrame: 0,
    currentFrame: 0,
-   delta: 0,
+   delta: 1,
 }
 
 let mousescan = {
@@ -85,10 +85,6 @@ document.addEventListener(
 		// get the nearest bubble
 		stepx = Math.round((event.clientX - wrapSizeX) / (bubbles.size + bubbles.space));
 		stepy = Math.round((event.clientY - wrapSizeY) / (bubbles.size + bubbles.space));
-
-		// position forcefield visual to follow mouse
-		// mouse.style.left = event.clientX - forcefield.size / 2 + "px";
-		// mouse.style.top = event.clientY - forcefield.size / 2 + "px";
 
 		// set vars for mouse velocity calculations, calculate velocity
 		forcefield.x2 = JSON.parse(JSON.stringify(forcefield.x1));
@@ -153,10 +149,13 @@ function animateBubble() {
 					// calculate angle of impact (tangent of the forcefield) and add to active bubble list to be externally animated
 					let xangle = Math.acos(dX / mousescan.hyp);
 					let yangle = Math.asin(dY / mousescan.hyp);
-					let id = curX + "-" + curY;
-
-					let sX = parseInt(document.querySelector(".bubble-" + id).style.left.slice(0, -2));
-					let sY = parseInt(document.querySelector(".bubble-" + id).style.top.slice(0, -2));
+               let id = curX + "-" + curY;
+               
+               let tParts = document.querySelector(".bubble-" + id).style.transform.split(", ");
+               let sX = parseInt(tParts[0].slice(10, tParts[0].length-2));
+               let sY = parseInt(tParts[1].slice(0, tParts[1].length-3));
+					// let sX = parseInt(document.querySelector(".bubble-" + id).style.left.slice(0, -2));
+					// let sY = parseInt(document.querySelector(".bubble-" + id).style.top.slice(0, -2));
 					addMovingBubble(forcefield.velocity * forcefield.vmult, xangle, yangle, id, sX, sY, dX, dY);
 				}
 			}
@@ -185,12 +184,12 @@ function animateBubble() {
 				movingBubbles[property].x < movingBubbles[property].sx &&
 				Math.abs(movingBubbles[property].x - movingBubbles[property].sx) > bubbles.pshutoff
 			) {
-				movingBubbles[property].xvel += (bubbles.decel * frames.delta);
+				movingBubbles[property].xvel += (bubbles.decel); // * frames.delta
 			} else if (
 				movingBubbles[property].x > movingBubbles[property].sx &&
 				Math.abs(movingBubbles[property].x - movingBubbles[property].sx) > bubbles.pshutoff
 			) {
-				movingBubbles[property].xvel -= (bubbles.decel * frames.delta);
+				movingBubbles[property].xvel -= (bubbles.decel); // * frames.delta
 			} else if (
 				Math.abs(movingBubbles[property].xvel) <= bubbles.vshutoff &&
 				Math.abs(movingBubbles[property].x - movingBubbles[property].sx) < bubbles.pshutoff
@@ -204,12 +203,12 @@ function animateBubble() {
 				movingBubbles[property].y < movingBubbles[property].sy &&
 				Math.abs(movingBubbles[property].y - movingBubbles[property].sy) > bubbles.pshutoff
 			) {
-				movingBubbles[property].yvel += (bubbles.decel * frames.delta);
+				movingBubbles[property].yvel += (bubbles.decel); //  * frames.delta
 			} else if (
 				movingBubbles[property].y > movingBubbles[property].sy &&
 				Math.abs(movingBubbles[property].y - movingBubbles[property].sy) > bubbles.pshutoff
 			) {
-				movingBubbles[property].yvel -= (bubbles.decel * frames.delta);
+				movingBubbles[property].yvel -= (bubbles.decel); //  * frames.delta
 			} else if (
 				Math.abs(movingBubbles[property].yvel) <= bubbles.vshutoff &&
 				Math.abs(movingBubbles[property].y - movingBubbles[property].sy) < bubbles.pshutoff
@@ -227,17 +226,19 @@ function animateBubble() {
 		let yangle = Math.asin(dY / mousescan.hyp);
 
 		if (d < mousescan.hyp) {
-			movingBubbles[property].xvel = (Math.cos(xangle) * -forcefield.vmin * frames.delta);
-			movingBubbles[property].yvel = (Math.sin(yangle) * -forcefield.vmin * frames.delta);
+			movingBubbles[property].xvel = (Math.cos(xangle) * -forcefield.vmin ); 
+			movingBubbles[property].yvel = (Math.sin(yangle) * -forcefield.vmin );  //* frames.delta
 		}
 
 		// position bubble
 
-		let addX = movingBubbles[property].x + movingBubbles[property].xvel;
-		let addY = movingBubbles[property].y + movingBubbles[property].yvel;
+		let addX = movingBubbles[property].x + (movingBubbles[property].xvel * frames.delta);
+		let addY = movingBubbles[property].y + (movingBubbles[property].yvel * frames.delta);
 
-		document.querySelector(".bubble-" + movingBubbles[property].id).style.left = addX + "px";
-		document.querySelector(".bubble-" + movingBubbles[property].id).style.top = addY + "px";
+		// document.querySelector(".bubble-" + movingBubbles[property].id).style.left = addX + "px";
+      // document.querySelector(".bubble-" + movingBubbles[property].id).style.top = addY + "px";
+      
+      document.querySelector(".bubble-" + movingBubbles[property].id).style.transform = `translate(${addX}px, ${addY}px)`;
 
 		movingBubbles[property].x += (movingBubbles[property].xvel * frames.delta);
       movingBubbles[property].y += (movingBubbles[property].yvel * frames.delta);
@@ -257,8 +258,11 @@ function animateBubble() {
 			movingBubbles[property].stopped++;
 		}
 		if (movingBubbles[property].stopped > bubbles.stopcount) {
-			document.querySelector(".bubble-" + movingBubbles[property].id).style.left = movingBubbles[property].sx + "px";
-			document.querySelector(".bubble-" + movingBubbles[property].id).style.top = movingBubbles[property].sy + "px";
+			// document.querySelector(".bubble-" + movingBubbles[property].id).style.left = movingBubbles[property].sx + "px";
+         // document.querySelector(".bubble-" + movingBubbles[property].id).style.top = movingBubbles[property].sy + "px";
+         
+         document.querySelector(".bubble-" + movingBubbles[property].id).style.transform = `translate(${movingBubbles[property].sx}px, ${movingBubbles[property].sy}px)`;
+
 			delete movingBubbles[property];
 		}
    }
@@ -291,8 +295,12 @@ function createBubbles() {
             let newb = document.createElement("DIV");
             newb.classList.add("bubble");
             newb.classList.add("bubble-" + a + "-" + b);
-            newb.style.left = a * bubbles.size + a * bubbles.space - bubbles.size / 2 + "px";
-            newb.style.top = b * bubbles.size + b * bubbles.space - bubbles.size / 2 + "px";
+            newb.style.willChange = "transform";
+            let x = a * bubbles.size + a * bubbles.space - bubbles.size / 2 + "px";
+            let y = b * bubbles.size + b * bubbles.space - bubbles.size / 2 + "px";
+            newb.style.transform = `translate(${x}px, ${y}px)`;
+            // newb.style.left = a * bubbles.size + a * bubbles.space - bubbles.size / 2 + "px";
+            // newb.style.top = b * bubbles.size + b * bubbles.space - bubbles.size / 2 + "px";
             newb.style.background = bubbles.color;
             newb.style.borderRadius = bubbles.radius;
             newb.style.height = bubbles.size + "px";
@@ -309,3 +317,8 @@ function createBubbles() {
 
 createBubbles();
 window.requestAnimationFrame(animateBubble);
+
+
+// setInterval(() => {
+//    console.log(frames.delta);
+// }, 100);
