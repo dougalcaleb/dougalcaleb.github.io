@@ -154,6 +154,7 @@ nav .picture img {
   left: 10vw;
   position: relative;
   background-image: url("../images/backgrounds/dark texture.png");
+  background-size: cover;
 }
 .land-page .continue-wrap .continue {
   bottom: 40px;

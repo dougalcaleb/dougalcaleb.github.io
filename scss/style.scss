@@ -146,6 +146,7 @@ nav {
 	// display: flex;
 	// justify-content: center;
 	background-image: url("../images/backgrounds/dark texture.png");
+   background-size: cover;
    .continue-wrap {
       .continue {
          @extend %center-x;
