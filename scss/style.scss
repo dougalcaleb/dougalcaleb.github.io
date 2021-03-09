@@ -60,13 +60,13 @@ nav {
 				&::after {
 					content: "";
 					height: 100%;
-               top: 0;
+					top: 0;
 					position: absolute;
 					width: 0%;
 					background: ext.$dark-blue;
 					transition: 0.2s;
 					left: 50%;
-               z-index: -1;
+					z-index: -1;
 				}
 				&:hover {
 					&::before {
@@ -83,13 +83,13 @@ nav {
 					&::after {
 						content: "";
 						height: 100%;
-                  top: 0;
+						top: 0;
 						position: absolute;
 						width: 50%;
 						background: ext.$dark-blue;
 						transition: 0.2s;
 						left: 50%;
-                  z-index: -1;
+						z-index: -1;
 					}
 				}
 			}
@@ -146,6 +146,37 @@ nav {
 	// display: flex;
 	// justify-content: center;
 	background-image: url("../images/backgrounds/dark texture.png");
+   .continue-wrap {
+      .continue {
+         @extend %center-x;
+         bottom: 40px;
+   
+         // border: 3px solid ext.$dark-blue;
+         border: none;
+         border-radius: 5px;
+         color: ext.$dark-blue;
+         font-family: "Ubuntu", sans-serif;
+         font-weight: 700;
+         padding: 5px;
+         padding-left: 25px;
+         padding-right: 25px;
+         cursor: pointer;
+         background: transparent;
+         outline: none;
+         margin-top: 25px;
+         font-size: max(1vw, 2vh);
+         z-index: 5;
+         animation: 1s pop ease;
+         
+      }
+      svg  {
+         @extend %center-x;
+         bottom: 10px;
+         color: ext.$dark-blue;
+         height: 30px;
+      }
+   }
+	
 	.intro-wrap {
 		// background: green;
 		display: flex;
@@ -229,3 +260,27 @@ nav {
 // 		background: ext.$dark-blue;
 // 	}
 // }
+
+@keyframes pop {
+	0% {
+		bottom: -50px;
+	}
+	40% {
+		bottom: 100px;
+	}
+	100% {
+		bottom: 40px;
+	}
+}
+
+@keyframes float {
+	0% {
+		bottom: 40px;
+	}
+	50% {
+		bottom: 50px;
+	}
+   100% {
+		bottom: 40px;
+	}
+}
