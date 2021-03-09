@@ -236,12 +236,10 @@ function animateBubble() {
 		let addX = movingBubbles[property].x + movingBubbles[property].xvel * frames.delta;
 		let addY = movingBubbles[property].y + movingBubbles[property].yvel * frames.delta;
 
-		// document.querySelector(".bubble-" + movingBubbles[property].id).style.left = addX + "px";
-      // document.querySelector(".bubble-" + movingBubbles[property].id).style.top = addY + "px";
+		document.querySelector(".bubble-" + movingBubbles[property].id).style.left = addX + "px";
+      document.querySelector(".bubble-" + movingBubbles[property].id).style.top = addY + "px";
       
-      document.querySelector(".bubble-" + movingBubbles[property].id).style.transform = `translate(${addX}px, ${addY}px)`;
-
-		// document.querySelector(".bubble-" + movingBubbles[property].id).style.transform = `translate(${addX}px, ${addY}px)`;
+      // document.querySelector(".bubble-" + movingBubbles[property].id).style.transform = `translate(${addX}px, ${addY}px)`;
 
 		movingBubbles[property].x += movingBubbles[property].xvel * frames.delta;
 		movingBubbles[property].y += movingBubbles[property].yvel * frames.delta;
