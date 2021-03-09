@@ -8,10 +8,24 @@ body {
 	overflow: hidden;
 	position: relative;
 	height: 100%;
+   scroll-behavior: smooth;
+}
+* {
+   scroll-behavior: smooth;
 }
 
 p {
 	margin: auto;
+}
+
+a {
+   text-decoration: none;
+}
+
+.links {
+   display: none;
+   visibility: hidden;
+   opacity: 0;
 }
 
 nav {
@@ -137,15 +151,17 @@ nav {
 }
 
 .land-page {
-	background: ext.$gray;
+	// background: ext.$gray;
 	height: 100vh;
 	width: 90vw;
 	top: 0;
-	left: 10vw;
+	// left: 10vw;
 	position: relative;
 	// display: flex;
 	// justify-content: center;
 	background-image: url("../images/backgrounds/dark texture.png");
+   background-size: cover;
+   animation-fill-mode: forwards;
    .continue-wrap {
       .continue {
          @extend %center-x;
@@ -188,16 +204,7 @@ nav {
 		.intro {
 			position: absolute;
 			z-index: 5;
-			// top: 0;
-			// bottom: 0;
-			// margin: auto;
 			left: 40px;
-			// width: 40%;
-			// height: 50vh;
-			// background: orange;
-			// display: flex;
-			// align-items: center;
-			// flex-direction: column;
 			.desc {
 				font-family: "Miriam Libre", "Courier New", Courier, monospace;
 				font-weight: 700;
@@ -239,27 +246,71 @@ nav {
 	margin-right: 15px;
 }
 
-// .active-nav-btn {
-// 	&::before {
-// 		content: "";
-// 		width: 8px;
-// 		height: 100%;
-// 		left: -30px;
-// 		position: absolute;
-// 		background: ext.$light-blue;
-// 	}
-// }
+.main {
+   background: ext.$gray;
+	height: calc(100vh - 10px);
+	width: calc(90vw - 10px);
+	// top: 100vh;
+	// left: 10vw;
+	position: relative;
+	// display: flex
+   overflow-y: auto;
+   border-right: 10px solid ext.$gray;
+   border-top: 5px solid ext.$gray;
+   border-bottom: 5px solid ext.$gray;
+   section {
+      width: 95%;
+      margin: auto;
+      position: relative;
+      background: #444;
+      border-radius: 5px;
+      box-shadow: 0px 5px 5px #111;
+      height: 700px;
+   }
 
-// .inactive-nav-btn {
-// 	&::before {
-// 		content: "";
-// 		width: 8px;
-// 		height: 100%;
-// 		left: -40px;
-// 		position: absolute;
-// 		background: ext.$dark-blue;
-// 	}
-// }
+   footer {
+      height: 40px;
+      bottom: 0;
+   }
+
+   &::-webkit-scrollbar {
+		width: 10px;
+		margin-right: 5px;
+	}
+
+	&::-webkit-scrollbar-track {
+		background: transparent;
+      width: 10px;
+      right: 55px;
+      padding-right: 5px;
+	}
+
+	&::-webkit-scrollbar-thumb {
+		background: #666;
+		width: 5px;
+		// border-radius: 10px;
+      margin-right: 5px;
+      transition: 0.1s;
+      &:hover {
+         background: ext.$dark-blue;
+      }
+      &:focus {
+         background: ext.$light-blue;
+      }
+	}
+
+	&::-webkit-scrollbar-button {
+		display: none;
+	}
+}
+
+.body-wrap {
+   position: fixed;
+   background: orange;
+   left: 10vw;
+   height: 5px;
+}
+
 
 @keyframes pop {
 	0% {
@@ -283,4 +334,22 @@ nav {
    100% {
 		bottom: 40px;
 	}
+}
+
+@keyframes moveUp {
+   0% {
+      top: 0;
+   }
+   100% {
+      top: -100vh;
+   }
+}
+
+@keyframes moveDown {
+   0% {
+      top: -100vh;
+   }
+   100% {
+      top: 0;
+   }
 }

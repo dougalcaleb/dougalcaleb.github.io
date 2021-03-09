@@ -1,24 +1,24 @@
 // editable vs non-editable values seperated by a line break, editable on top
 
 let bubbles = {
-	x: 40,            // bubble count on x axis
-	y: 40,            // bubble count on y axis
-   activeBubbles: places,
-	size: 12,          // size of bubbles in px
-	space: 12,         // space between bubbles in px
-	color: "rgb(0,183,255)",  // normal color of bubbles
+	x: 40, // bubble count on x axis
+	y: 40, // bubble count on y axis
+	activeBubbles: places,
+	size: 12, // size of bubbles in px
+	space: 12, // space between bubbles in px
+	color: "rgb(0,183,255)", // normal color of bubbles
 	active: "purple", // debug color
-	radius: "100%",   // bubble corner rounding
-	vshutoff: 2,      // at less than this velocity, it is set to 0 to avoid vibrating bubbles
-	pshutoff: 0.8,    // at less displacement than this, the bubble stops and returns to its normal position
-	decel: 0.5,       // effect of gravity from a bubble's origin to the bubble
-	vdecel: 0.15,     // natural deceleration loss, simulates friction
-	stopcount: 10,    // after this many iterations of no velocity, the bubbles's object is deleted from the iterator,
-	xgrav: true,      // toggles x-axis point gravity
-	ygrav: true,      // toggles y-axis point gravity
+	radius: "100%", // bubble corner rounding
+	vshutoff: 2, // at less than this velocity, it is set to 0 to avoid vibrating bubbles
+	pshutoff: 0.8, // at less displacement than this, the bubble stops and returns to its normal position
+	decel: 0.5, // effect of gravity from a bubble's origin to the bubble
+	vdecel: 0.15, // natural deceleration loss, simulates friction
+	stopcount: 10, // after this many iterations of no velocity, the bubbles's object is deleted from the iterator,
+	xgrav: true, // toggles x-axis point gravity
+	ygrav: true, // toggles y-axis point gravity
 };
 
-// Framerate compensation - 
+// Framerate compensation -
 /*
    baseTime is the length of time (ms) that one frame exists at the target framerate  (16.66 = 60fps)
       -  the idea is that the animation speeds are dialed in at the target framerate, and this system is added after to compensate
@@ -29,33 +29,33 @@ let bubbles = {
       -  all animations using this system must be *multiplied* by this value
 */
 let frames = {
-   baseTime: 16.66,  // target framerate
+	baseTime: 16.66, // target framerate
 
-   lastFrame: 0,
-   currentFrame: 0,
-   delta: 0,
-}
+	lastFrame: 0,
+	currentFrame: 0,
+	delta: 1,
+};
 
 let mousescan = {
-	color: "green",   // color of the scan visual
-	span: 5,          // number of bubbles the scan spans. must be odd
+	color: "green", // color of the scan visual
+	span: 5, // number of bubbles the scan spans. must be odd
 
-	size: 0,          // set later, depending on bubble size
-	half: 0,          // set later, used for mouse follow
-	hyp: 0,           // set later, stores radius of the forcefield circle
-	mx: 0,            // mouse x for transfer between functions
-	my: 0,            // mouse y for transfer between functions
+	size: 0, // set later, depending on bubble size
+	half: 0, // set later, used for mouse follow
+	hyp: 0, // set later, stores radius of the forcefield circle
+	mx: 0, // mouse x for transfer between functions
+	my: 0, // mouse y for transfer between functions
 };
 
 let forcefield = {
-	vmult: 2,         // multiplier for mouse velocity
-	vmin: 10,          // minimum read mouse velocity
-	boostmult: 1.3,     // multiplier for vmin and vmult when click is held down
-	visible: true,    // toggles forcefield visibility border
+	vmult: 2, // multiplier for mouse velocity
+	vmin: 10, // minimum read mouse velocity
+	boostmult: 1.8, // multiplier for vmin and vmult when click is held down
+	visible: true, // toggles forcefield visibility border
 
-	size: 0,          // set later, based on mousescan size
-	velocity: 0,      // constantly set to mouse velocity
-	x1: 0,            // x1, x2, y1, y2 used to calculate velocity
+	size: 0, // set later, based on mousescan size
+	velocity: 0, // constantly set to mouse velocity
+	x1: 0, // x1, x2, y1, y2 used to calculate velocity
 	y1: 0,
 	x2: 0,
 	y2: 0,
@@ -79,16 +79,13 @@ let wrap = document.querySelector(".showcase");
 // let readout = document.querySelector(".readout");
 // let mouse = document.querySelector(".forcefield");
 
-document.addEventListener(
+wrap.addEventListener(
 	"mousemove",
-	function (event) {
+	function handleMouseMove(event) {
+		// console.log("mousemove");
 		// get the nearest bubble
 		stepx = Math.round((event.clientX - wrapSizeX) / (bubbles.size + bubbles.space));
 		stepy = Math.round((event.clientY - wrapSizeY) / (bubbles.size + bubbles.space));
-
-		// position forcefield visual to follow mouse
-		// mouse.style.left = event.clientX - forcefield.size / 2 + "px";
-		// mouse.style.top = event.clientY - forcefield.size / 2 + "px";
 
 		// set vars for mouse velocity calculations, calculate velocity
 		forcefield.x2 = JSON.parse(JSON.stringify(forcefield.x1));
@@ -155,6 +152,9 @@ function animateBubble() {
 					let yangle = Math.asin(dY / mousescan.hyp);
 					let id = curX + "-" + curY;
 
+					let tParts = document.querySelector(".bubble-" + id).style.transform.split(", ");
+					// let sX = parseInt(tParts[0].slice(10, tParts[0].length - 2));
+					// let sY = parseInt(tParts[1].slice(0, tParts[1].length - 3));
 					let sX = parseInt(document.querySelector(".bubble-" + id).style.left.slice(0, -2));
 					let sY = parseInt(document.querySelector(".bubble-" + id).style.top.slice(0, -2));
 					addMovingBubble(forcefield.velocity * forcefield.vmult, xangle, yangle, id, sX, sY, dX, dY);
@@ -185,12 +185,12 @@ function animateBubble() {
 				movingBubbles[property].x < movingBubbles[property].sx &&
 				Math.abs(movingBubbles[property].x - movingBubbles[property].sx) > bubbles.pshutoff
 			) {
-				movingBubbles[property].xvel += (bubbles.decel * frames.delta);
+				movingBubbles[property].xvel += bubbles.decel; // * frames.delta
 			} else if (
 				movingBubbles[property].x > movingBubbles[property].sx &&
 				Math.abs(movingBubbles[property].x - movingBubbles[property].sx) > bubbles.pshutoff
 			) {
-				movingBubbles[property].xvel -= (bubbles.decel * frames.delta);
+				movingBubbles[property].xvel -= bubbles.decel; // * frames.delta
 			} else if (
 				Math.abs(movingBubbles[property].xvel) <= bubbles.vshutoff &&
 				Math.abs(movingBubbles[property].x - movingBubbles[property].sx) < bubbles.pshutoff
@@ -204,12 +204,12 @@ function animateBubble() {
 				movingBubbles[property].y < movingBubbles[property].sy &&
 				Math.abs(movingBubbles[property].y - movingBubbles[property].sy) > bubbles.pshutoff
 			) {
-				movingBubbles[property].yvel += (bubbles.decel * frames.delta);
+				movingBubbles[property].yvel += bubbles.decel; //  * frames.delta
 			} else if (
 				movingBubbles[property].y > movingBubbles[property].sy &&
 				Math.abs(movingBubbles[property].y - movingBubbles[property].sy) > bubbles.pshutoff
 			) {
-				movingBubbles[property].yvel -= (bubbles.decel * frames.delta);
+				movingBubbles[property].yvel -= bubbles.decel; //  * frames.delta
 			} else if (
 				Math.abs(movingBubbles[property].yvel) <= bubbles.vshutoff &&
 				Math.abs(movingBubbles[property].y - movingBubbles[property].sy) < bubbles.pshutoff
@@ -227,29 +227,31 @@ function animateBubble() {
 		let yangle = Math.asin(dY / mousescan.hyp);
 
 		if (d < mousescan.hyp) {
-			movingBubbles[property].xvel = (Math.cos(xangle) * -forcefield.vmin * frames.delta);
-			movingBubbles[property].yvel = (Math.sin(yangle) * -forcefield.vmin * frames.delta);
+			movingBubbles[property].xvel = Math.cos(xangle) * -forcefield.vmin;
+			movingBubbles[property].yvel = Math.sin(yangle) * -forcefield.vmin; //* frames.delta
 		}
 
 		// position bubble
 
-		let addX = movingBubbles[property].x + movingBubbles[property].xvel;
-		let addY = movingBubbles[property].y + movingBubbles[property].yvel;
+		let addX = movingBubbles[property].x + movingBubbles[property].xvel * frames.delta;
+		let addY = movingBubbles[property].y + movingBubbles[property].yvel * frames.delta;
 
 		document.querySelector(".bubble-" + movingBubbles[property].id).style.left = addX + "px";
 		document.querySelector(".bubble-" + movingBubbles[property].id).style.top = addY + "px";
 
-		movingBubbles[property].x += (movingBubbles[property].xvel * frames.delta);
-      movingBubbles[property].y += (movingBubbles[property].yvel * frames.delta);
-      
-      if (movingBubbles[property].yvel == Infinity || movingBubbles[property].yvel == -Infinity) {
-         movingBubbles[property].yvel = 0;
-         movingBubbles[property].y = movingBubbles[property].sy;
-      }
-      if (movingBubbles[property].xvel == Infinity || movingBubbles[property].xvel == -Infinity) {
-         movingBubbles[property].xvel = 0;
-         movingBubbles[property].x = movingBubbles[property].sx;
-      }
+		// document.querySelector(".bubble-" + movingBubbles[property].id).style.transform = `translate(${addX}px, ${addY}px)`;
+
+		movingBubbles[property].x += movingBubbles[property].xvel * frames.delta;
+		movingBubbles[property].y += movingBubbles[property].yvel * frames.delta;
+
+		if (movingBubbles[property].yvel == Infinity || movingBubbles[property].yvel == -Infinity) {
+			movingBubbles[property].yvel = 0;
+			movingBubbles[property].y = movingBubbles[property].sy;
+		}
+		if (movingBubbles[property].xvel == Infinity || movingBubbles[property].xvel == -Infinity) {
+			movingBubbles[property].xvel = 0;
+			movingBubbles[property].x = movingBubbles[property].sx;
+		}
 
 		// once a bubble has stopped moving, make sure it is done changing, then delete its object
 
@@ -259,13 +261,18 @@ function animateBubble() {
 		if (movingBubbles[property].stopped > bubbles.stopcount) {
 			document.querySelector(".bubble-" + movingBubbles[property].id).style.left = movingBubbles[property].sx + "px";
 			document.querySelector(".bubble-" + movingBubbles[property].id).style.top = movingBubbles[property].sy + "px";
+
+			// document.querySelector(
+			// 	".bubble-" + movingBubbles[property].id
+			// ).style.transform = `translate(${movingBubbles[property].sx}px, ${movingBubbles[property].sy}px)`;
+
 			delete movingBubbles[property];
 		}
-   }
-   // framerate compensation and new frame
-   frames.lastFrame = frames.currentFrame;
-   frames.currentFrame = Date.now();
-   frames.delta = (frames.currentFrame - frames.lastFrame) / frames.baseTime;
+	}
+	// framerate compensation and new frame
+	frames.lastFrame = frames.currentFrame;
+	frames.currentFrame = Date.now();
+	frames.delta = (frames.currentFrame - frames.lastFrame) / frames.baseTime;
 	window.requestAnimationFrame(animateBubble);
 }
 
@@ -287,19 +294,23 @@ function createBubbles() {
 	// 	y = 0;
 	for (let a = 0; a < bubbles.activeBubbles.length; a++) {
 		for (let b = 0; b < bubbles.activeBubbles[a].length; b++) {
-         if (bubbles.activeBubbles[a][b] == true) {
-            let newb = document.createElement("DIV");
-            newb.classList.add("bubble");
-            newb.classList.add("bubble-" + a + "-" + b);
-            newb.style.left = a * bubbles.size + a * bubbles.space - bubbles.size / 2 + "px";
-            newb.style.top = b * bubbles.size + b * bubbles.space - bubbles.size / 2 + "px";
-            newb.style.background = bubbles.color;
-            newb.style.borderRadius = bubbles.radius;
-            newb.style.height = bubbles.size + "px";
-            newb.style.width = bubbles.size + "px";
-            wrap.appendChild(newb);
-         }
-			
+			if (bubbles.activeBubbles[a][b] == true) {
+				let newb = document.createElement("DIV");
+				newb.classList.add("bubble");
+				newb.classList.add("bubble-" + a + "-" + b);
+				newb.style.willChange = "transform";
+				let x = a * bubbles.size + a * bubbles.space - bubbles.size / 2 + "px";
+				let y = b * bubbles.size + b * bubbles.space - bubbles.size / 2 + "px";
+				// newb.style.transform = `translate(${x}, ${y})`;
+				newb.style.left = x;
+				newb.style.top = y;
+				newb.style.background = bubbles.color;
+				newb.style.borderRadius = bubbles.radius;
+				newb.style.height = bubbles.size + "px";
+				newb.style.width = bubbles.size + "px";
+				wrap.appendChild(newb);
+			}
+
 			// y++;
 		}
 		// y = 0;
@@ -307,5 +318,15 @@ function createBubbles() {
 	}
 }
 
+bubbles.size = window.innerWidth / 160;
+bubbles.space = window.innerWidth / 160;
+if (window.innerWidth > 2000) {
+   forcefield.vmin = 12;
+}
+
 createBubbles();
 window.requestAnimationFrame(animateBubble);
+
+// setInterval(() => {
+//    console.log(frames.delta);
+// }, 100);
