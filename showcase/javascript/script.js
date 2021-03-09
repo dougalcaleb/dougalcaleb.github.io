@@ -175,12 +175,12 @@ function animateBubble() {
 				movingBubbles[property].x < movingBubbles[property].sx &&
 				Math.abs(movingBubbles[property].x - movingBubbles[property].sx) > bubbles.pshutoff
 			) {
-				movingBubbles[property].xvel += bubbles.decel;
+				movingBubbles[property].xvel += (bubbles.decel * frames.delta);
 			} else if (
 				movingBubbles[property].x > movingBubbles[property].sx &&
 				Math.abs(movingBubbles[property].x - movingBubbles[property].sx) > bubbles.pshutoff
 			) {
-				movingBubbles[property].xvel -= bubbles.decel;
+				movingBubbles[property].xvel -= (bubbles.decel * frames.delta);
 			} else if (
 				Math.abs(movingBubbles[property].xvel) <= bubbles.vshutoff &&
 				Math.abs(movingBubbles[property].x - movingBubbles[property].sx) < bubbles.pshutoff
@@ -194,12 +194,12 @@ function animateBubble() {
 				movingBubbles[property].y < movingBubbles[property].sy &&
 				Math.abs(movingBubbles[property].y - movingBubbles[property].sy) > bubbles.pshutoff
 			) {
-				movingBubbles[property].yvel += bubbles.decel;
+				movingBubbles[property].yvel += (bubbles.decel * frames.delta);
 			} else if (
 				movingBubbles[property].y > movingBubbles[property].sy &&
 				Math.abs(movingBubbles[property].y - movingBubbles[property].sy) > bubbles.pshutoff
 			) {
-				movingBubbles[property].yvel -= bubbles.decel;
+				movingBubbles[property].yvel -= (bubbles.decel * frames.delta);
 			} else if (
 				Math.abs(movingBubbles[property].yvel) <= bubbles.vshutoff &&
 				Math.abs(movingBubbles[property].y - movingBubbles[property].sy) < bubbles.pshutoff
@@ -217,8 +217,8 @@ function animateBubble() {
 		let yangle = Math.asin(dY / mousescan.hyp);
 
 		if (d < mousescan.hyp) {
-			movingBubbles[property].xvel = Math.cos(xangle) * -forcefield.vmin;
-			movingBubbles[property].yvel = Math.sin(yangle) * -forcefield.vmin;
+			movingBubbles[property].xvel = (Math.cos(xangle) * -forcefield.vmin * frames.delta);
+			movingBubbles[property].yvel = (Math.sin(yangle) * -forcefield.vmin * frames.delta);
 		}
 
 		// position bubble
