@@ -18,11 +18,22 @@ let bubbles = {
 	ygrav: true,      // toggles y-axis point gravity
 };
 
+// Framerate compensation - 
+/*
+   baseTime is the length of time (ms) that one frame exists at the target framerate  (16.66 = 60fps)
+      -  the idea is that the animation speeds are dialed in at the target framerate, and this system is added after to compensate
+      -  this is the only value that should be manually changed
+   lastFrame captures the date time (ms) of the previous frame
+   currentFrame captures the date time (ms) of the current frame
+   delta stores the current compensation amount (as a multiplier)
+      -  all animations using this system must be *multiplied* by this value
+*/
 let frames = {
+   baseTime: 16.66,  // target framerate
+
    lastFrame: 0,
    currentFrame: 0,
    delta: 0,
-   baseTime: 16.66,
 }
 
 let mousescan = {
@@ -38,8 +49,8 @@ let mousescan = {
 
 let forcefield = {
 	vmult: 2,         // multiplier for mouse velocity
-	vmin: 8,          // minimum read mouse velocity
-	boostmult: 2,     // multiplier for vmin and vmult when click is held down
+	vmin: 10,          // minimum read mouse velocity
+	boostmult: 1.3,     // multiplier for vmin and vmult when click is held down
 	visible: true,    // toggles forcefield visibility border
 
 	size: 0,          // set later, based on mousescan size
@@ -60,14 +71,13 @@ document.addEventListener("mouseup", function () {
 });
 
 let movingBubbles = {};
-let movingNum = 0;
 
 let wrapSizeX, wrapSizeY;
 let stepx, stepy, offset;
 
 let wrap = document.querySelector(".showcase");
-let readout = document.querySelector(".readout");
-let mouse = document.querySelector(".forcefield");
+// let readout = document.querySelector(".readout");
+// let mouse = document.querySelector(".forcefield");
 
 document.addEventListener(
 	"mousemove",
@@ -125,7 +135,7 @@ function animateBubble() {
 	// loop through the square of bubbles immediately around the mouse. avoids having to loop through all bubbles. more efficient
 	for (let a = 0; a < mousescan.span; a++) {
 		for (let b = 0; b < mousescan.span; b++) {
-			// get currrent bubble in the square and check to see if it exists (bubbles outside of wrap do not exist)
+			// get currrent bubble in the square and check to make sure it exists
 			let curX = stepx - offset + a;
 			let curY = stepy - offset + b;
 
@@ -252,6 +262,7 @@ function animateBubble() {
 			delete movingBubbles[property];
 		}
    }
+   // framerate compensation and new frame
    frames.lastFrame = frames.currentFrame;
    frames.currentFrame = Date.now();
    frames.delta = (frames.currentFrame - frames.lastFrame) / frames.baseTime;
