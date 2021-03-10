@@ -119,8 +119,31 @@ htmlcode.forEach(block => {
 
          // Format properties
          if (props) {
-            let pairs = props.replaceAll(new RegExp(`"\\s(\\S*)=`, "gmi"), `"REPLACE_PROPS--HERE$1=`).trim().split("REPLACE_PROPS--HERE");
-            pairs.forEach(pair => {
+            // let pairs = props.replaceAll(new RegExp(`"\\s(\\S*)=`, "gmi"), `"REPLACE_PROPS--HERE$1=`).trim().split("REPLACE_PROPS--HERE");
+            let pairs = props.trim().split(" ");
+            let joins = [];
+            let matching = false;
+            let joinedParts = [];
+            let firstMatch = true;
+            pairs.forEach(piece => {
+               let re = new RegExp('"', "gi");
+               if (piece.match(re) && piece.match(re).length == 1 && firstMatch) {
+                  matching = true;
+                  firstMatch = false;
+               } else if (piece.match(re) && piece.match(re).length == 1 && !firstMatch) {
+                  matching = false;
+                  firstMatch = true;
+               }
+               joinedParts.push(piece);
+               if (!matching) {
+                  joins.push(joinedParts);
+                  joinedParts = [];
+               }
+            });
+            for (let a = 0; a < joins.length; a++) {
+               joins[a] = joins[a].join(" ");
+            }
+            joins.forEach(pair => {
                let parts = pair.split("=");
                if (parts.length == 2) {
                   coloredProps += ` <span class="code-blue-l">${parts[0]}</span>=<span class="code-orange">${parts[1]}</span>`;
