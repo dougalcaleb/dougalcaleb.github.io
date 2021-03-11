@@ -205,6 +205,23 @@ nav {
 			position: absolute;
 			z-index: 5;
 			left: 40px;
+         .land-btn {
+            border: 3px solid ext.$dark-blue;
+            border-radius: 5px;
+            color: ext.$light-blue;
+            position: relative;
+            font-family: "Ubuntu", sans-serif;
+            font-weight: 700;
+            padding: 5px;
+            padding-left: 25px;
+            padding-right: 25px;
+            cursor: pointer;
+            background: transparent;
+            outline: none;
+            margin-top: 25px;
+            font-size: max(1vw, 2vh);
+            margin-right: 15px;
+         }
 			.desc {
 				font-family: "Miriam Libre", "Courier New", Courier, monospace;
 				font-weight: 700;
@@ -228,29 +245,11 @@ nav {
 	}
 }
 
-.land-btn {
-	border: 3px solid ext.$dark-blue;
-	border-radius: 5px;
-	color: ext.$light-blue;
-	position: relative;
-	font-family: "Ubuntu", sans-serif;
-	font-weight: 700;
-	padding: 5px;
-	padding-left: 25px;
-	padding-right: 25px;
-	cursor: pointer;
-	background: transparent;
-	outline: none;
-	margin-top: 25px;
-	font-size: max(1vw, 2vh);
-	margin-right: 15px;
-}
-
 .main {
    background: ext.$gray;
 	height: calc(100vh - 10px);
 	width: calc(90vw - 10px);
-	// top: 100vh;
+	// top: 0vh;
 	// left: 10vw;
 	position: relative;
 	// display: flex
@@ -262,10 +261,16 @@ nav {
       width: 95%;
       margin: auto;
       position: relative;
-      background: #444;
+      // background: #444;
       border-radius: 5px;
-      box-shadow: 0px 5px 5px #111;
+      // box-shadow: 0px 5px 5px #111;
       height: 700px;
+      h2 {
+         color: #eee;
+         font-family: "Miriam Libre";
+         font-weight: 700;
+         font-size: max(2vw, 4vh);
+      }
    }
 
    footer {
@@ -309,6 +314,7 @@ nav {
    background: orange;
    left: 10vw;
    height: 5px;
+   // top: -100vh; //! CHANGE BACK
 }
 
 
