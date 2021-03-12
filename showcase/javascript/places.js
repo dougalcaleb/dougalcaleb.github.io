@@ -1159,7 +1159,7 @@ let places = [
        false,
        false,
        false,
-       false,
+       true,
        true,
        true,
        true,
@@ -1679,4 +1679,24 @@ let places = [
        false,
        false
    ]
-]
+];
+
+
+
+function outputDiff() {
+   let diffTrue = 88;
+   let diffFalse = "";
+   let output = [];
+   for (let a = 0; a < places.length; a++) {
+      let row = [];
+      for (let b = 0; b < places[a].length; b++) {
+         if (places[a][b] == true) {
+            row.push(diffTrue);
+         } else {
+            row.push(diffFalse);
+         }
+      }
+      output.push(row);
+   }
+   console.log(output);
+}

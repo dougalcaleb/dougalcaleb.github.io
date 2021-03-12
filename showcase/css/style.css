@@ -1,3 +1,5 @@
 .bubble {
   position: absolute;
+  background: rgb(0,183,255);
+  border-radius: 2px;
 }
