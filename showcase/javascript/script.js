@@ -304,8 +304,8 @@ function createBubbles() {
 				// newb.style.transform = `translate(${x}, ${y})`;
 				newb.style.left = x;
 				newb.style.top = y;
-				newb.style.background = bubbles.color;
-				newb.style.borderRadius = bubbles.radius;
+				// newb.style.background = bubbles.color;
+				// newb.style.borderRadius = bubbles.radius;
 				newb.style.height = bubbles.size + "px";
 				newb.style.width = bubbles.size + "px";
 				wrap.appendChild(newb);

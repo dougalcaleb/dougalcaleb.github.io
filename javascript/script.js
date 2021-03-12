@@ -20,6 +20,11 @@ document.querySelector(".continue").addEventListener("click", () => {
    }
 });
 
+document.querySelector(".nav-btn-0").addEventListener("click", () => {
+   scrollUp();
+   managers.atTop = true;
+});
+
 document.querySelector(".nav-btn-1").addEventListener("click", () => {
    if (managers.atTop) {
       scrollDown();
@@ -46,6 +51,19 @@ document.querySelector(".nav-btn-2").addEventListener("click", () => {
 });
 
 document.querySelector(".nav-btn-3").addEventListener("click", () => {
+   if (managers.atTop) {
+      scrollDown();
+      managers.atTop = false;
+      managers.atTop = false;
+      setTimeout(() => {
+         document.getElementById("nav-3-link").click();
+      }, 850);
+   } else {
+      document.getElementById("nav-3-link").click();
+   }
+});
+
+document.querySelector(".btn-contact").addEventListener("click", () => {
    if (managers.atTop) {
       scrollDown();
       managers.atTop = false;
