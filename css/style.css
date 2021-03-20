@@ -243,13 +243,13 @@ nav .picture img {
 
 .main {
   background: #282828;
-  height: calc(100vh - 10px);
+  height: calc(100vh - 20px);
   width: calc(90vw - 10px);
   position: relative;
   overflow-y: auto;
   border-right: 10px solid #282828;
-  border-top: 5px solid #282828;
-  border-bottom: 5px solid #282828;
+  border-top: 10px solid #282828;
+  border-bottom: 10px solid #282828;
 }
 .main section {
   width: 95%;
@@ -299,6 +299,13 @@ nav .picture img {
   background: orange;
   left: 10vw;
   height: 5px;
+}
+
+.console {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  z-index: 9999999;
 }
 
 @keyframes pop {
