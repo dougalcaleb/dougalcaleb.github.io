@@ -247,7 +247,7 @@ nav {
 
 .main {
    background: ext.$gray;
-	height: calc(100vh - 10px);
+	height: calc(100vh - 20px);
 	width: calc(90vw - 10px);
 	// top: 0vh;
 	// left: 10vw;
@@ -255,8 +255,8 @@ nav {
 	// display: flex
    overflow-y: auto;
    border-right: 10px solid ext.$gray;
-   border-top: 5px solid ext.$gray;
-   border-bottom: 5px solid ext.$gray;
+   border-top: 10px solid ext.$gray;
+   border-bottom: 10px solid ext.$gray;
    section {
       width: 95%;
       margin: auto;
@@ -315,6 +315,13 @@ nav {
    left: 10vw;
    height: 5px;
    // top: -100vh; //! CHANGE BACK
+}
+
+.console {
+   position: fixed;
+   bottom: 0;
+   width: 100%;
+   z-index: 9999999;
 }
 
 
