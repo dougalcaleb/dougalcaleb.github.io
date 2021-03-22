@@ -80,6 +80,14 @@ $name - variable
   height: min(2vw, 6vh);
 }
 
+.contact .mail .open-mail {
+  display: flex;
+  align-items: center;
+}
+.contact .mail .open-mail svg {
+  height: 20px;
+  margin-left: 25px;
+}
 .contact .mail .send-to {
   display: flex;
   width: 100%;

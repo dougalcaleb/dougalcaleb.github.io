@@ -94,6 +94,14 @@
 
 .contact {
 	.mail {
+      .open-mail {
+         display: flex;
+         align-items: center;
+         svg {
+            height: 20px;
+            margin-left: 25px;
+         }
+      }
 		.send-to {
 			display: flex;
 			width: 100%;
