@@ -180,6 +180,7 @@ Pages
    height: 100%;
    transform: translateX(-10px);
    transition: 0.3s transform;
+   /* display: flex; */
 }
 
 .roundabout-0-page {

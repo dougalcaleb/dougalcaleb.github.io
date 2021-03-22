@@ -193,15 +193,20 @@
 					<h2 id="contact">CONTACT</h2>
 					<!-- <a href="mailto:dougalcaleb@gmail.com?subject=Test!&body=A%20test">Send to client</a> -->
 
-					<form id="mail-form" action="https://formspree.io/f/xjvjbkbo" method="POST">
-						<!-- <label>Email:</label> -->
-						<input type="email" name="email" class="reply-to" placeholder="Reply to"/>
-						<!-- <label>Message:</label> -->
-                  <input type="text" name="subject" placeholder="subject" autocomplete="off"/>
-						<input type="text" name="message" placeholder="Message" autocomplete="off"/>
-						<button id="my-form-button">Submit</button>
-						<p id="form-status"></p>
-					</form>
+               <div class="mail">
+                  <div class="send-to">
+                     <div class="send-to-email">Send to:<span class="address-bubble">address here</span></div>
+                     <div class="copy-button">Copy address</div>
+                  </div>
+                  <form id="mail-form" class="mail-form" action="https://formspree.io/f/xjvjbkbo" method="POST">
+                     <input type="email" name="email" class="reply-to" placeholder="Reply to"/>
+                     <input type="text" name="subject" class="mail-subject" placeholder="Subject" autocomplete="off"/>
+                     <textarea type="text" name="message" class="mail-message" placeholder="Message" autocomplete="off"></textarea>
+                     <button id="my-form-button" class="border-button">Submit</button>
+                     <p id="form-status"></p>
+                  </form>
+               </div>
+					
 
 
 
