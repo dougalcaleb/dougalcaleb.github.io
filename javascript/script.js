@@ -7,7 +7,7 @@ let managers = {
 	atTop: true,
 };
 
-let antiscrape = {
+let AS = {
    firstOne: "laguod",
    firstTwo: "belac",
    domain: "liamg"
@@ -128,9 +128,9 @@ document.querySelector(".copy-button").addEventListener("click", () => {
 window.addEventListener("load", () => {
    setTimeout(() => {
       let data = `?body=${document.querySelector(".mail-message").value}&subject=${document.querySelector(".mail-subject").value}`;
-      document.querySelector(".external-mail-link").setAttribute("href", "mail" + "to:" + antiscrape.firstOne.split("").reverse().join("") + antiscrape.firstTwo.split("").reverse().join("") + "@" + antiscrape.domain.split("").reverse().join("") + ".com" + data);
+      document.querySelector(".external-mail-link").setAttribute("href", "mail" + "to:" + AS.firstOne.split("").reverse().join("") + AS.firstTwo.split("").reverse().join("") + "@" + AS.domain.split("").reverse().join("") + ".com" + data);
 
-      document.querySelector(".address-bubble").innerText = antiscrape.firstOne.split("").reverse().join("") + antiscrape.firstTwo.split("").reverse().join("") + "@" + antiscrape.domain.split("").reverse().join("") + ".com";
+      document.querySelector(".address-bubble").innerText = AS.firstOne.split("").reverse().join("") + AS.firstTwo.split("").reverse().join("") + "@" + AS.domain.split("").reverse().join("") + ".com";
    }, 100);
 });
 
@@ -143,6 +143,6 @@ document.querySelector(".external-mail-link").addEventListener("click", (e) => {
       }, 25);
    }
    let data = `?body=${document.querySelector(".mail-message").value}&subject=${document.querySelector(".mail-subject").value}`;
-   document.querySelector(".external-mail-link").setAttribute("href", "mail" + "to:" + antiscrape.firstOne.split("").reverse().join("") + antiscrape.firstTwo.split("").reverse().join("") + "@" + antiscrape.domain.split("").reverse().join("") + ".com" + data);
+   document.querySelector(".external-mail-link").setAttribute("href", "mail" + "to:" + AS.firstOne.split("").reverse().join("") + AS.firstTwo.split("").reverse().join("") + "@" + AS.domain.split("").reverse().join("") + ".com" + data);
    document.querySelector(".external-mail-link").click();
 });
