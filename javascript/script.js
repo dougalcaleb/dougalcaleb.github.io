@@ -122,6 +122,10 @@ document.querySelector(".copy-button").addEventListener("click", () => {
 		// alert("Text has been copied, now paste in the text-area");
 	}
    window.getSelection().empty();
+   document.querySelector(".copy-button").innerText = "Copied!";
+   setTimeout(() => {
+      document.querySelector(".copy-button").innerText = "Copy address";
+   }, 2000);
 	// document.execCommand("copy");
 });
 

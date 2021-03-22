@@ -180,7 +180,20 @@ Pages
    height: 100%;
    transform: translateX(-10px);
    transition: 0.3s transform;
+   
    /* display: flex; */
+}
+
+.roundabout-1-page svg {
+   height: 20px;
+   margin-left: 25px;
+}
+
+.roundabout-1-page button {
+   display: flex;
+   align-items: center;
+   z-index: 10;
+   cursor: pointer;
 }
 
 .roundabout-0-page {
@@ -212,6 +225,40 @@ Pages
 
 .roundabout-1-visible-page-0 {
    transform: translate(0px);
+   z-index: 2;
+}
+
+.roundabout-1-page .border-button {
+   font-size: max(1vw, 2vh);
+}
+
+.desc-title {
+   font-family: "Miriam Libre", "Ubuntu", sans-serif;
+   color: #eee;
+   font-size: max(2vw, 4vh);
+}
+
+.desc-body {
+   font-family: "Ubuntu", sans-serif;
+   color: #ccc;
+   font-size: max(1vw, 2vh);
+}
+
+.desc-skills-title {
+   font-family: "Miriam Libre", "Ubuntu", sans-serif;
+   color: #eee;
+   font-size: max(1.5vw, 3vh);
+   margin-bottom: 15px;
+}
+
+.desc-skills img {
+   height: 30px;
+   margin-right: 10px;
+}
+
+.desc-skills .size-up {
+   height: 35px;
+   transform: translateY(3px);
 }
 
 /* .roundabout-0-visible-page-0, .roundabout-0-visible-page-2 {

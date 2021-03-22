@@ -13,7 +13,7 @@ $name - variable
   margin: auto;
   position: relative;
   border-radius: 5px;
-  margin-bottom: 200px;
+  margin-bottom: min(200px, 10vw);
 }
 .main section h2 {
   color: #eee;
