@@ -8,10 +8,10 @@ body {
 	overflow: hidden;
 	position: relative;
 	height: 100%;
-   scroll-behavior: smooth;
+	scroll-behavior: smooth;
 }
 * {
-   scroll-behavior: smooth;
+	scroll-behavior: smooth;
 }
 
 p {
@@ -19,13 +19,13 @@ p {
 }
 
 a {
-   text-decoration: none;
+	text-decoration: none;
 }
 
 .links {
-   display: none;
-   visibility: hidden;
-   opacity: 0;
+	display: none;
+	visibility: hidden;
+	opacity: 0;
 }
 
 nav {
@@ -34,12 +34,14 @@ nav {
 	position: fixed;
 	z-index: 9999;
 	background: ext.$dark-gray;
+   // max-width: 200px;
 	.navigation-wrap {
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
 		width: inherit;
-		height: calc(100% - 20vw);
+		height: calc(100% - min(5vw, 100px) - min(10vw, 200px));
+      position: relative;
 		top: 0;
 		// background: purple;
 		.navigation {
@@ -54,7 +56,7 @@ nav {
 				font-weight: 700;
 				color: #ddd;
 				position: relative;
-				font-size: 1vw;
+				font-size: min(1vw, 3vh);
 				border-top: 2px solid #505050;
 				text-align: center;
 				padding-top: 20px;
@@ -70,6 +72,7 @@ nav {
 					transition: 0.2s;
 					right: 50%;
 					z-index: -1;
+               visibility: hidden;
 				}
 				&::after {
 					content: "";
@@ -81,6 +84,7 @@ nav {
 					transition: 0.2s;
 					left: 50%;
 					z-index: -1;
+               visibility: hidden;
 				}
 				&:hover {
 					&::before {
@@ -93,6 +97,7 @@ nav {
 						transition: 0.2s;
 						right: 50%;
 						z-index: -1;
+                  visibility: visible;
 					}
 					&::after {
 						content: "";
@@ -104,6 +109,7 @@ nav {
 						transition: 0.2s;
 						left: 50%;
 						z-index: -1;
+                  visibility: visible;
 					}
 				}
 			}
@@ -118,6 +124,7 @@ nav {
 		position: absolute;
 		width: 10vw;
 		height: 5vw;
+      max-height: 100px;
 		border-top-left-radius: 20px;
 		border-top-right-radius: 20px;
 		display: flex;
@@ -127,12 +134,14 @@ nav {
 		svg {
 			color: #ccc;
 			width: 2vw;
+         max-height: 50px;
 		}
 	}
 
 	.picture {
 		height: 10vw;
 		width: 10vw;
+      max-height: 200px;
 		background: ext.$black;
 		position: relative;
 		border-bottom-left-radius: 20px;
@@ -146,6 +155,8 @@ nav {
 			bottom: 0;
 			height: 7vw;
 			width: 7vw;
+         max-height: 150px;
+         max-width: 150px;
 		}
 	}
 }
@@ -153,46 +164,46 @@ nav {
 .land-page {
 	// background: ext.$gray;
 	height: 100vh;
-	width: 90vw;
+	// width: max(90vw, calc(100% - 200px));
+   width: 90vw;
 	top: 0;
 	// left: 10vw;
 	position: relative;
 	// display: flex;
 	// justify-content: center;
 	background-image: url("../images/backgrounds/dark texture.png");
-   background-size: cover;
-   animation-fill-mode: forwards;
-   .continue-wrap {
-      .continue {
-         @extend %center-x;
-         bottom: 40px;
-   
-         // border: 3px solid ext.$dark-blue;
-         border: none;
-         border-radius: 5px;
-         color: ext.$dark-blue;
-         font-family: "Ubuntu", sans-serif;
-         font-weight: 700;
-         padding: 5px;
-         padding-left: 25px;
-         padding-right: 25px;
-         cursor: pointer;
-         background: transparent;
-         outline: none;
-         margin-top: 25px;
-         font-size: max(1vw, 2vh);
-         z-index: 5;
-         animation: 1s pop ease;
-         
-      }
-      svg  {
-         @extend %center-x;
-         bottom: 10px;
-         color: ext.$dark-blue;
-         height: 30px;
-      }
-   }
-	
+	background-size: cover;
+	animation-fill-mode: forwards;
+	.continue-wrap {
+		.continue {
+			@extend %center-x;
+			bottom: 40px;
+
+			// border: 3px solid ext.$dark-blue;
+			border: none;
+			border-radius: 5px;
+			color: ext.$dark-blue;
+			font-family: "Ubuntu", sans-serif;
+			font-weight: 700;
+			padding: 5px;
+			padding-left: 25px;
+			padding-right: 25px;
+			cursor: pointer;
+			background: transparent;
+			outline: none;
+			margin-top: 25px;
+			font-size: max(1vw, 2vh);
+			z-index: 5;
+			animation: 1s pop ease;
+		}
+		svg {
+			@extend %center-x;
+			bottom: 10px;
+			color: ext.$dark-blue;
+			height: 30px;
+		}
+	}
+
 	.intro-wrap {
 		// background: green;
 		display: flex;
@@ -205,23 +216,23 @@ nav {
 			position: absolute;
 			z-index: 5;
 			left: 40px;
-         .land-btn {
-            border: 3px solid ext.$dark-blue;
-            border-radius: 5px;
-            color: ext.$light-blue;
-            position: relative;
-            font-family: "Ubuntu", sans-serif;
-            font-weight: 700;
-            padding: 5px;
-            padding-left: 25px;
-            padding-right: 25px;
-            cursor: pointer;
-            background: transparent;
-            outline: none;
-            margin-top: 25px;
-            font-size: max(1vw, 2vh);
-            margin-right: 15px;
-         }
+			.land-btn {
+				border: 3px solid ext.$dark-blue;
+				border-radius: 5px;
+				color: ext.$light-blue;
+				position: relative;
+				font-family: "Ubuntu", sans-serif;
+				font-weight: 700;
+				padding: 5px;
+				padding-left: 25px;
+				padding-right: 25px;
+				cursor: pointer;
+				background: transparent;
+				outline: none;
+				margin-top: 25px;
+				font-size: max(1vw, 2vh);
+				margin-right: 15px;
+			}
 			.desc {
 				font-family: "Miriam Libre", "Courier New", Courier, monospace;
 				font-weight: 700;
@@ -246,62 +257,49 @@ nav {
 }
 
 .main {
-   background: ext.$gray;
+	background: ext.$gray;
 	height: calc(100vh - 20px);
-	width: calc(90vw - 10px);
+	// width: calc(90vw - 10px);
+	// width: min(90vw, calc(100% - 200px));
+
 	// top: 0vh;
 	// left: 10vw;
 	position: relative;
 	// display: flex
-   overflow-y: auto;
-   border-right: 10px solid ext.$gray;
-   border-top: 10px solid ext.$gray;
-   border-bottom: 10px solid ext.$gray;
-   section {
-      width: 95%;
-      margin: auto;
-      position: relative;
-      // background: #444;
-      border-radius: 5px;
-      // box-shadow: 0px 5px 5px #111;
-      height: 700px;
-      h2 {
-         color: #eee;
-         font-family: "Miriam Libre";
-         font-weight: 700;
-         font-size: max(2vw, 4vh);
-      }
-   }
+	overflow-y: auto;
+	border-right: 10px solid ext.$gray;
+	border-top: 10px solid ext.$gray;
+	border-bottom: 10px solid ext.$gray;
 
-   footer {
-      height: 40px;
-      bottom: 0;
-   }
+	footer {
+		height: 40px;
+		bottom: 0;
+	}
 
-   &::-webkit-scrollbar {
+	&::-webkit-scrollbar {
 		width: 10px;
 		margin-right: 5px;
 	}
 
 	&::-webkit-scrollbar-track {
 		background: transparent;
-      width: 10px;
-      right: 55px;
-      padding-right: 5px;
+		width: 10px;
+		right: 55px;
+		padding-right: 5px;
 	}
 
 	&::-webkit-scrollbar-thumb {
 		background: #666;
 		width: 5px;
 		// border-radius: 10px;
-      margin-right: 5px;
-      transition: 0.1s;
-      &:hover {
-         background: ext.$dark-blue;
-      }
-      &:focus {
-         background: ext.$light-blue;
-      }
+		margin-right: 5px;
+		transition: 0.1s;
+		&:hover {
+			background: ext.$dark-blue;
+		}
+		&:focus {
+			background: ext.$light-blue;
+		}
 	}
 
 	&::-webkit-scrollbar-button {
@@ -310,20 +308,37 @@ nav {
 }
 
 .body-wrap {
-   position: fixed;
-   background: orange;
-   left: 10vw;
-   height: 5px;
-   // top: -100vh; //! CHANGE BACK
+	position: fixed;
+	// background: orange;
+	left: 10vw;
+	height: 5px;
+	// top: -100vh;
+}
+
+.border-button {
+	border: 3px solid ext.$dark-blue;
+	border-radius: 5px;
+	color: ext.$light-blue;
+	position: relative;
+	font-family: "Ubuntu", sans-serif;
+	font-weight: 700;
+	padding: 5px;
+	padding-left: 25px;
+	padding-right: 25px;
+	cursor: pointer;
+	background: transparent;
+	outline: none;
+	margin-top: 25px;
+	font-size: max(1vw, 2vh);
+	margin-right: 15px;
 }
 
 .console {
-   position: fixed;
-   bottom: 0;
-   width: 100%;
-   z-index: 9999999;
+	position: fixed;
+	bottom: 0;
+	width: 100%;
+	z-index: 9999999;
 }
-
 
 @keyframes pop {
 	0% {
@@ -344,25 +359,25 @@ nav {
 	50% {
 		bottom: 50px;
 	}
-   100% {
+	100% {
 		bottom: 40px;
 	}
 }
 
 @keyframes moveUp {
-   0% {
-      top: 0;
-   }
-   100% {
-      top: -100vh;
-   }
+	0% {
+		top: 0;
+	}
+	100% {
+		top: -100vh;
+	}
 }
 
 @keyframes moveDown {
-   0% {
-      top: -100vh;
-   }
-   100% {
-      top: 0;
-   }
+	0% {
+		top: -100vh;
+	}
+	100% {
+		top: 0;
+	}
 }

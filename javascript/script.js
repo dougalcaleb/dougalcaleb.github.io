@@ -103,3 +103,10 @@ function scrollUp() {
    managers.lastScrollSnap = Date.now();
    document.querySelector(".body-wrap").style.animation = "0.8s moveDown forwards cubic-bezier(.21,.04,.25,1)";
 }
+
+// document.querySelector(".copy-test").addEventListener("click", () => {
+//    let txt = document.querySelector(".reply-to");
+//    txt.select();
+//    txt.blur();
+//    document.execCommand("copy");
+// });

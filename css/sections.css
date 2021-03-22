@@ -1,0 +1,70 @@
+.main section {
+  width: 95%;
+  margin: auto;
+  position: relative;
+  border-radius: 5px;
+}
+.main section h2 {
+  color: #eee;
+  font-family: "Miriam Libre";
+  font-weight: 700;
+  font-size: max(2vw, 4vh);
+  margin-bottom: 30px;
+}
+
+.projects {
+  display: flex;
+  flex-wrap: wrap;
+  padding-top: max(6vw, 11vh);
+}
+.projects h2 {
+  position: absolute;
+  z-index: 10;
+  top: 0;
+}
+.projects .proj-slider {
+  flex: 1;
+  position: relative;
+  height: 90%;
+  overflow: hidden;
+  margin: none;
+  min-width: 60vh;
+}
+.projects .proj-desc {
+  flex: 1;
+  height: 90%;
+  position: relative;
+  padding-left: 50px;
+  box-sizing: border-box;
+  min-width: 60vh;
+}
+
+.skills .skill-flex {
+  display: flex;
+  flex-wrap: wrap;
+  max-height: 50vw;
+}
+.skills .skill-flex .skill {
+  margin-right: 50px;
+  margin-bottom: 20px;
+  width: min(400px, 30vw);
+  display: flex;
+  align-items: center;
+}
+.skills .skill-flex .skill img {
+  margin-right: 2vw;
+}
+.skills .skill-flex .skill span {
+  color: #ddd;
+  font-family: "Ubuntu", sans-serif;
+  font-size: min(2vw, 5vh);
+}
+.skills .sizeUp {
+  height: min(2.5vw, 7vh);
+}
+.skills .sizeDown {
+  height: min(1.5vw, 5vh);
+}
+.skills img {
+  height: min(2vw, 6vh);
+}
