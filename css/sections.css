@@ -1,3 +1,13 @@
+/*
+%name - reusable styles (used @extend %name)
+@mixin name - function (used @include name(param))
+$name - variable
+
+*/
+/*
+
+
+*/
 .main section {
   width: 95%;
   margin: auto;
@@ -67,4 +77,72 @@
 }
 .skills img {
   height: min(2vw, 6vh);
+}
+
+.contact .mail .send-to {
+  display: flex;
+  width: 100%;
+  box-sizing: border-box;
+  background: #191919;
+  border: none;
+  padding: 20px;
+  margin-bottom: 10px;
+  font-family: "Ubuntu", sans-serif;
+  color: #eee;
+  outline: none;
+  font-size: max(1vw, 2vh);
+  color: #6a6a6a;
+  align-items: center;
+}
+.contact .mail .send-to .copy-button {
+  border: 3px solid #006b8c;
+  border-radius: 5px;
+  color: #00b7ff;
+  position: absolute;
+  right: 20px;
+  font-family: "Ubuntu", sans-serif;
+  font-weight: 700;
+  padding: 5px;
+  padding-left: 25px;
+  padding-right: 25px;
+  cursor: pointer;
+  background: transparent;
+  outline: none;
+  font-size: max(1vw, 2vh);
+}
+.contact .mail .send-to .address-bubble {
+  background: #006b8c;
+  color: #eee;
+  border-radius: 1000px;
+  padding: 10px;
+  padding-left: 20px;
+  padding-right: 20px;
+  margin-left: 20px;
+  user-select: text;
+}
+.contact .mail .mail-form input,
+.contact .mail .mail-form textarea {
+  width: 100%;
+  box-sizing: border-box;
+  background: #191919;
+  border: none;
+  padding: 20px;
+  margin-bottom: 10px;
+  font-family: "Ubuntu", sans-serif;
+  color: #eee;
+  outline: none;
+  font-size: max(1vw, 2vh);
+}
+.contact .mail .mail-form input:-webkit-autofill:focus,
+.contact .mail .mail-form input:-webkit-autofill {
+  background-color: #191919;
+  box-shadow: 0 0 0 50px #191919 inset !important;
+  -webkit-text-fill-color: #eee !important;
+  -moz-text-fill-color: #eee !important;
+  -o-text-fill-color: #eee !important;
+  -ms-text-fill-color: #eee !important;
+}
+.contact .mail .mail-form textarea {
+  height: 300px;
+  resize: none;
 }
