@@ -3,6 +3,7 @@
 	<head>
 		<title>Caleb Dougal's Portfolio</title>
 		<link rel="stylesheet" type="text/css" href="css/style.css" />
+		<link rel="stylesheet" type="text/css" href="css/sections.css" />
 		<link rel="stylesheet" type="text/css" href="css/roundabout-style.css" />
 
 		<link rel="preconnect" href="https://fonts.gstatic.com" />
@@ -68,8 +69,8 @@
 							<br />
 							and web developer.
 						</p>
-						<button class="btn-contact land-btn">CONTACT</button>
-						<a href="./files/Resume March 2021.pdf" download="Caleb Dougal's Resume"><button class="btn-resume land-btn">RESUME</button></a>
+						<button class="btn-contact land-btn border-button">Contact</button>
+						<a href="./files/Resume March 2021.pdf" download="Caleb Dougal's Resume"><button class="btn-resume land-btn border-button">Resume</button></a>
 					</div>
 				</div>
 
@@ -88,35 +89,123 @@
 			<div class="main">
 				<section class="projects">
 					<h2 id="projects">PROJECTS</h2>
-					<!-- 
-                  - roundabout
-                  - react chat
-                  - triangle gradient
-                  - node chat
-                  - golf scorecard
-                  - site clones
-                  - bubbles
-                  - storm center
-                  - simple to-do
-                  - stronger together
-                -->
-					<!-- <div class="slider"></div> -->
+
+               <div class="proj-slider"></div>
+               <div class="proj-desc"></div>
 				</section>
 				<section class="skills">
 					<h2 id="skills">SKILLS & INTERESTS</h2>
+
+               <!-- <img src="./images/svgs/angular.svg" >
+               <img src="./images/svgs/aws.svg" class="sizeDown">
+               <img src="./images/svgs/bootstrap.svg">
+               <img src="./images/svgs/csharp.svg">
+               <img src="./images/svgs/css.svg">
+               <img src="./images/svgs/docker.svg" class="sizeUp">
+               <img src="./images/svgs/firebase.svg">
+               <img src="./images/svgs/git.svg">
+               <img src="./images/svgs/github.svg" class="sizeUp">
+               <img src="./images/svgs/html.svg">
+               <img src="./images/svgs/js.svg">
+               <img src="./images/svgs/node.svg">
+               <img src="./images/svgs/pc.svg" class="sizeUp">
+               <img src="./images/svgs/react.svg">
+               <img src="./images/svgs/ts.svg">
+               <img src="./images/svgs/unity.svg">
+               <img src="./images/svgs/db.svg" class="sizeUp">
+                        
+
+               
+               <div class="skill">
+                  <img src="./images/svgs/js.svg">
+                  <span class="name">JavaScript</span>
+               </div> -->
+               
+
+               <div class="skill-flex">
+                  <div class="skill">
+                     <img src="./images/svgs/js.svg">
+                     <span class="name">JavaScript</span>
+                  </div>
+                  <div class="skill">
+                     <img src="./images/svgs/html.svg">
+                     <span class="name">HTML</span>
+                  </div>
+                  <div class="skill">
+                     <img src="./images/svgs/css.svg">
+                     <span class="name">CSS/SCSS/SASS</span>
+                  </div>
+                  <div class="skill">
+                     <img src="./images/svgs/ts.svg">
+                     <span class="name">TypeScript</span>
+                  </div>
+                  <div class="skill">
+                     <img src="./images/svgs/csharp.svg">
+                     <span class="name">C#</span>
+                  </div>
+                  <div class="skill">
+                     <img src="./images/svgs/react.svg">
+                     <span class="name">React</span>
+                  </div>
+                  <div class="skill">
+                     <img src="./images/svgs/angular.svg">
+                     <span class="name">Angular</span>
+                  </div>
+                  <div class="skill">
+                     <img src="./images/svgs/node.svg">
+                     <span class="name">Node.js</span>
+                  </div>
+                  <div class="skill">
+                     <img src="./images/svgs/unity.svg">
+                     <span class="name">Unity</span>
+                  </div>
+                  <div class="skill">
+                     <img src="./images/svgs/git.svg">
+                     <span class="name">Git</span>
+                  </div>
+                  <div class="skill">
+                     <img src="./images/svgs/github.svg" class="sizeUp">
+                     <span class="name">Github</span>
+                  </div>
+                  <div class="skill">
+                     <img src="./images/svgs/firebase.svg">
+                     <span class="name">Firebase</span>
+                  </div>
+                  <div class="skill">
+                     <img src="./images/svgs/aws.svg" class="sizeDown">
+                     <span class="name">AWS</span>
+                  </div>
+                  <div class="skill">
+                     <img src="./images/svgs/docker.svg" class="sizeUp">
+                     <span class="name">Docker</span>
+                  </div>
+                  <div class="skill">
+                     <img src="./images/svgs/bootstrap.svg">
+                     <span class="name">Bootstrap</span>
+                  </div>
+                  <div class="skill">
+                     <img src="./images/svgs/db.svg" class="sizeUp">
+                     <span class="name">SQL/NoSQL</span>
+                  </div>
+               </div>
 				</section>
 				<section class="contact">
 					<h2 id="contact">CONTACT</h2>
 					<!-- <a href="mailto:dougalcaleb@gmail.com?subject=Test!&body=A%20test">Send to client</a> -->
 
-					<!-- <form id="my-form" action="https://formspree.io/f/xjvjbkbo" method="POST">
-						<label>Email:</label>
-						<input type="email" name="email" />
-						<label>Message:</label>
-						<input type="text" name="message" />
+					<form id="mail-form" action="https://formspree.io/f/xjvjbkbo" method="POST">
+						<!-- <label>Email:</label> -->
+						<input type="email" name="email" class="reply-to" placeholder="Reply to"/>
+						<!-- <label>Message:</label> -->
+                  <input type="text" name="subject" placeholder="subject" autocomplete="off"/>
+						<input type="text" name="message" placeholder="Message" autocomplete="off"/>
 						<button id="my-form-button">Submit</button>
-						<p id="my-form-status"></p>
-					</form> -->
+						<p id="form-status"></p>
+					</form>
+
+
+
+               <!-- <button class="border-button copy-test">Copy to clipboard</button> -->
 				</section>
 				<footer></footer>
 			</div>
@@ -125,13 +214,14 @@
 		<!-- normal -->
 		<script src="./javascript/script.js"></script>
 		<!-- showcase -->
-		<script src="showcase/javascript/places.js"></script>
-		<script src="showcase/javascript/script.js"></script>
-
-		<script src="./javascript/mail.js"></script>
-		<script src="./javascript/console.js"></script>
+		<script src="showcase/javascript/places.min.js"></script>
+		<script src="showcase/javascript/script.min.js"></script>
 		<!-- slider -->
-		<!-- <script src="javascript/roundabout.min.js"></script> -->
-		<!-- <script src="javascript/roundabout-settings.js"></script> -->
+		<script src="javascript/roundabout.min.js"></script>
+		<script src="javascript/roundabout-scripting.js"></script>
+		<script src="javascript/roundabout-settings.js"></script>
+      <!-- extras -->
+      <script src="./javascript/mail.js"></script>
+      <!-- <script src="./javascript/console.js"></script> -->
 	</body>
 </html>

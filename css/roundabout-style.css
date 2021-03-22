@@ -13,11 +13,22 @@ Main wrapper
 ==================================
 */
 
-.roundabout-wrapper {
-   width: 100%;
-	height: 80vh;
+.projects-slider {
+   width: 150%;
+	height: 60vh;
+   left: -25%;
+   /* transform: rotate(90deg); */
    /* Cannot change: "position" and "overflow" */
 }
+
+.projects-desc {
+   width: 100%;
+	height: 60vh;
+   /* transform: rotate(90deg); */
+   /* Cannot change: "position" and "overflow" */
+}
+
+
 
 /* This same element also gains the selector specified by the "id" setting */
 
@@ -28,14 +39,15 @@ Swipe detector
 */
 
 .roundabout-swipe-overlay {
-	width: calc(100% - 140px);
+	width: 52%;
 	height: calc(100% - 40px);
 	top: 0;
 	left: 0;
 	right: 0;
 	position: absolute;
 	margin: auto;
-	z-index: 2;
+	z-index: 3;
+   /* background: orange; */
 }
 
 /*
@@ -44,10 +56,17 @@ UI wrapper
 ==================================
 */
 
-.roundabout-ui {
+.roundabout-0-ui {
 	height: 100%;
-	width: 100%;
+	width: 66%;
+   /* left: 25%; */
+   /* background: white; */
+   margin: auto;
+   position: relative;
+   z-index: 2;
 }
+
+/* .roundabout */
 
 /*
 ==================================
@@ -84,6 +103,10 @@ Next and Previous buttons
 	right: 0;
 }
 
+.roundabout-btn-prev {
+	left: 0;
+}
+
 /* Both buttons also gain the class ".roundabout-scroll-btn" */
 
 /*
@@ -100,9 +123,9 @@ Navigation
 	display: flex;
    flex-wrap: wrap;
 	justify-content: space-evenly;
-	bottom: 0;
+	bottom: 0px;
 	height: 40px;
-	width: 25%;
+	width: 75%;
 }
 
 .roundabout-nav-btn {
@@ -153,10 +176,26 @@ Pages
 
 /* Page wrap also gains the class ".roundabout-[UNIQUE ID]-page-wrap" */
 
-.roundabout-page {
+.roundabout-1-page {
    height: 100%;
+   transform: translateX(-10px);
+   transition: 0.3s transform;
+}
+
+.roundabout-0-page {
+   top: -20px;
+   bottom: 20px;
+   margin: auto;
+   transition: 0.3s height, 0.3s top, 0.3s filter;
+   height: calc(80% - 40px);
+
+   border: 5px solid rgb(0,107,140);
+   box-sizing: border-box;
    background-position: center center;
    background-size: cover;
+
+   filter: brightness(50%);
+   /* background: green; */
    /* Cannot change: "width", "position", "background", and "left" */
 
    /* NOTE: when giving any Roundabout page element a transition, be sure to give transition ONLY to the properties that need it.
@@ -164,6 +203,18 @@ Pages
       https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Transitions/Using_CSS_transitions#multiple_animated_properties_example
    */
 }
+
+.roundabout-0-visible-page-1 {
+   height: calc(100% - 40px);
+   filter: brightness(100%);
+}
+
+.roundabout-1-visible-page-0 {
+   transform: translate(0px);
+}
+
+/* .roundabout-0-visible-page-0, .roundabout-0-visible-page-2 {
+} */
 
 /* Each page also gains the class ".roundabout-[UNIQUE ID]-page-[NTH PAGE]", 
 and all visible pages gain the class ".roundabout-[UNIQUE ID]-visible-page-[NTH VISIBLE PAGE] */

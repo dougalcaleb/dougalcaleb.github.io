@@ -294,8 +294,8 @@ function createBubbles() {
 	// 	y = 0;
 	for (let a = 0; a < bubbles.activeBubbles.length; a++) {
 		for (let b = 0; b < bubbles.activeBubbles[a].length; b++) {
-			if (bubbles.activeBubbles[a][b] == true) {
-				let newb = document.createElement("DIV");
+			if (bubbles.activeBubbles[a][b] === true) {
+            let newb = document.createElement("DIV");
 				newb.classList.add("bubble");
 				newb.classList.add("bubble-" + a + "-" + b);
 				newb.style.willChange = "transform";
