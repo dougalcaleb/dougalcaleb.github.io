@@ -5,6 +5,33 @@ const main = new Roundabout({
    pageSpacing: 25,
    swipeThreshold: 150,
    lazyLoad: "hidden",
+   interpolate: [
+      {
+         value: "height",
+         start: [0, 80],
+         end: [1, 100],
+         unit: "%",
+      },
+      {
+         start: [1, 100],
+         value: "height",
+         end: [2, 80],
+         unit: "%",
+      },
+
+      {
+         value: "opacity",
+         start: [0, 80],
+         end: [1, 100],
+         unit: "%",
+      },
+      {
+         start: [1, 100],
+         value: "opacity",
+         end: [2, 80],
+         unit: "%",
+      }
+   ],
    pages: [
       {
          backgroundImage: "./images/carousel/projects/todo.png",
@@ -81,123 +108,147 @@ const desc = new Roundabout({
    id: ".projects-desc",
    uiEnabled: false,
    keys: false,
+   transition: 200,
    pages: [
       {
          // backgroundImage: "./images/carousel/projects/todo.png",
          // html: "simple to-do"
          html: `
-         <h3 class="desc-title">Simple To-Do App</h3>
-         <p class="desc-body">There's some text here!</p>
-         <h4 class="desc-skills-title">Skills:</h4>
-         <div class="desc-skills">${skills.js + skills.html + skills.css}</div>
-         <button class="border-button">View ${exBtn}</button>
+         <div class="content-wrap">
+            <h3 class="desc-title">Simple To-Do App</h3>
+            <p class="desc-body">There's some text here!</p>
+            <h4 class="desc-skills-title">Skills:</h4>
+            <div class="desc-skills">${skills.js + skills.html + skills.css}</div>
+            <button class="border-button">View ${exBtn}</button>
+         </div>
+         
          `
       },
       {
          // backgroundImage: "./images/carousel/projects/roundabout.png",
          html: `
+         <div class="content-wrap">
          <h3 class="desc-title">Roundabout</h3>
          <p class="desc-body">There's some text here!</p>
          <h4 class="desc-skills-title">Skills:</h4>
          <div class="desc-skills">${skills.js + skills.html + skills.css + skills.git + skills.github}</div>
          <a href="https://github.com/dougalcaleb/roundabout" target="_blank"><button class="border-button">Repo ${exBtn}</button></a>
+         </div>
          `
       },
       {
          // backgroundImage: "./images/carousel/projects/react-chat.png",
          html: `
-         <h3 class="desc-title">React Chat App</h3>
-         <p class="desc-body">There's some text here!</p>
-         <h4 class="desc-skills-title">Skills:</h4>
-         <div class="desc-skills">${skills.react + skills.js + skills.firebase + skills.git}</div>
-         <button class="border-button">View ${exBtn}</button>
+         <div class="content-wrap">
+            <h3 class="desc-title">React Chat App</h3>
+            <p class="desc-body">There's some text here!</p>
+            <h4 class="desc-skills-title">Skills:</h4>
+            <div class="desc-skills">${skills.react + skills.js + skills.firebase + skills.git}</div>
+            <button class="border-button">View ${exBtn}</button>
+         </div>
          `
       },
       {
          // backgroundImage: "./images/carousel/projects/tgrad.png",
          // html: "triangle gradient"
          html: `
-         <h3 class="desc-title">Low Poly Gradient Generator</h3>
-         <p class="desc-body">There's some text here!</p>
-         <h4 class="desc-skills-title">Skills:</h4>
-         <div class="desc-skills">${skills.js + skills.html + skills.css}</div>
-         <button class="border-button">View ${exBtn}</button>
+         <div class="content-wrap">
+            <h3 class="desc-title">Low Poly Gradient Generator</h3>
+            <p class="desc-body">There's some text here!</p>
+            <h4 class="desc-skills-title">Skills:</h4>
+            <div class="desc-skills">${skills.js + skills.html + skills.css}</div>
+            <button class="border-button">View ${exBtn}</button>
+         </div>
          `
       },
       {
          // backgroundImage: "./images/carousel/projects/gamejam.png",
          // html: "stronger together"
          html: `
-         <h3 class="desc-title">Stronger Together Game</h3>
-         <p class="desc-body">There's some text here!</p>
-         <h4 class="desc-skills-title">Skills:</h4>
-         <div class="desc-skills">${skills.csharp + skills.unity}</div>
+         <div class="content-wrap">
+            <h3 class="desc-title">Stronger Together Game</h3>
+            <p class="desc-body">There's some text here!</p>
+            <h4 class="desc-skills-title">Skills:</h4>
+            <div class="desc-skills">${skills.csharp + skills.unity}</div>
+         </div>
          `
       },
       {
          // backgroundImage: "./images/carousel/projects/scorecard.png",
          // html: "golf scorecard"
          html: `
-         <h3 class="desc-title">Golf Scorecard</h3>
-         <p class="desc-body">There's some text here!</p>
-         <h4 class="desc-skills-title">Skills:</h4>
-         <div class="desc-skills">${skills.js + skills.html + skills.css + skills.git + skills.github}</div>
-         <button class="border-button">View ${exBtn}</button>
+         <div class="content-wrap">
+            <h3 class="desc-title">Golf Scorecard</h3>
+            <p class="desc-body">There's some text here!</p>
+            <h4 class="desc-skills-title">Skills:</h4>
+            <div class="desc-skills">${skills.js + skills.html + skills.css + skills.git + skills.github}</div>
+            <button class="border-button">View ${exBtn}</button>
+         </div>
          `
       },
       {
          // backgroundImage: "./images/carousel/projects/ry-paris.png",
          // html: "site clone 1"
          html: `
-         <h3 class="desc-title">Site Clone (RY Paris)</h3>
-         <p class="desc-body">There's some text here!</p>
-         <h4 class="desc-skills-title">Skills:</h4>
-         <div class="desc-skills">${skills.html + skills.css}</div>
-         <button class="border-button">View ${exBtn}</button>
+         <div class="content-wrap">
+            <h3 class="desc-title">Site Clone (RY Paris)</h3>
+            <p class="desc-body">There's some text here!</p>
+            <h4 class="desc-skills-title">Skills:</h4>
+            <div class="desc-skills">${skills.html + skills.css}</div>
+            <button class="border-button">View ${exBtn}</button>
+         </div>
          `
       },
       {
          // backgroundImage: "./images/carousel/projects/mihealth.png",
          // html: "site clone 2"
          html: `
-         <h3 class="desc-title">Site Clone (MiHealth)</h3>
-         <p class="desc-body">There's some text here!</p>
-         <h4 class="desc-skills-title">Skills:</h4>
-         <div class="desc-skills">${skills.html + skills.css}</div>
-         <button class="border-button">View ${exBtn}</button>
+         <div class="content-wrap">
+            <h3 class="desc-title">Site Clone (MiHealth)</h3>
+            <p class="desc-body">There's some text here!</p>
+            <h4 class="desc-skills-title">Skills:</h4>
+            <div class="desc-skills">${skills.html + skills.css}</div>
+            <button class="border-button">View ${exBtn}</button>
+         </div>
          `
       },
       {
          // backgroundImage: "./images/carousel/projects/bubbles.png",
          // html: "bubbles"
          html: `
-         <h3 class="desc-title">Reactive Bubbles</h3>
-         <p class="desc-body">There's some text here!</p>
-         <h4 class="desc-skills-title">Skills:</h4>
-         <div class="desc-skills">${skills.js + skills.html + skills.css}</div>
-         <button class="border-button">View ${exBtn}</button>
+         <div class="content-wrap">
+            <h3 class="desc-title">Reactive Bubbles</h3>
+            <p class="desc-body">There's some text here!</p>
+            <h4 class="desc-skills-title">Skills:</h4>
+            <div class="desc-skills">${skills.js + skills.html + skills.css}</div>
+            <button class="border-button">View ${exBtn}</button>
+         </div>
          `
       },
       {
          // backgroundImage: "./images/carousel/projects/stormcenter.png",
          // html: "storm center"
          html: `
-         <h3 class="desc-title">WHS Storm Center</h3>
-         <p class="desc-body">There's some text here!</p>
-         <h4 class="desc-skills-title">Skills:</h4>
-         <div class="desc-skills">${skills.js + skills.html + skills.css}</div>
-         <button class="border-button">View ${exBtn}</button>
+         <div class="content-wrap">
+            <h3 class="desc-title">WHS Storm Center</h3>
+            <p class="desc-body">There's some text here!</p>
+            <h4 class="desc-skills-title">Skills:</h4>
+            <div class="desc-skills">${skills.js + skills.html + skills.css}</div>
+            <button class="border-button">View ${exBtn}</button>
+         </div>
          `
       },
       {
          // backgroundImage: "./images/carousel/projects/scss-resume.png",
          // html: "resume scss"
          html: `
-         <h3 class="desc-title">SCSS Resume Speedbuild</h3>
-         <p class="desc-body">There's some text here!</p>
-         <h4 class="desc-skills-title">Skills:</h4>
-         <div class="desc-skills">${skills.html + skills.css}</div>
-         <button class="border-button">View ${exBtn}</button>
+         <div class="content-wrap">
+            <h3 class="desc-title">SCSS Resume Speedbuild</h3>
+            <p class="desc-body">There's some text here!</p>
+            <h4 class="desc-skills-title">Skills:</h4>
+            <div class="desc-skills">${skills.html + skills.css}</div>
+            <button class="border-button">View ${exBtn}</button>
+         </div>
          `
       },
    ]

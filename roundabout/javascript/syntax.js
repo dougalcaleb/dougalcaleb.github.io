@@ -11,8 +11,17 @@ jscode.forEach(block => {
       if (line.includes("//")) {
          inProgress = `<span class="code-comment">${inProgress}</span>`;
       } else {
-         if (line.includes("new")) {
-            inProgress = inProgress.replace(new RegExp("new Roundabout", "gi"), `<span class="code-blue-d">new</span><span class="code-tan"> Roundabout</span>`)
+         if (line.includes("new Roundabout")) {
+            inProgress = inProgress.replace(new RegExp("new\\sRoundabout([^\\(]*)", "gi"), `<span class="code-blue-d">new</span><span class="code-tan"> Roundabout$1</span>`)
+         }
+         if (line.includes("const")) {
+            inProgress = inProgress.replace(new RegExp("const\\s(\\S*)", "gi"), `<span class="code-blue-d">const</span><span class="code-blue-l"> $1</span>`)
+         }
+         if (line.includes("RS")) {
+            inProgress = inProgress.replace(new RegExp("RS", "g"), `<span class="code-blue-l">RS</span>`)
+         }
+         if (line.includes(".")) {
+            inProgress = inProgress.replace(new RegExp("\\.([^\\(]*)", "gi"), `.<span class="code-tan">$1</span>`)
          }
          if (line.includes('"')) {
             inProgress = inProgress.replace(new RegExp(`"(.*)"`, "gmi"), `<span class="code-orange">"$1"</span>`);
