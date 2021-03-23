@@ -177,10 +177,7 @@ Pages
 /* Page wrap also gains the class ".roundabout-[UNIQUE ID]-page-wrap" */
 
 .roundabout-1-page {
-   height: 100%;
-   transform: translateX(-10px);
-   transition: 0.3s transform;
-   
+   height: 100%;   
    /* display: flex; */
 }
 
@@ -223,9 +220,14 @@ Pages
    filter: brightness(100%);
 }
 
-.roundabout-1-visible-page-0 {
-   transform: translate(0px);
-   z-index: 2;
+.roundabout-1-visible-page-0 .content-wrap {
+   transform: translateY(0px);
+}
+
+.content-wrap {
+   /* background: orange; */
+   transform: translateY(30px);
+   transition: 0.3s transform;
 }
 
 .roundabout-1-page .border-button {
