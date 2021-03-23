@@ -20,7 +20,7 @@ jscode.forEach(block => {
          if (line.includes("RS")) {
             inProgress = inProgress.replace(new RegExp("RS", "g"), `<span class="code-blue-l">RS</span>`)
          }
-         if (line.includes(".")) {
+         if (!line.includes('"') && !line.includes("`") && line.includes(".")) {
             inProgress = inProgress.replace(new RegExp("\\.([^\\(]*)", "gi"), `.<span class="code-tan">$1</span>`)
          }
          if (line.includes('"')) {
