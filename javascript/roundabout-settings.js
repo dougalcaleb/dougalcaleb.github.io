@@ -8,28 +8,35 @@ const main = new Roundabout({
    interpolate: [
       {
          value: "height",
-         start: [0, 80],
-         end: [1, 100],
-         unit: "%",
+         between: [
+            [0, 80],
+            [1, 100]
+         ],
+         unit: "calc($% - 40px)",
       },
       {
-         start: [1, 100],
          value: "height",
-         end: [2, 80],
-         unit: "%",
-      },
-
-      {
-         value: "opacity",
-         start: [0, 80],
-         end: [1, 100],
-         unit: "%",
+         between: [
+            [1, 100],
+            [2, 80]
+         ],
+         unit: "calc($% - 40px)",
       },
       {
-         start: [1, 100],
-         value: "opacity",
-         end: [2, 80],
-         unit: "%",
+         value: "filter",
+         between: [
+            [0, 50],
+            [1, 100]
+         ],
+         unit: "brightness($%)",
+      },
+      {
+         value: "filter",
+         between: [
+            [1, 100],
+            [2, 50]
+         ],
+         unit: "brightness($%)",
       }
    ],
    pages: [
