@@ -41,6 +41,10 @@
 	// top: -100vh;
 }
 
+.main {
+   height: calc(100vh - 20px);
+}
+
 nav {
 	height: 100%;
 	width: 10vw;
@@ -276,4 +280,19 @@ nav {
 
 .projects-slider {
    height: 60vh;
+}
+
+.skill {
+   width: min(400px, 30vw);
+   span {
+      font-size: min(2vw, 5vh);
+   }
+}
+
+.skills img {
+   height: min(2vw, 6vh);
+}
+
+.skills .sizeUp {
+   height: min(2.5vw, 7vh);
 }

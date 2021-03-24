@@ -54,13 +54,13 @@
 	.skill-flex {
 		display: flex;
 		flex-wrap: wrap;
-		max-height: 50vw;
-
+		// max-height: 50vw;
+      position: relative;
 		// justify-content: space-evenly;
 		.skill {
 			margin-right: 50px;
 			margin-bottom: 20px;
-			width: min(400px, 30vw);
+			// width: min(100px, 30vw);
 			// background: orange;
 			// border: 2px solid green;
 			// box-sizing: border-box;
@@ -73,22 +73,22 @@
 			span {
 				color: #ddd;
 				font-family: "Ubuntu", sans-serif;
-				font-size: min(2vw, 5vh);
+				// font-size: min(2vw, 5vh);
 			}
 		}
 	}
 
 	.sizeUp {
-		height: min(2.5vw, 7vh);
+		// height: min(2.5vw, 7vh);
 		// transform: translateY(3px);
 	}
 	.sizeDown {
 		height: min(1.5vw, 5vh);
 		// transform: translateY(3px);
 	}
-	img {
-		height: min(2vw, 6vh);
-	}
+	// img {
+	// 	height: min(2vw, 6vh);
+	// }
 }
 
 .contact {
