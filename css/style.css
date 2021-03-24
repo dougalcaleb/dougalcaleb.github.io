@@ -12,8 +12,15 @@ body {
   margin: 0;
   overflow: hidden;
   position: relative;
-  height: 100%;
   scroll-behavior: smooth;
+}
+
+html, body {
+  height: 100%;
+}
+
+:root {
+  --vh: 0vh;
 }
 
 p {
@@ -32,7 +39,6 @@ a {
 
 .main {
   background: #282828;
-  height: calc(100vh - 20px);
   position: relative;
   overflow-y: auto;
   border-right: 10px solid #282828;

@@ -5,6 +5,13 @@ const main = new Roundabout({
    pageSpacing: 25,
    swipeThreshold: 150,
    lazyLoad: "hidden",
+   breakpoints: [
+      {
+         width: 500,
+         swipeThreshold: 100,
+         swipeSpeed: 500
+      }
+   ],
    interpolate: [
       {
          value: "height",

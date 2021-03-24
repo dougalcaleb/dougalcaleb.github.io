@@ -1,22 +1,22 @@
 @use "ext" as ext;
 * {
 	user-select: none;
-   scroll-behavior: smooth;
-   &::-webkit-scrollbar {
-		width: 10px;
+	scroll-behavior: smooth;
+	&::-webkit-scrollbar {
+		width: 4px;
 		margin-right: 5px;
 	}
 
 	&::-webkit-scrollbar-track {
 		background: transparent;
-		width: 10px;
+		width: 4px;
 		right: 55px;
 		padding-right: 5px;
 	}
 
 	&::-webkit-scrollbar-thumb {
 		background: #666;
-		width: 5px;
+		width: 2px;
 		// border-radius: 10px;
 		margin-right: 5px;
 		transition: 0.1s;
@@ -41,14 +41,19 @@
 	// top: -100vh;
 }
 
+.main {
+	// height: calc(--vh - 20px);
+	height: calc(100vh - 20px);
+}
+
 nav {
-   display: none;
+	display: none;
 	height: 5vh;
 	width: 100vw;
 	position: fixed;
 	z-index: 9999;
 	background: ext.$dark-gray;
-   bottom: 0;
+	bottom: 0;
 	// max-width: 200px;
 	.navigation-wrap {
 		display: flex;
@@ -180,7 +185,7 @@ nav {
 	// background: ext.$gray;
 	height: 100vh;
 	// width: max(90vw, calc(100% - 200px));
-   width: 100vw;
+	width: 100vw;
 	top: 0;
 	// left: 10vw;
 	position: relative;
@@ -189,10 +194,10 @@ nav {
 	background-image: url("../images/backgrounds/dark texture.png");
 	background-size: cover;
 	animation-fill-mode: forwards;
-   overflow: hidden;
+	overflow: hidden;
 	.continue-wrap {
 		.continue {
-         @extend %center-x;
+			@extend %center-x;
 
 			// border: 3px solid ext.$dark-blue;
 			border: none;
@@ -231,7 +236,7 @@ nav {
 			position: absolute;
 			z-index: 5;
 			left: 40px;
-         width: calc(100vw - 40px);
+			width: calc(100vw - 80px);
 			.land-btn {
 				border: 3px solid ext.$dark-blue;
 				border-radius: 5px;
@@ -253,7 +258,7 @@ nav {
 				font-family: "Miriam Libre", "Courier New", Courier, monospace;
 				font-weight: 700;
 				color: #ccc;
-				font-size: max(3vw, 6vh);
+				font-size: max(2vw, 4vh);
 				text-shadow: 5px 5px 1px #333;
 			}
 		}
@@ -269,17 +274,35 @@ nav {
 		margin: auto;
 		right: 15px;
 		z-index: 1;
-      // overflow-y: hidden;
+		// overflow-y: hidden;
 	}
 }
 
 .copy-button {
-   display: none;
+	display: none;
 }
-.proj-slider, .desc-slider {
-   min-width: 85vw;
+.proj-slider,
+.desc-slider {
+	min-width: 85vw;
 }
 
 .projects-slider {
-   height: 40vh;
+	height: 40vh;
+}
+
+.skill {
+	width: min(100px, 30vw);
+	span {
+		font-size: min(4vw, 8vh);
+	}
+}
+
+.skills sizeUp {
+	height: min(4.5vw, 9vh);
+}
+.skills img {
+	height: min(4vw, 6vh);
+}
+.address-bubble {
+   font-size: min(3vw, 10vh);
 }

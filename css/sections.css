@@ -51,12 +51,11 @@ $name - variable
 .skills .skill-flex {
   display: flex;
   flex-wrap: wrap;
-  max-height: 50vw;
+  position: relative;
 }
 .skills .skill-flex .skill {
   margin-right: 50px;
   margin-bottom: 20px;
-  width: min(400px, 30vw);
   display: flex;
   align-items: center;
 }
@@ -66,16 +65,9 @@ $name - variable
 .skills .skill-flex .skill span {
   color: #ddd;
   font-family: "Ubuntu", sans-serif;
-  font-size: min(2vw, 5vh);
-}
-.skills .sizeUp {
-  height: min(2.5vw, 7vh);
 }
 .skills .sizeDown {
   height: min(1.5vw, 5vh);
-}
-.skills img {
-  height: min(2vw, 6vh);
 }
 
 .contact .mail .open-mail {
