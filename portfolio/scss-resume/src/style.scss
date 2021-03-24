@@ -1,0 +1,228 @@
+@import "ext";
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@600;700&family=Poppins:wght@400;500;700&family=Roboto&display=swap');
+
+* {
+    user-select: none;
+}
+body {
+    margin: 0;
+}
+
+.bg {
+    height: 2500px;
+    width: 100%;
+    background: $gray;
+    position: absolute;
+    &:before {
+        content: "";
+        height: 70vw;
+        width: 70vw;
+        left: 0;
+        top: 0;
+        position: absolute;
+        clip-path: polygon(0 0, 100% 0, 0 100%);
+        background: $black;
+    }
+    &:after {
+        content: "";
+        height: 70vw;
+        width: 70vw;
+        right: 0;
+        bottom: 0;
+        position: absolute;
+        clip-path: polygon(100% 0, 100% 100%, 0 100%);
+        background: $black;
+    }
+}
+
+.resume {
+    height: 1000px;
+    width: 70vw;
+    min-width: 500px;
+    @extend %center-x;
+    margin-top: 100px;
+    background: $lgray;
+    box-shadow: -60px 0px 120px #2b2b2b;
+    padding: 50px;
+    box-sizing: border-box;
+    &:before {
+        content: "";
+        width: 31vw;
+        height: 31vw;
+        position: absolute;
+        right: 0;
+        top: 0;
+        clip-path: polygon(0 0, 100% 0, 100% 100%);
+        background: $lgray;
+        z-index: 10;
+    }
+    &:after {
+        content: "";
+        width: 30vw;
+        height: 30vw;
+        position: absolute;
+        right: 0;
+        top: 0;
+        clip-path: polygon(0 0, 100% 0, 100% 100%);
+        background: $black;
+        z-index: 11;
+    }
+}
+
+header {
+    border-bottom: 1px solid $border;
+    h1 {
+        font-family: "Poppins";
+        font-weight: 500;
+        font-size: 60px;
+        line-height: 55px;
+        margin: 0;
+        padding: 0;
+    }
+    h6 {
+        margin: 0;
+        font-family: "Roboto";
+        font-size: 15px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        color: #696969;
+    }
+}
+
+.sec-wrap {
+    width: calc(100% - 100px);
+    height: 80%;
+    bottom: 0;
+    position: absolute;
+    display: flex;
+    align-items: stretch;
+}
+
+.sec-l {
+    border-right: 1px solid $border;
+    padding-top: 10px;
+    position: relative;
+    flex-grow: 1;
+    h6 {
+        font-family: "Open Sans";
+        font-weight: 700;
+        margin: 0;
+        font-size: 14px;
+    }
+    p {
+        font-family: "Roboto";
+        font-size: 12px;
+    }
+
+    .progress {
+        height: 10px;
+        width: 80%;
+        border: 1px solid $border;
+        box-sizing: border-box;
+        position: relative;
+        margin-top: 40px;
+        p {
+            position: absolute;
+            top: -20px;
+            left: 0;
+            font-family: "Roboto";
+            margin: 0;
+        }
+    }
+}
+h5{
+    font-family: "Poppins";
+    font-weight: 700;
+    padding: 0;
+    margin: 0;
+    font-size: 20px;
+    position: relative;
+    letter-spacing: 2px;
+    margin-bottom: 30px;
+    &:after {
+        content: "";
+        height: 3px;
+        width: 30px;
+        background: black;
+        position: absolute;
+        left: 0;
+        bottom: -8px;
+    }
+}
+
+.prog-95 {
+    @include progBar(95%);
+}
+
+.prog-80 {
+    @include progBar(80%);
+}
+.prog-75 {
+    @include progBar(75%);
+
+}
+.prog-65 {
+    @include progBar(65%);
+}
+
+
+.sec-r {
+    padding-top: 10px;
+    padding-left: 10px;
+    flex-grow: 7;
+    position: relative;
+    min-width: 200px;
+    .r-sec {
+        border-bottom: 1px solid $border;
+        padding-bottom: 15px;
+        position: relative;
+        .bio {
+            width: 35vw;
+            text-align: justify;
+        }
+    }
+}
+
+.social-wrap {
+    display: flex;
+    justify-content: space-between;
+    width: 35vw;
+    flex-wrap: wrap;
+    .social {
+        font-family: "Roboto";
+        position: relative;
+        padding-left: 30px;
+        svg {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            margin: auto;
+        }
+    }
+}
+
+.exp-wrap {
+    display: flex;
+    flex-direction: column;
+    .exp{
+        display: flex;
+        .exp-time {
+            font-family: "Roboto";
+        }
+        .exp-work {
+            width: 30vw;
+            padding-left: 40px;
+            p {
+                margin: 0;
+            }
+            .exp-head {
+                font-family: "Poppins";
+                font-weight: 600;
+            }
+            .exp-desc {
+                font-family: "Roboto";
+            }
+        }
+    }
+}
