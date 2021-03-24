@@ -8,28 +8,36 @@ const main = new Roundabout({
    interpolate: [
       {
          value: "height",
-         start: [0, 80],
-         end: [1, 100],
-         unit: "%",
+         between: [
+            [0, 80],
+            [1, 100],
+         ],
+         unit: "calc($% - 40px)",
       },
-      {
-         start: [1, 100],
+      { 
          value: "height",
-         end: [2, 80],
-         unit: "%",
+         between: [
+            [1, 100],
+            [2, 80],
+         ],
+         unit: "calc($% - 40px)",
       },
 
       {
-         value: "opacity",
-         start: [0, 80],
-         end: [1, 100],
-         unit: "%",
+         value: "filter",
+         between: [
+            [0, 50],
+            [1, 100],
+         ],
+         unit: "brightness($%)",
       },
       {
-         start: [1, 100],
-         value: "opacity",
-         end: [2, 80],
-         unit: "%",
+         value: "filter",
+         between: [
+            [1, 100],
+            [2, 50],
+         ],
+         unit: "brightness($%)",
       }
    ],
    pages: [
@@ -43,6 +51,10 @@ const main = new Roundabout({
       },
       {
          backgroundImage: "./images/carousel/projects/react-chat.png",
+         // html: "react chat"
+      },
+      {
+         backgroundImage: "./images/carousel/projects/timesheet.png",
          // html: "react chat"
       },
       {
@@ -143,7 +155,19 @@ const desc = new Roundabout({
             <h3 class="desc-title">React Chat App</h3>
             <p class="desc-body">There's some text here!</p>
             <h4 class="desc-skills-title">Skills:</h4>
-            <div class="desc-skills">${skills.react + skills.js + skills.firebase + skills.git}</div>
+            <div class="desc-skills">${skills.react + skills.js + skills.firebase + skills.db + skills.git + skills.github}</div>
+            <button class="border-button">View ${exBtn}</button>
+         </div>
+         `
+      },
+      {
+         // backgroundImage: "./images/carousel/projects/react-chat.png",
+         html: `
+         <div class="content-wrap">
+            <h3 class="desc-title">Angular Timesheet App</h3>
+            <p class="desc-body">There's some text here!</p>
+            <h4 class="desc-skills-title">Skills:</h4>
+            <div class="desc-skills">${skills.angular + skills.ts + skills.firebase + skills.db}</div>
             <button class="border-button">View ${exBtn}</button>
          </div>
          `
@@ -256,12 +280,16 @@ const desc = new Roundabout({
 
 const rs = new RoundaboutScripter();
 
-rs.onScrollNext(main, () => {
-   rs.scrollNext(desc);
-});
+// rs.onScrollNext(main, () => {
+//    rs.scrollNext(desc);
+// });
 
-rs.onScrollPrevious(main, () => {
-   rs.scrollPrevious(desc);
-});
+// rs.onScrollPrevious(main, () => {
+//    rs.scrollPrevious(desc);
+// });
+
+// rs.onScroll(main, (dist) => {
+//    rs.scroll(desc, dist);
+// });
 
 rs.scrollNext(desc, 1, false);
