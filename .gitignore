@@ -2,3 +2,5 @@
 /concepts/*
 /archive'/
 debug.log
+ignore/
+*.ignore.*
