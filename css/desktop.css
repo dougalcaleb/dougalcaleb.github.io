@@ -284,3 +284,7 @@ nav .picture img {
 .skills .sizeUp {
   height: min(2.5vw, 7vh);
 }
+
+.skills .sizeDown {
+  height: min(1.5vw, 5vh);
+}

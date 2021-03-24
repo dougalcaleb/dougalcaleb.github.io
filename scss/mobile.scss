@@ -297,11 +297,14 @@ nav {
 	}
 }
 
-.skills sizeUp {
+.skills .sizeUp {
 	height: min(4.5vw, 9vh);
 }
 .skills img {
 	height: min(4vw, 6vh);
+}
+.skills .sizeDown {
+   height: min(3vw, 5vh);
 }
 .address-bubble {
    font-size: min(3vw, 10vh);
