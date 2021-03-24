@@ -15,7 +15,6 @@ Main wrapper
 
 .projects-slider {
    width: 150%;
-	height: 60vh;
    left: -25%;
    /* transform: rotate(90deg); */
    /* Cannot change: "position" and "overflow" */
@@ -228,6 +227,8 @@ Pages
    /* background: orange; */
    transform: translateY(30px);
    transition: 0.3s transform;
+   padding-right: 50px;
+   box-sizing: border-box;
 }
 
 .roundabout-1-page .border-button {

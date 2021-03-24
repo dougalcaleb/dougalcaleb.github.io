@@ -9,7 +9,7 @@ $name - variable
 
 */
 .main section {
-  width: 95%;
+  width: 85vw;
   margin: auto;
   position: relative;
   border-radius: 5px;
@@ -39,7 +39,6 @@ $name - variable
   height: 90%;
   overflow: hidden;
   margin: none;
-  min-width: 60vh;
 }
 .projects .proj-desc {
   flex: 1;
@@ -47,7 +46,6 @@ $name - variable
   position: relative;
   padding-left: 50px;
   box-sizing: border-box;
-  min-width: 60vh;
 }
 
 .skills .skill-flex {

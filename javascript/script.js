@@ -150,3 +150,17 @@ document.querySelector(".external-mail-link").addEventListener("click", (e) => {
    document.querySelector(".external-mail-link").setAttribute("href", "mail" + "to:" + AS.firstOne.split("").reverse().join("") + AS.firstTwo.split("").reverse().join("") + "@" + AS.domain.split("").reverse().join("") + ".com" + data);
    document.querySelector(".external-mail-link").click();
 });
+
+if (window.innerWidth <= 500) {
+   let ts;
+   document.querySelector(".land-page").addEventListener("touchstart", (event) => {
+      ts = event.touches[0].screenY;
+      console.log(ts);
+   }, false);
+   document.querySelector(".land-page").addEventListener("touchmove", (event) => {
+      if (ts - event.touches[0].screenY > 100) {
+         scrollDown();
+		   managers.atTop = false;
+      }
+   }, false);
+}
