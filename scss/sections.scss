@@ -82,10 +82,10 @@
 		// height: min(2.5vw, 7vh);
 		// transform: translateY(3px);
 	}
-	.sizeDown {
-		height: min(1.5vw, 5vh);
+	// .sizeDown {
+		// height: min(1.5vw, 5vh);
 		// transform: translateY(3px);
-	}
+	// }
 	// img {
 	// 	height: min(2vw, 6vh);
 	// }
@@ -95,6 +95,7 @@
    .contact-alt {
       font-family: "Ubuntu", sans-serif;
       color: #ddd;
+      font-size: max(12px, 1.1vw);
    }
 	.mail {
       .open-mail {

@@ -77,9 +77,12 @@ a.weblink {
   padding-right: 60px;
 }
 .btn-resume svg {
-  height: 20px;
-  margin-left: 25px;
+  height: 65%;
   position: absolute;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  right: 20px;
 }
 
 .console {

@@ -200,7 +200,7 @@ nav .burger .burger-layer {
   animation: 1s pop ease;
 }
 .land-page .continue-wrap svg {
-  bottom: 55px;
+  bottom: 12vh;
   color: #006b8c;
   height: 30px;
 }
@@ -321,7 +321,7 @@ footer {
 }
 
 .skills .sizeDown {
-  height: min(3vw, 5vh);
+  height: min(2.5vw, 4vh);
 }
 
 .address-bubble {
@@ -333,20 +333,20 @@ footer {
     bottom: -10px;
   }
   40% {
-    bottom: 150px;
+    bottom: 25vh;
   }
   100% {
-    bottom: 80px;
+    bottom: 15vh;
   }
 }
 @keyframes float {
   0% {
-    bottom: 80px;
+    bottom: 15vh;
   }
   50% {
-    bottom: 90px;
+    bottom: 17vh;
   }
   100% {
-    bottom: 80px;
+    bottom: 15vh;
   }
 }

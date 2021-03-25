@@ -66,13 +66,10 @@ $name - variable
   color: #ddd;
   font-family: "Ubuntu", sans-serif;
 }
-.skills .sizeDown {
-  height: min(1.5vw, 5vh);
-}
-
 .contact .contact-alt {
   font-family: "Ubuntu", sans-serif;
   color: #ddd;
+  font-size: max(12px, 1.1vw);
 }
 .contact .mail .open-mail {
   display: flex;

@@ -232,7 +232,7 @@ nav {
 		}
 		svg {
 			@extend %center-x;
-			bottom: 55px;
+			bottom: 12vh;
 			color: ext.$dark-blue;
 			height: 30px;
 		}
@@ -357,7 +357,7 @@ footer {
 	height: min(4vw, 6vh);
 }
 .skills .sizeDown {
-	height: min(3vw, 5vh);
+	height: min(2.5vw, 4vh);
 }
 .address-bubble {
 	font-size: min(3vw, 10vh);
@@ -368,21 +368,21 @@ footer {
 		bottom: -10px;
 	}
 	40% {
-		bottom: 150px;
+		bottom: 25vh;
 	}
 	100% {
-		bottom: 80px;
+		bottom: 15vh;
 	}
 }
 
 @keyframes float {
 	0% {
-		bottom: 80px;
+		bottom: 15vh;
 	}
 	50% {
-		bottom: 90px;
+		bottom: 17vh;
 	}
 	100% {
-		bottom: 80px;
+		bottom: 15vh;
 	}
 }

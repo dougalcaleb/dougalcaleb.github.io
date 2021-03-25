@@ -57,7 +57,7 @@ nav {
 		flex-direction: column;
 		justify-content: center;
 		width: inherit;
-		height: calc(100% - min(5vw, 100px) - min(10vw, 200px));
+		height: calc(100% - min(5vw, 10vh) - min(10vw, 20vh));
       position: relative;
 		top: 0;
 		// background: purple;
@@ -76,8 +76,8 @@ nav {
 				font-size: min(1vw, 3vh);
 				border-top: 2px solid #505050;
 				text-align: center;
-				padding-top: 20px;
-				padding-bottom: 20px;
+				padding-top: max(20px, 3vh);
+				padding-bottom: max(20px, 3vh);
 				cursor: pointer;
 				&::before {
 					content: "";
@@ -140,8 +140,7 @@ nav {
 		bottom: 0;
 		position: absolute;
 		width: 10vw;
-		height: 5vw;
-      max-height: 100px;
+		height: min(5vw, 10vh);
 		border-top-left-radius: 20px;
 		border-top-right-radius: 20px;
 		display: flex;
@@ -150,15 +149,14 @@ nav {
 		background: ext.$black;
 		img {
 			color: #ccc;
-			width: 2vw;
-         max-height: 50px;
+			width: min(2vw, 4vh);
 		}
 	}
 
 	.picture {
-		height: 10vw;
+		height: min(10vw, 20vh);
 		width: 10vw;
-      max-height: 200px;
+      // max-height: 200px;
 		background: ext.$black;
 		position: relative;
 		border-bottom-left-radius: 20px;
@@ -170,10 +168,10 @@ nav {
 			top: 0;
 			right: 0;
 			bottom: 0;
-			height: 7vw;
-			width: 7vw;
-         max-height: 150px;
-         max-width: 150px;
+			height: min(7vw, 15vh);
+			width: min(7vw, 15vh);
+         // max-height: 150px;
+         // max-width: 150px;
 		}
 	}
 
@@ -242,7 +240,7 @@ nav {
 		.intro {
 			position: absolute;
 			z-index: 5;
-			left: 40px;
+			left: 2vw;
 			.land-btn {
 				border: 3px solid ext.$dark-blue;
 				border-radius: 5px;
@@ -300,7 +298,7 @@ footer {
 }
 
 .skill {
-   width: min(400px, 30vw);
+   width: min(400px, 25vw);
    span {
       font-size: min(2vw, 3vh);
    }

@@ -129,8 +129,8 @@ Navigation
 
 .roundabout-nav-btn {
 	margin: auto;
-	height: 10px;
-	width: 10px;
+	height: 1vh;
+	width: 1vh;
 	border-radius: 100%;
 	border: 2px solid #fff;
 	transition: 0.2s;
@@ -180,10 +180,10 @@ Pages
    /* display: flex; */
 }
 
-.roundabout-1-page svg {
+/* .roundabout-1-page svg {
    height: 20px;
    margin-left: 25px;
-}
+} */
 
 .roundabout-1-page button {
    display: flex;
@@ -252,6 +252,11 @@ Pages
    color: #eee;
    font-size: max(1.5vw, 3vh);
    margin-bottom: 15px;
+}
+
+.desc-ext {
+   height: 2vh;
+   margin-left: 25px;
 }
 
 .desc-skills img {
