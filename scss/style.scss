@@ -45,11 +45,6 @@ a.weblink {
 	border-right: 10px solid ext.$gray;
 	border-top: 10px solid ext.$gray;
 	border-bottom: 10px solid ext.$gray;
-
-	footer {
-		height: 40px;
-		bottom: 0;
-	}
 }
 
 .border-button {
@@ -75,30 +70,6 @@ a.weblink {
 	bottom: 0;
 	width: 100%;
 	z-index: 9999999;
-}
-
-@keyframes pop {
-	0% {
-		bottom: -50px;
-	}
-	40% {
-		bottom: 100px;
-	}
-	100% {
-		bottom: 40px;
-	}
-}
-
-@keyframes float {
-	0% {
-		bottom: 40px;
-	}
-	50% {
-		bottom: 50px;
-	}
-	100% {
-		bottom: 40px;
-	}
 }
 
 @keyframes moveUp {
