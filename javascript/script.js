@@ -7,6 +7,7 @@ let managers = {
    atTop: true,
    menuOpen: false,
    isMobile: false,
+   linksOpen: false,
 };
 
 let AS = {
@@ -255,10 +256,10 @@ if (window.innerWidth <= 500) {
 document.querySelector(".burger").addEventListener("click", () => {
    if (!managers.menuOpen) {
       openMobile();
-      managers.menuOpen = true;
+      
    } else {
       closeMobile();
-      managers.menuOpen = false;
+      
    }
 });
 
@@ -271,6 +272,8 @@ function openMobile() {
    document.querySelectorAll(".burger-layer")[2].classList.remove("b-layer-bottom-inactive");
 
    document.querySelector(".body-wrap").style.left = "50vw";
+   document.querySelector(".mobile-nav-return").style.display = "inline";
+   managers.menuOpen = true;
 }
 
 function closeMobile() {
@@ -282,4 +285,21 @@ function closeMobile() {
    document.querySelectorAll(".burger-layer")[2].classList.add("b-layer-bottom-inactive");
 
    document.querySelector(".body-wrap").style.left = "0";
+   document.querySelector(".mobile-nav-return").style.display = "none";
+   managers.menuOpen = false;
 }
+
+document.querySelector(".mobile-nav-return").addEventListener("touchstart", () => {
+   closeMobile();
+});
+
+document.querySelector(".quicklinks").style.height = "0px";
+document.querySelector(".links-open").addEventListener("click", () => {
+   if (!managers.linksOpen) {
+      document.querySelector(".quicklinks").style.height = "50vh";
+      managers.linksOpen = true;
+   } else {
+      document.querySelector(".quicklinks").style.height = "0";
+      managers.linksOpen = false;
+   }
+});

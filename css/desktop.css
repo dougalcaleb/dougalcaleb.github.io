@@ -184,8 +184,9 @@ nav .burger {
   display: none;
 }
 
-.mobile-navigation-wrap {
+.mobile-navigation-wrap, .mobile-nav-return {
   display: none;
+  visibility: hidden;
 }
 
 .land-page {

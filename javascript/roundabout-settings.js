@@ -4,7 +4,7 @@ const main = new Roundabout({
    pagesToShow: 3,
    pageSpacing: 25,
    swipeThreshold: 150,
-   lazyLoad: "hidden",
+   lazyLoad: "lazy-hidden",
    breakpoints: [
       {
          width: 500,

@@ -4,12 +4,6 @@
    position: fixed;
    z-index: 99999999;
    background: #333;
-}
-
-img {
-   position: absolute;
-   margin: auto;
-   width: min(30vw, 300px);
-   left: 0;
-   right: 0;
+   transition: 0.3s;
+   /* opacity: 0; */
 }
