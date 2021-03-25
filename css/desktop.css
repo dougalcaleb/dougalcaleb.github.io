@@ -59,7 +59,7 @@ nav {
   height: 100%;
   width: 10vw;
   position: fixed;
-  z-index: 9999;
+  z-index: 1000;
   background: #191919;
 }
 nav .navigation-wrap {
@@ -242,9 +242,9 @@ nav .burger {
   position: relative;
   font-family: "Ubuntu", sans-serif;
   font-weight: 700;
-  padding: 5px;
+  padding-top: 5px;
+  padding-bottom: 5px;
   padding-left: 25px;
-  padding-right: 25px;
   cursor: pointer;
   background: transparent;
   outline: none;
