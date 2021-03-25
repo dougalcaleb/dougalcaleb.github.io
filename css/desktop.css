@@ -269,6 +269,11 @@ nav .burger {
   z-index: 1;
 }
 
+footer {
+  height: 40px;
+  bottom: 0;
+}
+
 .proj-slider, .desc-slider {
   min-width: 60vh;
 }
@@ -294,4 +299,27 @@ nav .burger {
 
 .skills .sizeDown {
   height: min(1.5vw, 5vh);
+}
+
+@keyframes pop {
+  0% {
+    bottom: -50px;
+  }
+  40% {
+    bottom: 100px;
+  }
+  100% {
+    bottom: 40px;
+  }
+}
+@keyframes float {
+  0% {
+    bottom: 40px;
+  }
+  50% {
+    bottom: 50px;
+  }
+  100% {
+    bottom: 40px;
+  }
 }

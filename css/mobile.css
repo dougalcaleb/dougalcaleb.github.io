@@ -177,7 +177,7 @@ nav .burger .burger-layer {
   animation: 1s pop ease;
 }
 .land-page .continue-wrap svg {
-  bottom: 10px;
+  bottom: 55px;
   color: #006b8c;
   height: 30px;
 }
@@ -228,6 +228,11 @@ nav .burger .burger-layer {
   margin: auto;
   right: 15px;
   z-index: 1;
+}
+
+footer {
+  height: 60px;
+  bottom: 0;
 }
 
 .b-layer-top-active {
@@ -298,4 +303,27 @@ nav .burger .burger-layer {
 
 .address-bubble {
   font-size: min(3vw, 10vh);
+}
+
+@keyframes pop {
+  0% {
+    bottom: -10px;
+  }
+  40% {
+    bottom: 150px;
+  }
+  100% {
+    bottom: 80px;
+  }
+}
+@keyframes float {
+  0% {
+    bottom: 80px;
+  }
+  50% {
+    bottom: 90px;
+  }
+  100% {
+    bottom: 80px;
+  }
 }
