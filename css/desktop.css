@@ -154,7 +154,7 @@ nav .socials {
   align-items: center;
   background: #070707;
 }
-nav .socials svg {
+nav .socials img {
   color: #ccc;
   width: 2vw;
   max-height: 50px;
@@ -179,6 +179,9 @@ nav .picture img {
   width: 7vw;
   max-height: 150px;
   max-width: 150px;
+}
+nav .burger {
+  display: none;
 }
 
 .land-page {
@@ -274,7 +277,7 @@ nav .picture img {
   width: min(400px, 30vw);
 }
 .skill span {
-  font-size: min(2vw, 5vh);
+  font-size: min(2vw, 3vh);
 }
 
 .skills img {

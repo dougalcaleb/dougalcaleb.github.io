@@ -148,7 +148,7 @@ nav {
 		justify-content: space-evenly;
 		align-items: center;
 		background: ext.$black;
-		svg {
+		img {
 			color: #ccc;
 			width: 2vw;
          max-height: 50px;
@@ -176,6 +176,10 @@ nav {
          max-width: 150px;
 		}
 	}
+
+   .burger {
+      display: none;
+   }
 }
 
 .land-page {
@@ -285,7 +289,7 @@ nav {
 .skill {
    width: min(400px, 30vw);
    span {
-      font-size: min(2vw, 5vh);
+      font-size: min(2vw, 3vh);
    }
 }
 

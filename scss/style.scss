@@ -10,16 +10,15 @@ html, body {
    height: 100%;
 }
 
-:root {
-   --vh: 0vh;
-}
-
 p {
 	margin: auto;
 }
 
 a {
 	text-decoration: none;
+   margin: none;
+   padding: none;
+   box-sizing: border-box;
 }
 
 .links {
