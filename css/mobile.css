@@ -52,10 +52,41 @@ a.social-link {
 .body-wrap {
   position: fixed;
   height: 5px;
+  transition: left 0.3s, box-shadow 0.3s;
+  z-index: 5;
 }
 
 .main {
   height: calc(100vh - 20px);
+  box-shadow: 0px -5px 15px black;
+}
+
+.mobile-navigation-wrap {
+  position: absolute;
+  width: 50vw;
+  background: #191919;
+  height: calc(100% - 5vh);
+}
+.mobile-navigation-wrap .navigation {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: inherit;
+}
+.mobile-navigation-wrap .navigation .nav-btn {
+  font-family: "Ubuntu", sans-serif;
+  font-weight: 700;
+  color: #ddd;
+  position: relative;
+  font-size: min(3vw, 3vh);
+  border-top: 2px solid #505050;
+  text-align: center;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  cursor: pointer;
+}
+.mobile-navigation-wrap .navigation .nav-btn:last-child {
+  border-bottom: 2px solid #505050;
 }
 
 nav {
@@ -63,88 +94,11 @@ nav {
   width: 100vw;
   position: fixed;
   z-index: 9999;
-  background: #191919;
+  background: #070707;
   bottom: 0;
 }
 nav .navigation-wrap {
-  display: flex;
-  justify-content: center;
-  width: inherit;
-  height: inherit;
-  position: absolute;
-  top: 0;
-  z-index: 5;
   display: none;
-}
-nav .navigation-wrap .navigation {
-  position: relative;
-  margin: auto;
-  top: 0;
-  bottom: 0;
-  width: inherit;
-}
-nav .navigation-wrap .navigation .nav-btn {
-  font-family: "Ubuntu", sans-serif;
-  font-weight: 700;
-  color: #ddd;
-  position: relative;
-  font-size: min(1vw, 3vh);
-  border-top: 2px solid #505050;
-  text-align: center;
-  padding-top: 20px;
-  padding-bottom: 20px;
-  cursor: pointer;
-}
-nav .navigation-wrap .navigation .nav-btn::before {
-  content: "";
-  height: 100%;
-  position: absolute;
-  top: 0;
-  width: 0%;
-  background: #006b8c;
-  transition: 0.2s;
-  right: 50%;
-  z-index: -1;
-  visibility: hidden;
-}
-nav .navigation-wrap .navigation .nav-btn::after {
-  content: "";
-  height: 100%;
-  top: 0;
-  position: absolute;
-  width: 0%;
-  background: #006b8c;
-  transition: 0.2s;
-  left: 50%;
-  z-index: -1;
-  visibility: hidden;
-}
-nav .navigation-wrap .navigation .nav-btn:hover::before {
-  content: "";
-  height: 100%;
-  position: absolute;
-  top: 0;
-  width: 50%;
-  background: #006b8c;
-  transition: 0.2s;
-  right: 50%;
-  z-index: -1;
-  visibility: visible;
-}
-nav .navigation-wrap .navigation .nav-btn:hover::after {
-  content: "";
-  height: 100%;
-  top: 0;
-  position: absolute;
-  width: 50%;
-  background: #006b8c;
-  transition: 0.2s;
-  left: 50%;
-  z-index: -1;
-  visibility: visible;
-}
-nav .navigation-wrap .navigation:last-child {
-  border-bottom: 2px solid #505050;
 }
 nav .socials {
   bottom: 0;
@@ -163,7 +117,7 @@ nav .picture {
   width: 5vh;
   max-height: 200px;
   position: absolute;
-  right: 0;
+  right: 10vw;
 }
 nav .picture img {
   position: absolute;
@@ -181,7 +135,7 @@ nav .burger {
   height: 5vh;
   width: 5vh;
   position: absolute;
-  left: 0;
+  left: 10vw;
 }
 nav .burger .burger-layer {
   width: 60%;
@@ -197,6 +151,7 @@ nav .burger .burger-layer {
 }
 
 .land-page {
+  box-shadow: 0px -5px 15px black;
   height: 100vh;
   width: 100vw;
   top: 0;
