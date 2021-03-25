@@ -33,6 +33,10 @@
 	}
 }
 
+a.social-link {
+   margin-top: 4px;
+}
+
 .body-wrap {
 	position: fixed;
 	// background: orange;
@@ -47,7 +51,7 @@
 }
 
 nav {
-	display: none;
+	// display: none;
 	height: 5vh;
 	width: 100vw;
 	position: fixed;
@@ -57,12 +61,14 @@ nav {
 	// max-width: 200px;
 	.navigation-wrap {
 		display: flex;
-		flex-direction: column;
+		// flex-direction: column;
 		justify-content: center;
 		width: inherit;
-		height: calc(100vw - min(5vw, 100px) - min(10vw, 200px));
-		position: relative;
+		height: inherit;
+		position: absolute;
 		top: 0;
+      z-index: 5;
+      display: none;
 		// background: purple;
 		.navigation {
 			position: relative;
@@ -141,31 +147,28 @@ nav {
 
 	.socials {
 		bottom: 0;
-		position: absolute;
-		width: 10vw;
-		height: 5vw;
-		max-height: 100px;
-		border-top-left-radius: 20px;
-		border-top-right-radius: 20px;
+		@extend %center-x;
+		width: 40vw;
+		height: 5vh;
 		display: flex;
 		justify-content: space-evenly;
 		align-items: center;
-		background: ext.$black;
-		svg {
+		// background: ext.$black;
+		img {
 			color: #ccc;
-			width: 2vw;
-			max-height: 50px;
+			height: 3vh;
 		}
 	}
 
 	.picture {
-		height: 10vw;
-		width: 10vw;
+		height: 5vh;
+		width: 5vh;
 		max-height: 200px;
-		background: ext.$black;
-		position: relative;
-		border-bottom-left-radius: 20px;
-		border-bottom-right-radius: 20px;
+		// background: ext.$black;
+		position: absolute;
+      right: 0;
+		// border-bottom-left-radius: 20px;
+		// border-bottom-right-radius: 20px;
 		img {
 			position: absolute;
 			margin: auto;
@@ -179,6 +182,32 @@ nav {
 			max-width: 150px;
 		}
 	}
+
+   .burger {
+      height: 5vh;
+      width: 5vh;
+      // background: ext.$black;
+      position: absolute;
+      left: 0;
+      // bottom: 0;
+      // display: flex;
+      // flex-direction: column;
+      // align-items: center;
+      // justify-content: center;
+      .burger-layer {
+         width: 60%;
+         height: 3px;
+         background: ext.$dark-blue;
+         transform-origin: 50% 50%;
+         // margin: 2px;
+         transition: 0.2s;
+         position: absolute;
+         left: 0;
+         right: 0;
+         margin: auto;
+         z-index: 99;
+      }
+   }
 }
 
 .land-page {
@@ -276,6 +305,38 @@ nav {
 		z-index: 1;
 		// overflow-y: hidden;
 	}
+}
+
+.b-layer-top-active {
+   transform: rotate(45deg);
+   top: 0;
+   bottom: 0;
+}
+
+.b-layer-middle-active {
+   opacity: 0;
+   visibility: hidden;
+   bottom: 0;
+   top: 0;
+}
+
+.b-layer-bottom-active {
+   transform: rotate(-45deg);
+   top: 0;
+   bottom: 0;
+}
+
+.b-layer-top-inactive {
+   top: 1.2vh;
+   bottom: 3.4vh;
+}
+.b-layer-middle-inactive {
+   top: 0;
+   bottom: 0
+}
+.b-layer-bottom-inactive {
+   bottom: 1.2vh;
+   top: 3.4vh;
 }
 
 .copy-button {

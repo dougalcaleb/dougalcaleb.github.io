@@ -4,7 +4,8 @@ let settings = {
 
 let managers = {
 	lastScrollSnap: 0,
-	atTop: true,
+   atTop: true,
+   menuOpen: false,
 };
 
 let AS = {
@@ -228,3 +229,23 @@ if (window.innerWidth <= 500) {
 		false
 	);
 }
+
+document.querySelector(".burger").addEventListener("click", () => {
+   if (!managers.menuOpen) {
+      document.querySelectorAll(".burger-layer")[0].classList.add("b-layer-top-active");
+      document.querySelectorAll(".burger-layer")[0].classList.remove("b-layer-top-inactive");
+      document.querySelectorAll(".burger-layer")[1].classList.add("b-layer-middle-active");
+      document.querySelectorAll(".burger-layer")[1].classList.remove("b-layer-middle-inactive");
+      document.querySelectorAll(".burger-layer")[2].classList.add("b-layer-bottom-active");
+      document.querySelectorAll(".burger-layer")[2].classList.remove("b-layer-bottom-inactive");
+      managers.menuOpen = true;
+   } else {
+      document.querySelectorAll(".burger-layer")[0].classList.remove("b-layer-top-active");
+      document.querySelectorAll(".burger-layer")[0].classList.add("b-layer-top-inactive");
+      document.querySelectorAll(".burger-layer")[1].classList.remove("b-layer-middle-active");
+      document.querySelectorAll(".burger-layer")[1].classList.add("b-layer-middle-inactive");
+      document.querySelectorAll(".burger-layer")[2].classList.remove("b-layer-bottom-active");
+      document.querySelectorAll(".burger-layer")[2].classList.add("b-layer-bottom-inactive");
+      managers.menuOpen = false;
+   }
+});
