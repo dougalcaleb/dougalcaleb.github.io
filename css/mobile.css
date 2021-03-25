@@ -58,7 +58,8 @@ a.social-link {
 
 .main {
   height: calc(100vh - 20px);
-  box-shadow: 0px -5px 15px black;
+  box-shadow: 0px 0px 15px black;
+  clip-path: polygon(-100% -1px, 100% -1px, 100% 100%, -100% 100%);
 }
 
 .mobile-navigation-wrap {
@@ -151,7 +152,7 @@ nav .burger .burger-layer {
 }
 
 .land-page {
-  box-shadow: 0px -5px 15px black;
+  box-shadow: 0px 0px 15px black;
   height: 100vh;
   width: 100vw;
   top: 0;
