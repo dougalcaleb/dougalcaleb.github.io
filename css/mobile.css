@@ -66,7 +66,7 @@ a.social-link {
   position: absolute;
   width: 50vw;
   background: #191919;
-  height: calc(100% - 5vh);
+  height: 100%;
 }
 .mobile-navigation-wrap .navigation {
   display: flex;
@@ -79,7 +79,7 @@ a.social-link {
   font-weight: 700;
   color: #ddd;
   position: relative;
-  font-size: min(3vw, 3vh);
+  font-size: min(5vw, 3vh);
   border-top: 2px solid #505050;
   text-align: center;
   padding-top: 20px;
@@ -88,6 +88,32 @@ a.social-link {
 }
 .mobile-navigation-wrap .navigation .nav-btn:last-child {
   border-bottom: 2px solid #505050;
+}
+
+.mobile-nav-return {
+  height: 100%;
+  width: 50vw;
+  position: fixed;
+  right: 0;
+  z-index: 500;
+  display: none;
+}
+
+.quicklinks-wrap {
+  position: fixed;
+  bottom: 5vh;
+  width: 50vw;
+  background: #1d1d1d;
+}
+.quicklinks-wrap .links-open {
+  text-align: center;
+  font-family: "Ubuntu", sans-serif;
+  color: #eee;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+.quicklinks-wrap .quicklinks {
+  transition: 0.3s;
 }
 
 nav {
