@@ -15,7 +15,8 @@ body {
   scroll-behavior: smooth;
 }
 
-html, body {
+html,
+body {
   height: 100%;
 }
 
@@ -57,9 +58,9 @@ a.weblink {
   position: relative;
   font-family: "Ubuntu", sans-serif;
   font-weight: 700;
-  padding: 5px;
+  padding-top: 5px;
+  padding-bottom: 5px;
   padding-left: 25px;
-  padding-right: 25px;
   cursor: pointer;
   background: transparent;
   outline: none;
@@ -68,11 +69,82 @@ a.weblink {
   margin-right: 15px;
 }
 
+.border-button:not(.btn-resume) {
+  padding-right: 25px;
+}
+
+.btn-resume {
+  padding-right: 60px;
+}
+.btn-resume svg {
+  height: 20px;
+  margin-left: 25px;
+  position: absolute;
+}
+
 .console {
   position: fixed;
   bottom: 0;
   width: 100%;
   z-index: 9999999;
+}
+
+.links-modal {
+  height: 60vh;
+  width: min(75vw, 80vh);
+  box-shadow: 0px 0px 10px #000;
+  border-radius: 5px;
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  margin: auto;
+  z-index: 2001;
+  background: #282828;
+  visibility: hidden;
+  opacity: 0;
+  transition: 0.3s;
+}
+.links-modal a {
+  color: #ddd;
+}
+.links-modal .quicklinks {
+  color: #ddd;
+  padding-top: 40px;
+}
+.links-modal .quicklinks div {
+  font-family: "Ubuntu";
+  text-align: center;
+  margin-bottom: 10px;
+}
+.links-modal .quicklinks h4 {
+  font-family: "Miriam Libre", "Ubuntu", sans-serif;
+  color: #999;
+  text-align: center;
+}
+.links-modal .close-modal {
+  height: 8%;
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  cursor: pointer;
+}
+.links-modal .close-modal svg {
+  height: 100%;
+  color: #006b8c;
+}
+
+.modal-overlay {
+  z-index: 2000;
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  background: rgba(0, 0, 0, 0.4);
+  filter: blur(2px);
+  transition: 0.3s;
+  visibility: hidden;
+  opacity: 0;
 }
 
 @keyframes moveUp {

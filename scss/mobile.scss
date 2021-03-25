@@ -34,7 +34,7 @@
 }
 
 a.social-link {
-   margin-top: 4px;
+	margin-top: 4px;
 }
 
 .body-wrap {
@@ -43,88 +43,91 @@ a.social-link {
 	// left: 10vw;
 	height: 5px;
 	// top: -100vh;
-   transition: left 0.3s, box-shadow 0.3s;
-   z-index: 5;
+	transition: left 0.3s, box-shadow 0.3s;
+	z-index: 5;
 }
 
 .main {
 	// height: calc(--vh - 20px);
 	height: calc(100vh - 20px);
-   box-shadow: 0px 0px 15px black;
-   clip-path: polygon(-100% -1px, 100% -1px, 100% 100%, -100% 100%);
+	box-shadow: 0px 0px 15px black;
+	clip-path: polygon(-100% -1px, 100% -1px, 100% 100%, -100% 100%);
 }
 
 .mobile-navigation-wrap {
-   position: absolute;
-   width: 50vw;
-   background: ext.$dark-gray;
-   height: 100%;
-   .navigation {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      height: inherit;
-      .nav-btn {
-         font-family: "Ubuntu", sans-serif;
-         font-weight: 700;
-         color: #ddd;
-         position: relative;
-         font-size: min(5vw, 3vh);
-         border-top: 2px solid #505050;
-         text-align: center;
-         padding-top: 20px;
-         padding-bottom: 20px;
-         cursor: pointer;
-         &:last-child {
-            border-bottom: 2px solid #505050;
-         }
-      }
-   }
+	position: absolute;
+	width: 50vw;
+	background: ext.$dark-gray;
+	height: 100%;
+	.navigation {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		height: inherit;
+		.nav-btn {
+			font-family: "Ubuntu", sans-serif;
+			font-weight: 700;
+			color: #ddd;
+			position: relative;
+			font-size: min(5vw, 3vh);
+			border-top: 2px solid #505050;
+			text-align: center;
+			padding-top: 20px;
+			padding-bottom: 20px;
+			cursor: pointer;
+			&:last-child {
+				border-bottom: 2px solid #505050;
+			}
+		}
+	}
 }
 
 .mobile-nav-return {
-   height: 100%;
-   width: 50vw;
-   position: fixed;
-   right: 0;
-   z-index: 500;
-   display: none;
+	height: 100%;
+	width: 50vw;
+	position: fixed;
+	right: 0;
+	z-index: 500;
+	display: none;
 }
 
+// .quicklinks-wrap {
+//    // background: purple;
+//    position: fixed;
+//    bottom: 5vh;
+//    width: 50vw;
+//    background: #1d1d1d;
+//    .quicklinks {
+//       transition: 0.3s;
+//    }
+// }
 
-
-.quicklinks-wrap {
-   // background: purple;
-   position: fixed;
+.links-open {
+	text-align: center;
+	font-family: "Ubuntu", sans-serif;
+	color: #eee;
+	padding-top: 20px;
+	padding-bottom: 20px;
    bottom: 5vh;
+   position: fixed;
+   text-align: center;
    width: 50vw;
-   background: #1d1d1d;
-   .links-open {
-      text-align: center;
-      font-family: "Ubuntu", sans-serif;
-      color: #eee;
-      padding-top: 20px;
-      padding-bottom: 20px;
-   }
-   .quicklinks {
-      transition: 0.3s;
-   }
+   color: #888;
 }
-
 
 nav {
 	// display: none;
 	height: 5vh;
 	width: 100vw;
 	position: fixed;
-	z-index: 9999;
+	z-index: 1000;
 	background: ext.$black;
 	bottom: 0;
 	// max-width: 200px;
 
-   .navigation-wrap {
-      display: none;
-   }
+	.navigation-wrap {
+		display: none;
+	}
 
 	.socials {
 		bottom: 0;
@@ -147,7 +150,7 @@ nav {
 		max-height: 200px;
 		// background: ext.$black;
 		position: absolute;
-      right: 10vw;
+		right: 10vw;
 		// border-bottom-left-radius: 20px;
 		// border-bottom-right-radius: 20px;
 		img {
@@ -164,35 +167,35 @@ nav {
 		}
 	}
 
-   .burger {
-      height: 5vh;
-      width: 5vh;
-      // background: ext.$black;
-      position: absolute;
-      left: 10vw;
-      // bottom: 0;
-      // display: flex;
-      // flex-direction: column;
-      // align-items: center;
-      // justify-content: center;
-      .burger-layer {
-         width: 60%;
-         height: 3px;
-         background: ext.$dark-blue;
-         transform-origin: 50% 50%;
-         // margin: 2px;
-         transition: 0.2s;
-         position: absolute;
-         left: 0;
-         right: 0;
-         margin: auto;
-         z-index: 99;
-      }
-   }
+	.burger {
+		height: 5vh;
+		width: 5vh;
+		// background: ext.$black;
+		position: absolute;
+		left: 10vw;
+		// bottom: 0;
+		// display: flex;
+		// flex-direction: column;
+		// align-items: center;
+		// justify-content: center;
+		.burger-layer {
+			width: 60%;
+			height: 3px;
+			background: ext.$dark-blue;
+			transform-origin: 50% 50%;
+			// margin: 2px;
+			transition: 0.2s;
+			position: absolute;
+			left: 0;
+			right: 0;
+			margin: auto;
+			z-index: 99;
+		}
+	}
 }
 
 .land-page {
-   box-shadow: 0px 0px 15px black;
+	box-shadow: 0px 0px 15px black;
 	// background: ext.$gray;
 	height: 100vh;
 	// width: max(90vw, calc(100% - 200px));
@@ -255,9 +258,11 @@ nav {
 				position: relative;
 				font-family: "Ubuntu", sans-serif;
 				font-weight: 700;
-				padding: 5px;
+				// padding: 5px;
+            padding-top: 5px;
+            padding-bottom: 5px;
 				padding-left: 25px;
-				padding-right: 25px;
+				// padding-right: 25px;
 				cursor: pointer;
 				background: transparent;
 				outline: none;
@@ -290,40 +295,40 @@ nav {
 }
 
 footer {
-   height: 60px;
-   bottom: 0;
+	height: 60px;
+	bottom: 0;
 }
 
 .b-layer-top-active {
-   transform: rotate(45deg);
-   top: 0;
-   bottom: 0;
+	transform: rotate(45deg);
+	top: 0;
+	bottom: 0;
 }
 
 .b-layer-middle-active {
-   opacity: 0;
-   visibility: hidden;
-   bottom: 0;
-   top: 0;
+	opacity: 0;
+	visibility: hidden;
+	bottom: 0;
+	top: 0;
 }
 
 .b-layer-bottom-active {
-   transform: rotate(-45deg);
-   top: 0;
-   bottom: 0;
+	transform: rotate(-45deg);
+	top: 0;
+	bottom: 0;
 }
 
 .b-layer-top-inactive {
-   top: 1.2vh;
-   bottom: 3.4vh;
+	top: 1.2vh;
+	bottom: 3.4vh;
 }
 .b-layer-middle-inactive {
-   top: 0;
-   bottom: 0
+	top: 0;
+	bottom: 0;
 }
 .b-layer-bottom-inactive {
-   bottom: 1.2vh;
-   top: 3.4vh;
+	bottom: 1.2vh;
+	top: 3.4vh;
 }
 
 .copy-button {
@@ -352,10 +357,10 @@ footer {
 	height: min(4vw, 6vh);
 }
 .skills .sizeDown {
-   height: min(3vw, 5vh);
+	height: min(3vw, 5vh);
 }
 .address-bubble {
-   font-size: min(3vw, 10vh);
+	font-size: min(3vw, 10vh);
 }
 
 @keyframes pop {

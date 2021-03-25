@@ -99,28 +99,24 @@ a.social-link {
   display: none;
 }
 
-.quicklinks-wrap {
-  position: fixed;
-  bottom: 5vh;
-  width: 50vw;
-  background: #1d1d1d;
-}
-.quicklinks-wrap .links-open {
+.links-open {
   text-align: center;
   font-family: "Ubuntu", sans-serif;
   color: #eee;
   padding-top: 20px;
   padding-bottom: 20px;
-}
-.quicklinks-wrap .quicklinks {
-  transition: 0.3s;
+  bottom: 5vh;
+  position: fixed;
+  text-align: center;
+  width: 50vw;
+  color: #888;
 }
 
 nav {
   height: 5vh;
   width: 100vw;
   position: fixed;
-  z-index: 9999;
+  z-index: 1000;
   background: #070707;
   bottom: 0;
 }
@@ -229,9 +225,9 @@ nav .burger .burger-layer {
   position: relative;
   font-family: "Ubuntu", sans-serif;
   font-weight: 700;
-  padding: 5px;
+  padding-top: 5px;
+  padding-bottom: 5px;
   padding-left: 25px;
-  padding-right: 25px;
   cursor: pointer;
   background: transparent;
   outline: none;
