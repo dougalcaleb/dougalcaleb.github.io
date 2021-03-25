@@ -77,9 +77,13 @@ a.weblink {
    // padding: 0;
    padding-right: 60px;
    svg {
-      height: 20px;
-      margin-left: 25px;
+      height: 65%;
+      // margin-left: 25px;
       position: absolute;
+      top: 0;
+      bottom: 0;
+      margin: auto;
+      right: 20px;
    }
 }
 

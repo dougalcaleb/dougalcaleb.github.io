@@ -67,7 +67,7 @@ nav .navigation-wrap {
   flex-direction: column;
   justify-content: center;
   width: inherit;
-  height: calc(100% - min(5vw, 100px) - min(10vw, 200px));
+  height: calc(100% - min(5vw, 10vh) - min(10vw, 20vh));
   position: relative;
   top: 0;
 }
@@ -86,8 +86,8 @@ nav .navigation-wrap .navigation .nav-btn {
   font-size: min(1vw, 3vh);
   border-top: 2px solid #505050;
   text-align: center;
-  padding-top: 20px;
-  padding-bottom: 20px;
+  padding-top: max(20px, 3vh);
+  padding-bottom: max(20px, 3vh);
   cursor: pointer;
 }
 nav .navigation-wrap .navigation .nav-btn::before {
@@ -145,8 +145,7 @@ nav .socials {
   bottom: 0;
   position: absolute;
   width: 10vw;
-  height: 5vw;
-  max-height: 100px;
+  height: min(5vw, 10vh);
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
   display: flex;
@@ -156,13 +155,11 @@ nav .socials {
 }
 nav .socials img {
   color: #ccc;
-  width: 2vw;
-  max-height: 50px;
+  width: min(2vw, 4vh);
 }
 nav .picture {
-  height: 10vw;
+  height: min(10vw, 20vh);
   width: 10vw;
-  max-height: 200px;
   background: #070707;
   position: relative;
   border-bottom-left-radius: 20px;
@@ -175,10 +172,8 @@ nav .picture img {
   top: 0;
   right: 0;
   bottom: 0;
-  height: 7vw;
-  width: 7vw;
-  max-height: 150px;
-  max-width: 150px;
+  height: min(7vw, 15vh);
+  width: min(7vw, 15vh);
 }
 nav .burger {
   display: none;
@@ -233,7 +228,7 @@ nav .burger {
 .land-page .intro-wrap .intro {
   position: absolute;
   z-index: 5;
-  left: 40px;
+  left: 2vw;
 }
 .land-page .intro-wrap .intro .land-btn {
   border: 3px solid #006b8c;
@@ -284,7 +279,7 @@ footer {
 }
 
 .skill {
-  width: min(400px, 30vw);
+  width: min(400px, 25vw);
 }
 .skill span {
   font-size: min(2vw, 3vh);
