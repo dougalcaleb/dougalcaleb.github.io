@@ -50,7 +50,8 @@ a.social-link {
 .main {
 	// height: calc(--vh - 20px);
 	height: calc(100vh - 20px);
-   box-shadow: 0px -5px 15px black
+   box-shadow: 0px 0px 15px black;
+   clip-path: polygon(-100% -1px, 100% -1px, 100% 100%, -100% 100%);
 }
 
 .mobile-navigation-wrap {
@@ -163,7 +164,7 @@ nav {
 }
 
 .land-page {
-   box-shadow: 0px -5px 15px black;
+   box-shadow: 0px 0px 15px black;
 	// background: ext.$gray;
 	height: 100vh;
 	// width: max(90vw, calc(100% - 200px));
