@@ -30,6 +30,11 @@ a {
   box-sizing: border-box;
 }
 
+a.weblink {
+  color: #00b7ff;
+  font-family: "Ubuntu", sans-serif;
+}
+
 .links {
   display: none;
   visibility: hidden;

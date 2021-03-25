@@ -21,6 +21,11 @@ a {
    box-sizing: border-box;
 }
 
+a.weblink {
+   color: ext.$light-blue;
+   font-family: "Ubuntu", sans-serif;
+}
+
 .links {
 	display: none;
 	visibility: hidden;
