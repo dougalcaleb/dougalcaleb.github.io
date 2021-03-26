@@ -1,6 +1,6 @@
 new Roundabout({
    parent: ".roundabout-example",
-   transitionFunction: "cubic-bezier(.5,0,.2,1.3)",
+   transitionFunction: "linear",
    transition: 1000,
    pages: [
       {
