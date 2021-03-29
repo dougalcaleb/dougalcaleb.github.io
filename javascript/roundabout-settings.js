@@ -170,7 +170,7 @@ const desc = new Roundabout({
             <p class="desc-body">Built with Angular and a touch of Firebase, this app keeps track of work hours for multiple employees across multiple departments, and features analytics about pay at a glance.</p>
             <h4 class="desc-skills-title">Skills:</h4>
             <div class="desc-skills">${skills.angular + skills.ts + skills.firebase + skills.db}</div>
-            
+            <a href="https://hr-timesheet-a9f11.web.app/departments" target="_blank"><button class="border-button">View ${exBtn}</button></a>
          </div>
          `
       },
