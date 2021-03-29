@@ -84,9 +84,9 @@
             </ul>
             "none" loads all supplied background images as the webpage is loading.
             <br/><br/>
-            "hidden" only loads all visible background images as the webpage is loading, along with images within the reach of one scroll in either direction. Once a scroll occurs, the new pages within one scroll will be loaded. This is ideal for carousels that are less central to a page and might not be interacted with, so there isn't a need to spend the network usage to load the images.
+            "hidden" only loads initially visible background images as the webpage is loading, along with images within the reach of one scroll in either direction. Once a scroll occurs, the new pages within one scroll will be loaded. This is ideal for carousels that are less central to a page and might not be interacted with, so there isn't a need to spend the network usage to load additional images.
             <br/><br/>
-            "all" waits until the page has finished loading to load its images. Once the page is ready, it loads each background image one-by-one.
+            "all" waits until the page has finished loading to load its images. Once the page is ready, it loads every background image one-by-one.
             <br/><br/>
             For the example below, watch the 'network' tab in your browser inspector. You will see 3 images requested initially - one for the first page, one for the page to the right, and one for the page to the left. As you scroll, it will request more images.
             <!-- <br/><br/>

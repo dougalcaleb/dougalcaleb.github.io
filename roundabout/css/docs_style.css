@@ -85,8 +85,12 @@ div.code::-webkit-scrollbar-button {
   color: #00b7ff;
 }
 
-.secondCarousel {
+.secondCarousel, .second {
   margin-top: 25px;
+}
+
+.slider-psm .roundabout-wrapper {
+  background: #111;
 }
 
 .spec {
