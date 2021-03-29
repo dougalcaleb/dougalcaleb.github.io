@@ -85,7 +85,7 @@
 				<span class="code">roundabout.min.js</span> to your HTML. Create another JavaScript file (or use the provided
 				<span class="code">roundabout-settings.js</span>) to contain your settings, linked <i>after</i> <span class="code">roundabout.min.js</span>.
             <br/><br/>
-            It is important that your settings come after the source code, so that it can load in the correct order.
+            It is important that your settings come after the source code, so that it can load and initialize in the correct order. Do not use the <span class="code">async</span> property.
 				<br /><br />
 				Finally, link <span class="code">roundabout-style.css</span> to the same HTML page as before. Your HTML should then look like this:
             <div class="code html-codeblock">
@@ -104,7 +104,6 @@
                &nbsp;&nbsp;&lt;/body&gt;<br/>
                &lt;/html&gt;
 				</div>
-            Once you have that, you're all set! Define your settings, and you have a carousel up and running in no time at all.
             <br/><br/>
             Alternatively, if you'd rather have your <span class="code">script</span> tags in your <span class="code">head</span>, you must use the <span class="code">defer</span> attribute and structure your HTML like this:
             <div class="code html-codeblock">
@@ -123,8 +122,9 @@
                &nbsp;&nbsp;&lt;/body&gt;<br/>
                &lt;/html&gt;
             </div>
-				Creating a new carousel is done with an object constructor, passed an object containing all of your settings. It does not need to be
-				stored in a variable, except when using the scripting module.
+            Once you have that, you're all set! Define your settings, and you have a carousel up and running in no time at all.
+            <br/><br/>
+				Creating a new carousel is done with an object constructor, passed an object containing all of your settings. It does not need to be stored in a variable, except when using the scripting module.
 				<div class="code js-codeblock">
 					new Roundabout({<br />
 					&nbsp;&nbsp;// include your settings here...<br />
@@ -133,11 +133,9 @@
             <br/>
             <b> <i>-- Some other things to note: --</i> </b>
             <br/><br/>
-				The only required setting is <span class="code">pages</span>. If you have more than one carousel on a single page,
-				<span class="code">id</span> is also required.
+				The only required setting is <span class="code">pages</span>. If you have more than one carousel on a single page, <span class="code">id</span> is also required.
             <br/><br/>
-				Multiple carousels can be created on one page by defining multiple constructors. Be sure to give them unique CSS selectors with the
-				<span class="code">id</span> property so that they can be interacted with individually.
+				Multiple carousels can be created on one page by defining multiple constructors. Be sure to give them unique CSS selectors with the <span class="code">id</span> property so that they can be interacted with individually.
 				<div class="code js-codeblock">
 					new Roundabout({<br />
 					&nbsp;&nbsp;id: "#carouselNumberOne"<br />
