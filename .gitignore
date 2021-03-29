@@ -1,6 +1,8 @@
 /.vscode/
-/concepts/*
-/archive'/
+/concepts/
+/archive/
 debug.log
 ignore/
 *.ignore.*
+*-old*
+# *.ai
