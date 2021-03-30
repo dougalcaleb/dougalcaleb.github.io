@@ -51,8 +51,9 @@ div.code {
   background: #252525;
   border-radius: 5px;
   font-family: monospace;
-  padding: 5px;
   padding-left: 15px;
+  padding-right: 15px;
+  padding-bottom: 15px;
   outline: none;
   border: none;
   line-height: 17px;
@@ -79,6 +80,34 @@ div.code::-webkit-scrollbar-thumb {
 }
 div.code::-webkit-scrollbar-button {
   display: none;
+}
+
+div.code:not(.code-collapse) {
+  padding-top: 5px;
+}
+
+.code-collapse {
+  padding-top: 25px;
+  overflow-y: hidden;
+  position: relative;
+}
+.code-collapse div {
+  position: absolute;
+  left: 0;
+  top: 0;
+  padding-left: 15px;
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  width: 25px;
+  height: 25px;
+  user-select: none;
+  cursor: pointer;
+}
+.code-collapse div svg {
+  height: 15px;
+  min-width: 15px;
+  margin-left: 5px;
 }
 
 .link {
@@ -267,6 +296,7 @@ nav .setup div {
   font-family: "Roboto";
   border-bottom: 3px solid #006b8c;
   border-radius: 5px;
+  font-size: min(1vw, 2vh);
 }
 nav .setup div:hover {
   background: #494949;
