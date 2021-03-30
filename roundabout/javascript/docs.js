@@ -152,6 +152,30 @@ function sort(method) {
    }
    newGs.innerHTML = `<div>Custom Styling</div>`;
    table.appendChild(newGs);
+
+   newGs = document.createElement("a");
+   newGs.setAttribute("href", `/roundabout/scripting.html`);
+   if (!sameTab) {
+      newGs.setAttribute("target", "_blank");
+   }
+   newGs.innerHTML = `<div>Scripting</div>`;
+   table.appendChild(newGs);
+
+   newGs = document.createElement("a");
+   newGs.setAttribute("href", `/roundabout/patch-notes.html`);
+   if (!sameTab) {
+      newGs.setAttribute("target", "_blank");
+   }
+   newGs.innerHTML = `<div>Patch Notes</div>`;
+   table.appendChild(newGs);
+
+   newGs = document.createElement("a");
+   newGs.setAttribute("href", `/roundabout/examples.html`);
+   if (!sameTab) {
+      newGs.setAttribute("target", "_blank");
+   }
+   newGs.innerHTML = `<div>Examples</div>`;
+   table.appendChild(newGs);
    
    gs = document.createElement("div");
    gs.innerHTML = `SETTINGS`;
