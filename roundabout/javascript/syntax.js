@@ -1,5 +1,18 @@
 let htmlcode = document.querySelectorAll(".html-codeblock");
 let jscode = document.querySelectorAll(".js-codeblock");
+let csscode = document.querySelectorAll(".css-codeblock");
+
+/*
+Using this plugin:
+- Codeblocks must be in seperate elements
+- Each line ends with a <br/> element
+- Contain the following classes:
+   - Either "js-codeblock", "html-codeblock" or "css-codeblock"
+   - If collapsable, "code-collapse"
+   - If collapsable, "start-collapsed" or "start-expanded"
+
+CSS reference is stored in syntax.css
+*/
 
 jscode.forEach(block => {
    let lines = block.innerHTML.split("<br>");
@@ -175,4 +188,62 @@ htmlcode.forEach(block => {
       finalBlock += inProgress+"<br>"
    });
 	block.innerHTML = finalBlock;
+});
+
+csscode.forEach(block => {
+   let lines = block.innerHTML.split("<br>");
+   let finalBlock = "";
+   let nums = ["1","2","3","4","5","6","7","8","9","0"]
+
+   lines.forEach(line => {
+      let inProgress = line.trim();
+
+      if (inProgress.split("")[0] == "." || inProgress.split("")[0] == "#") {
+         inProgress = `<span class="code-tan"> ${inProgress} </span>`;
+      }
+      if (line.includes("{")) {
+         inProgress = inProgress.replace("{", `<span class="code-white">{</span>`)
+      }
+      if (line.includes(",")) {
+         inProgress = inProgress.replace(",", `<span class="code-white">,</span>`)
+      }
+      if (line.includes(":")) {
+         let parts = inProgress.split(": ");
+         parts[0] = `<span class="code-blue-l">${parts[0]}</span>`;
+         if (nums.includes(parts[1].split("")[0])) {
+            parts[1] = `<span class="code-green">${parts[1]}</span>`;
+         } else {
+            parts[1] = `<span class="code-orange">${parts[1]}</span>`;
+         }
+
+         inProgress = parts.join(": ");
+      }
+
+      finalBlock += inProgress + "<br/>"
+   });
+   block.innerHTML = finalBlock;
+});
+
+document.querySelectorAll(".code-collapse").forEach(element => {
+   let type = element.classList.contains("start-collapsed") ? "Collapse" : "Expand";
+   let c = document.createElement("div");
+   let svg_c = `<svg viewBox="0 0 24 24"><path fill="currentColor" d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z" /></svg>`;
+   let svg_o = `<svg viewBox="0 0 24 24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z" /></svg>`
+   c.innerHTML = (type == "Collapse" ? "Expand" : "Collapse") + " code block" + (type == "Collapse" ? svg_c : svg_o);
+   element.prepend(c);
+   if (type == "Collapse") {
+      element.style.height = "0px";
+      element.style.paddingBottom = "0px";
+   }
+   element.children[0].addEventListener("click", () => {
+      if (element.style.height == "") {
+         element.style.height = "0px";
+         element.style.paddingBottom = "0px";
+         element.children[0].innerHTML = "Expand code block" + svg_c;
+      } else if (element.style.height == "0px") {
+         element.style.height = "";
+         element.style.paddingBottom = "15px";
+         element.children[0].innerHTML = "Collapse code block" + svg_o;
+      }
+   });
 });
