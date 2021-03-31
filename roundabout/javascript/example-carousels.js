@@ -100,6 +100,7 @@ new Roundabout({
    parent: ".type-4",
    id: "#type-4",
    transition: 500,
+   throttleTimeout: 800,
    type: "gallery",
    pages: [
       {
@@ -227,10 +228,9 @@ const nav = new Roundabout({
 // Initialize the scripting module
 const RS = new RoundaboutScripter();
 
-// Give each page a click handler.
+// Give each page a click handler
 // We won't use the normal "click" listener, because that can cause drag interactions to be counted as clicks
-document.querySelectorAll(".interactive-nav").forEach(navBtn => {
-   // Keep track of mouse start and end
+document.querySelectorAll(".interactive-nav").forEach((navBtn) => {
    let mouseStart = 0;
    let mouseEnd = 0;
    // On mouse down, track the start position
