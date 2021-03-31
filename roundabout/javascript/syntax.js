@@ -16,7 +16,8 @@ CSS reference is stored in syntax.css
 
 jscode.forEach((block) => {
 	let lines = block.innerHTML.split("<br>");
-	let finalBlock = "";
+   let finalBlock = "";
+   let variables = [];
 
 	lines.forEach((line) => {
 		let inProgress = line.trim();
@@ -31,11 +32,29 @@ jscode.forEach((block) => {
 				);
 			}
 			if (line.includes("const")) {
+            let matches = inProgress.match(new RegExp("const\\s(\\S*)", "gi"));
+            if (matches.length > 0) {
+               matches.forEach(match => {
+                  variables.push(match.split(" ")[1]);
+               });
+            }
 				inProgress = inProgress.replace(
 					new RegExp("const\\s(\\S*)", "gi"),
 					`<span class="code-blue-d">const</span><span class="code-blue-l"> $1</span>`
+            );
+         }
+         if (line.includes("let")) {
+            let matches = inProgress.match(new RegExp("let\\s(\\S*)", "gi"));
+            if (matches.length > 0) {
+               matches.forEach(match => {
+                  variables.push(match.split(" ")[1]);
+               });
+            }
+            inProgress = inProgress.replace(
+					new RegExp("let\\s(\\S*)", "gi"),
+					`<span class="code-blue-d">let</span><span class="code-blue-l"> $1</span>`
 				);
-			}
+         }
 			if (line.includes("RS")) {
 				inProgress = inProgress.replace(new RegExp("RS", "g"), `<span class="code-blue-l">RS</span>`);
 			}
@@ -57,7 +76,12 @@ jscode.forEach((block) => {
 						`<span class="code-blue-l">$1</span>:<span class="code-green">$2</span>$3`
 					);
 				}
-			}
+         }
+         variables.forEach(v => {
+            if (line.includes(v)) {
+               inProgress = inProgress.replace(v, `<span class="code-blue-l">${v}</span>`)
+            }
+         });
 		}
 		finalBlock += inProgress + "<br>";
 	});
