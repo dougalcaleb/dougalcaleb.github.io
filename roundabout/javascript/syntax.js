@@ -16,8 +16,9 @@ CSS reference is stored in syntax.css
 
 jscode.forEach((block) => {
 	let lines = block.innerHTML.split("<br>");
-   let finalBlock = "";
-   let variables = [];
+	let finalBlock = "";
+	let variables = ["document", "window"];
+	let objects = ["Math"];
 
 	lines.forEach((line) => {
 		let inProgress = line.trim();
@@ -31,43 +32,52 @@ jscode.forEach((block) => {
 					`<span class="code-blue-d">new</span><span class="code-tan"> Roundabout$1</span>`
 				);
 			}
+			if (line.includes('"')) {
+				inProgress = inProgress.replace(new RegExp(`"(.*)"`, "gmi"), `<span class="code-orange">"$1"</span>`);
+			}
 			if (line.includes("const")) {
-            let matches = inProgress.match(new RegExp("const\\s(\\S*)", "gi"));
-            if (matches.length > 0) {
-               matches.forEach(match => {
-                  variables.push(match.split(" ")[1]);
-               });
-            }
+				let matches = inProgress.match(new RegExp("const\\s(\\S*)", "gi"));
+				if (matches) {
+					matches.forEach((match) => {
+						variables.push(match.split(" ")[1]);
+					});
+				}
 				inProgress = inProgress.replace(
 					new RegExp("const\\s(\\S*)", "gi"),
 					`<span class="code-blue-d">const</span><span class="code-blue-l"> $1</span>`
-            );
-         }
-         if (line.includes("let")) {
-            let matches = inProgress.match(new RegExp("let\\s(\\S*)", "gi"));
-            if (matches.length > 0) {
-               matches.forEach(match => {
-                  variables.push(match.split(" ")[1]);
-               });
-            }
-            inProgress = inProgress.replace(
+				);
+			}
+			if (line.includes("let")) {
+				let matches = inProgress.match(new RegExp("let\\s(\\S*)", "gi"));
+				if (matches) {
+					matches.forEach((match) => {
+						variables.push(match.split(" ")[1]);
+					});
+				}
+				inProgress = inProgress.replace(
 					new RegExp("let\\s(\\S*)", "gi"),
 					`<span class="code-blue-d">let</span><span class="code-blue-l"> $1</span>`
 				);
-         }
+			}
 			if (line.includes("RS")) {
 				inProgress = inProgress.replace(new RegExp("RS", "g"), `<span class="code-blue-l">RS</span>`);
 			}
-			if (!line.includes('"') && !line.includes("`") && line.includes("(") && line.includes(".")) {
-				inProgress = inProgress.replace(new RegExp("\\.([^\\(]*)", "gi"), `.<span class="code-tan">$1</span>`);
+			if (line.includes("(")) {
+				inProgress = inProgress.replaceAll(new RegExp("(\\w*)\\(", "gmi"), `<span class="code-tan">$1</span>(`);
+				let matches = inProgress.match(new RegExp("\\((\\w*)\\)", "gmi"));
+				if (matches) {
+					matches.forEach((match) => {
+						variables.push(match.substring(1, match.length - 1));
+					});
+				}
 			}
-			if (line.includes('"')) {
-				inProgress = inProgress.replace(new RegExp(`"(.*)"`, "gmi"), `<span class="code-orange">"$1"</span>`);
+			if (line.includes("if")) {
+				inProgress = inProgress.replace("if", `<span class="code-purple">if</span>`);
 			}
 			if (line.includes("`")) {
 				inProgress = inProgress.replace(new RegExp("`(.*)`", "gmi"), '<span class="code-orange">`$1`</span>');
 			}
-         if (line.includes(":")) {
+			if (line.includes(":")) {
 				if (line.includes(`"`) || line.includes("`") || line.includes("[") || line.includes("{")) {
 					inProgress = inProgress.replace(new RegExp("^\\s*(\\S*):", "gmi"), `<span class="code-blue-l">$1</span>:`);
 				} else {
@@ -76,12 +86,36 @@ jscode.forEach((block) => {
 						`<span class="code-blue-l">$1</span>:<span class="code-green">$2</span>$3`
 					);
 				}
-         }
-         variables.forEach(v => {
-            if (line.includes(v)) {
-               inProgress = inProgress.replace(v, `<span class="code-blue-l">${v}</span>`)
-            }
+			}
+			variables.forEach((v) => {
+				if (v != "") {
+					let matches = inProgress.match(new RegExp(`${v}\\.([^\\.\\s<>;\\[\\]]*)`, "gmi"));
+					console.log(matches);
+					if (matches) {
+                  matches.forEach((match) => {
+                     if (!variables.includes(match.split(".")[1])) {
+                        variables.push(match.split(".")[1]);
+                     }
+						});
+					}
+				}
          });
+         // console.log(variables);
+         variables.forEach((v) => {
+            console.log("checking", v);
+				if (v != "") {
+					if (line.includes(v)) {
+						inProgress = inProgress.replaceAll(new RegExp(v, "gm"), `<span class="code-blue-l">${v}</span>`);
+					}
+				}
+			});
+			objects.forEach((o) => {
+				if (o != "") {
+					if (line.includes(o)) {
+						inProgress = inProgress.replaceAll(new RegExp(o, "gm"), `<span class="code-green">${o}</span>`);
+					}
+				}
+			});
 		}
 		finalBlock += inProgress + "<br>";
 	});
@@ -233,8 +267,8 @@ csscode.forEach((block) => {
 	lines.forEach((line) => {
 		let inProgress = line.trim();
 
-      if (inProgress.includes("//")) {
-         inProgress = `<span class="code-comment">${inProgress}</span>`;
+		if (inProgress.includes("//")) {
+			inProgress = `<span class="code-comment">${inProgress}</span>`;
 		} else {
 			if (inProgress.split("")[0] == "." || inProgress.split("")[0] == "#") {
 				inProgress = `<span class="code-tan"> ${inProgress} </span>`;
@@ -244,9 +278,12 @@ csscode.forEach((block) => {
 			}
 			if (line.includes(",")) {
 				inProgress = inProgress.replace(",", `<span class="code-white">,</span>`);
-         }
-         if (inProgress.replaceAll("&nbsp;", "").includes(";")) {
-				inProgress = inProgress.replaceAll("&nbsp;", "REPLACE_SPACE").replace(";", `<span class="code-white">;</span>`).replaceAll("REPLACE_SPACE", "&nbsp;");
+			}
+			if (inProgress.replaceAll("&nbsp;", "").includes(";")) {
+				inProgress = inProgress
+					.replaceAll("&nbsp;", "REPLACE_SPACE")
+					.replace(";", `<span class="code-white">;</span>`)
+					.replaceAll("REPLACE_SPACE", "&nbsp;");
 			}
 			if (line.includes(":")) {
 				let parts = inProgress.split(": ");
@@ -267,11 +304,11 @@ csscode.forEach((block) => {
 });
 
 document.querySelectorAll(".code-collapse").forEach((element) => {
-   let type = element.classList.contains("start-collapsed") ? "Collapse" : "Expand";
-   let lang;
-   if (element.classList.contains("js-codeblock")) lang = "Javascript";
-   if (element.classList.contains("html-codeblock")) lang = "HTML";
-   if (element.classList.contains("css-codeblock")) lang = "CSS";
+	let type = element.classList.contains("start-collapsed") ? "Collapse" : "Expand";
+	let lang;
+	if (element.classList.contains("js-codeblock")) lang = "Javascript";
+	if (element.classList.contains("html-codeblock")) lang = "HTML";
+	if (element.classList.contains("css-codeblock")) lang = "CSS";
 	let c = document.createElement("div");
 	let svg_c = `<svg viewBox="0 0 24 24"><path fill="currentColor" d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z" /></svg>`;
 	let svg_o = `<svg viewBox="0 0 24 24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z" /></svg>`;
