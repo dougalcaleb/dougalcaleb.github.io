@@ -244,11 +244,15 @@ csscode.forEach((block) => {
 });
 
 document.querySelectorAll(".code-collapse").forEach((element) => {
-	let type = element.classList.contains("start-collapsed") ? "Collapse" : "Expand";
+   let type = element.classList.contains("start-collapsed") ? "Collapse" : "Expand";
+   let lang;
+   if (element.classList.contains("js-codeblock")) lang = "Javascript";
+   if (element.classList.contains("html-codeblock")) lang = "HTML";
+   if (element.classList.contains("css-codeblock")) lang = "CSS";
 	let c = document.createElement("div");
 	let svg_c = `<svg viewBox="0 0 24 24"><path fill="currentColor" d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z" /></svg>`;
 	let svg_o = `<svg viewBox="0 0 24 24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z" /></svg>`;
-	c.innerHTML = (type == "Collapse" ? "Expand" : "Collapse") + " code block" + (type == "Collapse" ? svg_c : svg_o);
+	c.innerHTML = (type == "Collapse" ? "Expand" : "Collapse") + " " + lang + " code block" + (type == "Collapse" ? svg_c : svg_o);
 	element.prepend(c);
 	if (type == "Collapse") {
 		element.style.height = "0px";
@@ -258,11 +262,11 @@ document.querySelectorAll(".code-collapse").forEach((element) => {
 		if (element.style.height == "") {
 			element.style.height = "0px";
 			element.style.paddingBottom = "0px";
-			element.children[0].innerHTML = "Expand code block" + svg_c;
+			element.children[0].innerHTML = `Expand ${lang} code block ${svg_c}`;
 		} else if (element.style.height == "0px") {
 			element.style.height = "";
 			element.style.paddingBottom = "15px";
-			element.children[0].innerHTML = "Collapse code block" + svg_o;
+			element.children[0].innerHTML = `Collapse ${lang} code block ${svg_o}`;
 		}
 	});
 });
