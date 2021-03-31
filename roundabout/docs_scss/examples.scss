@@ -61,3 +61,32 @@
    background-size: cover;
    background-position: center center;
 }
+
+
+#type-3 .roundabout-page {
+   height: 80%;
+   margin: auto;
+   top: 0;
+   bottom: 0;
+   transition: height 0.3s;
+}
+
+#type-3 .roundabout-2-visible-page-1 {
+   height: 100%;
+}
+
+#type-5 {
+   height: 25vh;
+}
+
+#type-6-2 {
+   height: 20vh;
+}
+
+#type-6-2 .interactive-nav {
+   position: absolute;
+   height: 100%;
+   width: 100%;
+   cursor: pointer;
+   z-index: 5;
+}
