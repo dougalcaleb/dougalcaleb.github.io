@@ -39,7 +39,7 @@ jscode.forEach((block) => {
 			if (line.includes("RS")) {
 				inProgress = inProgress.replace(new RegExp("RS", "g"), `<span class="code-blue-l">RS</span>`);
 			}
-			if (!line.includes('"') && !line.includes("`") && line.includes(".")) {
+			if (!line.includes('"') && !line.includes("`") && line.includes("(") && line.includes(".")) {
 				inProgress = inProgress.replace(new RegExp("\\.([^\\(]*)", "gi"), `.<span class="code-tan">$1</span>`);
 			}
 			if (line.includes('"')) {
@@ -48,7 +48,7 @@ jscode.forEach((block) => {
 			if (line.includes("`")) {
 				inProgress = inProgress.replace(new RegExp("`(.*)`", "gmi"), '<span class="code-orange">`$1`</span>');
 			}
-			if (line.includes(":")) {
+         if (line.includes(":")) {
 				if (line.includes(`"`) || line.includes("`") || line.includes("[") || line.includes("{")) {
 					inProgress = inProgress.replace(new RegExp("^\\s*(\\S*):", "gmi"), `<span class="code-blue-l">$1</span>:`);
 				} else {
@@ -221,7 +221,6 @@ csscode.forEach((block) => {
 			if (line.includes(",")) {
 				inProgress = inProgress.replace(",", `<span class="code-white">,</span>`);
          }
-         console.log(inProgress);
          if (inProgress.replaceAll("&nbsp;", "").includes(";")) {
 				inProgress = inProgress.replaceAll("&nbsp;", "REPLACE_SPACE").replace(";", `<span class="code-white">;</span>`).replaceAll("REPLACE_SPACE", "&nbsp;");
 			}
