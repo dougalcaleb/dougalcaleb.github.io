@@ -439,6 +439,8 @@
 						<br />
 						&nbsp;&nbsp;transition: 500,
 						<br />
+						&nbsp;&nbsp;throttleTimeout: 800,
+						<br />
 						&nbsp;&nbsp;type: "gallery",
 						<br />
 						&nbsp;&nbsp;pages: [
@@ -704,13 +706,11 @@
 						const RS = new RoundaboutScripter();
 						<br />
 						<br />
-						// Give each page a click handler.
+						// Give each page a click handler
 						<br />
 						// We won't use the normal "click" listener, because that can cause drag interactions to be counted as clicks
 						<br />
-						document.querySelectorAll(".interactive-nav").forEach(navBtn => {
-						<br />
-						&nbsp;&nbsp;// Keep track of mouse start and end
+						document.querySelectorAll(".interactive-nav").forEach((navBtn) => {
 						<br />
 						&nbsp;&nbsp;let mouseStart = 0;
 						<br />
@@ -724,7 +724,8 @@
 						<br />
 						&nbsp;&nbsp;});
 						<br />
-						&nbsp;&nbsp;// On mouse up, track the end position. If the movement of the mouse was less than 5 pixels, we can assume it was a click
+						&nbsp;&nbsp;// On mouse up, track the end position. If the movement of the mouse was less than 5 pixels, we can assume it was a
+						click
 						<br />
 						&nbsp;&nbsp;// Otherwise, if the mouse moved more than 5 pixels, we assume it was a drag event, so we don't scroll
 						<br />
@@ -743,6 +744,31 @@
 						&nbsp;&nbsp;});
 						<br />
 						});
+					</div>
+					<div class="code css-codeblock code-collapse start-collapsed">
+                  // In addition to default CSS file
+						<br />
+						<br />
+						#type-6-2 {
+						<br />
+						&nbsp;&nbsp;height: 20vh;
+						<br />
+						}
+						<br />
+						<br />
+						#type-6-2 .interactive-nav {
+						<br />
+						&nbsp;&nbsp;position: absolute;
+						<br />
+						&nbsp;&nbsp;height: 100%;
+						<br />
+						&nbsp;&nbsp;width: 100%;
+						<br />
+						&nbsp;&nbsp;cursor: pointer;
+						<br />
+						&nbsp;&nbsp;z-index: 5;
+						<br />
+						}
 					</div>
 				</section>
 				<footer></footer>
