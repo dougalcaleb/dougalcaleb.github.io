@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>Scripting | Roundabout Docs</title>
+		<title>Examples | Roundabout Docs</title>
 		<link rel="stylesheet" type="text/css" href="./css/docs_style.css" />
 		<link rel="stylesheet" type="text/css" href="./css/examples.css" />
 		<link rel="stylesheet" type="text/css" href="./css/roundabout-style.css" />
@@ -137,7 +137,7 @@
 					</div>
 				</section>
 				<section class="ex type-2">
-					<h3>Thumbnail</h3>
+					<h3>Thumbnail Navigation</h3>
 					<div class="code js-codeblock code-collapse start-collapsed">
 						new Roundabout({
 						<br />
@@ -148,8 +148,6 @@
 						&nbsp;&nbsp;navigationBehavior: "direction",
 						<br />
 						&nbsp;&nbsp;infinite: false,
-						<br />
-						&nbsp;&nbsp;showWrappedPage: false,
 						<br />
 						&nbsp;&nbsp;pages: [
 						<br />
@@ -194,7 +192,9 @@
 						});
 					</div>
 					<div class="code css-codeblock code-collapse start-collapsed">
-                  // Also requires default CSS file<br/><br/>
+						// In addition to default CSS file
+						<br />
+						<br />
 						#type-2 .roundabout-active-nav-btn {
 						<br />
 						&nbsp;&nbsp;border: 3px solid white;
@@ -311,15 +311,439 @@
 				</section>
 				<section class="ex type-3">
 					<h3>Showcase</h3>
-					<div class="code js-codeblock code-collapse start-collapsed"></div>
+					<div class="code js-codeblock code-collapse start-collapsed">
+						new Roundabout({
+						<br />
+						&nbsp;&nbsp;parent: ".type-3",
+						<br />
+						&nbsp;&nbsp;id: "#type-3",
+						<br />
+						&nbsp;&nbsp;navigation: false,
+						<br />
+						&nbsp;&nbsp;pagesToShow: 3,
+						<br />
+						&nbsp;&nbsp;pageSpacing: 10,
+						<br />
+						&nbsp;&nbsp;interpolate: [
+						<br />
+						&nbsp;&nbsp;&nbsp;&nbsp;{
+						<br />
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;between: [
+						<br />
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[0, 80],
+						<br />
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[1, 100]
+						<br />
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;],
+						<br />
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;value: "height",
+						<br />
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;unit: "$%"
+						<br />
+						&nbsp;&nbsp;&nbsp;&nbsp;},
+						<br />
+						&nbsp;&nbsp;&nbsp;&nbsp;{
+						<br />
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;between: [
+						<br />
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[1, 100],
+						<br />
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[2, 80]
+						<br />
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;],
+						<br />
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;value: "height",
+						<br />
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;unit: "$%"
+						<br />
+						&nbsp;&nbsp;&nbsp;&nbsp;}
+						<br />
+						&nbsp;&nbsp;],
+						<br />
+						&nbsp;&nbsp;pages: [
+						<br />
+						&nbsp;&nbsp; &nbsp;&nbsp;{
+						<br />
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;backgroundImage: "./images/numbers/0.png"
+						<br />
+						&nbsp;&nbsp;&nbsp;&nbsp;},
+						<br />
+						&nbsp;&nbsp;&nbsp;&nbsp;{
+						<br />
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;backgroundImage: "./images/numbers/1.png"
+						<br />
+						&nbsp;&nbsp;&nbsp;&nbsp;},
+						<br />
+						&nbsp;&nbsp;&nbsp;&nbsp;{
+						<br />
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;backgroundImage: "./images/numbers/2.png"
+						<br />
+						&nbsp;&nbsp;&nbsp;&nbsp;},
+						<br />
+						&nbsp;&nbsp;&nbsp;&nbsp;{
+						<br />
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;backgroundImage: "./images/numbers/3.png"
+						<br />
+						&nbsp;&nbsp;&nbsp;&nbsp;},
+						<br />
+						&nbsp;&nbsp;&nbsp;&nbsp;{
+						<br />
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;backgroundImage: "./images/numbers/4.png"
+						<br />
+						&nbsp;&nbsp;&nbsp;&nbsp;},
+						<br />
+						&nbsp;&nbsp;&nbsp;&nbsp;{
+						<br />
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;backgroundImage: "./images/numbers/5.png"
+						<br />
+						&nbsp;&nbsp;&nbsp;&nbsp;}
+						<br />
+						&nbsp;&nbsp;]
+						<br />
+						});
+					</div>
+					<div class="code css-codeblock code-collapse start-collapsed">
+						// In addition to default CSS file
+						<br />
+						<br />
+						#type-3 .roundabout-page {
+						<br />
+						&nbsp;&nbsp;height: 80%;
+						<br />
+						&nbsp;&nbsp;margin: auto;
+						<br />
+						&nbsp;&nbsp;top: 0;
+						<br />
+						&nbsp;&nbsp;bottom: 0;
+						<br />
+						&nbsp;&nbsp;transition: height 0.3s;
+						<br />
+						}
+						<br />
+						<br />
+						#type-3 .roundabout-2-visible-page-1 {
+						<br />
+						&nbsp;&nbsp;height: 100%;
+						<br />
+						}
+					</div>
 				</section>
 				<section class="ex type-4">
-					<h3>Art</h3>
-					<div class="code js-codeblock code-collapse start-collapsed"></div>
+					<h3>Gallery</h3>
+					<div class="code js-codeblock code-collapse start-collapsed">
+						new Roundabout({
+						<br />
+						&nbsp;&nbsp;parent: ".type-4",
+						<br />
+						&nbsp;&nbsp;id: "#type-4",
+						<br />
+						&nbsp;&nbsp;transition: 500,
+						<br />
+						&nbsp;&nbsp;type: "gallery",
+						<br />
+						&nbsp;&nbsp;pages: [
+						<br />
+						&nbsp;&nbsp;&nbsp;&nbsp;{
+						<br />
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;backgroundImage: "./images/numbers/0.png"
+						<br />
+						&nbsp;&nbsp;&nbsp;&nbsp;},
+						<br />
+						&nbsp;&nbsp;&nbsp;&nbsp;{
+						<br />
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;backgroundImage: "./images/numbers/1.png"
+						<br />
+						&nbsp;&nbsp;&nbsp;&nbsp;},
+						<br />
+						&nbsp;&nbsp;&nbsp;&nbsp;{
+						<br />
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;backgroundImage: "./images/numbers/2.png"
+						<br />
+						&nbsp;&nbsp;&nbsp;&nbsp;},
+						<br />
+						&nbsp;&nbsp;&nbsp;&nbsp;{
+						<br />
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;backgroundImage: "./images/numbers/3.png"
+						<br />
+						&nbsp;&nbsp;&nbsp;&nbsp;},
+						<br />
+						&nbsp;&nbsp;&nbsp;&nbsp;{
+						<br />
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;backgroundImage: "./images/numbers/4.png"
+						<br />
+						&nbsp;&nbsp;&nbsp;&nbsp;},
+						<br />
+						&nbsp;&nbsp;&nbsp;&nbsp;{
+						<br />
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;backgroundImage: "./images/numbers/5.png"
+						<br />
+						&nbsp;&nbsp;&nbsp;&nbsp;}
+						<br />
+						&nbsp;&nbsp;]
+						<br />
+						});
+					</div>
 				</section>
 				<section class="ex type-5">
 					<h3>Item List</h3>
-					<div class="code js-codeblock code-collapse start-collapsed"></div>
+					<div class="code js-codeblock code-collapse start-collapsed">
+						new Roundabout({
+						<br />
+						&nbsp;&nbsp;parent: ".type-5",
+						<br />
+						&nbsp;&nbsp;id: "#type-5",
+						<br />
+						&nbsp;&nbsp;swipeSnap: false,
+						<br />
+						&nbsp;&nbsp;buttons: false,
+						<br />
+						&nbsp;&nbsp;navigation: false,
+						<br />
+						&nbsp;&nbsp;infinite: false,
+						<br />
+						&nbsp;&nbsp;pagesToShow: 4,
+						<br />
+						&nbsp;&nbsp;pageSpacing: 25,
+						<br />
+						&nbsp;&nbsp;swipeResistance: 0.97,
+						<br />
+						&nbsp;&nbsp;pages: [
+						<br />
+						&nbsp;&nbsp;&nbsp;&nbsp;{
+						<br />
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;backgroundImage: "./images/numbers/0.png"
+						<br />
+						&nbsp;&nbsp;&nbsp;&nbsp;},
+						<br />
+						&nbsp;&nbsp;&nbsp;&nbsp;{
+						<br />
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;backgroundImage: "./images/numbers/1.png"
+						<br />
+						&nbsp;&nbsp;&nbsp;&nbsp;},
+						<br />
+						&nbsp;&nbsp;&nbsp;&nbsp;{
+						<br />
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;backgroundImage: "./images/numbers/2.png"
+						<br />
+						&nbsp;&nbsp;&nbsp;&nbsp;},
+						<br />
+						&nbsp;&nbsp;&nbsp;&nbsp;{
+						<br />
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;backgroundImage: "./images/numbers/3.png"
+						<br />
+						&nbsp;&nbsp;&nbsp;&nbsp;},
+						<br />
+						&nbsp;&nbsp;&nbsp;&nbsp;{
+						<br />
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;backgroundImage: "./images/numbers/4.png"
+						<br />
+						&nbsp;&nbsp;&nbsp;&nbsp;},
+						<br />
+						&nbsp;&nbsp;&nbsp;&nbsp;{
+						<br />
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;backgroundImage: "./images/numbers/5.png"
+						<br />
+						&nbsp;&nbsp;&nbsp;&nbsp;}
+						<br />
+						&nbsp;&nbsp;]
+						<br />
+						});
+					</div>
+					<div class="code css-codeblock code-collapse start-collapsed">
+						// In addition to default CSS file
+						<br />
+						<br />
+						#type-5 {
+						<br />
+						&nbsp;&nbsp;height: 25vh;
+						<br />
+						}
+					</div>
+				</section>
+				<section class="ex type-6">
+					<h3>Interactive Thumbnail Navigation</h3>
+					<div class="code js-codeblock code-collapse start-expanded">
+						// Main carousel
+						<br />
+						const main = new Roundabout({
+						<br />
+						&nbsp;&nbsp;parent: ".type-6",
+						<br />
+						&nbsp;&nbsp;id: "#type-6-1",
+						<br />
+						&nbsp;&nbsp;navigationBehavior: "direction",
+						<br />
+						&nbsp;&nbsp;pages: [
+						<br />
+						&nbsp;&nbsp;&nbsp;&nbsp;{
+						<br />
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;backgroundImage: "./images/numbers/0.png"
+						<br />
+						&nbsp;&nbsp;&nbsp;&nbsp;},
+						<br />
+						&nbsp;&nbsp;&nbsp;&nbsp;{
+						<br />
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;backgroundImage: "./images/numbers/1.png"
+						<br />
+						&nbsp;&nbsp;&nbsp;&nbsp;},
+						<br />
+						&nbsp;&nbsp;&nbsp;&nbsp;{
+						<br />
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;backgroundImage: "./images/numbers/2.png"
+						<br />
+						&nbsp;&nbsp;&nbsp;&nbsp;},
+						<br />
+						&nbsp;&nbsp;&nbsp;&nbsp;{
+						<br />
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;backgroundImage: "./images/numbers/3.png"
+						<br />
+						&nbsp;&nbsp;&nbsp;&nbsp;},
+						<br />
+						&nbsp;&nbsp;&nbsp;&nbsp;{
+						<br />
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;backgroundImage: "./images/numbers/4.png"
+						<br />
+						&nbsp;&nbsp;&nbsp;&nbsp;},
+						<br />
+						&nbsp;&nbsp;&nbsp;&nbsp;{
+						<br />
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;backgroundImage: "./images/numbers/5.png"
+						<br />
+						&nbsp;&nbsp;&nbsp;&nbsp;}
+						<br />
+						&nbsp;&nbsp;]
+						<br />
+						});
+						<br />
+						<br />
+						// Nav carousel
+						<br />
+						new Roundabout({
+						<br />
+						&nbsp;&nbsp;parent: ".type-6",
+						<br />
+						&nbsp;&nbsp;id: "#type-6-2",
+						<br />
+						&nbsp;&nbsp;pagesToShow: 3,
+						<br />
+						&nbsp;&nbsp;swipeSnap: false,
+						<br />
+						&nbsp;&nbsp;pageSpacing: 25,
+						<br />
+						&nbsp;&nbsp;buttons: false,
+						<br />
+						&nbsp;&nbsp;navigation: false,
+						<br />
+						&nbsp;&nbsp;infinite: false,
+						<br />
+						&nbsp;&nbsp;swipeResistance: 1,
+						<br />
+						&nbsp;&nbsp;throttleTimeout: 200,
+						<br />
+						&nbsp;&nbsp;transition: 200,
+						<br />
+						&nbsp;&nbsp;scrollwheel: true,
+						<br />
+						&nbsp;&nbsp;pages: [
+						<br />
+						&nbsp;&nbsp;&nbsp;&nbsp;{
+						<br />
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;backgroundImage: "./images/numbers/0.png",
+						<br />
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;html: `&lt;div class="interactive-nav i-nav-0"&gt;&lt;/div&gt;`
+						<br />
+						&nbsp;&nbsp;&nbsp;&nbsp;},
+						<br />
+						&nbsp;&nbsp;&nbsp;&nbsp;{
+						<br />
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;backgroundImage: "./images/numbers/1.png",
+						<br />
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;html: `&lt;div class="interactive-nav i-nav-1"&gt;&lt;/div&gt;`
+						<br />
+						&nbsp;&nbsp;&nbsp;&nbsp;},
+						<br />
+						&nbsp;&nbsp;&nbsp;&nbsp;{
+						<br />
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;backgroundImage: "./images/numbers/2.png",
+						<br />
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;html: `&lt;div class="interactive-nav i-nav-2"&gt;&lt;/div&gt;`
+						<br />
+						&nbsp;&nbsp;&nbsp;&nbsp;},
+						<br />
+						&nbsp;&nbsp;&nbsp;&nbsp;{
+						<br />
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;backgroundImage: "./images/numbers/3.png",
+						<br />
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;html: `&lt;div class="interactive-nav i-nav-3"&gt;&lt;/div&gt;`
+						<br />
+						&nbsp;&nbsp;&nbsp;&nbsp;},
+						<br />
+						&nbsp;&nbsp;&nbsp;&nbsp;{
+						<br />
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;backgroundImage: "./images/numbers/4.png",
+						<br />
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;html: `&lt;div class="interactive-nav i-nav-4"&gt;&lt;/div&gt;`
+						<br />
+						&nbsp;&nbsp;&nbsp;&nbsp;},
+						<br />
+						&nbsp;&nbsp;&nbsp;&nbsp;{
+						<br />
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;backgroundImage: "./images/numbers/5.png",
+						<br />
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;html: `&lt;div class="interactive-nav i-nav-5"&gt;&lt;/div&gt;`
+						<br />
+						&nbsp;&nbsp;&nbsp;&nbsp;}
+						<br />
+						&nbsp;&nbsp;]
+						<br />
+						})
+						<br />
+						<br />
+						// Initialize the scripting module
+						<br />
+						const RS = new RoundaboutScripter();
+						<br />
+						<br />
+						// Give each page a click handler.
+						<br />
+						// We won't use the normal "click" listener, because that can cause drag interactions to be counted as clicks
+						<br />
+						document.querySelectorAll(".interactive-nav").forEach(navBtn => {
+						<br />
+						&nbsp;&nbsp;// Keep track of mouse start and end
+						<br />
+						&nbsp;&nbsp;let mouseStart = 0;
+						<br />
+						&nbsp;&nbsp;let mouseEnd = 0;
+						<br />
+						&nbsp;&nbsp;// On mouse down, track the start position
+						<br />
+						&nbsp;&nbsp;navBtn.addEventListener("mousedown", (event) => {
+						<br />
+						&nbsp;&nbsp;&nbsp;&nbsp;mouseStart = event.clientX;
+						<br />
+						&nbsp;&nbsp;});
+						<br />
+						&nbsp;&nbsp;// On mouse up, track the end position. If the movement of the mouse was less than 5 pixels, we can assume it was a click
+						<br />
+						&nbsp;&nbsp;// Otherwise, if the mouse moved more than 5 pixels, we assume it was a drag event, so we don't scroll
+						<br />
+						&nbsp;&nbsp;navBtn.addEventListener("mouseup", (event) => {
+						<br />
+						&nbsp;&nbsp;&nbsp;&nbsp;mouseEnd = event.clientX;
+						<br />
+						&nbsp;&nbsp;&nbsp;&nbsp;if (Math.abs(mouseEnd - mouseStart) &lt; 5) {
+						<br />
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;let goToPage = parseInt(navBtn.classList[1].substring(navBtn.classList[1].length - 1));
+						<br />
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;RS.scrollTo(main, goToPage);
+						<br />
+						&nbsp;&nbsp;&nbsp;&nbsp;}
+						<br />
+						&nbsp;&nbsp;});
+						<br />
+						});
+					</div>
 				</section>
 				<footer></footer>
 			</div>

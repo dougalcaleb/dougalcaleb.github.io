@@ -35,7 +35,7 @@ Swipe detector
 	right: 0;
 	position: absolute;
 	margin: auto;
-	z-index: 2;
+	z-index: 3;
 }
 
 /*
@@ -64,6 +64,7 @@ Next and Previous buttons
 	width: 80px;
 	cursor: pointer;
 	color: #fff;
+   z-index: 2;
 }
 
 .roundabout-btn-next svg, .roundabout-btn-prev svg {
@@ -103,6 +104,7 @@ Navigation
 	bottom: 0;
 	height: 40px;
 	width: 25%;
+   z-index: 2;
 }
 
 .roundabout-nav-btn {
