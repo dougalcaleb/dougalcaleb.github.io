@@ -23,6 +23,9 @@
 
       <div class="load">
          <!-- <img src="images/svgs/personal logo.svg"> -->
+         <div class="load-logo">
+            <p class="load-name">CALEB DOUGAL</p>
+         </div>
       </div>
 
       <div class="mobile-nav-return"></div>
@@ -254,9 +257,11 @@
             document.write(`\x3Cscript src="showcase/javascript/script.min.js">\x3C/script>`);
          }
          window.addEventListener("load", () => {
-            document.querySelector(".load").style.visibility = "hidden";
-            document.querySelector(".load").style.opacity = "0";
-            document.querySelector(".profile-image").setAttribute("src", "./images/landing card/profile-circle.png");
+            setTimeout(() => {
+               document.querySelector(".load").style.visibility = "hidden";
+               document.querySelector(".load").style.opacity = "0";
+               document.querySelector(".profile-image").setAttribute("src", "./images/landing card/profile-circle.png");
+            }, 500);
          });
       </script>
 		<!-- slider -->
