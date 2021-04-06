@@ -8,8 +8,8 @@ const main = new Roundabout({
    breakpoints: [
       {
          width: 500,
-         swipeThreshold: 100,
-         swipeSpeed: 300
+         swipeThreshold: 60,
+         swipeSpeedThreshold: 300,
       }
    ],
    interpolate: [
