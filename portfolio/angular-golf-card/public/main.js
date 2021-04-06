@@ -190,6 +190,7 @@ class ApiHandlerService {
     }
     loadBasicInfo(id, display = true) {
         return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            // console.log("loadBasicInfo called");
             id = parseInt(id);
             let basic;
             if (sessionStorage.getItem(`course-${this.Store.courseData.courses[id].id}`)) {
@@ -218,7 +219,9 @@ class ApiHandlerService {
                             // console.log("Returning", this.Store.courseData[id]);
                         }
                         else {
-                            this.Store.activeCourse = "course-" + this.Store.courseData.courses[id].id;
+                            this.Store.activeCourse = this.Store.courseData.courses[id].id;
+                            // console.log(`store activecourse is`, this.Store.activeCourse);
+                            // this.Store.activeCourse = JSON.parse(sessionStorage.getItem("course-" + this.Store.courseData.courses[id].id) || "");
                         }
                         resolve(basic);
                         this.retrievalAttempts = 3;
@@ -240,9 +243,12 @@ class ApiHandlerService {
     selectCourse(id) {
         id = parseInt(id);
         if (!sessionStorage.getItem("course-" + this.Store.courseData.courses[id].id)) {
-            this.loadBasicInfo(id, false);
+            // console.log("Loading not from cache");
+            let loader = this.loadBasicInfo(id, false);
+            // loader.then()
         }
         else {
+            // console.log("Retrieving from cache");
             this.Store.activeCourse = JSON.parse(sessionStorage.getItem("course-" + this.Store.courseData.courses[id].id) || "");
             // fillCard(id);
         }
@@ -321,6 +327,7 @@ class StoreService {
         }
     }
     setActive(id) {
+        // console.log("setActive");
         this.cb.forEach(c => {
             c();
         });
@@ -1189,7 +1196,6 @@ class InitCardComponent {
             (_a = document.querySelector(`.load-${this.idx}`)) === null || _a === void 0 ? void 0 : _a.classList.add("clocking");
         }
         else {
-            this.Store.setActive(id);
         }
         this.courseData.data = this.apiHandler.loadBasicInfo(id, from == "select" ? false : true).then((data) => {
             var _a, _b, _c;
@@ -1201,6 +1207,7 @@ class InitCardComponent {
             this.courseData.data = data.data;
             this.fetched = true;
             if (from == "select") {
+                this.Store.setActive(id);
                 callback();
             }
             else {
@@ -1214,21 +1221,23 @@ class InitCardComponent {
     }
     select(id) {
         var _a;
+        // console.log(`initcard select`, id);
         (_a = document.querySelector(`.select-${this.idx}`)) === null || _a === void 0 ? void 0 : _a.classList.add("clocking");
         id = parseInt(id);
         this.Store.activeCourse = this.Store.courseData.courses[id].id;
         this.requestLoad(id, "select", () => {
-            var _a, _b, _c;
+            var _a, _b, _c, _d;
+            // console.log(`select callback triggered`);
             (_a = document.querySelector(`.select-${this.idx}`)) === null || _a === void 0 ? void 0 : _a.classList.remove("clocking");
-            window.scroll({
+            (_b = document.querySelector(".root-wrap")) === null || _b === void 0 ? void 0 : _b.scroll({
                 top: 0,
                 left: 0,
                 behavior: "smooth",
             });
             // document.querySelector(".scorecard").style.animation = "0.6s slidein ease-out forwards";
             // document.querySelector(".scorecard").style.animationDelay = "0.5s";
-            (_b = document.querySelector(".scorecard")) === null || _b === void 0 ? void 0 : _b.setAttribute("style", "animation: 0.6s slidein ease-out forwards; animation-delay: 0.5s");
-            (_c = document.querySelector(`.select-${this.idx}`)) === null || _c === void 0 ? void 0 : _c.classList.remove("clocking");
+            (_c = document.querySelector(".scorecard")) === null || _c === void 0 ? void 0 : _c.setAttribute("style", "animation: 0.6s slidein ease-out forwards; animation-delay: 0.5s");
+            (_d = document.querySelector(`.select-${this.idx}`)) === null || _d === void 0 ? void 0 : _d.classList.remove("clocking");
             for (let a = 0; a < document.querySelectorAll(".card").length; a++) {
                 // document.querySelectorAll(".card")[a].style.animation = "0.6s slideout cubic-bezier(.54,-0.06,.6,-0.34) forwards";
                 // document.querySelectorAll(".card")[a].style.animationDelay = 0.083 + 0.08 * a + "s";
