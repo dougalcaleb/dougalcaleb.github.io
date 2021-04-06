@@ -9,7 +9,7 @@ const main = new Roundabout({
       {
          width: 500,
          swipeThreshold: 100,
-         swipeSpeed: 500
+         swipeSpeed: 300
       }
    ],
    interpolate: [
