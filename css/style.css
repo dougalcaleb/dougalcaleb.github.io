@@ -42,6 +42,13 @@ a.weblink {
   opacity: 0;
 }
 
+.hidden-element {
+  opacity: 0;
+  height: 0;
+  width: 0;
+  display: none;
+}
+
 .main {
   background: #282828;
   position: relative;
