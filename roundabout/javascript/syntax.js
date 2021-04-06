@@ -90,7 +90,7 @@ jscode.forEach((block) => {
 			variables.forEach((v) => {
 				if (v != "") {
 					let matches = inProgress.match(new RegExp(`${v}\\.([^\\.\\s<>;\\[\\]]*)`, "gmi"));
-					console.log(matches);
+					// console.log(matches);
 					if (matches) {
                   matches.forEach((match) => {
                      if (!variables.includes(match.split(".")[1])) {
@@ -102,7 +102,7 @@ jscode.forEach((block) => {
          });
          // console.log(variables);
          variables.forEach((v) => {
-            console.log("checking", v);
+            // console.log("checking", v);
 				if (v != "") {
 					if (line.includes(v)) {
 						inProgress = inProgress.replaceAll(new RegExp(v, "gm"), `<span class="code-blue-l">${v}</span>`);
