@@ -76,6 +76,10 @@ const main = new Roundabout({
          // html: "golf scorecard"
       },
       {
+         backgroundImage: "./images/carousel/projects/angulargolf.png",
+         // html: "angular golf scorecard"
+      },
+      {
          backgroundImage: "./images/carousel/projects/bubbles.png",
          // html: "bubbles"
       },
@@ -209,6 +213,19 @@ const desc = new Roundabout({
             <h4 class="desc-skills-title">Skills:</h4>
             <div class="desc-skills">${skills.js + skills.html + skills.css + skills.git + skills.github}</div>
             <a href="https://dougalcaleb.github.io/portfolio/golf-card/" target="_blank"><button class="border-button">View ${exBtn}</button></a>
+         </div>
+         `
+      },
+      {
+         // backgroundImage: "./images/carousel/projects/scorecard.png",
+         // html: "golf scorecard"
+         html: `
+         <div class="content-wrap">
+            <h3 class="desc-title">Angular Golf Scorecard</h3>
+            <p class="desc-body">Nearly identical to my original Golf Scorecard project, this version is built entirely in Angular. It features a mobile-first design with functionality to keep track of scores for up to four players.</p>
+            <h4 class="desc-skills-title">Skills:</h4>
+            <div class="desc-skills">${skills.angular + skills.ts + skills.html + skills.css}</div>
+            <a href="https://dougalcaleb.github.io/portfolio/angular-golf-card/" target="_blank"><button class="border-button">View ${exBtn}</button></a>
          </div>
          `
       },
