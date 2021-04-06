@@ -90,3 +90,45 @@
    cursor: pointer;
    z-index: 5;
 }
+
+.type-7 {
+   display: flex;
+   justify-content: center;
+   display: none;
+}
+
+#type-7 {
+   transform: rotate(90deg);
+   width: 40vw;
+   // height: 
+}
+
+#type-7 .number {
+   height: 100%;
+   width: 100%;
+   // background: orange;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+}
+
+#type-7 .number span {
+   transform: rotate(-90deg);
+   user-select: none;
+}
+
+#type-7 .roundabout-page {
+   height: 80%;
+   margin: auto;
+   top: 0;
+   bottom: 0;
+   transition: height 0.3s, font-size 0.3s, opacity 0.3s;
+   font-size: 5vw;
+   opacity: 0.3;
+}
+
+#type-7 .roundabout-7-visible-page-1 {
+   height: 100%;
+   font-size: 8vw;
+   opacity: 1;
+}
