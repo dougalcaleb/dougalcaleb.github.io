@@ -225,7 +225,7 @@ const desc = new Roundabout({
             <p class="desc-body">Nearly identical to my original Golf Scorecard project, this version is built entirely in Angular. It features a mobile-first design with functionality to keep track of scores for up to four players.</p>
             <h4 class="desc-skills-title">Skills:</h4>
             <div class="desc-skills">${skills.angular + skills.ts + skills.html + skills.css}</div>
-            <a href="https://dougalcaleb.github.io/portfolio/angular-golf-card/" target="_blank"><button class="border-button">View ${exBtn}</button></a>
+            <a href="https://golf-scorecard-f029d.web.app/" target="_blank"><button class="border-button">View ${exBtn}</button></a>
          </div>
          `
       },
