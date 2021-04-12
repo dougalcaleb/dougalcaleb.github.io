@@ -1,47 +1,50 @@
-let settings = [
-   {name: "autoscroll", category: "Behavioral"},
-   {name: "autoscrollDirection", category: "Behavioral"},
-   {name: "autoscrollPauseOnHover", category: "Behavioral"},
-   {name: "autoscrollSpeed", category: "Behavioral"},
-   {name: "autoscrollStartAfter", category: "Behavioral"},
-   {name: "autoscrollTimeout", category: "Behavioral"},
-   {name: "breakpoints", category: "General"},
-   {name: "buttons", category: "General"},
-   {name: "id", category: "General"},
-   {name: "infinite", category: "Behavioral"},
-   {name: "keys", category: "Behavioral"},
-   {name: "lazyLoad", category: "Behavioral"},
-   {name: "listenForResize", category: "Behavioral"},
-   {name: "navigation", category: "General"},
-   {name: "navigationBehavior", category: "Behavioral"},
-   {name: "navigationTrim", category: "Behavioral"},
-   {name: "nextHTML", category: "General"},
-   {name: "pages", category: "General"},
-   {name: "pageSpacing", category: "General"},
-   {name: "pageSpacingMode", category: "General"},
-   {name: "pageSpacingUnits", category: "General"},
-   {name: "pagesToShow", category: "General"},
-   {name: "parent", category: "General"},
-   {name: "prevHTML", category: "General"},
-   {name: "scrollBy", category: "Behavioral"},
-   {name: "showWrappedPage", category: "Behavioral"},
-   {name: "swipe", category: "Behavioral"},
-   {name: "swipeMultiplier", category: "Behavioral"},
-   {name: "swipeResistance", category: "Behavioral"},
-   {name: "swipeThreshold", category: "Behavioral"},
-   {name: "throttle", category: "Behavioral"},
-   {name: "throttleButtons", category: "Behavioral"},
-   {name: "throttleKeys", category: "Behavioral"},
-   // {name: "throttleMatchTransition", category: "Behavioral"},
-   {name: "throttleNavigation", category: "Behavioral"},
-   {name: "throttleSwipe", category: "Behavioral"},
-   {name: "throttleTimeout", category: "Behavioral"},
-   {name: "transition", category: "Behavioral"},
-   {name: "transitionFunction", category: "Behavioral"},
-   {name: "uiEnabled", category: "General"},
-];
+import { settings } from "./settings.js";
 
-const VERSION = "v1.3.1";
+// let settings = [
+//    {name: "autoscroll", category: "Behavioral"},
+//    {name: "autoscrollDirection", category: "Behavioral"},
+//    {name: "autoscrollPauseOnHover", category: "Behavioral"},
+//    {name: "autoscrollSpeed", category: "Behavioral"},
+//    {name: "autoscrollStartAfter", category: "Behavioral"},
+//    {name: "autoscrollTimeout", category: "Behavioral"},
+//    {name: "breakpoints", category: "General"},
+//    {name: "buttons", category: "General"},
+//    {name: "id", category: "General"},
+//    {name: "infinite", category: "Behavioral"},
+//    {name: "keys", category: "Behavioral"},
+//    {name: "lazyLoad", category: "Behavioral"},
+//    {name: "listenForResize", category: "Behavioral"},
+//    {name: "navigation", category: "General"},
+//    {name: "navigationBehavior", category: "Behavioral"},
+//    {name: "navigationTrim", category: "Behavioral"},
+//    {name: "nextHTML", category: "General"},
+//    {name: "pages", category: "General"},
+//    {name: "pageSpacing", category: "General"},
+//    {name: "pageSpacingMode", category: "General"},
+//    {name: "pageSpacingUnits", category: "General"},
+//    {name: "pagesToShow", category: "General"},
+//    {name: "parent", category: "General"},
+//    {name: "prevHTML", category: "General"},
+//    {name: "scrollBy", category: "Behavioral"},
+//    {name: "showWrappedPage", category: "Behavioral"},
+//    {name: "swipe", category: "Behavioral"},
+//    {name: "swipeMultiplier", category: "Behavioral"},
+//    {name: "swipeResistance", category: "Behavioral"},
+//    {name: "swipeThreshold", category: "Behavioral"},
+//    {name: "throttle", category: "Behavioral"},
+//    {name: "throttleButtons", category: "Behavioral"},
+//    {name: "throttleKeys", category: "Behavioral"},
+//    // {name: "throttleMatchTransition", category: "Behavioral"},
+//    {name: "throttleNavigation", category: "Behavioral"},
+//    {name: "throttleSwipe", category: "Behavioral"},
+//    {name: "throttleTimeout", category: "Behavioral"},
+//    {name: "transition", category: "Behavioral"},
+//    { name: "transitionFunction", category: "Behavioral" },
+//    {name: "type", category: "General"},
+//    {name: "uiEnabled", category: "General"},
+// ];
+
+const VERSION = "v1.4.0";
 
 let sortOrder = "c";
 let sameTab = true;
@@ -129,14 +132,15 @@ document.querySelector(".tab-behavior").addEventListener("click", () => {
 });
 
 function sort(method) {
-   // console.log(`Sorting with methos ${method}`);
-   let table = document.querySelector(".settings");
 
+   let table = document.querySelector(".settings");
+   // Getting Started header
    let gs = document.createElement("div");
    gs.innerHTML = `GETTING STARTED`;
    table.appendChild(gs);
    gs.classList.add("category-title");
 
+   // Setup button
    let newGs = document.createElement("a");
    newGs.setAttribute("href", `/roundabout/setup.html`);
    if (!sameTab) {
@@ -145,6 +149,7 @@ function sort(method) {
    newGs.innerHTML = `<div>Setup</div>`;
    table.appendChild(newGs);
 
+   // Styling button
    newGs = document.createElement("a");
    newGs.setAttribute("href", `/roundabout/styling.html`);
    if (!sameTab) {
@@ -153,6 +158,7 @@ function sort(method) {
    newGs.innerHTML = `<div>Custom Styling</div>`;
    table.appendChild(newGs);
 
+   // Scripting button
    newGs = document.createElement("a");
    newGs.setAttribute("href", `/roundabout/scripting.html`);
    if (!sameTab) {
@@ -161,6 +167,7 @@ function sort(method) {
    newGs.innerHTML = `<div>Scripting</div>`;
    table.appendChild(newGs);
 
+   // Patch notes button
    newGs = document.createElement("a");
    newGs.setAttribute("href", `/roundabout/patch-notes.html`);
    if (!sameTab) {
@@ -169,6 +176,7 @@ function sort(method) {
    newGs.innerHTML = `<div>Patch Notes</div>`;
    table.appendChild(newGs);
 
+   // Examples button
    newGs = document.createElement("a");
    newGs.setAttribute("href", `/roundabout/examples.html`);
    if (!sameTab) {
@@ -177,6 +185,7 @@ function sort(method) {
    newGs.innerHTML = `<div>Examples</div>`;
    table.appendChild(newGs);
    
+   // Settings header
    gs = document.createElement("div");
    gs.innerHTML = `SETTINGS`;
    table.appendChild(gs);

@@ -1,3 +1,6 @@
+// import settings
+import { settings } from "./settings.js";
+import { roundabout, Roundabout } from "/javascript/roundabout.min.js";
 // Constants
 const input = document.querySelector(".code");
 // Settings
@@ -210,8 +213,8 @@ function checkForUpdate() {
 		} catch (e) {
 			document.querySelector(".code-toggle").style.color = "red";
       }
-      document.querySelectorAll(".roundabout-wrapper").forEach((roundabout) => {
-         roundabout.remove();
+      document.querySelectorAll(".roundabout-wrapper").forEach((rCarousel) => {
+         rCarousel.remove();
       });
       document.querySelectorAll(".roundabout-error-message").forEach((errorMsg) => {
          errorMsg.remove();
@@ -269,9 +272,10 @@ function checkAutocomplete(key) {
    }
 	matcher = new RegExp(`${typing}[a-z]*`, "ig");
 	let matches = [];
-	document.querySelector(".autocomplete").innerHTML = null;
-	autoSettings.forEach((setting) => {
-		if (setting[0].match(matcher) && setting[0].substr(0, 2) != "--") {
+   document.querySelector(".autocomplete").innerHTML = null;
+   //! FIXXXXXXXXX
+	settings.forEach((setting) => {
+		if (setting.type.match(matcher) && setting[0].substr(0, 2) != "--") {
 			matches.push(setting);
 			if (document.querySelector(".auto-hint")) {
 				document.querySelector(".auto-hint").style.opacity = "0";
