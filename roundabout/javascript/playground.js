@@ -1,6 +1,6 @@
 // import settings
-import { settings } from "./settings.js";
-import { roundabout, Roundabout } from "/javascript/roundabout.min.js";
+import { settings } from "javascript/settings.js";
+import { roundabout, Roundabout } from "javascript/roundabout.min.js";
 // Constants
 const input = document.querySelector(".code");
 // Settings

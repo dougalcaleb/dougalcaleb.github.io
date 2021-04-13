@@ -1,4 +1,4 @@
-import { settings } from "./settings.js";
+import { settings } from "/javascript/settings.js";
 
 // let settings = [
 //    {name: "autoscroll", category: "Behavioral"},
