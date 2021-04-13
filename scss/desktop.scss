@@ -161,7 +161,7 @@ nav {
 		position: relative;
 		border-bottom-left-radius: 20px;
 		border-bottom-right-radius: 20px;
-		img {
+		.profile-image {
 			position: absolute;
 			margin: auto;
 			left: 0;
@@ -170,9 +170,26 @@ nav {
 			bottom: 0;
 			height: min(7vw, 15vh);
 			width: min(7vw, 15vh);
+         z-index: 1;
          // max-height: 150px;
          // max-width: 150px;
 		}
+      .profile-logo {
+         background: url("/images/svgs/personal-logo.svg");
+         border-radius: 100%;
+         background-position: center center;
+         background-size: cover;
+         height: min(3vw, 8vh);
+         width: min(3vw, 8vh);
+         border: 4px solid #3f3f3f;
+         z-index: 2;
+         position: absolute;
+         right: 0;
+         left: min(5vw, 10vh);
+         top: min(5vw, 10vh);
+         bottom: 0;
+         margin: auto;
+      }
 	}
 
    .burger {

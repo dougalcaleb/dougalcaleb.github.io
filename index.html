@@ -39,6 +39,7 @@
 
 			<div class="picture">
 				<img class="profile-image" alt="Caleb Dougal" />
+            <div class="profile-logo"></div>
 			</div>
 
 			<div class="navigation-wrap">
@@ -94,7 +95,7 @@
          </div>
       </div>
 
-      
+      <img src="images/backgrounds/dark texture.png" class="hidden-element" />
 
 		<div class="body-wrap">
 			<div class="land-page">
@@ -250,18 +251,25 @@
 
 		<!-- normal -->
 		<script src="./javascript/script.js"></script>
-		<!-- showcase -->
+		<!-- load -->
       <script>
+         let start = Date.now();
+         let extra = 700;
          if (window.innerWidth > 800) {
             document.write(`\x3Cscript src="showcase/javascript/places.min.js">\x3C/script>`);
             document.write(`\x3Cscript src="showcase/javascript/script.min.js">\x3C/script>`);
          }
          window.addEventListener("load", () => {
+            if (Date.now() - start > 500) {
+               extra = 0;
+            }
+            console.log("Load complete");
             setTimeout(() => {
                document.querySelector(".load").style.visibility = "hidden";
                document.querySelector(".load").style.opacity = "0";
                document.querySelector(".profile-image").setAttribute("src", "./images/landing card/profile-circle.png");
-            }, 500);
+               console.log("Timeout expired");
+            }, extra);
          });
       </script>
 		<!-- slider -->
