@@ -1,3 +1,5 @@
+import { Roundabout } from "/javascript/roundabout.min.js";
+
 new Roundabout({
    parent: ".roundabout-example",
    transition: 2000,
