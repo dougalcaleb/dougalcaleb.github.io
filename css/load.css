@@ -11,7 +11,7 @@
 .load-logo {
    height: min(50vw, 300px);
    width: min(50vw, 300px);
-   background: #111;
+   background: url("/images/svgs/personal-logo.svg");
    border-radius: 100%;
    position: absolute;
    /* left: 0; */
