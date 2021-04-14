@@ -1,3 +1,6 @@
+import { Roundabout } from "/javascript/roundabout.min.js";
+import { RoundaboutScripter } from "/javascript/roundabout-scripting.min.js";
+
 new Roundabout({
 	parent: ".type-1",
 	id: "#type-1",
