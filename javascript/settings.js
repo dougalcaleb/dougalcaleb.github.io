@@ -32,7 +32,7 @@ export const settings = [
 	{name: "swipe", category: "Behavioral", type: "boolean", default: roundabout.defaults.swipe},
 	{name: "swipeMultiplier", category: "Behavioral", type: "number", default: roundabout.defaults.swipeMultiplier},
 	{name: "swipeResistance", category: "Behavioral", type: "number", default: roundabout.defaults.swipeResistance},
-	{name: "swipeSnap", category: "Behavioral", type: "boolean", default: roundabout.defaults.swipeSnap, todo: true},
+	{name: "swipeSnap", category: "Behavioral", type: "boolean", default: roundabout.defaults.swipeSnap},
 	{name: "swipeSpeedThreshold", category: "Behavioral", type: "integer", default: roundabout.defaults.swipeSpeedThreshold, todo: true},
 	{name: "swipeThreshold", category: "Behavioral", type: "integer", default: roundabout.defaults.swipeThreshold},
 	{name: "throttle", category: "Behavioral", type: "boolean", default: roundabout.defaults.throttle},
