@@ -27,7 +27,7 @@ export const settings = [
 	{name: "parent", category: "General", type: "string", default: roundabout.defaults.parent},
 	{name: "prevHTML", category: "General", type: "string", default: "&lt;SVG Left Arrow&gt;"},
 	{name: "scrollBy", category: "Behavioral", type: "integer", default: roundabout.defaults.scrollBy},
-	{name: "scrollwheel", category: "Behavioral", type: "boolean", default: roundabout.defaults.scrollwheel, todo: true},
+	{name: "scrollwheel", category: "Behavioral", type: "boolean", default: roundabout.defaults.scrollwheel},
 	{name: "showWrappedPage", category: "Behavioral", type: "boolean", default: roundabout.defaults.showWrappedPage},
 	{name: "swipe", category: "Behavioral", type: "boolean", default: roundabout.defaults.swipe},
 	{name: "swipeMultiplier", category: "Behavioral", type: "number", default: roundabout.defaults.swipeMultiplier},
