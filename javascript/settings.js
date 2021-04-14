@@ -1,4 +1,5 @@
 import { roundabout } from "./roundabout.min.js";
+
 export const settings = [
 	{name: "autoscroll", category: "Behavioral", type: "boolean", default: roundabout.defaults.autoscroll},
 	{name: "autoscrollDirection", category: "Behavioral", type: "string", default: roundabout.defaults.autoscrollDirection},
@@ -6,10 +7,11 @@ export const settings = [
 	{name: "autoscrollSpeed", category: "Behavioral", type: "integer", default: roundabout.defaults.autoscrollSpeed},
 	{name: "autoscrollStartAfter", category: "Behavioral", type: "integer", default: roundabout.defaults.autoscrollStartAfter},
 	{name: "autoscrollTimeout", category: "Behavioral", type: "integer", default: roundabout.defaults.autoscrollTimeout},
-	{name: "breakpoints", category: "General", type: "array", default: roundabout.defaults.breakpoints},
+	{name: "breakpoints", category: "Behavioral", type: "array", default: roundabout.defaults.breakpoints},
 	{name: "buttons", category: "General", type: "boolean", default: roundabout.defaults.buttons},
 	{name: "id", category: "General", type: "string", default: roundabout.defaults.id},
 	{name: "infinite", category: "Behavioral", type: "boolean", default: roundabout.defaults.infinite},
+	{name: "interpolate", category: "Behavioral", type: "array", default: roundabout.defaults.interpolate},
 	{name: "keys", category: "Behavioral", type: "boolean", default: roundabout.defaults.keys},
 	{name: "lazyLoad", category: "Behavioral", type: "string", default: roundabout.defaults.lazyLoad},
 	{name: "listenForResize", category: "Behavioral", type: "boolean", default: roundabout.defaults.listenForResize},
@@ -25,10 +27,13 @@ export const settings = [
 	{name: "parent", category: "General", type: "string", default: roundabout.defaults.parent},
 	{name: "prevHTML", category: "General", type: "string", default: "&lt;SVG Left Arrow&gt;"},
 	{name: "scrollBy", category: "Behavioral", type: "integer", default: roundabout.defaults.scrollBy},
+	{name: "scrollwheel", category: "Behavioral", type: "boolean", default: roundabout.defaults.scrollwheel},
 	{name: "showWrappedPage", category: "Behavioral", type: "boolean", default: roundabout.defaults.showWrappedPage},
 	{name: "swipe", category: "Behavioral", type: "boolean", default: roundabout.defaults.swipe},
 	{name: "swipeMultiplier", category: "Behavioral", type: "number", default: roundabout.defaults.swipeMultiplier},
 	{name: "swipeResistance", category: "Behavioral", type: "number", default: roundabout.defaults.swipeResistance},
+	{name: "swipeSnap", category: "Behavioral", type: "boolean", default: roundabout.defaults.swipeSnap},
+	{name: "swipeSpeedThreshold", category: "Behavioral", type: "integer", default: roundabout.defaults.swipeSpeedThreshold},
 	{name: "swipeThreshold", category: "Behavioral", type: "integer", default: roundabout.defaults.swipeThreshold},
 	{name: "throttle", category: "Behavioral", type: "boolean", default: roundabout.defaults.throttle},
 	{name: "throttleButtons", category: "Behavioral", type: "boolean", default: roundabout.defaults.throttleButtons},
@@ -40,8 +45,35 @@ export const settings = [
 	{name: "transitionFunction", category: "Behavioral", type: "string", default: roundabout.defaults.transitionFunction},
 	{name: "type", category: "General", type: "string", default: roundabout.defaults.type},
 	{name: "uiEnabled", category: "General", type: "boolean", default: roundabout.defaults.uiEnabled},
-   // extra
+	// pages
 	{name: "html", category: null, type: "string", default: '""'},
 	{name: "css", category: null, type: "string", default: '""'},
 	{name: "backgroundImage", category: null, type: "string", default: '""'},
+	// misc
+	// {name: "ignoreErrors", category: "Misc", type: "boolean", default: roundabout.defaults.ignoreErrors},
+];
+
+export const scripting = [
+	// scripting
+	{name: "addPage", category: "Scripting"},
+	{name: "addPageElement", category: "Scripting"},
+	{name: "afterDestroy", category: "Scripting"},
+	{name: "beforeDestroy", category: "Scripting"},
+	{name: "destroy", category: "Scripting"},
+	{name: "lazyLoad", category: "Scripting"},
+	{name: "onDragEnd", category: "Scripting"},
+	{name: "onDragStart", category: "Scripting"},
+	{name: "onScroll", category: "Scripting"},
+	{name: "onScrollEnd", category: "Scripting"},
+	{name: "onScrollNext", category: "Scripting"},
+	{name: "onScrollNextEnd", category: "Scripting"},
+	{name: "onScrollPrevious", category: "Scripting"},
+	{name: "onScrollPreviousEnd", category: "Scripting"},
+	{name: "removePage", category: "Scripting"},
+	{name: "scroll", category: "Scripting"},
+	{name: "scrollNext", category: "Scripting"},
+	{name: "scrollPrevious", category: "Scripting"},
+	{name: "scrollTo", category: "Scripting"},
+	{name: "setValue", category: "Scripting"},
+	{name: "throttledScroll", category: "Scripting"},
 ];
