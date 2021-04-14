@@ -26,6 +26,7 @@ export const settings = [
 	{name: "pagesToShow", category: "General", type: "integer", default: roundabout.defaults.pagesToShow},
 	{name: "parent", category: "General", type: "string", default: roundabout.defaults.parent},
 	{name: "prevHTML", category: "General", type: "string", default: "&lt;SVG Left Arrow&gt;"},
+	{name: "rotation", category: "Behavioral", type: "string", default: roundabout.defaults.rotation},
 	{name: "scrollBy", category: "Behavioral", type: "integer", default: roundabout.defaults.scrollBy},
 	{name: "scrollwheel", category: "Behavioral", type: "boolean", default: roundabout.defaults.scrollwheel},
 	{name: "showWrappedPage", category: "Behavioral", type: "boolean", default: roundabout.defaults.showWrappedPage},
