@@ -1,48 +1,4 @@
-import { settings } from "/javascript/settings.js";
-
-// let settings = [
-//    {name: "autoscroll", category: "Behavioral"},
-//    {name: "autoscrollDirection", category: "Behavioral"},
-//    {name: "autoscrollPauseOnHover", category: "Behavioral"},
-//    {name: "autoscrollSpeed", category: "Behavioral"},
-//    {name: "autoscrollStartAfter", category: "Behavioral"},
-//    {name: "autoscrollTimeout", category: "Behavioral"},
-//    {name: "breakpoints", category: "General"},
-//    {name: "buttons", category: "General"},
-//    {name: "id", category: "General"},
-//    {name: "infinite", category: "Behavioral"},
-//    {name: "keys", category: "Behavioral"},
-//    {name: "lazyLoad", category: "Behavioral"},
-//    {name: "listenForResize", category: "Behavioral"},
-//    {name: "navigation", category: "General"},
-//    {name: "navigationBehavior", category: "Behavioral"},
-//    {name: "navigationTrim", category: "Behavioral"},
-//    {name: "nextHTML", category: "General"},
-//    {name: "pages", category: "General"},
-//    {name: "pageSpacing", category: "General"},
-//    {name: "pageSpacingMode", category: "General"},
-//    {name: "pageSpacingUnits", category: "General"},
-//    {name: "pagesToShow", category: "General"},
-//    {name: "parent", category: "General"},
-//    {name: "prevHTML", category: "General"},
-//    {name: "scrollBy", category: "Behavioral"},
-//    {name: "showWrappedPage", category: "Behavioral"},
-//    {name: "swipe", category: "Behavioral"},
-//    {name: "swipeMultiplier", category: "Behavioral"},
-//    {name: "swipeResistance", category: "Behavioral"},
-//    {name: "swipeThreshold", category: "Behavioral"},
-//    {name: "throttle", category: "Behavioral"},
-//    {name: "throttleButtons", category: "Behavioral"},
-//    {name: "throttleKeys", category: "Behavioral"},
-//    // {name: "throttleMatchTransition", category: "Behavioral"},
-//    {name: "throttleNavigation", category: "Behavioral"},
-//    {name: "throttleSwipe", category: "Behavioral"},
-//    {name: "throttleTimeout", category: "Behavioral"},
-//    {name: "transition", category: "Behavioral"},
-//    { name: "transitionFunction", category: "Behavioral" },
-//    {name: "type", category: "General"},
-//    {name: "uiEnabled", category: "General"},
-// ];
+import { settings, scripting } from "/javascript/settings.js";
 
 const VERSION = "v1.4.0";
 
@@ -232,7 +188,24 @@ function sort(method) {
          newtr.innerHTML = `<div>${setting}</div>`;
          table.appendChild(newtr);
       });
-   }      
+   }
+
+   // Scripting header
+   gs = document.createElement("div");
+   gs.innerHTML = `SCRIPTING`;
+   table.appendChild(gs);
+   gs.classList.add("category-title");
+
+   scripting.forEach(method => {
+      let newtr = document.createElement("a");
+         newtr.setAttribute("href", `/roundabout/pages/${method.name}.html`);
+         if (!sameTab) {
+            newtr.setAttribute("target", "_blank");
+         }
+         newtr.innerHTML = `<div>${method.name}</div>`;
+         table.appendChild(newtr);
+   });
+
 }
 
 sort(sortOrder);
