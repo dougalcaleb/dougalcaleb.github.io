@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>swipeThreshold | Roundabout Docs</title>
+		<title>swipeSpeedThreshold | Roundabout Docs</title>
 		<link rel="stylesheet" type="text/css" href="../css/docs_style.css" />
 		<link rel="stylesheet" type="text/css" href="../css/roundabout-style.css" />
+
       <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
 
 		<link rel="preconnect" href="https://fonts.gstatic.com" />
@@ -17,11 +18,6 @@
 		<iframe frameborder="0" class="ls-helper" id="ls-helper"></iframe>
 		<header>
 			<a href="/roundabout/docs.html"><p class="title"><span class="name">Roundabout</span> <span class="desc">DOCS</span></p></a>
-			<!-- <select name="version" class="version">
-				<option value="1.2.0">v1.2.0</option>
-				<option value="1.1.0">v1.1.0</option>
-				<option value="1.0.0">v1.0.0</option>
-			</select> -->
 			<div class="links">
 				<a href="https://github.com/dougalcaleb/roundabout" target="_blank"
 					><div class="download">
@@ -49,7 +45,6 @@
 		</header>
 
 		<nav>
-			<!-- <section class="links"></section> -->
 			<section class="setup">
 				<div class="sort-order">Sort order</div>
 				<div class="tab-behavior">Tabs</div>
@@ -59,14 +54,14 @@
 
 		<section class="spec">
 			<div class="basic">
-				<h1 class="title">swipeThreshold</h1>
+				<h1 class="title">swipeSpeedThreshold</h1>
 				<div class="basic-info">
 					<div class="type"><span class="deemp">Type:</span> <span class="normal">integer</span></div>
-					<div class="default"><span class="deemp">Default:</span> <span class="normal">300</span></div>
+					<div class="default"><span class="deemp">Default:</span> <span class="normal">1200</span></div>
 				</div>
 			</div>
 			<div class="info">
-				<div class="desc">Sets the number of pixels that must be swiped to advance the carousel one page.</div>
+				<div class="desc">Sets the speed (in pixels/second) that should be exceeded to advance the carousel.</div>
 				<!-- 
                <ul>
                   <li>
@@ -76,27 +71,25 @@
                   </li>
                </ul>
              -->
-             When a user swipes a distance greater than or equal to this setting and ends the swipe, the carousel will advance in the appropriate direction by one page. If the swipe does not exceed this, it will snap back to the current page. Regardless of this setting, if the swipe distance exceeds the width of one page, it will snap to that next page, ensuring that it is always possible to advance the carousel.
+             When a swipe's average speed (calculated at the end of a swipe) is greater than this speed, the carousel will advance one scroll in the appropriate direction.
              <br/><br/>
-             On non-infinite carousels, dragging past a side will not advance the carousel even after this distance has been exceeded.
+             This can be used alongside <span class="code">swipeThreshold</span>, where meeting the condition for either setting will allow the carousel to advance.
              <br/><br/>
-             Be sure to adjust this value down when displaying more than one page.
+             Note that this should be lowered significantly for mobile devices, as the pixel size is much smaller.
              <br/><br/>
-             This can be used alongside <span class="code">swipeSpeedThreshold</span>, where meeting the condition for either setting will allow the carousel to advance.
-             <!-- The carousel on this page has a few extra settings edited for demonstration:
+             The carousels on this page have an extra setting edited for demonstration:
              <ul>
-               <li><span class="code">setting: value</span></li>
-            </ul> -->
-            <br/><br/>
-            The upper carousel has been given a <span class="code">swipeThreshold</span> value of <span class="code">500</span>, and the lower is set to <span class="code">50</span>.
+               <li><span class="code">swipeThreshold: 800</span></li>
+            </ul>
+            The upper carousel has been given a <span class="code">swipeSpeedThreshold</span> value of <span class="code">1200</span>, and the lower is set to <span class="code">100</span>.
             <div class="roundabout-example"></div>
 				<footer></footer>
 			</div>
 		</section>
-		<!-- <table class="temp-settings"></table> -->
 	</body>
 
 	<script src="../javascript/docs.js" type="module"></script>
 	<script src="/javascript/roundabout.min.js" type="module"></script>
-	<script src="./javascript/swipeThreshold-settings.js" type="module"></script>
+	<script src="./javascript/swipeSpeedThreshold-settings.js" type="module"></script>
+   <!-- <script src="../javascript/syntax.js"></script> -->
 </html>
