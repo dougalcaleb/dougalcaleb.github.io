@@ -202,16 +202,22 @@ function sort(method) {
 	gs.classList.add("category-title");
 
 	scripting.forEach((method) => {
-		let newtr = document.createElement("a");
+      let newtr = document.createElement("a");
+      console.log(JSON.stringify(method));
+      if (method.name == "lazyLoad") {
+         method.name = "lazyLoadMethod";
+      }
 		newtr.setAttribute("href", `/roundabout/pages/${method.name}.html`);
 		if (!sameTab) {
-			newtr.setAttribute("target", "_blank");
+         newtr.setAttribute("target", "_blank");
 		}
-		newtr.innerHTML = `<div>${method.name}()</div>`;
 		if (method.todo) {
-			newtr.style.color = "green";
-		}
-		table.appendChild(newtr);
+         newtr.style.color = "green";
+      }
+      method.name = method.name == "lazyLoadMethod" ? "lazyLoad" : method.name;
+      newtr.innerHTML = `<div>${method.name}()</div>`;
+      table.appendChild(newtr);
+      console.log("----------------");
 	});
 }
 

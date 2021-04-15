@@ -57,10 +57,10 @@ export const settings = [
 export const scripting = [
 	// scripting
 	{name: "addPage", category: "Scripting"},
-	{name: "addPageElement", category: "Scripting", todo: true},
-	{name: "afterDestroy", category: "Scripting", todo: true},
-	{name: "beforeDestroy", category: "Scripting", todo: true},
-	{name: "destroy", category: "Scripting", todo: true},
+	{name: "addPageElement", category: "Scripting"},
+	{name: "afterDestroy", category: "Scripting"},
+	{name: "beforeDestroy", category: "Scripting"},
+	{name: "destroy", category: "Scripting"},
 	{name: "lazyLoad", category: "Scripting", todo: true},
 	{name: "onDragEnd", category: "Scripting", todo: true},
 	{name: "onDragStart", category: "Scripting", todo: true},
