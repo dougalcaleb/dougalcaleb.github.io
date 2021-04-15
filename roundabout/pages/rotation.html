@@ -61,7 +61,7 @@
 				</div>
 			</div>
 			<div class="info">
-				<div class="desc">QUICK DESCRIPTION</div>
+				<div class="desc">Changes the way that swipe interactions are handled to allow for 90-degree rotations.</div>
 				<!-- 
                <ul>
                   <li>
@@ -71,7 +71,18 @@
                   </li>
                </ul>
              -->
+             Possible values:
+             <ul>
+                <li>"none"</li>
+                <li>"left"</li>
+                <li>"right"</li>
+             </ul>
 
+             This setting is partially unfinished. However, it does correctly modify swipe interactions. Rotating a carousel is currently expected to be done by a CSS value such as <span class="code">transform: rotate(90deg)</span>.
+             <br/><br/>
+             <span class="code">"left"</span> is equivalent to a -90 degree turn, where the top of the carousel faces left.
+             <br/><br/>
+             <span class="code">"right"</span> is equivalent to a 90 degree turn, where the top of the carousel faces right.
              <!-- The carousel on this page has a few extra settings edited for demonstration:
              <ul>
                <li><span class="code">setting: value</span></li>

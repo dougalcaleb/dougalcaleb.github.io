@@ -56,7 +56,7 @@ export const settings = [
 
 export const scripting = [
 	// scripting
-	{name: "addPage", category: "Scripting", todo: true},
+	{name: "addPage", category: "Scripting"},
 	{name: "addPageElement", category: "Scripting", todo: true},
 	{name: "afterDestroy", category: "Scripting", todo: true},
 	{name: "beforeDestroy", category: "Scripting", todo: true},
