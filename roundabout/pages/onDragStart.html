@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>lazyLoad | Roundabout Docs</title>
+		<title>onDragStart | Roundabout Docs</title>
 		<link rel="stylesheet" type="text/css" href="../css/docs_style.css" />
 		<link rel="stylesheet" type="text/css" href="../css/roundabout-style.css" />
 
@@ -54,37 +54,31 @@
 
 		<section class="spec">
 			<div class="basic">
-				<h1 class="title">lazyLoad</h1>
+				<h1 class="title">onDragStart</h1>
 				<div class="basic-info">
-					<div class="type"><span class="deemp">Parameters:</span> <span class="normal">(carousel, pageIds, callback)</span></div>
+					<div class="type"><span class="deemp">Parameters:</span> <span class="normal">(carousel, callback)</span></div>
 					<!-- <div class="default"><span class="deemp">Default:</span> <span class="normal">DEFAULT</span></div> -->
 				</div>
 			</div>
 			<div class="info">
-				<div class="desc">Loads page images.</div>
+				<div class="desc">Sets a listener that will trigger when a drag interaction starts.</div>
 				Inputs:
 				<ul>
                <li>
 						carousel
 						<ul>
 							<li>Type: Roundabout object</li>
-                     <li>Selects the carousel to modify</li>
+                     <li>Selects the carousel to subscribe to</li>
 						</ul>
 					</li>
-					<li>pageIds
+					<li>callback
 						<ul>
-							<li>Type: array of integers</li>
-                     <li>Contains the IDs of the pages that are to be loaded</li>
+							<li>Type: function</li>
+                     <li>Will be called after the start of a drag interaction</li>
 						</ul>
 					</li>
-               <li>callback
-                  <ul>
-                     <li>Type: function</li>
-                     <li>Called on each page load, passed a single parameter which is the ID of the loaded page</li>
-                  </ul>
-               </li>
 				</ul>
-            CALLBACK SUBSCRIBES TO INCORRECT VALUE
+
              <!-- The carousel on this page has a few extra settings edited for demonstration:
              <ul>
                <li><span class="code">setting: value</span></li>

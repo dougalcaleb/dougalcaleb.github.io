@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>lazyLoad | Roundabout Docs</title>
+		<title>scrollTo | Roundabout Docs</title>
 		<link rel="stylesheet" type="text/css" href="../css/docs_style.css" />
 		<link rel="stylesheet" type="text/css" href="../css/roundabout-style.css" />
 
@@ -54,14 +54,14 @@
 
 		<section class="spec">
 			<div class="basic">
-				<h1 class="title">lazyLoad</h1>
+				<h1 class="title">scrollTo</h1>
 				<div class="basic-info">
-					<div class="type"><span class="deemp">Parameters:</span> <span class="normal">(carousel, pageIds, callback)</span></div>
+					<div class="type"><span class="deemp">Parameters:</span> <span class="normal">(carousel, pageId, transition?)</span></div>
 					<!-- <div class="default"><span class="deemp">Default:</span> <span class="normal">DEFAULT</span></div> -->
 				</div>
 			</div>
 			<div class="info">
-				<div class="desc">Loads page images.</div>
+				<div class="desc">Scrolls the carousel to a specific page.</div>
 				Inputs:
 				<ul>
                <li>
@@ -71,20 +71,22 @@
                      <li>Selects the carousel to modify</li>
 						</ul>
 					</li>
-					<li>pageIds
+               <li>pageId
 						<ul>
-							<li>Type: array of integers</li>
-                     <li>Contains the IDs of the pages that are to be loaded</li>
+							<li>Type: integer</li>
+                     <li>Selects the page to be scrolled to</li>
 						</ul>
 					</li>
-               <li>callback
-                  <ul>
-                     <li>Type: function</li>
-                     <li>Called on each page load, passed a single parameter which is the ID of the loaded page</li>
-                  </ul>
-               </li>
+					<li>transition [optional]
+						<ul>
+							<li>Type: boolean</li>
+                     <li>Optional input: defaults to true</li>
+                     <li><span class="code">true</span>: pages will scroll with transition</li>
+                     <li><span class="code">false</span>: pages will scroll instantly</li>
+						</ul>
+					</li>
 				</ul>
-            CALLBACK SUBSCRIBES TO INCORRECT VALUE
+
              <!-- The carousel on this page has a few extra settings edited for demonstration:
              <ul>
                <li><span class="code">setting: value</span></li>
