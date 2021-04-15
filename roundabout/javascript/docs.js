@@ -203,7 +203,6 @@ function sort(method) {
 
 	scripting.forEach((method) => {
       let newtr = document.createElement("a");
-      console.log(JSON.stringify(method));
       if (method.name == "lazyLoad") {
          method.name = "lazyLoadMethod";
       }
@@ -220,7 +219,6 @@ function sort(method) {
       method.name = method.name == "lazyLoadMethod" ? "lazyLoad" : method.name;
       newtr.innerHTML = `<div>${method.name}()</div>`;
       table.appendChild(newtr);
-      console.log("----------------");
 	});
 }
 
