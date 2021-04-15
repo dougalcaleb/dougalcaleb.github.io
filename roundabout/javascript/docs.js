@@ -207,7 +207,7 @@ function sort(method) {
 		if (!sameTab) {
 			newtr.setAttribute("target", "_blank");
 		}
-		newtr.innerHTML = `<div>${method.name}</div>`;
+		newtr.innerHTML = `<div>${method.name}()</div>`;
 		if (method.todo) {
 			newtr.style.color = "green";
 		}
