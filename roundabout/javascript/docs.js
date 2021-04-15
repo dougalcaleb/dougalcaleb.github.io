@@ -214,6 +214,9 @@ function sort(method) {
 		if (method.todo) {
          newtr.style.color = "green";
       }
+      if (method.knownIssue) {
+         newtr.style.color = "orange";
+      }
       method.name = method.name == "lazyLoadMethod" ? "lazyLoad" : method.name;
       newtr.innerHTML = `<div>${method.name}()</div>`;
       table.appendChild(newtr);

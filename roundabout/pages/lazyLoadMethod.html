@@ -61,7 +61,7 @@
 				</div>
 			</div>
 			<div class="info">
-				<div class="desc">QUICK DESCRIPTION</div>
+				<div class="desc">Loads page images.</div>
 				Inputs:
 				<ul>
                <li>
@@ -71,11 +71,18 @@
                      <li>Selects the carousel to modify</li>
 						</ul>
 					</li>
-					<li>
+					<li>pageIds
 						<ul>
-							<li></li>
+							<li>Type: array of integers</li>
+                     <li>Contains the IDs of the pages that are to be loaded</li>
 						</ul>
 					</li>
+               <li>callback
+                  <ul>
+                     <li>Type: function</li>
+                     <li>Called on each page load, passed a single parameter which is the ID of the loaded page</li>
+                  </ul>
+               </li>
 				</ul>
             CALLBACK SUBSCRIBES TO INCORRECT VALUE
              <!-- The carousel on this page has a few extra settings edited for demonstration:
