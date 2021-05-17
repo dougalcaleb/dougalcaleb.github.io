@@ -62,7 +62,7 @@ export const scripting = [
 	{name: "afterDestroy", category: "Scripting"},
 	{name: "beforeDestroy", category: "Scripting"},
 	{name: "destroy", category: "Scripting"},
-	{name: "lazyLoad", category: "Scripting", knownIssue: true},
+	{name: "lazyLoad", category: "Scripting"},
 	{name: "onDragEnd", category: "Scripting"},
 	{name: "onDragStart", category: "Scripting"},
 	{name: "onScroll", category: "Scripting"},

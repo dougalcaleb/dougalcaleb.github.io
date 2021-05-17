@@ -18,56 +18,56 @@ const tabPairs = [
 	["[", "]"],
 ];
 // [name, type, default]
-const autoSettings = [
-	["autoscroll", "boolean", "false"],
-	["autoscrollDirection", "string", '"right"'],
-	["autoscrollPauseOnHover", "boolean", "false"],
-	["autoscrollSpeed", "integer", "5000"],
-	["autoscrollStartAfter", "integer", "5000"],
-   ["autoscrollTimeout", "integer", "15000"],
-   ["breakpoints", "array", "[{width: 500, swipeThreshold: 50}]"],
-   ["buttons", "boolean", "true"],
-	["id", "string", '".myCarousel"'],
-	["infinite", "boolean", "true"],
-	["keys", "boolean", "true"],
-   ["lazyLoad", "string", '"none"'],
-   ["listenForResize", "boolean", "false"],
-	["navigation", "boolean", "true"],
-	["navigationBehavior", "string", '"nearest"'],
-	["navigationTrim", "boolean", "true"],
-	["nextHTML", "string", "&lt;SVG Right Arrow&gt;"],
-	["pages", "array", "[]"],
-	["pageSpacing", "integer", "0"],
-	["pageSpacingMode", "string", '"fill"'],
-	["pageSpacingUnits", "string", '"px"'],
-	["pagesToShow", "integer", "1"],
-	["parent", "string", '"body"'],
-	["prevHTML", "string", "&lt;SVG Left Arrow&gt;"],
-	["scrollBy", "integer", "1"],
-	["showWrappedPage", "boolean", "false"],
-	["swipe", "boolean", "true"],
-	["swipeMultiplier", "number", "1"],
-	["swipeResistance", "number", "0.95"],
-	["swipeThreshold", "integer", "300"],
-	["throttle", "boolean", "true"],
-	["throttleButtons", "boolean", "true"],
-	["throttleKeys", "boolean", "true"],
-	["throttleNavigation", "boolean", "true"],
-	["throttleSwipe", "boolean", "true"],
-	["throttleTimeout", "integer", "300"],
-	["transition", "integer", "300"],
-	["transitionFunction", "string", '"ease"'],
-   ["uiEnabled", "boolean", "true"],
-   // ====
-   ["html", "string", '""'],
-   ["css", "string", '""'],
-   ["backgroundImage", "string", '""']
+// const autoSettings = [
+// 	["autoscroll", "boolean", "false"],
+// 	["autoscrollDirection", "string", '"right"'],
+// 	["autoscrollPauseOnHover", "boolean", "false"],
+// 	["autoscrollSpeed", "integer", "5000"],
+// 	["autoscrollStartAfter", "integer", "5000"],
+//    ["autoscrollTimeout", "integer", "15000"],
+//    ["breakpoints", "array", "[{width: 500, swipeThreshold: 50}]"],
+//    ["buttons", "boolean", "true"],
+// 	["id", "string", '".myCarousel"'],
+// 	["infinite", "boolean", "true"],
+// 	["keys", "boolean", "true"],
+//    ["lazyLoad", "string", '"none"'],
+//    ["listenForResize", "boolean", "false"],
+// 	["navigation", "boolean", "true"],
+// 	["navigationBehavior", "string", '"nearest"'],
+// 	["navigationTrim", "boolean", "true"],
+// 	["nextHTML", "string", "&lt;SVG Right Arrow&gt;"],
+// 	["pages", "array", "[]"],
+// 	["pageSpacing", "integer", "0"],
+// 	["pageSpacingMode", "string", '"fill"'],
+// 	["pageSpacingUnits", "string", '"px"'],
+// 	["pagesToShow", "integer", "1"],
+// 	["parent", "string", '"body"'],
+// 	["prevHTML", "string", "&lt;SVG Left Arrow&gt;"],
+// 	["scrollBy", "integer", "1"],
+// 	["showWrappedPage", "boolean", "false"],
+// 	["swipe", "boolean", "true"],
+// 	["swipeMultiplier", "number", "1"],
+// 	["swipeResistance", "number", "0.95"],
+// 	["swipeThreshold", "integer", "300"],
+// 	["throttle", "boolean", "true"],
+// 	["throttleButtons", "boolean", "true"],
+// 	["throttleKeys", "boolean", "true"],
+// 	["throttleNavigation", "boolean", "true"],
+// 	["throttleSwipe", "boolean", "true"],
+// 	["throttleTimeout", "integer", "300"],
+// 	["transition", "integer", "300"],
+// 	["transitionFunction", "string", '"ease"'],
+//    ["uiEnabled", "boolean", "true"],
+//    // ====
+//    ["html", "string", '""'],
+//    ["css", "string", '""'],
+//    ["backgroundImage", "string", '""']
    
-	// ["type", "string", '"normal"'],
-	// ["throttleMatchTransition", "boolean", "true"],
-	// ["mobile", "object", "{swipeThreshold:50}"],
-	// ["mobileBreakpoint", "integer", "700"],
-];
+// 	// ["type", "string", '"normal"'],
+// 	// ["throttleMatchTransition", "boolean", "true"],
+// 	// ["mobile", "object", "{swipeThreshold:50}"],
+// 	// ["mobileBreakpoint", "integer", "700"],
+// ];
 const accepted = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", "_", "-"];
 const tabSize = 4;
 let updateSpeed = 1000;
@@ -273,16 +273,15 @@ function checkAutocomplete(key) {
 	matcher = new RegExp(`${typing}[a-z]*`, "ig");
 	let matches = [];
    document.querySelector(".autocomplete").innerHTML = null;
-   //! FIXXXXXXXXX
 	settings.forEach((setting) => {
-		if (setting.type.match(matcher) && setting[0].substr(0, 2) != "--") {
+		if (setting.name.match(matcher) && setting.name.substr(0, 2) != "--") {
 			matches.push(setting);
 			if (document.querySelector(".auto-hint")) {
 				document.querySelector(".auto-hint").style.opacity = "0";
 			}
 			let autoHint = document.createElement("div");
 			autoHint.classList.add("auto-row");
-			autoHint.innerHTML = `<div>${setting[0]}</div><div>${setting[1]}</div><div>${setting[2]}</div>`;
+			autoHint.innerHTML = `<div>${setting.name}</div><div>${setting.type}</div><div>${setting.default}</div>`;
 			document.querySelector(".autocomplete").appendChild(autoHint);
 		}
    });
