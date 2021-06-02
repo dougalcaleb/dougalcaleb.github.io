@@ -71,6 +71,10 @@ const main = new Roundabout({
          // html: "triangle gradient"
       },
       {
+         backgroundImage: "./images/carousel/projects/gamedevfinal.png",
+         // html: "isometry"
+      },
+      {
          backgroundImage: "./images/carousel/projects/gamejam.png",
          // html: "stronger together"
       },
@@ -191,6 +195,18 @@ const desc = new Roundabout({
             <h4 class="desc-skills-title">Skills:</h4>
             <div class="desc-skills">${skills.js + skills.html + skills.css}</div>
             <a href="https://dougalcaleb.github.io/portfolio/poly-gradient/" target="_blank"><button class="border-button">View ${exBtn}</button></a>
+         </div>
+         `
+      },
+      {
+         // backgroundImage: "./images/carousel/projects/gamedevfinal.png",
+         // html: "isometry"
+         html: `
+         <div class="content-wrap">
+            <h3 class="desc-title">Isometry</h3>
+            <p class="desc-body">This game, built in Unity, is an entertaining survival experience, letting you survive a constant onslaught of enemies while trying to protect and upgrade the ancient monolith. This my final project for my Game Development class, and features full support for both keyboard and controller, utilizes a powerful particle system, and incorporates a low-poly 3D environment viewed from an isometric angle.</p>
+            <h4 class="desc-skills-title">Skills:</h4>
+            <div class="desc-skills">${skills.csharp + skills.unity + skills.collaboration}</div>
          </div>
          `
       },
