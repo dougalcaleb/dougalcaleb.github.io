@@ -4,6 +4,10 @@
 		<title>interpolate | Roundabout Docs</title>
 		<link rel="stylesheet" type="text/css" href="../css/docs_style.css" />
 		<link rel="stylesheet" type="text/css" href="../css/roundabout-style.css" />
+		<link rel="stylesheet" type="text/css" href="../css/syntax.css" />
+		<link rel="stylesheet" type="text/css" href="../css/examples.css" />
+
+		<link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
 
 		<link rel="preconnect" href="https://fonts.gstatic.com" />
 		<link href="https://fonts.googleapis.com/css2?family=Miriam+Libre:wght@400;700&family=Roboto:wght@300;500;700&display=swap" rel="stylesheet" />
@@ -15,15 +19,20 @@
 	<body>
 		<iframe frameborder="0" class="ls-helper" id="ls-helper"></iframe>
 		<header>
-			<a href="/roundabout/docs.html"><p class="title"><span class="name">Roundabout</span> <span class="desc">DOCS</span></p></a>
+			<a href="/roundabout/docs.html">
+				<p class="title">
+					<span class="name">Roundabout</span>
+					<span class="desc">DOCS</span>
+				</p>
+			</a>
 			<!-- <select name="version" class="version">
 				<option value="1.2.0">v1.2.0</option>
 				<option value="1.1.0">v1.1.0</option>
 				<option value="1.0.0">v1.0.0</option>
 			</select> -->
 			<div class="links">
-				<a href="https://github.com/dougalcaleb/roundabout" target="_blank"
-					><div class="download">
+				<a href="https://github.com/dougalcaleb/roundabout" target="_blank">
+					<div class="download">
 						<svg style="width: 24px; height: 24px" viewBox="0 0 24 24">
 							<path
 								fill="currentColor"
@@ -31,10 +40,10 @@
 							/>
 						</svg>
 						Download
-					</div></a
-				>
-				<a href="https://dougalcaleb.github.io/roundabout/playground" target="_blank"
-					><div class="playground">
+					</div>
+				</a>
+				<a href="https://dougalcaleb.github.io/roundabout/playground" target="_blank">
+					<div class="playground">
 						<svg style="width: 24px; height: 24px" viewBox="0 0 24 24">
 							<path
 								fill="currentColor"
@@ -42,8 +51,8 @@
 							/>
 						</svg>
 						Playground
-					</div></a
-				>
+					</div>
+				</a>
 			</div>
 		</header>
 
@@ -60,12 +69,18 @@
 			<div class="basic">
 				<h1 class="title">interpolate</h1>
 				<div class="basic-info">
-					<div class="type"><span class="deemp">Type:</span> <span class="normal">TYPE</span></div>
-					<div class="default"><span class="deemp">Default:</span> <span class="normal">DEFAULT</span></div>
+					<div class="type">
+						<span class="deemp">Type:</span>
+						<span class="normal">array</span>
+					</div>
+					<div class="default">
+						<span class="deemp">Default:</span>
+						<span class="normal">[]</span>
+					</div>
 				</div>
 			</div>
 			<div class="info">
-				<div class="desc">QUICK DESCRIPTION</div>
+				<div class="desc">Calculates intermediate values between active and non-active pages during swipe.</div>
 				<!-- 
                <ul>
                   <li>
@@ -75,13 +90,122 @@
                   </li>
                </ul>
              -->
-
-             <!-- The carousel on this page has a few extra settings edited for demonstration:
+				Normally, when swiping, the visible pages will gain their respective focused and unfocused classes once a scroll occurs. For carousels
+				where focused and unfocused pages are visually identical, this poses no problem. However, in cases where focused pages appear different,
+				this setting will help to make the transition fluid.
+				<br />
+				<br />
+				Note that this only works for numerical CSS values. Additionally, be mindful of the scope and number of interpolations that are happening. Having many complex values changing can have performance issues on less powerful devices, since they are calculated, applied, and rendered at every instance of a swipe movement.
+				<br />
+				<br />
+				Each item in the array is an object containing each of the following values:
+				<ul>
+					<li><span class="code">between</span></li>
+					<li><span class="code">value</span></li>
+					<li><span class="code">unit</span></li>
+				</ul>
+				The
+				<span class="code">between</span>
+				option is an array that must contain two arrays, each of which correspond to a page position. Both of these sub-arrays must contain two
+				values: the first value in the array selects the position of a page to be interpolated from, and the second value defines the numerical
+				value that the page will have when perfectly at that position. The second sub-array is the same, but for the other page to be interpolated
+				to. Note that these two pages MUST be directly adjacent to each other.
+				<br />
+				<br />
+				For example, to tell Roundabout that we want a page at position 0 to have a height of 80%, and a page at position at position 1 to have a
+				height of 100%, our
+				<span class="code">between</span>
+				value would look like this:
+				<div class="code js-codeblock">
+					between: [
+					<br />
+					&nbsp;&nbsp;[0, 80],
+					<br />
+					&nbsp;&nbsp;[1, 100]
+					<br />
+					],
+				</div>
+				The
+				<span class="code">value</span>
+				option is a string that selects the CSS value to manipulate. This value must be in camelCase, not kebab-case. Continuing our example, the
+				<span class="code">value</span>
+				option will look like this:
+				<div class="code js-codeblock">value: "height",</div>
+				The
+				<span class="code">unit</span>
+				option defines the appropriate units to use for the CSS value. The string must contain a dollar sign ($) to mark the position that the
+				calculated numerical value should be placed. To use percent for height, it would look like this:
+				<div class="code js-codeblock">unit: "$%"</div>
+				All together, our
+				<span class="code">interpolate</span>
+				setting will look like this:
+				<div class="code js-codeblock">
+					interpolate: [<br />
+					&nbsp;&nbsp;{<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;between: [
+					<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[0, 80],
+					<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[1, 100]
+					<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;],
+					<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;value: "height",
+					<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;unit: "$%"
+               <br/>
+					&nbsp;&nbsp;}
+					<br />
+					]
+				</div>
+            <br/>
+            Multiple interpolations can be applied to the same pairs of pages, but each requires its own object. For example, we can combine a brightness filter and height with these settings:
+            <div class="code js-codeblock">
+               interpolate: [<br/>
+                  &nbsp;&nbsp;{<br/>
+                  &nbsp;&nbsp;&nbsp;&nbsp;between: [<br/>
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[0, 30],<br/>
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[1, 100]<br/>
+                  &nbsp;&nbsp;&nbsp;&nbsp;],<br/>
+                  &nbsp;&nbsp;&nbsp;&nbsp;value: "filter",<br/>
+                  &nbsp;&nbsp;&nbsp;&nbsp;unit: "brightness($%)"<br/>
+                  &nbsp;&nbsp;},<br/>
+                  &nbsp;&nbsp;{<br/>
+                  &nbsp;&nbsp;&nbsp;&nbsp;between: [<br/>
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[1, 100],<br/>
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[2, 30]<br/>
+                  &nbsp;&nbsp;&nbsp;&nbsp;],<br/>
+                  &nbsp;&nbsp;&nbsp;&nbsp;value: "filter",<br/>
+                  &nbsp;&nbsp;&nbsp;&nbsp;unit: "brightness($%)"<br/>
+                  &nbsp;&nbsp;},<br/>
+                  &nbsp;&nbsp;{<br/>
+                  &nbsp;&nbsp;&nbsp;&nbsp;between: [<br/>
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[0, 80],<br/>
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[1, 100]<br/>
+                  &nbsp;&nbsp;&nbsp;&nbsp;],<br/>
+                  &nbsp;&nbsp;&nbsp;&nbsp;value: "height",<br/>
+                  &nbsp;&nbsp;&nbsp;&nbsp;unit: "$%"<br/>
+                  &nbsp;&nbsp;},<br/>
+                  &nbsp;&nbsp;{<br/>
+                  &nbsp;&nbsp;&nbsp;&nbsp;between: [<br/>
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[1, 100],<br/>
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[2, 80]<br/>
+                  &nbsp;&nbsp;&nbsp;&nbsp;],<br/>
+                  &nbsp;&nbsp;&nbsp;&nbsp;value: "height",<br/>
+                  &nbsp;&nbsp;&nbsp;&nbsp;unit: "$%"<br/>
+                  &nbsp;&nbsp;},<br/>
+               ]
+            </div>
+            <br/>
+            The codeblock above is used in the upper carousel below. The lower carousel has no interpolation.
+            <br/><br/>
+				The carousels on this page have a few extra settings edited for demonstration:
              <ul>
-               <li><span class="code">setting: value</span></li>
-            </ul> -->
-            <!-- The below carousel has been given an <span class="code">setting</span> value of <span class="code">value</span>. -->
-            <!-- <div class="roundabout-example"></div> -->
+               <li><span class="code">pagesToShow: 3</span></li>
+               <li><span class="code">pageSpacing: 15</span></li>
+            </ul>
+				<!-- The below carousel has been given an <span class="code">setting</span> value of <span class="code">value</span>. -->
+				<div class="roundabout-example"></div>
 				<footer></footer>
 			</div>
 		</section>
@@ -89,6 +213,7 @@
 	</body>
 
 	<script src="../javascript/docs.js" type="module"></script>
-	<script src="/javascript/roundabout.min.js" type="module"></script>
-	<script src="./javascript/keys-settings.js" type="module"></script>
+	<script src="/javascript/roundabout.min.js" type="module"></script> -->
+	<script src="./javascript/interpolate-settings.js" type="module"></script>
+	<script src="../javascript/syntax.js"></script>
 </html>
