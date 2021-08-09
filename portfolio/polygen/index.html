@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Polygen</title>
+		<link rel="stylesheet" type="text/css" href="css/style.css" />
+		<link rel="stylesheet" type="text/css" media="screen and (min-width: 501px)" href="css/desktop.css" />
+		<link rel="stylesheet" type="text/css" media="screen and (max-width: 500px)" href="css/mobile.css" />
+
+		<link rel="shortcut icon" href="./images/icon.png" type="image/x-icon" />
+
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+	</head>
+	<body>
+      <a class="downloader"></a>
+		<header>
+			<div class="logo">
+				<div class="logo-img"></div>
+				<p class="logo-text">POLYGEN</p>
+			</div>
+         <div class="download">
+            DOWNLOAD AS PNG
+            <svg viewBox="0 0 24 24">
+               <path fill="currentColor" d="M5,20H19V18H5M19,9H15V3H9V9H5L12,16L19,9Z" />
+           </svg>
+         </div>
+		</header>
+
+      <div class="controls">
+         <div class="control control-inputs dimensions">
+            <p>DIMENSIONS</p>
+            <div class="control-input-wrap">
+               <input type="number" class="image-width" placeholder="Width" value="1920">
+               <input type="number" class="image-height" placeholder="Height" value="1080">
+            </div>
+         </div>
+         <div class="control control-btns type">
+            <p>TYPE</p>
+            <div class="control-btn-wrap">
+               <div class="type-btn type-0 btn-active">Linear</div>
+               <div class="type-btn type-1">Radial</div>
+               <div class="type-btn type-2">Image</div>
+            </div>
+         </div>
+
+         <div class="control control-file image-file fortype-2">
+            <p>ORIGINAL IMAGE</p>
+            <div class="control-btn-wrap">
+               <div class="file-choose">Choose File</div>
+            </div>
+         </div>
+
+         <div class="control control-range variance">
+            <p>VERTEX VARIANCE</p>
+            <input type="range" class="i-variance" min="0" max="1.5" step="0.01" value="0.5">
+         </div>
+         <div class="control control-range verts">
+            <p>CELL SIZE</p>
+            <input type="range" class="i-verts" min="50" max="195" step="0.5" value="185">
+         </div>
+         <div class="control control-range bright-variance">
+            <p>BRIGHTNESS VARIANCE</p>
+            <input type="range" class="i-bright-variance" min="0" max="255" step="1" value="0">
+         </div>
+         <div class="control control-btns brightness-mode">
+            <p>BRIGHTNESS VARIANCE MODE</p>
+            <div class="control-btn-wrap">   
+               <div class="bmode-btn lighten">Lighten</div>
+               <div class="bmode-btn darken btn-active">Darken</div>
+            </div>
+         </div>
+
+         <div class="control control-range grad-rotation fortype-0">
+            <p>GRADIENT ROTATION</p>
+            <input type="range" class="i-0-rotation" min="0" max="360" step="1" value="0">
+         </div>
+         <div class="control control-btns grad-rotation-snap fortype-0">
+            <p>GRADIENT ROTATION SNAP</p>
+            <div class="control-btn-wrap">
+               <div class="rot-snap snap-0"></div>
+               <div class="rot-snap snap-1"></div>
+               <div class="rot-snap snap-2"></div>
+               <div class="rot-snap snap-3"></div>
+            </div>
+            <div class="control-btn-wrap">
+               <div class="rot-snap snap-4"></div>
+               <div class="rot-snap snap-5"></div>
+               <div class="rot-snap snap-6"></div>
+               <div class="rot-snap snap-7"></div>
+            </div>
+         </div>
+
+         <div class="control control-range grad-posx fortype-1">
+            <p>GRADIENT POSITION X</p>
+            <input type="range" class="i-1-posx" min="0" max="1" step="0.01" value="0.5">
+         </div>
+         <div class="control control-range grad-posy fortype-1">
+            <p>GRADIENT POSITION Y</p>
+            <input type="range" class="i-1-posy" min="0" max="1" step="0.01" value="0.5">
+         </div>
+         <div class="control control-range grad-outrad fortype-1">
+            <p>GRADIENT OUTER RADIUS</p>
+            <input type="range" class="i-1-outrad" min="0" max="1" step="0.01" value="0.5">
+         </div>
+         <div class="control control-range grad-inrad fortype-1">
+            <p>GRADIENT INNER RADIUS</p>
+            <input type="range" class="i-1-inrad" min="0" max="0.25" step="0.01" value="0">
+         </div>
+         <div class="control control-color outline-color">
+            <p>OUTLINE COLOR</p>
+            <div class="outline-color-wrap">
+               <input type="color" value="#ffffff" class="i-outline-color" >
+            </div>
+         </div>
+         <div class="control control-range outline-opacity">
+            <p>OUTLINE OPACITY</p>
+            <input type="range" class="i-outline" min="0" max="1" step="0.01" value="0">
+         </div>
+         <div class="control control-palettes">
+            <p>COLOR PALETTE</p>
+            <div class="palette-add">
+               <svg viewBox="0 0 24 24">
+                  <path fill="currentColor" d="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z" />
+              </svg>
+            </div>
+         </div>
+      </div>
+
+      <div class="preview">
+         <canvas></canvas>
+      </div>
+
+	</body>
+
+	<script src="javascript/script.js"></script>
+</html>
