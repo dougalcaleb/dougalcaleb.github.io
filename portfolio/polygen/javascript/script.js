@@ -85,7 +85,7 @@ class Controls {
       if (custom && custom.length > 0) {
          startingPalettes = custom;
       } else {
-         startingPalettes = defaultPalettes;
+         startingPalettes = this.defaultPalettes;
       }
 
       // Populate color palettes
