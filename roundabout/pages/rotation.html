@@ -1,10 +1,9 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>breakpoints | Roundabout Docs</title>
+		<title>rotation | Roundabout Docs</title>
 		<link rel="stylesheet" type="text/css" href="../css/docs_style.css" />
 		<link rel="stylesheet" type="text/css" href="../css/roundabout-style.css" />
-		<link rel="stylesheet" type="text/css" href="../css/syntax.css" />
 
       <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
 
@@ -19,11 +18,6 @@
 		<iframe frameborder="0" class="ls-helper" id="ls-helper"></iframe>
 		<header>
 			<a href="/roundabout/docs.html"><p class="title"><span class="name">Roundabout</span> <span class="desc">DOCS</span></p></a>
-			<!-- <select name="version" class="version">
-				<option value="1.2.0">v1.2.0</option>
-				<option value="1.1.0">v1.1.0</option>
-				<option value="1.0.0">v1.0.0</option>
-			</select> -->
 			<div class="links">
 				<a href="https://github.com/dougalcaleb/roundabout" target="_blank"
 					><div class="download">
@@ -51,7 +45,6 @@
 		</header>
 
 		<nav>
-			<!-- <section class="links"></section> -->
 			<section class="setup">
 				<div class="sort-order">Sort order</div>
 				<div class="tab-behavior">Tabs</div>
@@ -61,14 +54,14 @@
 
 		<section class="spec">
 			<div class="basic">
-				<h1 class="title">breakpoints</h1>
+				<h1 class="title">rotation</h1>
 				<div class="basic-info">
-					<div class="type"><span class="deemp">Type:</span> <span class="normal">array</span></div>
-					<div class="default"><span class="deemp">Default:</span> <span class="normal">[{width: 500, swipeThreshold: 50}]</span></div>
+					<div class="type"><span class="deemp">Type:</span> <span class="normal">string</span></div>
+					<div class="default"><span class="deemp">Default:</span> <span class="normal">"none"</span></div>
 				</div>
 			</div>
 			<div class="info">
-				<div class="desc">Describes the settings to override when the screen reaches certain widths.</div>
+				<div class="desc">Changes the way that swipe interactions are handled to allow for 90-degree rotations.</div>
 				<!-- 
                <ul>
                   <li>
@@ -78,47 +71,31 @@
                   </li>
                </ul>
              -->
-
-             This array holds a list of objects that will override both default settings and settings changed in higher breakpoints to help accomodate different screen sizes.
-             <br/><br/>
-             Each object, along with its settings to override, must contain a <span class="code">width</span> property that defines at which width, measured in pixels, (window width for desktop, screen width for mobile) to apply the contained settings.
-             <br/><br/>
-             Note that these settings only apply when the page loads, unless <span class="code">listenForResize</span> is enabled.
-             <br/><br/>
-             For example, the snippet below contains two additional breakpoints - one at 1200 pixels, and one at 800 pixels. When the screen is smaller than 1200 pixels but larger than 800 pixels, it will only show 2 pages. When smaller than 800 pixels, it will reduce to 1 page and the navigation will be disabled. When the screen is wider than 1200 pixels, the default settings that were passed in with the constructor will be applied.
-             <br/><br/>
-             <div class="code js-codeblock">
-               breakpoints: [<br/>
-                  &nbsp;&nbsp;{<br/>
-                  &nbsp;&nbsp;&nbsp;&nbsp;width: 1200,<br/>
-                  &nbsp;&nbsp;&nbsp;&nbsp;pagesToShow: 2<br/>
-                  &nbsp;&nbsp;},<br/>
-                  &nbsp;&nbsp;{<br/>
-                  &nbsp;&nbsp;&nbsp;&nbsp;width: 800,<br/>
-                  &nbsp;&nbsp;&nbsp;&nbsp;pagesToShow: 1,<br/>
-                  &nbsp;&nbsp;&nbsp;&nbsp;navigation: false<br/>
-                  &nbsp;&nbsp;}<br/>
-               ]
-             </div>
-             <br/>
-             
-
-             The carousel on this page has a few extra settings edited for demonstration:
+             Possible values:
              <ul>
-               <li><span class="code">pagesToShow: 3</span></li>
-               <li><span class="code">listenForResize: true</span></li>
-            </ul>
+                <li>"none"</li>
+                <li>"left"</li>
+                <li>"right"</li>
+             </ul>
+
+             This setting is partially unfinished. However, it does correctly modify swipe interactions. Rotating a carousel is currently expected to be done by a CSS value such as <span class="code">transform: rotate(90deg)</span>.
+             <br/><br/>
+             <span class="code">"left"</span> is equivalent to a -90 degree turn, where the top of the carousel faces left.
+             <br/><br/>
+             <span class="code">"right"</span> is equivalent to a 90 degree turn, where the top of the carousel faces right.
+             <!-- The carousel on this page has a few extra settings edited for demonstration:
+             <ul>
+               <li><span class="code">setting: value</span></li>
+            </ul> -->
             <!-- The below carousel has been given an <span class="code">setting</span> value of <span class="code">value</span>. -->
-            The code snippet above is also used in the carousel below. Try resizing the page to see the changes.
-            <div class="roundabout-example"></div>
+            <!-- <div class="roundabout-example"></div> -->
 				<footer></footer>
 			</div>
 		</section>
-		<!-- <table class="temp-settings"></table> -->
 	</body>
 
 	<script src="../javascript/docs.js" type="module"></script>
 	<script src="/javascript/roundabout.min.js" type="module"></script>
-	<script src="./javascript/breakpoints-settings.js" type="module"></script>
-   <script src="../javascript/syntax.js"></script>
+	<script src="./javascript/SETTING-settings.js" type="module"></script>
+   <!-- <script src="../javascript/syntax.js"></script> -->
 </html>

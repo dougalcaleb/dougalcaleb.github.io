@@ -62,7 +62,7 @@ jscode.forEach((block) => {
 			if (line.includes("RS")) {
 				inProgress = inProgress.replace(new RegExp("RS", "g"), `<span class="code-blue-l">RS</span>`);
 			}
-			if (line.includes("(")) {
+			if (line.includes("(") && !line.includes('"(') && !line.includes(')"')) {
 				inProgress = inProgress.replaceAll(new RegExp("(\\w*)\\(", "gmi"), `<span class="code-tan">$1</span>(`);
 				let matches = inProgress.match(new RegExp("\\((\\w*)\\)", "gmi"));
 				if (matches) {

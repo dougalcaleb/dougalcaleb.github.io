@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>NAME | Roundabout Docs</title>
+		<title>onScrollNext | Roundabout Docs</title>
 		<link rel="stylesheet" type="text/css" href="../css/docs_style.css" />
 		<link rel="stylesheet" type="text/css" href="../css/roundabout-style.css" />
 
@@ -54,23 +54,30 @@
 
 		<section class="spec">
 			<div class="basic">
-				<h1 class="title">NAME</h1>
+				<h1 class="title">onScrollNext</h1>
 				<div class="basic-info">
-					<div class="type"><span class="deemp">Type:</span> <span class="normal">TYPE</span></div>
-					<div class="default"><span class="deemp">Default:</span> <span class="normal">DEFAULT</span></div>
+					<div class="type"><span class="deemp">Parameters:</span> <span class="normal">(carousel, callback)</span></div>
+					<!-- <div class="default"><span class="deemp">Default:</span> <span class="normal">DEFAULT</span></div> -->
 				</div>
 			</div>
 			<div class="info">
-				<div class="desc">QUICK DESCRIPTION</div>
-				<!-- 
-               <ul>
-                  <li>
-                     <ul>
-                        <li></li>
-                     </ul>
-                  </li>
-               </ul>
-             -->
+				<div class="desc">Sets a listener that triggers when any scroll to the next page occurs.</div>
+				Inputs:
+				<ul>
+               <li>
+						carousel
+						<ul>
+							<li>Type: Roundabout object</li>
+                     <li>Selects the carousel to subscribe to</li>
+						</ul>
+					</li>
+               <li>callback
+						<ul>
+							<li>Type: function</li>
+                     <li>Will be called when any scroll to the next page occurs - including throttled scrolls, dragging to new pages, and scripted scrolls</li>
+						</ul>
+					</li>
+				</ul>
 
              <!-- The carousel on this page has a few extra settings edited for demonstration:
              <ul>
@@ -84,7 +91,7 @@
 	</body>
 
 	<script src="../javascript/docs.js" type="module"></script>
-	<script src="/javascript/roundabout.min.js" type="module"></script>
-	<script src="./javascript/SETTING-settings.js" type="module"></script>
+	<!-- <script src="/javascript/roundabout.min.js" type="module"></script>
+	<script src="./javascript/SETTING-settings.js" type="module"></script> -->
    <!-- <script src="../javascript/syntax.js"></script> -->
 </html>

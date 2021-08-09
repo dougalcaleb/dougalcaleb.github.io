@@ -69,7 +69,7 @@ new Roundabout({
 			],
 			value: "height",
 			unit: "$%",
-		},
+      },
 		{
 			between: [
 				[1, 100],
