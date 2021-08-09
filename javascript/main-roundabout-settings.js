@@ -67,7 +67,7 @@ const main = new Roundabout({
          // html: "react chat"
       },
       {
-         backgroundImage: "./images/carousel/projects/tgrad.png",
+         backgroundImage: "./images/carousel/projects/triangles-2.png",
          // html: "triangle gradient"
       },
       {
@@ -186,11 +186,11 @@ const desc = new Roundabout({
          // html: "triangle gradient"
          html: `
          <div class="content-wrap">
-            <h3 class="desc-title">Low Poly Gradient Generator</h3>
-            <p class="desc-body">An easy to use tool to whip up attractive loy-poly gradients, downloadable in PNG format. The background of the landing page on this site uses this!</p>
+            <h3 class="desc-title">Polygen</h3>
+            <p class="desc-body">Revamped in version 2.0, this is an easy to use tool to quickly create low-poly gradients and images, downloadable in PNG format. The background of the landing page on this site uses this!</p>
             <h4 class="desc-skills-title">Skills:</h4>
             <div class="desc-skills">${skills.js + skills.html + skills.css}</div>
-            <a href="https://dougalcaleb.github.io/portfolio/poly-gradient/" target="_blank"><button class="border-button">View ${exBtn}</button></a>
+            <a href="https://dougalcaleb.github.io/portfolio/polygen" target="_blank"><button class="border-button">View ${exBtn}</button></a>
          </div>
          `
       },
