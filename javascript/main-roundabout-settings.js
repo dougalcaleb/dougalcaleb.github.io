@@ -94,10 +94,10 @@ const main = new Roundabout({
          backgroundImage: "./images/carousel/projects/ry-paris.png",
          // html: "site clone 1"
       },
-      {
-         backgroundImage: "./images/carousel/projects/stormcenter.png",
-         // html: "storm center"
-      },
+      // {
+      //    backgroundImage: "./images/carousel/projects/stormcenter.png",
+      //    // html: "storm center"
+      // },
       {
          backgroundImage: "./images/carousel/projects/scss-resume.png",
          // html: "resume scss"
@@ -274,19 +274,19 @@ const desc = new Roundabout({
          </div>
          `
       },
-      {
-         // backgroundImage: "./images/carousel/projects/stormcenter.png",
-         // html: "storm center"
-         html: `
-         <div class="content-wrap">
-            <h3 class="desc-title">WHS Storm Center</h3>
-            <p class="desc-body">Built for Westlake High School, the products page shows off all of the merchandise available from the school's spirit store.</p>
-            <h4 class="desc-skills-title">Skills:</h4>
-            <div class="desc-skills">${skills.js + skills.html + skills.css + skills.collaboration}</div>
-            <a href="http://whsstormcenter.com/store.html" target="_blank"><button class="border-button">View ${exBtn}</button></a>
-         </div>
-         `
-      },
+      // {
+      //    // backgroundImage: "./images/carousel/projects/stormcenter.png",
+      //    // html: "storm center"
+      //    html: `
+      //    <div class="content-wrap">
+      //       <h3 class="desc-title">WHS Storm Center</h3>
+      //       <p class="desc-body">Built for Westlake High School, the products page shows off all of the merchandise available from the school's spirit store.</p>
+      //       <h4 class="desc-skills-title">Skills:</h4>
+      //       <div class="desc-skills">${skills.js + skills.html + skills.css + skills.collaboration}</div>
+      //       <a href="http://whsstormcenter.com/store.html" target="_blank"><button class="border-button">View ${exBtn}</button></a>
+      //    </div>
+      //    `
+      // },
       {
          // backgroundImage: "./images/carousel/projects/scss-resume.png",
          // html: "resume scss"
