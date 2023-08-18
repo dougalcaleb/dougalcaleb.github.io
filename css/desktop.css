@@ -175,6 +175,7 @@ nav .picture .profile-image {
   height: min(7vw, 15vh);
   width: min(7vw, 15vh);
   z-index: 1;
+  border-radius: 20px;
 }
 nav .picture .profile-logo {
   background: url("/images/svgs/personal-logo.svg");
