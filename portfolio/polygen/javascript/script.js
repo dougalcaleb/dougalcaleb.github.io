@@ -4,6 +4,12 @@ const defaults = {
    }
 }
 
+/*
+
+TODO:
+
+*/
+
 // Control panel UI
 class Controls {
    constructor() {
@@ -27,6 +33,9 @@ class Controls {
          y: 1080,
          colors: [],
       };
+      this.internalSettings = {
+         inputDebounce: 500
+      };
       // Color palettes
       this.defaultPalettes = [
          ["#f3e1af", "#f09c3d", "#f0693d", "#f03d72", "#9f3df0", "#3d81f0", "#037ac4"],
@@ -42,7 +51,9 @@ class Controls {
    // Basic setup - hide irrelevant controls, setup listeners, setup canvas
    init() {
       for (let a = 0; a < document.querySelectorAll(".fortype-1").length; a++) {
-         document.querySelectorAll(".fortype-1")[a].style.height = "0px";
+         if (!document.querySelectorAll(".fortype-1")[a].classList.contains("fortype-0")) {
+            document.querySelectorAll(".fortype-1")[a].style.height = "0px";
+         }
       }
       for (let a = 0; a < document.querySelectorAll(".fortype-2").length; a++) {
          document.querySelectorAll(".fortype-2")[a].style.height = "0px";
@@ -152,23 +163,24 @@ class Controls {
    buttonListeners() {
       document.querySelector(".type-0").addEventListener("click", () => {
          document.querySelector(".type-btn.btn-active").classList.remove("btn-active");
-         document.querySelector(".type-0").classList.add("btn-active");
          for (let a = 0; a < document.querySelectorAll(".fortype-0").length; a++) {
             document.querySelectorAll(".fortype-0")[a].style.height = "";
          }
          for (let a = 0; a < document.querySelectorAll(".fortype-1").length; a++) {
-            document.querySelectorAll(".fortype-1")[a].style.height = "0px";
+            if (!document.querySelectorAll(".fortype-1")[a].classList.contains("fortype-0")) {
+               document.querySelectorAll(".fortype-1")[a].style.height = "0px";
+            }
          }
          for (let a = 0; a < document.querySelectorAll(".fortype-2").length; a++) {
             document.querySelectorAll(".fortype-2")[a].style.height = "0px";
          }
+         document.querySelector(".type-0").classList.add("btn-active");
          this.activeType = 0;
          this.settings.mode = "linear";
          Canvas.updateSettings(this.settings);
       });
       document.querySelector(".type-1").addEventListener("click", () => {
          document.querySelector(".type-btn.btn-active").classList.remove("btn-active");
-         document.querySelector(".type-1").classList.add("btn-active");
          for (let a = 0; a < document.querySelectorAll(".fortype-0").length; a++) {
             document.querySelectorAll(".fortype-0")[a].style.height = "0px";
          }
@@ -178,13 +190,13 @@ class Controls {
          for (let a = 0; a < document.querySelectorAll(".fortype-2").length; a++) {
             document.querySelectorAll(".fortype-2")[a].style.height = "0px";
          }
+         document.querySelector(".type-1").classList.add("btn-active");
          this.activeType = 1;
          this.settings.mode = "radial";
          Canvas.updateSettings(this.settings);
       });
       document.querySelector(".type-2").addEventListener("click", () => {
          document.querySelector(".type-btn.btn-active").classList.remove("btn-active");
-         document.querySelector(".type-2").classList.add("btn-active");
          for (let a = 0; a < document.querySelectorAll(".fortype-0").length; a++) {
             document.querySelectorAll(".fortype-0")[a].style.height = "0px";
          }
@@ -194,6 +206,7 @@ class Controls {
          for (let a = 0; a < document.querySelectorAll(".fortype-2").length; a++) {
             document.querySelectorAll(".fortype-2")[a].style.height = "";
          }
+         document.querySelector(".type-2").classList.add("btn-active");
          this.activeType = 2;
          this.settings.mode = "image";
          Canvas.updateSettings(this.settings);
@@ -287,18 +300,35 @@ class Controls {
 
    // Other event listeners
    miscListeners() {
+      let hDimDebounce = null;
+      let wDimDebounce = null;
+
       document.querySelector(".i-outline-color").addEventListener("input", () => {
          document.querySelector(".outline-color-wrap").style.background = document.querySelector(".i-outline-color").value;
          this.settings.line = document.querySelector(".i-outline-color").value;
          Canvas.updateSettings(this.settings, false);
       });
       document.querySelector(".image-height").addEventListener("input", () => {
-         this.settings.y = document.querySelector(".image-height").value;
-         Canvas.updateSettings(this.settings);
+         clearTimeout(hDimDebounce);
+         hDimDebounce = setTimeout(() => {
+            this.settings.y = document.querySelector(".image-height").value;
+            if (this.settings.y !== 0 && this.settings.y !== undefined && this.settings.y !== "") {
+               Canvas.updateSettings(this.settings);
+            } else {
+               console.warn("ERROR: Bad height dimension value. Enter a value of 1 or greater");
+            }
+         }, this.internalSettings.inputDebounce);
       });
       document.querySelector(".image-width").addEventListener("input", () => {
-         this.settings.x = document.querySelector(".image-width").value;
-         Canvas.updateSettings(this.settings);
+         clearTimeout(wDimDebounce);
+         wDimDebounce = setTimeout(() => {
+            this.settings.x = document.querySelector(".image-width").value;
+            if (this.settings.x !== 0 && this.settings.x !== undefined && this.settings.x !== "") {
+               Canvas.updateSettings(this.settings);
+            } else {
+               console.warn("ERROR: Bad width dimension value. Enter a value of 1 or greater");
+            }
+         }, this.internalSettings.inputDebounce);
       });
       document.querySelector(".palette-add").addEventListener("click", async () => {
          let colors = await Modal.modal("New Color Palette");
@@ -438,7 +468,7 @@ class Preview {
       // HTML Canvas element
       this.canvas = document.querySelector("canvas");
       // Canvas context
-      this.ctx = this.canvas.getContext("2d");
+      this.ctx = this.canvas.getContext("2d", { willReadFrequently: true });
       // Draw settings
 		this.settings = {
 			mode: "",
@@ -528,7 +558,7 @@ class Preview {
 		let verts = [];
 
 		// Create vertex placements
-		for (let a = 0; a < yc; a++) {
+		for (let a = 0; a <= yc; a++) {
 			let row = [];
 			for (let b = 0; b < xc; b++) {
 				let vertX = dist * b;
