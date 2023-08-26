@@ -144,16 +144,20 @@
             height: 30px;
             width: 30px;
          }
-         &.btn-active::before {
-            content: '';
-            height: calc(100% + 0px);
-            width: 100%;
-            position: absolute;
-            left: 0;
-            border-top: 3px solid ext.$theme-blue-light;
-            border-bottom: 3px solid ext.$theme-blue-light;
-            box-sizing: border-box;
-            z-index: -2;
+         // &.btn-active::before {
+         //    content: '';
+         //    height: calc(100% + 0px);
+         //    width: 100%;
+         //    position: absolute;
+         //    left: 0;
+         //    border-top: 3px solid ext.$theme-blue-light;
+         //    border-bottom: 3px solid ext.$theme-blue-light;
+         //    box-sizing: border-box;
+         //    z-index: -2;
+         // }
+         &.btn-active {
+            background: ext.$theme-blue-light;
+            color: ext.$theme-black-dark;
          }
       }
    }
