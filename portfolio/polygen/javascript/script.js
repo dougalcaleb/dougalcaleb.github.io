@@ -1,12 +1,15 @@
 const defaults = {
 	ui: {
 		csize: [5, 200],
-	},
+    },
+    inputs: {
+        debounce: 500
+    }
 };
 
 /*
 
-TODO: move internal settings object to defaults const above
+TODO:
 
 */
 
@@ -32,9 +35,6 @@ class Controls {
 			x: 1920,
 			y: 1080,
 			colors: [],
-		};
-		this.internalSettings = {
-			inputDebounce: 500,
 		};
 		// Color palettes
 		this.defaultPalettes = [
@@ -340,7 +340,7 @@ class Controls {
 				} else {
 					console.warn("ERROR: Bad height dimension value. Enter a value of 1 or greater");
 				}
-			}, this.internalSettings.inputDebounce);
+			}, defaults.inputs.debounce);
 		});
 		document.querySelector(".image-width").addEventListener("input", () => {
 			clearTimeout(wDimDebounce);
@@ -351,7 +351,7 @@ class Controls {
 				} else {
 					console.warn("ERROR: Bad width dimension value. Enter a value of 1 or greater");
 				}
-			}, this.internalSettings.inputDebounce);
+			}, defaults.inputs.debounce);
 		});
 		document.querySelector(".palette-add").addEventListener("click", async () => {
 			let colors = await Modal.modal("New Color Palette");
