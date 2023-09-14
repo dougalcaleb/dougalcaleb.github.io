@@ -6,7 +6,7 @@ const defaults = {
 
 /*
 
-TODO:
+TODO: move internal settings object to defaults const above
 
 */
 
@@ -510,7 +510,11 @@ class Preview {
 			x: 0,
 			y: 0,
 			colors: [],
-		};
+        };
+        
+        this.xAngles = null;
+        this.yAngles = null;
+
 		// Draw throttle
 		this.redrawDelay = 50;
 		this.allowRedraw = true;
@@ -520,7 +524,8 @@ class Preview {
 		this.debug = {
 			drawPoints: false,
 			drawAvgs: false,
-			drawGradientLine: false,
+            drawGradientLine: false,
+            draw: true
 		};
 
 		// Generated verticies
@@ -615,32 +620,56 @@ class Preview {
 			// Center coords (also lengths to center)
 			let centerX = this.settings.x / 2;
 			let centerY = this.settings.y / 2;
-			// Center-to-corner length
-			let r = Math.hypot(centerX, centerY);
-			// Start and end coords of gradient
+            let rad = this.degToRad(this.settings.rot);
+            let r;
+
+            let knownX = null;
+            let knownY = null;
+
+            let angleOffset = this.xAngles * 0.5;
+
+            // Calculate which quadrant of the rectangle the angle is pointed. Use that to calculate the length that the gradient should be so it doesn't leave the edges
+            if (rad <= angleOffset || rad >= ((Math.PI * 2) - angleOffset)) { // right quad
+                knownX = centerX;
+                r = knownX / Math.cos(rad);
+            } else if (rad >= angleOffset && rad <= (angleOffset + this.yAngles)) { // top quad
+                knownY = centerY;
+                r = knownY / Math.sin(rad);
+            } else if (rad >= (angleOffset + this.yAngles) && rad <= (angleOffset + this.xAngles + this.yAngles)) { // left quad
+                knownX = -1 * centerX;
+                r = knownX / Math.cos(rad);
+            } else if (rad >= (angleOffset + this.xAngles + this.yAngles) && rad <= ((2 * Math.PI) - angleOffset)) { // bottom quad
+                knownY = -1 * centerY;
+                r = knownY / Math.sin(rad);
+            } else {
+                console.warn("Invalid Rotation. Cannot calculate quadrant.");
+            }
+            // Start and end coords of gradient
+            
+
 			let x1, y1, x2, y2;
 
-			let rad = this.degToRad(this.settings.rot);
 			let sin = Math.sin(rad) * r;
 			let cos = Math.cos(rad) * r;
 
 			// XY pair 1
 			x1 = centerX - cos;
-			y1 = centerY - sin;
+			y1 = centerY + sin;
 			// XY pair 2
 			x2 = centerX + cos;
-			y2 = centerY + sin;
+			y2 = centerY - sin;
 
 			// Draws a ling perpendicular to the gradient, including endpoints
-			if (this.debug.drawGradientLine) {
+            if (this.debug.drawGradientLine) {
+				this.ctx.fillStyle = "pink";
+				this.ctx.beginPath();
+				this.ctx.arc(x1, y1, 20, 0, Math.PI * 2);
+				this.ctx.fill();
 				this.ctx.fillStyle = "orange";
 				this.ctx.beginPath();
-				this.ctx.arc(x1, y1, 15, 0, Math.PI * 2);
+				this.ctx.arc(x2, y2, 20, 0, Math.PI * 2);
 				this.ctx.fill();
-				this.ctx.beginPath();
-				this.ctx.arc(x2, y2, 15, 0, Math.PI * 2);
-				this.ctx.fill();
-				this.ctx.strokeStyle = "orange";
+				this.ctx.strokeStyle = "red";
 				this.ctx.beginPath();
 				this.ctx.moveTo(x1, y1);
 				this.ctx.lineTo(x2, y2);
@@ -666,8 +695,10 @@ class Preview {
 		}
 
 		// Draw
-		this.ctx.fillStyle = gradient;
-		this.ctx.fillRect(0, 0, this.settings.x, this.settings.y);
+        if (this.debug.draw) {
+            this.ctx.fillStyle = gradient;
+            this.ctx.fillRect(0, 0, this.settings.x, this.settings.y);
+        }
 	}
 
 	polygons() {
@@ -790,7 +821,12 @@ class Preview {
 			delete newSettings.y;
 		}
 		// Refresh settings
-		this.settings = Object.assign(this.settings, newSettings);
+        this.settings = Object.assign(this.settings, newSettings);
+        
+        // Recalculate
+        this.xAngles = this.degToRad(180) - (2 * Math.atan(this.settings.x / this.settings.y));
+        this.yAngles = this.degToRad(180) - (2 * Math.atan(this.settings.y / this.settings.x));
+
 		// Handle throttling and drawing
 		if (bypassDelay) {
 			this.draw(redrawVerts);
