@@ -24,6 +24,8 @@ Features:
 
 - Zoom with scroll wheel?
 
+- Add Delete Color Palette
+
 */
 
 // Control panel UI
@@ -78,7 +80,8 @@ class Controls {
 		Canvas.canvas.height = this.settings.y.toString();
 		Canvas.canvas.width = this.settings.x.toString();
 
-		this.settings.colors = this.palettes[0];
+      this.settings.colors = this.palettes[0];
+      document.querySelectorAll(".palette")[0].classList.add("active-palette");
 
 		Canvas.updateSettings(this.settings);
 	}
@@ -140,8 +143,8 @@ class Controls {
          <svg viewBox="0 0 24 24"><path fill="currentColor" d="M20.71,7.04C21.1,6.65 21.1,6 20.71,5.63L18.37,3.29C18,2.9 17.35,2.9 16.96,3.29L15.12,5.12L18.87,8.87M3,17.25V21H6.75L17.81,9.93L14.06,6.18L3,17.25Z" /></svg>
       `;
 		wrap.appendChild(palette);
-		wrap.appendChild(opts);
-		document.querySelector(".control-palettes").insertBefore(wrap, document.querySelector(".control-palettes").childNodes[2]);
+      wrap.appendChild(opts);
+      document.querySelector(".control-palettes").appendChild(wrap);
 
 		opts.children[0].addEventListener("click", async () => {
 			let newColors = await Modal.modal("Edit Color Palette", this.palettes[pos]);
@@ -162,7 +165,9 @@ class Controls {
 		});
 
 		wrap.addEventListener("click", () => {
-			this.settings.colors = this.palettes[pos];
+         this.settings.colors = this.palettes[pos];
+         document.querySelector(".active-palette").classList.remove("active-palette");
+         wrap.classList.add("active-palette");
 			Canvas.updateSettings(this.settings, false);
 		});
 
@@ -250,11 +255,11 @@ class Controls {
 		});
 
 		document.querySelector(".snap-0").addEventListener("click", () => {
-			this.settings.rot = 270;
+			this.settings.rot = 90;
 			Canvas.updateSettings(this.settings, false);
 		});
 		document.querySelector(".snap-1").addEventListener("click", () => {
-			this.settings.rot = 90;
+			this.settings.rot = 270;
 			Canvas.updateSettings(this.settings, false);
 		});
 		document.querySelector(".snap-2").addEventListener("click", () => {
@@ -266,19 +271,19 @@ class Controls {
 			Canvas.updateSettings(this.settings, false);
 		});
 		document.querySelector(".snap-4").addEventListener("click", () => {
-			this.settings.rot = Canvas.radToDeg(-1 * Canvas.idealAngle);
+			this.settings.rot = Canvas.radToDeg(Canvas.idealAngle);
 			Canvas.updateSettings(this.settings, false);
 		});
 		document.querySelector(".snap-5").addEventListener("click", () => {
-			this.settings.rot = Canvas.radToDeg(Math.PI - Canvas.idealAngle);
+			this.settings.rot = Canvas.radToDeg(Math.PI + Canvas.idealAngle);
 			Canvas.updateSettings(this.settings, false);
 		});
-		document.querySelector(".snap-6").addEventListener("click", () => {
-			this.settings.rot = Canvas.radToDeg(-1 * (Math.PI - Canvas.idealAngle));
+      document.querySelector(".snap-6").addEventListener("click", () => {
+         this.settings.rot = Canvas.radToDeg(Math.PI - Canvas.idealAngle);
 			Canvas.updateSettings(this.settings, false);
 		});
 		document.querySelector(".snap-7").addEventListener("click", () => {
-			this.settings.rot = Canvas.radToDeg(Canvas.idealAngle);
+			this.settings.rot = Canvas.radToDeg(-1 * ( Canvas.idealAngle));
 			Canvas.updateSettings(this.settings, false);
 		});
 	}

@@ -27,12 +27,32 @@
       }
    }
    .control-palettes {
+      .active-palette {
+         margin-top: 30px;
+         .palette-colors {
+            border: 3px solid ext.$theme-blue-light;
+            box-sizing: border-box;
+            border-radius: 3px;
+         }
+      }
+      .active-palette::after {
+         content: 'ACTIVE:';
+         font-family: ext.$theme-font-paragraph;
+         color: ext.$theme-white;
+         font-size: 10px;
+         position: absolute; 
+         top: -15px;
+      }
       .palette-add {
          width: 100%;
          height: 30px;
          position: relative;
          background: ext.$theme-black-medium;
          cursor: pointer;
+         margin-bottom: 15px;
+         &:hover {
+            background: ext.$theme-gray;
+         }
          svg {
             @extend %center;
             height: 20px;
@@ -137,7 +157,7 @@
          background: ext.$theme-black-medium;
          z-index: 2;
          &:hover {
-            background: ext.$theme-black-light;
+            background: ext.$theme-gray;
          }
          svg {
             @extend %center;
@@ -186,13 +206,14 @@
    position: fixed;
    z-index: 99;
    background: rgba(0,0,0,0.5);
+   backdrop-filter: blur(3px);
    .edit-modal {
       height: 40vh;
       width: 40vw;
       background: ext.$theme-black-light;
       border-radius: 5px;
       @extend %center;
-      box-shadow: 0px 0px 20px black;
+      box-shadow: 0px 0px 20px ext.$theme-black-dark;
       .modal-title {
          text-align: center;
          font-family: ext.$theme-font-title;
@@ -214,6 +235,10 @@
             outline: none;
             color: ext.$theme-white;
             cursor: pointer;
+            color: ext.$theme-blue-light;
+            &:hover {
+               background: ext.$theme-gray;
+            }
          }
       }
       .modal-color-add {
