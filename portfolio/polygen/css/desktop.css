@@ -46,12 +46,32 @@ $name - variable
   margin-bottom: 15px;
   margin-top: 35px;
 }
+.controls .control-palettes .active-palette {
+  margin-top: 30px;
+}
+.controls .control-palettes .active-palette .palette-colors {
+  border: 3px solid #00b7ff;
+  box-sizing: border-box;
+  border-radius: 3px;
+}
+.controls .control-palettes .active-palette::after {
+  content: "ACTIVE:";
+  font-family: "Ubuntu", sans-serif;
+  color: #e8e8e8;
+  font-size: 10px;
+  position: absolute;
+  top: -15px;
+}
 .controls .control-palettes .palette-add {
   width: 100%;
   height: 30px;
   position: relative;
   background: #191919;
   cursor: pointer;
+  margin-bottom: 15px;
+}
+.controls .control-palettes .palette-add:hover {
+  background: #333;
 }
 .controls .control-palettes .palette-add svg {
   height: 20px;
@@ -151,7 +171,7 @@ $name - variable
   z-index: 2;
 }
 .controls .control-btn-wrap div:hover {
-  background: #282828;
+  background: #333;
 }
 .controls .control-btn-wrap div svg {
   height: 30px;
@@ -184,13 +204,14 @@ $name - variable
   position: fixed;
   z-index: 99;
   background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(3px);
 }
 .edit-modal-bg .edit-modal {
   height: 40vh;
   width: 40vw;
   background: #282828;
   border-radius: 5px;
-  box-shadow: 0px 0px 20px black;
+  box-shadow: 0px 0px 20px #070707;
 }
 .edit-modal-bg .edit-modal .modal-title {
   text-align: center;
@@ -214,6 +235,10 @@ $name - variable
   outline: none;
   color: #e8e8e8;
   cursor: pointer;
+  color: #00b7ff;
+}
+.edit-modal-bg .edit-modal .modal-btn-wrap button:hover {
+  background: #333;
 }
 .edit-modal-bg .edit-modal .modal-color-add {
   height: 40px;
