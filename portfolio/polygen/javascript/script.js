@@ -10,8 +10,6 @@ const defaults = {
 /*
 
 TODO:
-Bugfixes:
-- Rotation snap is broken now
 
 Features:
 - Brush tool:
@@ -30,8 +28,26 @@ Features:
 
 // Control panel UI
 class Controls {
-	constructor() {
-		this.activeType = 0;
+   constructor() {
+      this.canvas = document.querySelector("canvas");
+
+      this.brush = {
+         indicator: document.querySelector(".brush-indicator"),
+         indOn: true,
+         size: 100,
+         sizeStep: 5,
+         minSize: 5,
+         maxSize: 100,
+      };
+
+      this.activeType = 0;
+      this.page = 0;
+      this.brushActive = false;
+
+      this.controllers = {
+         FollowEvent: new AbortController(),
+      }
+
 		// All settings
 		this.settings = {
 			mode: "linear",
@@ -178,7 +194,52 @@ class Controls {
 	}
 
 	// Event listeners for buttons
-	buttonListeners() {
+   buttonListeners() {
+      
+      document.querySelector(".choose-properties").addEventListener("click", () => {
+         this.page = 0;
+         document.querySelector(".choose-tools").classList.remove("btn-active");
+         document.querySelector(".choose-properties").classList.add("btn-active");
+         document.querySelector(".panel-image-tools").style.display = "none";
+         document.querySelector(".panel-image-properties").style.display = "inline";
+      });
+      
+      document.querySelector(".choose-tools").addEventListener("click", () => {
+         this.page = 1;
+         document.querySelector(".choose-properties").classList.remove("btn-active");
+         document.querySelector(".choose-tools").classList.add("btn-active");
+         document.querySelector(".panel-image-tools").style.display = "inline";
+         document.querySelector(".panel-image-properties").style.display = "none";
+      });
+
+      document.querySelector(".brush-btn").addEventListener("click", () => {
+         if (!this.brushActive) {
+            this.brushActive = true;
+            this.activateBrush();
+         } else {
+            this.brushActive = false;
+            this.deactivateBrush();
+         }
+      });
+
+      window.addEventListener("keydown", (Event) => {
+         if (Event.key === "b" && !this.brushActive) {
+            console.log("b pressed")
+            this.brushActive = true;
+            this.activateBrush();
+         }
+      });
+
+
+      // TODO: choose a better keybind - maybe space? Customizable?
+
+      window.addEventListener("keyup", (Event) => {
+         if (Event.key === "b") {
+            this.brushActive = false;
+            this.deactivateBrush();
+         }
+      });
+
 		document.querySelector(".type-0").addEventListener("click", () => {
 			document.querySelector(".type-btn.btn-active").classList.remove("btn-active");
 			for (let a = 0; a < document.querySelectorAll(".fortype-0").length; a++) {
@@ -384,7 +445,53 @@ class Controls {
 			downloader.setAttribute("href", Canvas.canvas.toDataURL("image/png").replace("image/png", "image/octet-stream"));
 			downloader.click();
 		});
-	}
+   }
+   
+
+   activateBrush() {
+      // TODO: Make the brush button active when brush is active
+      document.querySelector(".brush-btn").innerHTML = "Brush: Active";
+      this.brush.indicator.style.display = "inline";
+
+      window.addEventListener("mousemove", (Event) => {
+
+         this.brush.indicator.style.left = Event.clientX - (this.brush.size / 2) + "px";
+         this.brush.indicator.style.top = Event.clientY - (this.brush.size / 2) + "px";
+
+         let relPos = {
+            x: (Event.clientX - this.canvas.getBoundingClientRect().x),
+            y: (Event.clientY - this.canvas.getBoundingClientRect().y),
+         };
+         // let relNode = {
+         //    x: relPos
+         // }
+
+         // TODO: Trying to hide the indicator when it leaves the canvas significantly
+         // maybe listen on the canvas inset window? 
+         // if (relPos.x < -this.brush.size || relPos.x > this.brush.size + this.canvas.width) {
+         //    this.brush.indicator.style.display = "none";
+         //    this.brush.indOn = false;
+         // }
+
+      }, { signal: this.controllers.FollowEvent.signal });
+
+      window.addEventListener("wheel", (Event) => {
+         Event.deltaY > 0 ? this.brush.size -= this.brush.sizeStep : this.brush.size += this.brush.sizeStep;
+         this.brush.size = Math.max(this.brush.size, this.brush.minSize);
+         this.brush.size = Math.min(this.brush.size, this.brush.maxSize);
+         this.brush.indicator.style.left = Event.clientX - (this.brush.size / 2) + "px";
+         this.brush.indicator.style.top = Event.clientY - (this.brush.size / 2) + "px";
+         this.brush.indicator.style.height = this.brush.size + "px";
+         this.brush.indicator.style.width = this.brush.size + "px";
+      });
+   }
+
+   deactivateBrush() {
+      document.querySelector(".brush-btn").innerHTML = "Brush: Off";
+      this.brush.indicator.style.display = "none";
+      this.controllers.FollowEvent.abort();
+      this.controllers.FollowEvent = new AbortController();
+   }
 }
 
 // Create an async modal
