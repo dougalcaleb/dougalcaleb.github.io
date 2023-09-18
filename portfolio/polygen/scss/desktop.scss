@@ -1,5 +1,38 @@
 @use "ext";
 
+.choose-panel {
+   padding-top: 10px;
+}
+
+.panel-image-properties {
+
+}
+
+.panel-image-tools {
+   display: none;
+
+   .brush-btn {
+      svg {
+         height: 20px;
+         width: 20px;
+         color: ext.$theme-white;
+      }
+   }
+}
+
+.brush-indicator {
+   position: absolute;
+   height: 100px;
+   width: 100px;
+   border: 1px solid black;
+   background: ext.$theme-gray;
+   z-index: 10;
+   border-radius: 100%;
+   opacity: 0.3;
+   display: none;
+}
+
+
 .controls {
    width: 20vw;
    height: calc(100vh - max(50px, 5vh));;
