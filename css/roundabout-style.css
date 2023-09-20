@@ -203,9 +203,8 @@ Pages
    box-sizing: border-box;
    background-position: center center;
    background-size: cover;
-
-   filter: brightness(50%);
-   /* background: green; */
+   
+   filter: blur(2px);
    /* Cannot change: "width", "position", "background", and "left" */
 
    /* NOTE: when giving any Roundabout page element a transition, be sure to give transition ONLY to the properties that need it.
