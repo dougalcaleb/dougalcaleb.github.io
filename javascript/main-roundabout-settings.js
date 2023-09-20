@@ -32,22 +32,38 @@ const main = new Roundabout({
          ],
          unit: "calc($% - 40px)",
       },
+      // {
+      //    value: "filter",
+      //    between: [
+      //       [0, 50],
+      //       [1, 100],
+      //    ],
+      //    unit: "brightness($%)",
+      // },
+      // {
+      //    value: "filter",
+      //    between: [
+      //       [1, 100],
+      //       [2, 30],
+      //    ],
+      //    unit: "brightness($%)",
+      // },
       {
          value: "filter",
          between: [
-            [0, 50],
-            [1, 100],
+            [1, 0],
+            [2, 2],
          ],
-         unit: "brightness($%)",
+         unit: "blur($px)",
       },
       {
          value: "filter",
          between: [
-            [1, 100],
-            [2, 50],
+            [0, 2],
+            [1, 0],
          ],
-         unit: "brightness($%)",
-      }
+         unit: "blur($px)",
+      },
    ],
    pages: [
       {
@@ -59,16 +75,16 @@ const main = new Roundabout({
          // html: "roundabout"
       },
       {
-         backgroundImage: "./images/carousel/projects/react-chat.png",
-         // html: "react chat"
-      },
-      {
-         backgroundImage: "./images/carousel/projects/timesheet.png",
-         // html: "react chat"
+
+         backgroundImage: "./images/carousel/projects/spigot-status-bot.png",
       },
       {
          backgroundImage: "./images/carousel/projects/triangles-2.png",
          // html: "triangle gradient"
+      },
+      {
+         backgroundImage: "./images/carousel/projects/react-chat.png",
+         // html: "react chat"
       },
       {
          backgroundImage: "./images/carousel/projects/gamedevfinal.png",
@@ -90,18 +106,6 @@ const main = new Roundabout({
          backgroundImage: "./images/carousel/projects/bubbles.png",
          // html: "bubbles"
       },
-      {
-         backgroundImage: "./images/carousel/projects/ry-paris.png",
-         // html: "site clone 1"
-      },
-      // {
-      //    backgroundImage: "./images/carousel/projects/stormcenter.png",
-      //    // html: "storm center"
-      // },
-      {
-         backgroundImage: "./images/carousel/projects/scss-resume.png",
-         // html: "resume scss"
-      },
    ]
 });
 
@@ -113,6 +117,7 @@ let skills = {
    bootstrap: `<img src="./images/svgs/bootstrap.svg" class="skill-badge" title="Bootstrap" />`,
    collaboration: `<img src="./images/svgs/collaboration.svg" class="skill-badge size-up" title="Group Collaboration" />`,
    csharp: `<img src="./images/svgs/csharp.svg" class="skill-badge" title="C#" />`,
+   java: `<img src="./images/svgs/java.svg" class="skill-badge" title="Java" />`,
    css: `<img src="./images/svgs/css.svg" class="skill-badge" title="CSS3" />`,
    db: `<img src="./images/svgs/db.svg" class="skill-badge size-up" title="Database Technologies" />`,
    docker: `<img src="./images/svgs/docker.svg" class="skill-badge" title="Docker" />`,
@@ -121,11 +126,13 @@ let skills = {
    github: `<img src="./images/svgs/github.svg" class="skill-badge size-up" title="Github" />`,
    html: `<img src="./images/svgs/html.svg" class="skill-badge" title="HTML5" />`,
    js: `<img src="./images/svgs/js.svg" class="skill-badge" title="JavaScript" />`,
-   node: `<img src="./images/svgs/node.svg" class="skill-badge" />`,
+   node: `<img src="./images/svgs/node.svg" class="skill-badge" title="Node JS" />`,
    pc: `<img src="./images/svgs/pc.svg" class="skill-badge" title="Computer Hardware" />`,
    react: `<img src="./images/svgs/react.svg" class="skill-badge" title="React.js" />`,
    ts: `<img src="./images/svgs/ts.svg" class="skill-badge" title="TypeScript" />`,
    unity: `<img src="./images/svgs/unity.svg" class="skill-badge" title="Unity Game Engine" />`,
+   raspi: `<img src="./images/svgs/raspberry-pi.svg" class="skill-badge" title="Raspberry Pi" />`,
+   apis: `<img src="./images/svgs/api.svg" class="skill-badge" title="Public APIs" />`,
 }
 
 const desc = new Roundabout({
@@ -137,8 +144,6 @@ const desc = new Roundabout({
    transition: 200,
    pages: [
       {
-         // backgroundImage: "./images/carousel/projects/todo.png",
-         // html: "simple to-do"
          html: `
          <div class="content-wrap">
             <h3 class="desc-title">Simple To-Do App</h3>
@@ -150,7 +155,6 @@ const desc = new Roundabout({
          `
       },
       {
-         // backgroundImage: "./images/carousel/projects/roundabout.png",
          html: `
          <div class="content-wrap">
          <h3 class="desc-title">Roundabout</h3>
@@ -162,32 +166,17 @@ const desc = new Roundabout({
          `
       },
       {
-         // backgroundImage: "./images/carousel/projects/react-chat.png",
          html: `
          <div class="content-wrap">
-            <h3 class="desc-title">React Chat App</h3>
-            <p class="desc-body">Using React and Firebase, this simple chat app features login capabilities for identifying users, persistent and low-latency cloud storage, and seperate message channels.</p>
-            <h4 class="desc-skills-title">Skills:</h4>
-            <div class="desc-skills">${skills.react + skills.js + skills.firebase + skills.db + skills.git + skills.github + skills.collaboration}</div>
-            
+         <h3 class="desc-title">Minecraft Server Status Bot</h3>
+         <p class="desc-body">Hook this plugin up to your own Minecraft server in just a few minutes and feel your server administration stress drop to zero. Now you can always keep tabs on the health of your Minecraft server, in Discord, from anywhere!</p>
+         <h4 class="desc-skills-title">Skills:</h4>
+         <div class="desc-skills">${skills.node + skills.java + skills.raspi + skills.apis}</div>
+         <a href="https://github.com/dougalcaleb/spigot-status-bot" target="_blank"><button class="border-button">Repo ${exBtn}</button></a>
          </div>
          `
       },
       {
-         // backgroundImage: "./images/carousel/projects/react-chat.png",
-         html: `
-         <div class="content-wrap">
-            <h3 class="desc-title">Angular Timesheet App</h3>
-            <p class="desc-body">Built with Angular and a touch of Firebase, this app keeps track of work hours for multiple employees across multiple departments, and features analytics about pay at a glance.</p>
-            <h4 class="desc-skills-title">Skills:</h4>
-            <div class="desc-skills">${skills.angular + skills.ts + skills.firebase + skills.db}</div>
-            <a href="https://hr-timesheet-a9f11.web.app/departments" target="_blank"><button class="border-button">View ${exBtn}</button></a>
-         </div>
-         `
-      },
-      {
-         // backgroundImage: "./images/carousel/projects/tgrad.png",
-         // html: "triangle gradient"
          html: `
          <div class="content-wrap">
             <h3 class="desc-title">Polygen</h3>
@@ -199,8 +188,17 @@ const desc = new Roundabout({
          `
       },
       {
-         // backgroundImage: "./images/carousel/projects/gamedevfinal.png",
-         // html: "isometry"
+         html: `
+         <div class="content-wrap">
+            <h3 class="desc-title">React Chat App</h3>
+            <p class="desc-body">Using React and Firebase, this simple chat app features login capabilities for identifying users, persistent and low-latency cloud storage, and seperate message channels.</p>
+            <h4 class="desc-skills-title">Skills:</h4>
+            <div class="desc-skills">${skills.react + skills.js + skills.firebase + skills.db + skills.git + skills.github + skills.apis + skills.collaboration}</div>
+            
+         </div>
+         `
+      },
+      {
          html: `
          <div class="content-wrap">
             <h3 class="desc-title">Isometry</h3>
@@ -211,8 +209,6 @@ const desc = new Roundabout({
          `
       },
       {
-         // backgroundImage: "./images/carousel/projects/gamejam.png",
-         // html: "stronger together"
          html: `
          <div class="content-wrap">
             <h3 class="desc-title">'Stronger Together' Game</h3>
@@ -223,34 +219,28 @@ const desc = new Roundabout({
          `
       },
       {
-         // backgroundImage: "./images/carousel/projects/scorecard.png",
-         // html: "golf scorecard"
          html: `
          <div class="content-wrap">
             <h3 class="desc-title">Golf Scorecard</h3>
             <p class="desc-body">This app was built with mobile devices in mind, providing a dynamic scorecard for golf games with up to four players. It utilizes AJAX and a third-party API to grab nearby course data and display it to the user.</p>
             <h4 class="desc-skills-title">Skills:</h4>
-            <div class="desc-skills">${skills.js + skills.html + skills.css + skills.git + skills.github}</div>
+            <div class="desc-skills">${skills.js + skills.html + skills.css + skills.git + skills.github + skills.apis}</div>
             <a href="https://dougalcaleb.github.io/portfolio/golf-card/" target="_blank"><button class="border-button">View ${exBtn}</button></a>
          </div>
          `
       },
       {
-         // backgroundImage: "./images/carousel/projects/scorecard.png",
-         // html: "golf scorecard"
          html: `
          <div class="content-wrap">
             <h3 class="desc-title">Angular Golf Scorecard</h3>
             <p class="desc-body">Nearly identical to my original Golf Scorecard project, this version is built entirely in Angular. It features a mobile-first design with functionality to keep track of scores for up to four players.</p>
             <h4 class="desc-skills-title">Skills:</h4>
-            <div class="desc-skills">${skills.angular + skills.ts + skills.html + skills.css}</div>
+            <div class="desc-skills">${skills.angular + skills.ts + skills.html + skills.css + skills.apis}</div>
             <a href="https://golf-scorecard-f029d.web.app/" target="_blank"><button class="border-button">View ${exBtn}</button></a>
          </div>
          `
       },
       {
-         // backgroundImage: "./images/carousel/projects/bubbles.png",
-         // html: "bubbles"
          html: `
          <div class="content-wrap">
             <h3 class="desc-title">Reactive Bubbles</h3>
@@ -261,57 +251,10 @@ const desc = new Roundabout({
          </div>
          `
       },
-      {
-         // backgroundImage: "./images/carousel/projects/ry-paris.png",
-         // html: "site clone 1"
-         html: `
-         <div class="content-wrap">
-            <h3 class="desc-title">Site Clone (RY Paris)</h3>
-            <p class="desc-body">A simple clone of a website that helped me hone my skills on SCSS and CSS.</p>
-            <h4 class="desc-skills-title">Skills:</h4>
-            <div class="desc-skills">${skills.html + skills.css}</div>
-            <a href="https://dougalcaleb.github.io/portfolio/ry-paris/" target="_blank"><button class="border-button">View ${exBtn}</button></a>
-         </div>
-         `
-      },
-      // {
-      //    // backgroundImage: "./images/carousel/projects/stormcenter.png",
-      //    // html: "storm center"
-      //    html: `
-      //    <div class="content-wrap">
-      //       <h3 class="desc-title">WHS Storm Center</h3>
-      //       <p class="desc-body">Built for Westlake High School, the products page shows off all of the merchandise available from the school's spirit store.</p>
-      //       <h4 class="desc-skills-title">Skills:</h4>
-      //       <div class="desc-skills">${skills.js + skills.html + skills.css + skills.collaboration}</div>
-      //       <a href="http://whsstormcenter.com/store.html" target="_blank"><button class="border-button">View ${exBtn}</button></a>
-      //    </div>
-      //    `
-      // },
-      {
-         // backgroundImage: "./images/carousel/projects/scss-resume.png",
-         // html: "resume scss"
-         html: `
-         <div class="content-wrap">
-            <h3 class="desc-title">SCSS Resume Speedbuild</h3>
-            <p class="desc-body">A simple speedbuild of an (irrelevant) resume to hone my SCSS skills.</p>
-            <h4 class="desc-skills-title">Skills:</h4>
-            <div class="desc-skills">${skills.html + skills.css}</div>
-            <a href="https://dougalcaleb.github.io/portfolio/scss-resume/" target="_blank"><button class="border-button">View ${exBtn}</button></a>
-         </div>
-         `
-      },
    ]
 });
 
 const rs = new RoundaboutScripter();
-
-// rs.onScrollNext(main, () => {
-//    rs.scrollNext(desc);
-// });
-
-// rs.onScrollPrevious(main, () => {
-//    rs.scrollPrevious(desc);
-// });
 
 rs.onScroll(main, (dist) => {
    rs.scroll(desc, dist);
