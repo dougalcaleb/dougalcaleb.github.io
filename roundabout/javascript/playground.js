@@ -203,15 +203,21 @@ function checkForChar(position, value) {
 }
 
 function checkForUpdate() {
-	if (!updated) {
+   if (!updated) {
+      if (clearConsole) {
+         console.clear();
+      }
 		carousel = null;
 		// let rawSettings = input.value.trim().substring(15, input.value.trim().length - 2);
 		let settings;
 		try {
 			settings = JSON.parse(input.value.trim().substring(15, input.value.trim().length - 2));
 			document.querySelector(".code-toggle").style.color = "";
-		} catch (e) {
-			document.querySelector(".code-toggle").style.color = "red";
+      } catch (e) {
+         console.error("Error: error parsing JSON");
+         console.warn("Ensure your settings are in strict JSON format. Property names should be encased in quotes, indentation should be uniform, and there should be no hanging commas.")
+         document.querySelector(".code-toggle").style.color = "red";
+         return;
       }
       document.querySelectorAll(".roundabout-wrapper").forEach((rCarousel) => {
          rCarousel.remove();
@@ -225,9 +231,6 @@ function checkForUpdate() {
 		// if (document.querySelector(".roundabout-error-message")) {
 		// 	document.querySelector(".roundabout-error-message").remove();
 		// }
-      if (clearConsole) {
-         console.clear();
-      }
 		roundabout.usedIds = [];
       roundabout.on = -1;
       console.log("Attempting to render new Roundabout carousel...");
