@@ -28,25 +28,25 @@ Features:
 
 // Control panel UI
 class Controls {
-   constructor() {
-      this.canvas = document.querySelector("canvas");
+	constructor() {
+		this.canvas = document.querySelector("canvas");
 
-      this.brush = {
-         indicator: document.querySelector(".brush-indicator"),
-         indOn: true,
-         size: 100,
-         sizeStep: 5,
-         minSize: 5,
-         maxSize: 100,
-      };
+		this.brush = {
+			indicator: document.querySelector(".brush-indicator"),
+			indOn: true,
+			size: 100,
+			sizeStep: 5,
+			minSize: 5,
+			maxSize: 100,
+		};
 
-      this.activeType = 0;
-      this.page = 0;
-      this.brushActive = false;
+		this.activeType = 0;
+		this.page = 0;
+		this.brushActive = false;
 
-      this.controllers = {
-         FollowEvent: new AbortController(),
-      }
+		this.controllers = {
+			FollowEvent: new AbortController(),
+		};
 
 		// All settings
 		this.settings = {
@@ -96,8 +96,8 @@ class Controls {
 		Canvas.canvas.height = this.settings.y.toString();
 		Canvas.canvas.width = this.settings.x.toString();
 
-      this.settings.colors = this.palettes[0];
-      document.querySelectorAll(".palette")[0].classList.add("active-palette");
+		this.settings.colors = this.palettes[0];
+		document.querySelectorAll(".palette")[0].classList.add("active-palette");
 
 		Canvas.updateSettings(this.settings);
 	}
@@ -159,8 +159,8 @@ class Controls {
          <svg viewBox="0 0 24 24"><path fill="currentColor" d="M20.71,7.04C21.1,6.65 21.1,6 20.71,5.63L18.37,3.29C18,2.9 17.35,2.9 16.96,3.29L15.12,5.12L18.87,8.87M3,17.25V21H6.75L17.81,9.93L14.06,6.18L3,17.25Z" /></svg>
       `;
 		wrap.appendChild(palette);
-      wrap.appendChild(opts);
-      document.querySelector(".control-palettes").appendChild(wrap);
+		wrap.appendChild(opts);
+		document.querySelector(".control-palettes").appendChild(wrap);
 
 		opts.children[0].addEventListener("click", async () => {
 			let newColors = await Modal.modal("Edit Color Palette", this.palettes[pos]);
@@ -181,9 +181,9 @@ class Controls {
 		});
 
 		wrap.addEventListener("click", () => {
-         this.settings.colors = this.palettes[pos];
-         document.querySelector(".active-palette").classList.remove("active-palette");
-         wrap.classList.add("active-palette");
+			this.settings.colors = this.palettes[pos];
+			document.querySelector(".active-palette").classList.remove("active-palette");
+			wrap.classList.add("active-palette");
 			Canvas.updateSettings(this.settings, false);
 		});
 
@@ -194,51 +194,49 @@ class Controls {
 	}
 
 	// Event listeners for buttons
-   buttonListeners() {
-      
-      document.querySelector(".choose-properties").addEventListener("click", () => {
-         this.page = 0;
-         document.querySelector(".choose-tools").classList.remove("btn-active");
-         document.querySelector(".choose-properties").classList.add("btn-active");
-         document.querySelector(".panel-image-tools").style.display = "none";
-         document.querySelector(".panel-image-properties").style.display = "inline";
-      });
-      
-      document.querySelector(".choose-tools").addEventListener("click", () => {
-         this.page = 1;
-         document.querySelector(".choose-properties").classList.remove("btn-active");
-         document.querySelector(".choose-tools").classList.add("btn-active");
-         document.querySelector(".panel-image-tools").style.display = "inline";
-         document.querySelector(".panel-image-properties").style.display = "none";
-      });
+	buttonListeners() {
+		document.querySelector(".choose-properties").addEventListener("click", () => {
+			this.page = 0;
+			document.querySelector(".choose-tools").classList.remove("btn-active");
+			document.querySelector(".choose-properties").classList.add("btn-active");
+			document.querySelector(".panel-image-tools").style.display = "none";
+			document.querySelector(".panel-image-properties").style.display = "inline";
+		});
 
-      document.querySelector(".brush-btn").addEventListener("click", () => {
-         if (!this.brushActive) {
-            this.brushActive = true;
-            this.activateBrush();
-         } else {
-            this.brushActive = false;
-            this.deactivateBrush();
-         }
-      });
+		document.querySelector(".choose-tools").addEventListener("click", () => {
+			this.page = 1;
+			document.querySelector(".choose-properties").classList.remove("btn-active");
+			document.querySelector(".choose-tools").classList.add("btn-active");
+			document.querySelector(".panel-image-tools").style.display = "inline";
+			document.querySelector(".panel-image-properties").style.display = "none";
+		});
 
-      window.addEventListener("keydown", (Event) => {
-         if (Event.key === "b" && !this.brushActive) {
-            console.log("b pressed")
-            this.brushActive = true;
-            this.activateBrush();
-         }
-      });
+		document.querySelector(".brush-btn").addEventListener("click", () => {
+			if (!this.brushActive) {
+				this.brushActive = true;
+				this.activateBrush();
+			} else {
+				this.brushActive = false;
+				this.deactivateBrush();
+			}
+		});
 
+		window.addEventListener("keydown", (Event) => {
+			if (Event.key === "b" && !this.brushActive) {
+				console.log("b pressed");
+				this.brushActive = true;
+				this.activateBrush();
+			}
+		});
 
-      // TODO: choose a better keybind - maybe space? Customizable?
+		// TODO: choose a better keybind - maybe space? Customizable?
 
-      window.addEventListener("keyup", (Event) => {
-         if (Event.key === "b") {
-            this.brushActive = false;
-            this.deactivateBrush();
-         }
-      });
+		window.addEventListener("keyup", (Event) => {
+			if (Event.key === "b") {
+				this.brushActive = false;
+				this.deactivateBrush();
+			}
+		});
 
 		document.querySelector(".type-0").addEventListener("click", () => {
 			document.querySelector(".type-btn.btn-active").classList.remove("btn-active");
@@ -339,12 +337,12 @@ class Controls {
 			this.settings.rot = Canvas.radToDeg(Math.PI + Canvas.idealAngle);
 			Canvas.updateSettings(this.settings, false);
 		});
-      document.querySelector(".snap-6").addEventListener("click", () => {
-         this.settings.rot = Canvas.radToDeg(Math.PI - Canvas.idealAngle);
+		document.querySelector(".snap-6").addEventListener("click", () => {
+			this.settings.rot = Canvas.radToDeg(Math.PI - Canvas.idealAngle);
 			Canvas.updateSettings(this.settings, false);
 		});
 		document.querySelector(".snap-7").addEventListener("click", () => {
-			this.settings.rot = Canvas.radToDeg(-1 * ( Canvas.idealAngle));
+			this.settings.rot = Canvas.radToDeg(-1 * Canvas.idealAngle);
 			Canvas.updateSettings(this.settings, false);
 		});
 	}
@@ -445,53 +443,54 @@ class Controls {
 			downloader.setAttribute("href", Canvas.canvas.toDataURL("image/png").replace("image/png", "image/octet-stream"));
 			downloader.click();
 		});
-   }
-   
+	}
 
-   activateBrush() {
-      // TODO: Make the brush button active when brush is active
-      document.querySelector(".brush-btn").innerHTML = "Brush: Active";
-      this.brush.indicator.style.display = "inline";
+	activateBrush() {
+		// TODO: Make the brush button active when brush is active
+		document.querySelector(".brush-btn").innerHTML = "Brush: Active";
+		this.brush.indicator.style.display = "inline";
 
-      window.addEventListener("mousemove", (Event) => {
+		window.addEventListener(
+			"mousemove",
+			(Event) => {
+				this.brush.indicator.style.left = Event.clientX - this.brush.size / 2 + "px";
+				this.brush.indicator.style.top = Event.clientY - this.brush.size / 2 + "px";
 
-         this.brush.indicator.style.left = Event.clientX - (this.brush.size / 2) + "px";
-         this.brush.indicator.style.top = Event.clientY - (this.brush.size / 2) + "px";
+				let relPos = {
+					x: Event.clientX - this.canvas.getBoundingClientRect().x,
+					y: Event.clientY - this.canvas.getBoundingClientRect().y,
+				};
+				// let relNode = {
+				//    x: relPos
+				// }
 
-         let relPos = {
-            x: (Event.clientX - this.canvas.getBoundingClientRect().x),
-            y: (Event.clientY - this.canvas.getBoundingClientRect().y),
-         };
-         // let relNode = {
-         //    x: relPos
-         // }
+				// TODO: Trying to hide the indicator when it leaves the canvas significantly
+				// maybe listen on the canvas inset window?
+				// if (relPos.x < -this.brush.size || relPos.x > this.brush.size + this.canvas.width) {
+				//    this.brush.indicator.style.display = "none";
+				//    this.brush.indOn = false;
+				// }
+			},
+			{signal: this.controllers.FollowEvent.signal}
+		);
 
-         // TODO: Trying to hide the indicator when it leaves the canvas significantly
-         // maybe listen on the canvas inset window? 
-         // if (relPos.x < -this.brush.size || relPos.x > this.brush.size + this.canvas.width) {
-         //    this.brush.indicator.style.display = "none";
-         //    this.brush.indOn = false;
-         // }
+		window.addEventListener("wheel", (Event) => {
+			Event.deltaY > 0 ? (this.brush.size -= this.brush.sizeStep) : (this.brush.size += this.brush.sizeStep);
+			this.brush.size = Math.max(this.brush.size, this.brush.minSize);
+			this.brush.size = Math.min(this.brush.size, this.brush.maxSize);
+			this.brush.indicator.style.left = Event.clientX - this.brush.size / 2 + "px";
+			this.brush.indicator.style.top = Event.clientY - this.brush.size / 2 + "px";
+			this.brush.indicator.style.height = this.brush.size + "px";
+			this.brush.indicator.style.width = this.brush.size + "px";
+		});
+	}
 
-      }, { signal: this.controllers.FollowEvent.signal });
-
-      window.addEventListener("wheel", (Event) => {
-         Event.deltaY > 0 ? this.brush.size -= this.brush.sizeStep : this.brush.size += this.brush.sizeStep;
-         this.brush.size = Math.max(this.brush.size, this.brush.minSize);
-         this.brush.size = Math.min(this.brush.size, this.brush.maxSize);
-         this.brush.indicator.style.left = Event.clientX - (this.brush.size / 2) + "px";
-         this.brush.indicator.style.top = Event.clientY - (this.brush.size / 2) + "px";
-         this.brush.indicator.style.height = this.brush.size + "px";
-         this.brush.indicator.style.width = this.brush.size + "px";
-      });
-   }
-
-   deactivateBrush() {
-      document.querySelector(".brush-btn").innerHTML = "Brush: Off";
-      this.brush.indicator.style.display = "none";
-      this.controllers.FollowEvent.abort();
-      this.controllers.FollowEvent = new AbortController();
-   }
+	deactivateBrush() {
+		document.querySelector(".brush-btn").innerHTML = "Brush: Off";
+		this.brush.indicator.style.display = "none";
+		this.controllers.FollowEvent.abort();
+		this.controllers.FollowEvent = new AbortController();
+	}
 }
 
 // Create an async modal
