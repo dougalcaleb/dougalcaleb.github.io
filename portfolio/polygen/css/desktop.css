@@ -32,18 +32,6 @@ $name - variable
   color: #e8e8e8;
 }
 
-.brush-indicator {
-  position: absolute;
-  height: 100px;
-  width: 100px;
-  border: 1px solid black;
-  background: #333;
-  z-index: 10;
-  border-radius: 100%;
-  opacity: 0.3;
-  display: none;
-}
-
 .controls {
   width: 20vw;
   height: calc(100vh - max(50px, 5vh));
@@ -219,6 +207,8 @@ $name - variable
 .preview canvas {
   max-width: 90%;
   max-height: 90%;
+}
+.preview #canvas-main {
   box-shadow: 0px 0px 20px black;
   background: #282828;
 }
