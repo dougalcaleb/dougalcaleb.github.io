@@ -1,6 +1,9 @@
-const defaults = {
+const DEFAULTS = {
 	ui: {
 		csize: [5, 200],
+		editCircleColor: "rgba(0,0,0,0.5)",
+		brushDrawColor: "rgba(255,255,255,0.05)",
+		brushLineWeight: 3
 	},
 	inputs: {
 		debounce: 500,
@@ -29,24 +32,27 @@ Features:
 // Control panel UI
 class Controls {
 	constructor() {
-		this.canvas = document.querySelector("canvas");
+		this.canvas = document.getElementById("canvas-main");
+		this.canvasEdit = document.getElementById("canvas-edit");
+
+		this.editCtx = this.canvasEdit.getContext("2d");
 
 		this.brush = {
+			FollowEvent: new AbortController(),
 			indicator: document.querySelector(".brush-indicator"),
 			indOn: true,
 			size: 100,
 			sizeStep: 5,
 			minSize: 5,
 			maxSize: 100,
+			posX: null,
+			posY: null,
+			drawing: false,
 		};
 
 		this.activeType = 0;
 		this.page = 0;
 		this.brushActive = false;
-
-		this.controllers = {
-			FollowEvent: new AbortController(),
-		};
 
 		// All settings
 		this.settings = {
@@ -93,8 +99,12 @@ class Controls {
 		this.buttonListeners();
 		this.rangeListeners();
 		this.miscListeners();
+
 		Canvas.canvas.height = this.settings.y.toString();
 		Canvas.canvas.width = this.settings.x.toString();
+
+		Canvas.canvasEdit.height = this.settings.y.toString();
+		Canvas.canvasEdit.width = this.settings.x.toString();
 
 		this.settings.colors = this.palettes[0];
 		document.querySelectorAll(".palette")[0].classList.add("active-palette");
@@ -216,7 +226,6 @@ class Controls {
 				this.brushActive = true;
 				this.activateBrush();
 			} else {
-				this.brushActive = false;
 				this.deactivateBrush();
 			}
 		});
@@ -233,7 +242,6 @@ class Controls {
 
 		window.addEventListener("keyup", (Event) => {
 			if (Event.key === "b") {
-				this.brushActive = false;
 				this.deactivateBrush();
 			}
 		});
@@ -417,7 +425,7 @@ class Controls {
 				} else {
 					console.warn("ERROR: Bad height dimension value. Enter a value of 1 or greater");
 				}
-			}, defaults.inputs.debounce);
+			}, DEFAULTS.inputs.debounce);
 		});
 		document.querySelector(".image-width").addEventListener("input", () => {
 			clearTimeout(wDimDebounce);
@@ -428,7 +436,7 @@ class Controls {
 				} else {
 					console.warn("ERROR: Bad width dimension value. Enter a value of 1 or greater");
 				}
-			}, defaults.inputs.debounce);
+			}, DEFAULTS.inputs.debounce);
 		});
 		document.querySelector(".palette-add").addEventListener("click", async () => {
 			let colors = await Modal.modal("New Color Palette");
@@ -446,51 +454,103 @@ class Controls {
 	}
 
 	activateBrush() {
-		// TODO: Make the brush button active when brush is active
 		document.querySelector(".brush-btn").innerHTML = "Brush: Active";
-		this.brush.indicator.style.display = "inline";
 
-		window.addEventListener(
-			"mousemove",
-			(Event) => {
-				this.brush.indicator.style.left = Event.clientX - this.brush.size / 2 + "px";
-				this.brush.indicator.style.top = Event.clientY - this.brush.size / 2 + "px";
+		let isInPreviewWindow = false;
+		let canvasCompressionRatio = this.canvas.offsetWidth / this.settings.x;
 
-				let relPos = {
-					x: Event.clientX - this.canvas.getBoundingClientRect().x,
-					y: Event.clientY - this.canvas.getBoundingClientRect().y,
-				};
-				// let relNode = {
-				//    x: relPos
-				// }
+		this.editCtx.strokeStyle = DEFAULTS.ui.editCircleColor;
+		this.editCtx.fillStyle = DEFAULTS.ui.brushDrawColor;
+		this.editCtx.lineWidth = DEFAULTS.ui.brushLineWeight;
 
-				// TODO: Trying to hide the indicator when it leaves the canvas significantly
-				// maybe listen on the canvas inset window?
-				// if (relPos.x < -this.brush.size || relPos.x > this.brush.size + this.canvas.width) {
-				//    this.brush.indicator.style.display = "none";
-				//    this.brush.indOn = false;
-				// }
-			},
-			{signal: this.controllers.FollowEvent.signal}
-		);
+		// Mouse down and mouse up: set for paint
+		window.addEventListener("mousedown", () => {
+			this.editCtx.clearRect(0, 0, this.settings.x, this.settings.y);
+			this.brush.drawing = true;
+		}, { signal: this.brush.FollowEvent.signal });
 
+		window.addEventListener("mouseup", () => {
+			this.brush.drawing = false;
+		}, { signal: this.brush.FollowEvent.signal });
+
+		// Mouse following
+
+		console.log(Canvas.vertDist)
+
+		window.addEventListener("mousemove", (Event) => {
+
+			this.brush.posX = ((Event.clientX - this.canvas.getBoundingClientRect().x) / canvasCompressionRatio);
+			this.brush.posY = ((Event.clientY - this.canvas.getBoundingClientRect().y) / canvasCompressionRatio);
+
+			this.editCtx.beginPath();
+			this.editCtx.arc(this.brush.posX, this.brush.posY, this.brush.size, 0, 2 * Math.PI);
+
+			let halfX = this.settings.x / 2;
+			let halfY = this.settings.y / 2;
+
+			
+
+			this.editCtx.fillStyle = DEFAULTS.ui.brushDrawColor;
+
+			if (!this.brush.drawing) {
+				this.editCtx.clearRect(0, 0, this.settings.x, this.settings.y);				
+				this.editCtx.stroke();
+			} else {
+				this.editCtx.fill();
+			}
+			
+			// Calculate the nearest vertex to start checking for vertices in the paint area
+			let nearestX = Math.round((this.brush.posX / Canvas.vertDist) + 1.5);    // these magic numbers have to do with the overlap vertices (past the edges)
+			let nearestY = Math.round((this.brush.posY / Canvas.vertDist) + 1.25);   // there might be a way to calculate this, but this does fine
+
+			// Bind so that it doesn't try to search for vertices that don't exist
+			nearestY = Math.max(0, Math.min(nearestY, Canvas.verts.length - 1));
+			nearestX = Math.max(0, Math.min(nearestX, Canvas.verts[0].length - 1));
+
+			let nearestVert = Canvas.verts[nearestY][nearestX];
+
+			if (Canvas.debug.drawNearestVert) {
+				this.editCtx.beginPath()
+				this.editCtx.arc(nearestVert[0], nearestVert[1], 10, 0, 2 * Math.PI);
+				this.editCtx.fillStyle = "rgba(255,0,0,1)";
+				this.editCtx.fill();
+			}
+
+		}, { signal: this.brush.FollowEvent.signal });
+
+		// Wheel zoom
 		window.addEventListener("wheel", (Event) => {
 			Event.deltaY > 0 ? (this.brush.size -= this.brush.sizeStep) : (this.brush.size += this.brush.sizeStep);
 			this.brush.size = Math.max(this.brush.size, this.brush.minSize);
 			this.brush.size = Math.min(this.brush.size, this.brush.maxSize);
-			this.brush.indicator.style.left = Event.clientX - this.brush.size / 2 + "px";
-			this.brush.indicator.style.top = Event.clientY - this.brush.size / 2 + "px";
-			this.brush.indicator.style.height = this.brush.size + "px";
-			this.brush.indicator.style.width = this.brush.size + "px";
-		});
+
+			if (!this.brush.drawing) {
+				this.editCtx.clearRect(0, 0, this.settings.x, this.settings.y);
+				this.editCtx.beginPath();
+				this.editCtx.arc(this.brush.posX, this.brush.posY, this.brush.size, 0, 2 * Math.PI);
+				this.editCtx.stroke();
+			}
+
+		}, { signal: this.brush.FollowEvent.signal });
+
+		document.querySelector(".controls").addEventListener("mouseover", () => {
+			if (isInPreviewWindow) {
+				isInPreviewWindow = false;
+				this.deactivateBrush();
+			}
+		}, { signal: this.brush.FollowEvent.signal });
+
+		document.querySelector(".preview").addEventListener("mouseover", () => {
+			isInPreviewWindow = true;
+		}, { signal: this.brush.FollowEvent.signal });
 	}
 
-	deactivateBrush() {
-		document.querySelector(".brush-btn").innerHTML = "Brush: Off";
-		this.brush.indicator.style.display = "none";
-		this.controllers.FollowEvent.abort();
-		this.controllers.FollowEvent = new AbortController();
-	}
+   	deactivateBrush() {
+      	document.querySelector(".brush-btn").innerHTML = "Brush: Off";
+      	this.brush.FollowEvent.abort();
+		this.brush.FollowEvent = new AbortController();
+		this.brushActive = false;
+   	}
 }
 
 // Create an async modal
@@ -613,7 +673,8 @@ class Modals {
 class Preview {
 	constructor() {
 		// HTML Canvas element
-		this.canvas = document.querySelector("canvas");
+		this.canvas = document.getElementById("canvas-main");
+		this.canvasEdit = document.getElementById("canvas-edit");
 		// Canvas context
 		this.ctx = this.canvas.getContext("2d", {willReadFrequently: true});
 		// Draw settings
@@ -650,7 +711,11 @@ class Preview {
 			drawAvgs: false,
 			drawGradientLine: false,
 			draw: true,
+			drawNearestVert: false,
 		};
+
+		this.vertCount = { x: null, y: null }
+		this.vertDist = null;
 
 		// Generated verticies
 		this.verts = [];
@@ -672,6 +737,9 @@ class Preview {
 		if (this.settings.mode != "image") {
 			Canvas.canvas.height = this.settings.y.toString();
 			Canvas.canvas.width = this.settings.x.toString();
+
+			Canvas.canvasEdit.height = this.settings.y.toString();
+			Canvas.canvasEdit.width = this.settings.x.toString();
 		}
 		// Calculate ideal angle
 		this.idealAngle = Math.atan(this.settings.y / this.settings.x);
@@ -697,11 +765,15 @@ class Preview {
 	// Generates and returns the verticies
 	verticies() {
 		// Distance between non-varied verticies (x-based)
-		let dist = this.settings.x / (defaults.ui.csize[1] - this.settings.csize);
+		let dist = this.settings.x / (DEFAULTS.ui.csize[1] - this.settings.csize);
+
+		this.vertDist = dist;
 
 		// Vertex counts
 		let xc = Math.ceil(this.settings.x / dist + 1) + 2;
 		let yc = Math.ceil(this.settings.y / dist + 2);
+
+		this.vertCount = { x: xc, y: yc };
 
 		// Pre-variance shifts to center verticies
 		let xshift = (dist * xc - this.settings.x) / 2;
