@@ -459,9 +459,11 @@ class Controls {
 		let isInPreviewWindow = false;
 		let canvasCompressionRatio = this.canvas.offsetWidth / this.settings.x;
 
+		// Set defaults for drawing
 		this.editCtx.strokeStyle = DEFAULTS.ui.editCircleColor;
 		this.editCtx.fillStyle = DEFAULTS.ui.brushDrawColor;
 		this.editCtx.lineWidth = DEFAULTS.ui.brushLineWeight;
+		
 
 		// Mouse down and mouse up: set for paint
 		window.addEventListener("mousedown", () => {
@@ -474,24 +476,17 @@ class Controls {
 		}, { signal: this.brush.FollowEvent.signal });
 
 		// Mouse following
-
-		console.log(Canvas.vertDist)
-
 		window.addEventListener("mousemove", (Event) => {
 
+			// Calculate cursor position over canvas
 			this.brush.posX = ((Event.clientX - this.canvas.getBoundingClientRect().x) / canvasCompressionRatio);
 			this.brush.posY = ((Event.clientY - this.canvas.getBoundingClientRect().y) / canvasCompressionRatio);
 
+			// Setup common necessities between outline and paint
 			this.editCtx.beginPath();
 			this.editCtx.arc(this.brush.posX, this.brush.posY, this.brush.size, 0, 2 * Math.PI);
 
-			let halfX = this.settings.x / 2;
-			let halfY = this.settings.y / 2;
-
-			
-
-			this.editCtx.fillStyle = DEFAULTS.ui.brushDrawColor;
-
+			// If drawing, draw a non-clearing solid fill. If not, draw a circle around the cursor
 			if (!this.brush.drawing) {
 				this.editCtx.clearRect(0, 0, this.settings.x, this.settings.y);				
 				this.editCtx.stroke();
@@ -507,13 +502,26 @@ class Controls {
 			nearestY = Math.max(0, Math.min(nearestY, Canvas.verts.length - 1));
 			nearestX = Math.max(0, Math.min(nearestX, Canvas.verts[0].length - 1));
 
+			// Select the actual vertex coordinates
 			let nearestVert = Canvas.verts[nearestY][nearestX];
+
+			// TODO:
+			/*
+			- Take vertices closest to nearestVert (number checked dependant on brush size) and check if they're actually within the circle.
+				- Use actual coordinates
+			- Store vertices (both position IDs and coordinates) in an array
+			- Allow different operations on selected vertices
+				- Recalculate position
+				- Snap towards color
+				- Drag all
+			*/
 
 			if (Canvas.debug.drawNearestVert) {
 				this.editCtx.beginPath()
 				this.editCtx.arc(nearestVert[0], nearestVert[1], 10, 0, 2 * Math.PI);
 				this.editCtx.fillStyle = "rgba(255,0,0,1)";
 				this.editCtx.fill();
+				this.editCtx.fillStyle = DEFAULTS.ui.brushDrawColor;
 			}
 
 		}, { signal: this.brush.FollowEvent.signal });
@@ -533,6 +541,7 @@ class Controls {
 
 		}, { signal: this.brush.FollowEvent.signal });
 
+		// Deactivate brush when it enters the controls. May not really need this since it's using Canvas instead of the DOM now
 		document.querySelector(".controls").addEventListener("mouseover", () => {
 			if (isInPreviewWindow) {
 				isInPreviewWindow = false;
@@ -770,7 +779,7 @@ class Preview {
 		this.vertDist = dist;
 
 		// Vertex counts
-		let xc = Math.ceil(this.settings.x / dist + 1) + 2;
+		let xc = Math.ceil(this.settings.x / dist + 1) + 2; // magic number helps to correct image peeking through.
 		let yc = Math.ceil(this.settings.y / dist + 2);
 
 		this.vertCount = { x: xc, y: yc };
