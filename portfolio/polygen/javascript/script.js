@@ -478,11 +478,11 @@ class Controls {
 		// Mouse following
 		window.addEventListener("mousemove", (Event) => {
 
-			// Calculate cursor position over canvas
+			// Calculate cursor position relative to canvas
 			this.brush.posX = ((Event.clientX - this.canvas.getBoundingClientRect().x) / canvasCompressionRatio);
 			this.brush.posY = ((Event.clientY - this.canvas.getBoundingClientRect().y) / canvasCompressionRatio);
 
-			// Setup common necessities between outline and paint
+			// Setup common canvas necessities between area indicator and paint
 			this.editCtx.beginPath();
 			this.editCtx.arc(this.brush.posX, this.brush.posY, this.brush.size, 0, 2 * Math.PI);
 
@@ -502,7 +502,7 @@ class Controls {
 			nearestY = Math.max(0, Math.min(nearestY, Canvas.verts.length - 1));
 			nearestX = Math.max(0, Math.min(nearestX, Canvas.verts[0].length - 1));
 
-			// Select the actual vertex coordinates
+			// Select the vertex
 			let nearestVert = Canvas.verts[nearestY][nearestX];
 
 			// TODO:
@@ -515,6 +515,42 @@ class Controls {
 				- Snap towards color
 				- Drag all
 			*/
+
+			let vertCheckRadius = Math.ceil(this.brush.size / Canvas.vertDist);
+
+			let nearbyVerts = [];
+
+			// Run through all potential nearby verts (square around mouse)
+			for (let a = -vertCheckRadius; a <= vertCheckRadius; a++) {
+				for (let b = -vertCheckRadius; b <= vertCheckRadius; b++) {
+					let checkX = nearestX + b;
+					let checkY = nearestY + a;
+
+					// Prevent checking nonexistent verts
+					if (checkX < 0 || checkY < 0 || checkX >= Canvas.verts[0].length || checkY >= Canvas.verts.length) {
+						continue;
+					}
+
+					// Get the offset between vert being checked and mouse pos
+					let dx = this.brush.posX - Canvas.verts[nearestY + a][nearestX + b][0];
+					let dy = this.brush.posY - Canvas.verts[nearestY + a][nearestX + b][1];
+					
+					// Calculate if vertex is actually inside circle
+					let diff = Math.hypot(dx, dy);
+					if (diff < this.brush.size) {
+						nearbyVerts.push(Canvas.verts[nearestY + a][nearestX + b]);
+
+						// Debug: draw verts inside circle
+						if (Canvas.debug.drawAllNearestVerts) {
+							this.editCtx.beginPath()
+							this.editCtx.arc(Canvas.verts[nearestY + a][nearestX + b][0], Canvas.verts[nearestY + a][nearestX + b][1], 10, 0, 2 * Math.PI);
+							this.editCtx.fillStyle = "rgba(0,255,0,1)";
+							this.editCtx.fill();
+							this.editCtx.fillStyle = DEFAULTS.ui.brushDrawColor;
+						}
+					}
+				}
+			}
 
 			if (Canvas.debug.drawNearestVert) {
 				this.editCtx.beginPath()
@@ -720,9 +756,11 @@ class Preview {
 			drawAvgs: false,
 			drawGradientLine: false,
 			draw: true,
-			drawNearestVert: false,
+			drawNearestVert: true,
+			drawAllNearestVerts: true,
 		};
 
+		// These are accessed externally by the brush mode
 		this.vertCount = { x: null, y: null }
 		this.vertDist = null;
 
