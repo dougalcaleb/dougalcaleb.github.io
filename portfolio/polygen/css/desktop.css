@@ -288,7 +288,8 @@ $name - variable
 .edit-modal-bg .edit-modal .modal-colors-wrap .modal-color:hover {
   width: 60px;
 }
-.edit-modal-bg .edit-modal .modal-colors-wrap .modal-color:hover .modal-color-controls-top, .edit-modal-bg .edit-modal .modal-colors-wrap .modal-color:hover .modal-color-controls-bottom {
+.edit-modal-bg .edit-modal .modal-colors-wrap .modal-color:hover .modal-color-controls-top,
+.edit-modal-bg .edit-modal .modal-colors-wrap .modal-color:hover .modal-color-controls-bottom {
   visibility: visible;
   opacity: 1;
 }
