@@ -33,7 +33,7 @@
 // }
 
 .controls {
-	width: 20vw;
+	width: max(20vw, 240px);
 	height: calc(100vh - max(50px, 5vh));
 	position: absolute;
 	left: 0;
@@ -176,6 +176,7 @@
 	}
 	.control-btn-wrap {
 		display: flex;
+		margin-bottom: 15px;
 		div {
 			font-family: ext.$theme-font-button;
 			color: ext.$theme-blue-light;
@@ -196,27 +197,67 @@
 				height: 30px;
 				width: 30px;
 			}
-			// &.btn-active::before {
-			//    content: '';
-			//    height: calc(100% + 0px);
-			//    width: 100%;
-			//    position: absolute;
-			//    left: 0;
-			//    border-top: 3px solid ext.$theme-blue-light;
-			//    border-bottom: 3px solid ext.$theme-blue-light;
-			//    box-sizing: border-box;
-			//    z-index: -2;
-			// }
 			&.btn-active {
 				background: ext.$theme-blue-light;
 				color: ext.$theme-black-dark;
 			}
 		}
 	}
+
+	.control-toggle-wrap {
+		display: flex;
+		margin-bottom: 15px;
+		text-wrap: wrap;
+		div {
+			font-family: ext.$theme-font-button;
+			color: ext.$theme-blue-light;
+			cursor: pointer;
+			flex: 1;
+			text-align: left;
+			text-wrap: wrap;
+			position: relative;
+			// background: purple;
+			line-height: 40px;
+			height: 40px;
+			// background: ext.$theme-black-medium;
+			z-index: 2;
+			&::before {
+				content: '';
+				@extend %center-y;
+				height: 30px;
+				right: 5px;
+				background: ext.$theme-black-dark;
+				width: 50px;
+				border-radius: 50px;
+			}
+			&::after {
+				content: '';
+				@extend %center-y;
+				height: 22px;
+				right: 28px;
+				background: ext.$theme-gray;
+				width: 22px;
+				border-radius: 100%;
+				transition: 0.2s;
+			}
+			svg {
+				@extend %center;
+				height: 30px;
+				width: 30px;
+			}
+			&.btn-active {
+				&::after {
+					content: '';
+					right: 10px;
+					background: ext.$theme-blue-light;
+				}
+			}
+		}
+	}
 }
 
 .preview {
-	width: 80vw;
+	width: calc(100vw - max(20vw, 240px));
 	height: calc(100vh - max(50px, 5vh));
 	position: absolute;
 	right: 0;

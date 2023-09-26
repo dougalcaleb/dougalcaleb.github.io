@@ -3,7 +3,7 @@
 @mixin name - function (used @include name(param))
 $name - variable
 */
-.controls .control-palettes .palette-add svg, .controls .control-palettes .palette .palette-options svg, .controls .control-btn-wrap div svg, .preview canvas, .edit-modal-bg .edit-modal, .edit-modal-bg .edit-modal .modal-color-add svg {
+.controls .control-palettes .palette-add svg, .controls .control-palettes .palette .palette-options svg, .controls .control-btn-wrap div svg, .controls .control-toggle-wrap div svg, .preview canvas, .edit-modal-bg .edit-modal, .edit-modal-bg .edit-modal .modal-color-add svg {
   position: absolute;
   left: 0;
   right: 0;
@@ -16,6 +16,13 @@ $name - variable
   position: absolute;
   left: 0;
   right: 0;
+  margin: auto;
+}
+
+.controls .control-toggle-wrap div::before, .controls .control-toggle-wrap div::after {
+  position: absolute;
+  top: 0;
+  bottom: 0;
   margin: auto;
 }
 
@@ -33,7 +40,7 @@ $name - variable
 }
 
 .controls {
-  width: 20vw;
+  width: max(20vw, 240px);
   height: calc(100vh - max(50px, 5vh));
   position: absolute;
   left: 0;
@@ -169,6 +176,7 @@ $name - variable
 }
 .controls .control-btn-wrap {
   display: flex;
+  margin-bottom: 15px;
 }
 .controls .control-btn-wrap div {
   font-family: "Miriam Libre", "Segoe UI", sans-serif, monospace;
@@ -194,9 +202,52 @@ $name - variable
   background: #00b7ff;
   color: #070707;
 }
+.controls .control-toggle-wrap {
+  display: flex;
+  margin-bottom: 15px;
+  text-wrap: wrap;
+}
+.controls .control-toggle-wrap div {
+  font-family: "Miriam Libre", "Segoe UI", sans-serif, monospace;
+  color: #00b7ff;
+  cursor: pointer;
+  flex: 1;
+  text-align: left;
+  text-wrap: wrap;
+  position: relative;
+  line-height: 40px;
+  height: 40px;
+  z-index: 2;
+}
+.controls .control-toggle-wrap div::before {
+  content: "";
+  height: 30px;
+  right: 5px;
+  background: #070707;
+  width: 50px;
+  border-radius: 50px;
+}
+.controls .control-toggle-wrap div::after {
+  content: "";
+  height: 22px;
+  right: 28px;
+  background: #333;
+  width: 22px;
+  border-radius: 100%;
+  transition: 0.2s;
+}
+.controls .control-toggle-wrap div svg {
+  height: 30px;
+  width: 30px;
+}
+.controls .control-toggle-wrap div.btn-active::after {
+  content: "";
+  right: 10px;
+  background: #00b7ff;
+}
 
 .preview {
-  width: 80vw;
+  width: calc(100vw - max(20vw, 240px));
   height: calc(100vh - max(50px, 5vh));
   position: absolute;
   right: 0;
