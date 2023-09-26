@@ -3,6 +3,7 @@ const DEFAULTS = {
 		csize: [5, 200],
 		editCircleColor: "rgba(0,0,0,0.5)",
 		brushDrawColor: "rgba(255,255,255,0.05)",
+		selectedVertexColor: { color: "rgba(255,255,255,1)", size: 5 },
 		brushLineWeight: 3
 	},
 	inputs: {
@@ -23,9 +24,10 @@ Features:
    - Drag individual vertices
       - Transparency mode?
 
-- Zoom with scroll wheel?
-
 - Add Delete Color Palette
+
+Eventually:
+- I started this project when I was just learning what OOP was. Therefore, classes. But the scope of each class has become far more bloated and general and intertwining than it should be. Needs a general SOC refactor.
 
 */
 
@@ -53,6 +55,7 @@ class Controls {
 		this.activeType = 0;
 		this.page = 0;
 		this.brushActive = false;
+		this.selectedVertices = {};
 
 		// All settings
 		this.settings = {
@@ -232,7 +235,6 @@ class Controls {
 
 		window.addEventListener("keydown", (Event) => {
 			if (Event.key === "b" && !this.brushActive) {
-				console.log("b pressed");
 				this.brushActive = true;
 				this.activateBrush();
 			}
@@ -454,7 +456,8 @@ class Controls {
 	}
 
 	activateBrush() {
-		document.querySelector(".brush-btn").innerHTML = "Brush: Active";
+		document.querySelector(".brush-btn").classList.add("btn-active");
+		this.canvasEdit.style.cursor = "crosshair";
 
 		let isInPreviewWindow = false;
 		let canvasCompressionRatio = this.canvas.offsetWidth / this.settings.x;
@@ -469,6 +472,7 @@ class Controls {
 		window.addEventListener("mousedown", () => {
 			this.editCtx.clearRect(0, 0, this.settings.x, this.settings.y);
 			this.brush.drawing = true;
+			this.selectedVertices = {};
 		}, { signal: this.brush.FollowEvent.signal });
 
 		window.addEventListener("mouseup", () => {
@@ -485,11 +489,14 @@ class Controls {
 			// Setup common canvas necessities between area indicator and paint
 			this.editCtx.beginPath();
 			this.editCtx.arc(this.brush.posX, this.brush.posY, this.brush.size, 0, 2 * Math.PI);
+			this.editCtx.fillStyle = DEFAULTS.ui.brushDrawColor;
 
-			// If drawing, draw a non-clearing solid fill. If not, draw a circle around the cursor
+			// If not drawing, clear the canvas and exit. If drawing, draw the overlay and continue executing.
 			if (!this.brush.drawing) {
 				this.editCtx.clearRect(0, 0, this.settings.x, this.settings.y);				
 				this.editCtx.stroke();
+				this.drawSelectedVertices();
+				return;
 			} else {
 				this.editCtx.fill();
 			}
@@ -507,9 +514,6 @@ class Controls {
 
 			// TODO:
 			/*
-			- Take vertices closest to nearestVert (number checked dependant on brush size) and check if they're actually within the circle.
-				- Use actual coordinates
-			- Store vertices (both position IDs and coordinates) in an array
 			- Allow different operations on selected vertices
 				- Recalculate position
 				- Snap towards color
@@ -538,7 +542,8 @@ class Controls {
 					// Calculate if vertex is actually inside circle
 					let diff = Math.hypot(dx, dy);
 					if (diff < this.brush.size) {
-						nearbyVerts.push(Canvas.verts[nearestY + a][nearestX + b]);
+						let data = [[nearestY + a, nearestX + b], Canvas.verts[nearestY + a][nearestX + b]]
+						nearbyVerts.push(data);
 
 						// Debug: draw verts inside circle
 						if (Canvas.debug.drawAllNearestVerts) {
@@ -552,6 +557,14 @@ class Controls {
 				}
 			}
 
+			// Assign valid vertices to the selected vertices object
+			nearbyVerts.forEach((point) => {
+				this.selectedVertices[point[0].toString()] = { id: point[0], coord: point[1] };
+			});
+
+			this.drawSelectedVertices();
+
+			// Debug: draw single nearest vertex
 			if (Canvas.debug.drawNearestVert) {
 				this.editCtx.beginPath()
 				this.editCtx.arc(nearestVert[0], nearestVert[1], 10, 0, 2 * Math.PI);
@@ -577,25 +590,40 @@ class Controls {
 
 		}, { signal: this.brush.FollowEvent.signal });
 
-		// Deactivate brush when it enters the controls. May not really need this since it's using Canvas instead of the DOM now
+		// Change cursor when on canvas
 		document.querySelector(".controls").addEventListener("mouseover", () => {
 			if (isInPreviewWindow) {
 				isInPreviewWindow = false;
-				this.deactivateBrush();
+				this.canvasEdit.style.cursor = "default";
 			}
 		}, { signal: this.brush.FollowEvent.signal });
 
 		document.querySelector(".preview").addEventListener("mouseover", () => {
 			isInPreviewWindow = true;
+			this.canvasEdit.style.cursor = "crosshair";
 		}, { signal: this.brush.FollowEvent.signal });
 	}
 
+	// Clean up after brush is deactivated
    	deactivateBrush() {
-      	document.querySelector(".brush-btn").innerHTML = "Brush: Off";
+		document.querySelector(".brush-btn").classList.remove("btn-active");
+		this.canvasEdit.style.cursor = "default";
       	this.brush.FollowEvent.abort();
 		this.brush.FollowEvent = new AbortController();
 		this.brushActive = false;
-   	}
+		this.editCtx.clearRect(0, 0, this.settings.x, this.settings.y);
+		this.drawSelectedVertices();
+	}
+	
+	// Iterates over each stored vertex and draws it. Called often
+	drawSelectedVertices() {
+		for (let [key, value] of Object.entries(this.selectedVertices)) {
+			this.editCtx.beginPath();
+			this.editCtx.arc(value.coord[0], value.coord[1], DEFAULTS.ui.selectedVertexColor.size, 0, 2 * Math.PI);
+			this.editCtx.fillStyle = DEFAULTS.ui.selectedVertexColor.color;
+			this.editCtx.fill();
+		}
+	}
 }
 
 // Create an async modal
@@ -756,8 +784,8 @@ class Preview {
 			drawAvgs: false,
 			drawGradientLine: false,
 			draw: true,
-			drawNearestVert: true,
-			drawAllNearestVerts: true,
+			drawNearestVert: false,
+			drawAllNearestVerts: false,
 		};
 
 		// These are accessed externally by the brush mode
