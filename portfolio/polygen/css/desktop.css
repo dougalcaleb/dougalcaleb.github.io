@@ -174,9 +174,11 @@ $name - variable
   padding: 10px;
   border-radius: 5px;
 }
+.controls .control-btn-wrap:not(.btn-wrap-no-bottom-margin) {
+  margin-bottom: 15px;
+}
 .controls .control-btn-wrap {
   display: flex;
-  margin-bottom: 15px;
 }
 .controls .control-btn-wrap div {
   font-family: "Miriam Libre", "Segoe UI", sans-serif, monospace;
