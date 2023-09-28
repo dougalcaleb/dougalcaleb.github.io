@@ -21,12 +21,14 @@ TODO:
 
 Features:
 - Brush tool:
-   - Regnerate sections of vertices (useful for when it makes wonky triangles)
    - Snap to color
-   - Should select (paint) and then apply after. Can use to impose a limit
    - Falloff for snap to color?
    - Drag individual vertices
       - Transparency mode?
+
+- Optimization:
+	- Add a web worker for calculating nearby color changes (required - start with it this way, it will likely be computationally intense)
+	- Add a web worker for vertex generation (optional - it isn't noticeable now)
 
 - Add Delete Color Palette
 
@@ -733,6 +735,8 @@ class Editor {
 				this.ctx.stroke();
 			}
 
+			this.drawSelectedVertices();
+
 		}, { signal: this.brush.FollowEvent.signal });
 
 		// Change cursor when on canvas
@@ -757,6 +761,7 @@ class Editor {
 	// Run on mousemove event
 	selectVertices(Event) {
 		this.isClean = false;
+
 		// Calculate cursor position relative to canvas
 		this.brush.posX = ((Event.clientX - this.canvas.getBoundingClientRect().x) / this.canvasCompressionRatio);
 		this.brush.posY = ((Event.clientY - this.canvas.getBoundingClientRect().y) / this.canvasCompressionRatio);
@@ -898,6 +903,7 @@ class Preview {
 		// These are accessed externally by the brush mode
 		this.vertCount = { x: null, y: null }
 
+		// Values used in calculating vertex final positions. Accessed by brush mode
 		this.vertexMeta = {
 			dist: null,
 			xCount: 0,
@@ -908,10 +914,13 @@ class Preview {
 
 		// Generated verticies
 		this.verts = [];
+
 		// Pixel data
 		this.imageData = null;
+
 		// Angle from centerpoint to corner
 		this.idealAngle = null;
+
 		// Drawn image
 		this.imgSrc = null;
 	}
@@ -933,27 +942,33 @@ class Preview {
 			EditLayer.canvas.height = Control.settings.y.toString();
 			EditLayer.canvas.width = Control.settings.x.toString();
 		}
-		// Calculate ideal angle
+
+		// Calculate ideal angle (angle from corner to corner of canvas, used for snapping rotation to diagonals)
 		this.idealAngle = Math.atan(Control.settings.y / Control.settings.x);
+
 		// Generate verticies
 		if (newVerts) {
 			this.verts = this.verticies();
 		}
+
 		// Draw underlying gradient or image
 		if (Control.settings.mode != "image") {
 			this.drawGradient();
 		} else {
 			this.ctx.drawImage(this.imgSrc, 0, 0);
 		}
+
 		// Get pixel data
 		this.imageData = this.ctx.getImageData(0, 0, Control.settings.x, Control.settings.y);
 		if (this.debug.drawPoints) {
 			this.drawPoints();
 		}
+
 		// Create and draw polygons
 		this.polygons();
 	}
 
+	// Replace existing vertices with newly calculated vertices. Used by edit mode Recalculate Vertices functionality
 	replaceVertices(newVerts) {
 		for (let [key, value] of Object.entries(newVerts)) {
 			this.verts[value.id[0]][value.id[1]] = value.coords;
@@ -1050,8 +1065,8 @@ class Preview {
 			} else {
 				console.warn("Invalid Rotation. Cannot calculate quadrant.");
 			}
-			// Start and end coords of gradient
 
+			// Start and end coords of gradient
 			let x1, y1, x2, y2;
 
 			let sin = Math.sin(rad) * r;
@@ -1060,6 +1075,7 @@ class Preview {
 			// XY pair 1
 			x1 = centerX - cos;
 			y1 = centerY + sin;
+
 			// XY pair 2
 			x2 = centerX + cos;
 			y2 = centerY - sin;
@@ -1122,7 +1138,6 @@ class Preview {
 				if (!this.verts[a + 1] || !this.verts[a][b + 1] || !this.verts[a + 1][b + 1]) {
 					continue;
 				}
-
 				
 				// top left to bottom right distance
 				let tlbrLength = Math.hypot(this.verts[a + 1][b + 1][0] - this.verts[a][b][0], this.verts[a + 1][b][1] - this.verts[a][b][1]).toFixed(2);
@@ -1131,10 +1146,9 @@ class Preview {
 				
 				// Decide which way the triangle points
 				let tri;
-
 				if (tlbrLength < trblLength) { // choose the direction that makes the cut shorter
 					tri = 0
-				} else if (tlbrLength == trblLength) { // if they're equal (0 variance) make it random
+				} else if (tlbrLength == trblLength) { // if they're equal (in the case of 0 vertex variance) make it random
 					tri = Math.floor(Math.random() * 2);
 				} else { // if the above comparison isn't the shorter one, do the shorter one
 					tri = 1;
