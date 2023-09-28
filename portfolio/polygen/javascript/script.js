@@ -1114,8 +1114,6 @@ class Preview {
 
 		for (let a = 0; a < this.verts.length; a++) {
 			for (let b = 0; b < this.verts[a].length; b++) {
-				// Decide which way the triangle points
-				let tri = Math.floor(Math.random() * 2);
 
 				// Centers of triangles
 				let avgX1, avgX2, avgY1, avgY2;
@@ -1123,6 +1121,23 @@ class Preview {
 				// Skip over edges
 				if (!this.verts[a + 1] || !this.verts[a][b + 1] || !this.verts[a + 1][b + 1]) {
 					continue;
+				}
+
+				
+				// top left to bottom right distance
+				let tlbrLength = Math.hypot(this.verts[a + 1][b + 1][0] - this.verts[a][b][0], this.verts[a + 1][b][1] - this.verts[a][b][1]).toFixed(2);
+				// top right to bottom left distance
+				let trblLength = Math.hypot(this.verts[a][b + 1][0] - this.verts[a][b][0], this.verts[a + 1][b + 1][1] - this.verts[a][b][1]).toFixed(2);
+				
+				// Decide which way the triangle points
+				let tri;
+
+				if (tlbrLength < trblLength) { // choose the direction that makes the cut shorter
+					tri = 0
+				} else if (tlbrLength == trblLength) { // if they're equal (0 variance) make it random
+					tri = Math.floor(Math.random() * 2);
+				} else { // if the above comparison isn't the shorter one, do the shorter one
+					tri = 1;
 				}
 
 				this.ctx.beginPath();
