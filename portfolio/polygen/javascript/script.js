@@ -251,16 +251,6 @@ class Controls {
 			document.querySelector(".panel-image-properties").style.display = "none";
 		});
 
-		// selection brush toggle
-		document.querySelector(".brush-btn").addEventListener("click", () => {
-			if (!EditLayer.brush.active) {
-				EditLayer.brush.active = true;
-				EditLayer.activateBrush();
-			} else {
-				EditLayer.deactivateBrush();
-			}
-		});
-
 		// show / hide relevant buttons for specific gradient types
 		document.querySelector(".type-0").addEventListener("click", () => {
 			document.querySelector(".type-btn.btn-active").classList.remove("btn-active");
@@ -372,6 +362,24 @@ class Controls {
 		document.querySelector(".snap-7").addEventListener("click", () => {
 			this.settings.rot = Preview.radToDeg(-1 * PreviewLayer.idealAngle);
 			this.updateSettings(this.settings, false);
+		});
+
+		// selection brush toggle
+		document.querySelector(".brush-btn").addEventListener("click", () => {
+			if (!EditLayer.brush.active) {
+				EditLayer.brush.active = true;
+				EditLayer.activateBrush();
+			} else {
+				EditLayer.deactivateBrush();
+			}
+		});
+
+		document.querySelector(".deselect-vertices").addEventListener("click", () => {
+			EditLayer.clean();
+		});
+
+		document.querySelector(".vertex-recalc").addEventListener("click", () => {
+			EditLayer.recalculateSelected();
 		});
 	}
 
@@ -661,6 +669,25 @@ class Editor {
 		this.canvas.width = settings.x.toString();
 	}
 
+	recalculateSelected() {
+
+		let recalculated = [];
+		
+		for (let [key, value] of Object.entries(this.selectedVertices)) {
+			let dist = PreviewLayer.vertexMeta.dist;
+			let vertX = dist * value.id[1];
+			let vertY = dist * value.id[0];
+			let xVari = Math.random() * Control.settings.vvar * dist - (Control.settings.vvar * dist) / 2;
+			let yVari = Math.random() * Control.settings.vvar * dist - (Control.settings.vvar * dist) / 2;
+			recalculated.push({
+				id: value.id,
+				coords: [vertX + xVari - PreviewLayer.vertexMeta.xShift, vertY + yVari - PreviewLayer.vertexMeta.yShift]
+			});
+		}
+
+		PreviewLayer.replaceVertices(recalculated);
+	}
+
 	activateBrush() {
 		document.querySelector(".brush-btn").classList.add("btn-active");
 		this.canvas.style.cursor = "crosshair";
@@ -748,10 +775,10 @@ class Editor {
 		} else {
 			this.ctx.fill();
 		}
-		
+
 		// Calculate the nearest vertex to start checking for vertices in the paint area
-		let nearestX = Math.round((this.brush.posX / PreviewLayer.vertDist) + 1.5);    // these magic numbers have to do with the overlap vertices (past the edges)
-		let nearestY = Math.round((this.brush.posY / PreviewLayer.vertDist) + 1.25);   // there might be a way to calculate this, but this does fine
+		let nearestX = Math.round((this.brush.posX / PreviewLayer.vertexMeta.dist) + 1.5);    // these magic numbers have to do with the overlap vertices (past the edges)
+		let nearestY = Math.round((this.brush.posY / PreviewLayer.vertexMeta.dist) + 1.25);   // there might be a way to calculate this, but this does fine
 
 		// Bind so that it doesn't try to search for vertices that don't exist
 		nearestY = Math.max(0, Math.min(nearestY, PreviewLayer.verts.length - 1));
@@ -760,7 +787,7 @@ class Editor {
 		// Select the vertex
 		let nearestVert = PreviewLayer.verts[nearestY][nearestX];
 
-		let vertCheckRadius = Math.ceil(this.brush.size / PreviewLayer.vertDist);
+		let vertCheckRadius = Math.ceil(this.brush.size / PreviewLayer.vertexMeta.dist);
 		let nearbyVerts = [];
 
 		// Run through all potential nearby verts (square around mouse)
@@ -870,7 +897,14 @@ class Preview {
 
 		// These are accessed externally by the brush mode
 		this.vertCount = { x: null, y: null }
-		this.vertDist = null;
+
+		this.vertexMeta = {
+			dist: null,
+			xCount: 0,
+			yCount: 0,
+			xShift: 0,
+			yShift: 0,
+		}
 
 		// Generated verticies
 		this.verts = [];
@@ -920,22 +954,36 @@ class Preview {
 		this.polygons();
 	}
 
+	replaceVertices(newVerts) {
+		for (let [key, value] of Object.entries(newVerts)) {
+			this.verts[value.id[0]][value.id[1]] = value.coords;
+		}
+
+		this.draw(false);
+	}
+
 	// Generates and returns the verticies
 	verticies() {
 		// Distance between non-varied verticies (x-based)
 		let dist = Control.settings.x / (DEFAULTS.ui.csize[1] - Control.settings.csize);
 
-		this.vertDist = dist;
+		this.vertexMeta.dist = dist;
 
 		// Vertex counts
 		let xc = Math.ceil(Control.settings.x / dist + 1) + 2; // magic number helps to correct image peeking through.
 		let yc = Math.ceil(Control.settings.y / dist + 2);
+
+		this.vertexMeta.xCount = xc;
+		this.vertexMeta.yCount = yc;
 
 		this.vertCount = { x: xc, y: yc };
 
 		// Pre-variance shifts to center verticies
 		let xshift = (dist * xc - Control.settings.x) / 2;
 		let yshift = (dist * yc - Control.settings.y) / 2;
+
+		this.vertexMeta.xShift = xshift;
+		this.vertexMeta.yShift = yshift;
 
 		let verts = [];
 
