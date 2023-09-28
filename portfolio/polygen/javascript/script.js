@@ -1277,6 +1277,55 @@ class Preview {
 	}
 }
 
+// Create a web worker to run heavy processes in the background. Returns a promise
+/** Usage:
+ * 	new Thread().then((returnsOutputHere) => {})
+ *	Thread.send(inputData);
+ */
+class Thread {
+
+	static supported = true;
+	static worker = null;
+
+	constructor() {
+		if (!Thread.supported || !window.Worker) {
+			console.warn("WebWorkers aren't supported. Features disabled: color line finding.");
+			Thread.supported = false;
+			return;
+		}
+
+		this.resolve = () => console.warn("No promise");
+		this.reject = () => console.warn("No promise");
+
+		Thread.worker = new Worker("./javascript/worker.js");
+
+		Thread.worker.onmessage = (data) => {
+			this.handleMessageRecieved(data.data)
+		}
+
+		Thread.worker.onerror = (e) => {
+			console.warn("Worker Error:");
+			console.warn(e);
+		}
+
+		return new Promise((resolve, reject) => {
+			this.resolve = resolve;
+			this.reject = reject;
+		});
+	}
+
+	static send(data) {
+		Thread.worker.postMessage(data);
+	}
+
+	handleMessageRecieved(data) {
+		if (data.complete) {
+			this.resolve(data.data);
+		}
+		console.log(data);
+	}
+}
+
 // Init
 
 let PreviewLayer = new Preview();
