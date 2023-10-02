@@ -107,8 +107,7 @@ class Controls {
 	// Handle controls changing
 	updateSettings(newSettings, redrawVerts = true, bypassDelay = false) {
 
-		EditLayer.updateSettings(this.settings);
-
+		
 		if (newSettings.mode == "image") {
 			delete newSettings.x;
 			delete newSettings.y;
@@ -117,8 +116,10 @@ class Controls {
 		this.settings = Object.assign(this.settings, newSettings);
 
 		// Recalculate
-		PreviewLayer.xAngles = Preview.degToRad(180) - 2 * Math.atan(this.settings.x / this.settings.y);
-		PreviewLayer.yAngles = Preview.degToRad(180) - 2 * Math.atan(this.settings.y / this.settings.x);
+		if (this.settings.mode !== "image") {
+			PreviewLayer.xAngles = Preview.degToRad(180) - 2 * Math.atan(this.settings.x / this.settings.y);
+			PreviewLayer.yAngles = Preview.degToRad(180) - 2 * Math.atan(this.settings.y / this.settings.x);
+		}
 
 		// Handle throttling and drawing
 		if (bypassDelay) {
@@ -382,6 +383,10 @@ class Controls {
 
 		document.querySelector(".vertex-recalc").addEventListener("click", () => {
 			EditLayer.recalculateSelected();
+		});
+
+		document.querySelector(".vertex-color-snap").addEventListener("click", () => {
+			EditLayer.colorSnap();
 		});
 	}
 
@@ -669,6 +674,46 @@ class Editor {
 	updateSettings(settings) {
 		this.canvas.height = settings.y.toString();
 		this.canvas.width = settings.x.toString();
+		this.canvasCompressionRatio = this.canvas.offsetWidth / settings.x;
+	}
+
+	// TODO:
+	/**
+	 * I think the change to make brush size consistent still broke the actual vertex selection
+	 * Also need to carry that over to the actual vertex selected drawing. They need to be visible on large images
+	 */
+
+	colorSnap() {
+		document.querySelector(".loader-wrap").style.visibility = "visible";
+		
+		Thread.open();
+
+		Thread.send({
+			verts: PreviewLayer.verts,
+			selectedVerts: this.selectedVertices,
+			canvas: PreviewLayer.ctx.getImageData(0, 0, Control.settings.x, Control.settings.y),
+			radius: PreviewLayer.vertexMeta.dist,
+		});
+
+		Thread.recieve((data) => {
+			let operation = data.type.split("-")
+			switch (operation[0]) {
+				case "progress":
+					if (data.data == 100) {
+						document.querySelector(".loader-wrap").style.visibility = "hidden";
+					}
+					break;
+				case "debug":
+					if (operation[1] == "drawPixels" && operation[2] == "radius") {
+						PreviewLayer.drawBatchPixels(data.data);
+					}
+
+					if (operation[1] == "drawPixels" && operation[2] == "diff") {
+						PreviewLayer.drawBatchPixels(data.data, 10, "orange");
+					}
+					break;
+			}
+		});
 	}
 
 	recalculateSelected() {
@@ -701,7 +746,7 @@ class Editor {
 		// Set defaults for drawing
 		this.ctx.strokeStyle = DEFAULTS.ui.editCircleColor;
 		this.ctx.fillStyle = DEFAULTS.ui.brushDrawColor;
-		this.ctx.lineWidth = DEFAULTS.ui.brushLineWeight;
+		this.ctx.lineWidth = DEFAULTS.ui.brushLineWeight / this.canvasCompressionRatio;
 
 		// Mouse down and mouse up: set for paint
 		window.addEventListener("mousedown", (Event) => {
@@ -731,7 +776,7 @@ class Editor {
 			if (!this.brush.drawing) {
 				this.ctx.clearRect(0, 0, Control.settings.x, Control.settings.y);
 				this.ctx.beginPath();
-				this.ctx.arc(this.brush.posX, this.brush.posY, this.brush.size, 0, 2 * Math.PI);
+				this.ctx.arc(this.brush.posX, this.brush.posY, this.brush.size / this.canvasCompressionRatio, 0, 2 * Math.PI);
 				this.ctx.stroke();
 			}
 
@@ -768,7 +813,7 @@ class Editor {
 
 		// Setup common canvas necessities between area indicator and paint
 		this.ctx.beginPath();
-		this.ctx.arc(this.brush.posX, this.brush.posY, this.brush.size, 0, 2 * Math.PI);
+		this.ctx.arc(this.brush.posX, this.brush.posY, this.brush.size / this.canvasCompressionRatio, 0, 2 * Math.PI);
 		this.ctx.fillStyle = DEFAULTS.ui.brushDrawColor;
 
 		// If not drawing, clear the canvas and exit. If drawing, draw the overlay and continue executing.
@@ -792,7 +837,7 @@ class Editor {
 		// Select the vertex
 		let nearestVert = PreviewLayer.verts[nearestY][nearestX];
 
-		let vertCheckRadius = Math.ceil(this.brush.size / PreviewLayer.vertexMeta.dist);
+		let vertCheckRadius = Math.ceil((this.brush.size / PreviewLayer.vertexMeta.dist) / this.canvasCompressionRatio);
 		let nearbyVerts = [];
 
 		// Run through all potential nearby verts (square around mouse)
@@ -1221,6 +1266,14 @@ class Preview {
 		}
 	}
 
+	// helper function to draw a batch of pixels. Primarily for debug.
+	drawBatchPixels(pixels, size = 1, color = "rgba(0,0,0,255)") {
+		this.ctx.fillStyle = color;
+		for (let pixel of pixels) {
+			this.ctx.fillRect(pixel[0], pixel[1], size, size);
+		}
+	}
+
 	// Returns an RGBA color of the color at a given pixel on the canvas
 	getPixelColor(x, y) {
 		// Adjust and correct given XY coords to be valid
@@ -1262,6 +1315,7 @@ class Preview {
 				document.querySelector(".image-width").value = img.width;
 				Control.settings.x = img.width;
 				Control.settings.y = img.height;
+				EditLayer.updateSettings(Control.settings);
 				this.imgSrc = img;
 				this.ctx.drawImage(img, 0, 0);
 				this.draw(true);
@@ -1286,43 +1340,41 @@ class Thread {
 
 	static supported = true;
 	static worker = null;
+	static callback = null;
 
 	constructor() {
+		return null;
+	}
+
+	static open() {
 		if (!Thread.supported || !window.Worker) {
 			console.warn("WebWorkers aren't supported. Features disabled: color line finding.");
 			Thread.supported = false;
 			return;
 		}
 
-		this.resolve = () => console.warn("No promise");
-		this.reject = () => console.warn("No promise");
-
 		Thread.worker = new Worker("./javascript/worker.js");
 
 		Thread.worker.onmessage = (data) => {
-			this.handleMessageRecieved(data.data)
+			Thread.#__handleMessageRecieved(data.data);
 		}
 
 		Thread.worker.onerror = (e) => {
 			console.warn("Worker Error:");
 			console.warn(e);
 		}
-
-		return new Promise((resolve, reject) => {
-			this.resolve = resolve;
-			this.reject = reject;
-		});
 	}
 
 	static send(data) {
 		Thread.worker.postMessage(data);
 	}
 
-	handleMessageRecieved(data) {
-		if (data.complete) {
-			this.resolve(data.data);
-		}
-		console.log(data);
+	static recieve(callback) {
+		Thread.callback = callback;
+	}
+
+	static #__handleMessageRecieved(data) {
+		Thread.callback(data);
 	}
 }
 
