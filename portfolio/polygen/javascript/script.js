@@ -5,7 +5,7 @@ const DEFAULTS = {
 		csize: [5, 200],
 		editCircleColor: "rgba(0,0,0,0.5)",
 		brushDrawColor: "rgba(255,255,255,0.05)",
-		selectedVertexColor: { color: "rgba(255,255,255,1)", size: 2 },
+		selectedVertexColor: { color: "rgba(255,255,255,1)", size: 5 },
 		brushLineWeight: 3,
 		selectionBrushKeybinds: { "b": true, " ": true },
 	},
@@ -25,6 +25,10 @@ Features:
    - Falloff for snap to color?
    - Drag individual vertices
       - Transparency mode?
+
+- Refactor: change brush drawing to be smooth.
+	- Check this JSFiddle: https://jsfiddle.net/aesthaddicts/PEKyw/
+	- Try to use requestAnimationFrame to draw instead of overusing the mousemove event. Should help performance?
 
 - Optimization:
 	- Add a web worker for calculating nearby color changes (required - start with it this way, it will likely be computationally intense)
@@ -677,12 +681,6 @@ class Editor {
 		this.canvasCompressionRatio = this.canvas.offsetWidth / settings.x;
 	}
 
-	// TODO:
-	/**
-	 * I think the change to make brush size consistent still broke the actual vertex selection
-	 * Also need to carry that over to the actual vertex selected drawing. They need to be visible on large images
-	 */
-
 	colorSnap() {
 		document.querySelector(".loader-wrap").style.visibility = "visible";
 		
@@ -851,15 +849,25 @@ class Editor {
 					continue;
 				}
 
+				// Debug: draw square of checked vertices
+				if (PreviewLayer.debug.drawAllCheckedVerts) {
+					this.ctx.beginPath()
+					this.ctx.arc(PreviewLayer.verts[checkY][checkX][0], PreviewLayer.verts[checkY][checkX][1], 10, 0, 2 * Math.PI);
+					this.ctx.fillStyle = "rgba(0,0,255,1)";
+					this.ctx.fill();
+					this.ctx.fillStyle = DEFAULTS.ui.brushDrawColor;
+				}
+
 				// Get the offset between vert being checked and mouse pos
 				let dx = this.brush.posX - PreviewLayer.verts[nearestY + a][nearestX + b][0];
 				let dy = this.brush.posY - PreviewLayer.verts[nearestY + a][nearestX + b][1];
 				
 				// Calculate if vertex is actually inside circle
-				let diff = Math.hypot(dx, dy);
-				if (diff < this.brush.size) {
+				let diff = (Math.hypot(dx, dy));
+				if (diff < (this.brush.size)  / this.canvasCompressionRatio) {
 					let data = [[nearestY + a, nearestX + b], PreviewLayer.verts[nearestY + a][nearestX + b]]
 					nearbyVerts.push(data);
+
 					// Debug: draw verts inside circle
 					if (PreviewLayer.debug.drawAllNearestVerts) {
 						this.ctx.beginPath()
@@ -904,7 +912,7 @@ class Editor {
 	drawSelectedVertices() {
 		for (let [key, value] of Object.entries(this.selectedVertices)) {
 			this.ctx.beginPath();
-			this.ctx.arc(value.coord[0], value.coord[1], DEFAULTS.ui.selectedVertexColor.size  * (2-this.canvasCompressionRatio), 0, 2 * Math.PI);
+			this.ctx.arc(value.coord[0], value.coord[1], DEFAULTS.ui.selectedVertexColor.size / this.canvasCompressionRatio, 0, 2 * Math.PI);
 			this.ctx.fillStyle = DEFAULTS.ui.selectedVertexColor.color;
 			this.ctx.fill();
 		}
@@ -941,8 +949,9 @@ class Preview {
 			drawAvgs: false,
 			drawGradientLine: false,
 			draw: true,
-			drawNearestVert: false,
-			drawAllNearestVerts: false,
+			drawNearestVert: true,
+			drawAllNearestVerts: true,
+			drawAllCheckedVerts: false,
 		};
 
 		// These are accessed externally by the brush mode
