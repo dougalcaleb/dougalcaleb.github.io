@@ -1,5 +1,9 @@
 "use strict";
 
+const DEFAULTS = {
+	reportInt: 5,
+}
+
 const values = {
 	imageData: null,
 	selectedVertices: null,
@@ -11,7 +15,7 @@ self.onmessage = (data) => {
 	values.selectedVertices = structuredClone(data.data.selectedVerts);
 	values.radius = data.data.radius;
 
-	calculateNearestColorLine()
+	calculateNearestColorLine();
 };
 
 function calculateNearestColorLine() {
@@ -19,10 +23,6 @@ function calculateNearestColorLine() {
 	 * Process:
 	 * check in a circle around vertex
 	 * choose vector on that line that has the greatest difference.
-	 * 		options for doing this:
-	 * 			- store all in an array, sort, choose highest
-	 * 			- store in an array, but place it at the beginning or end depending on its relation to those pixels. self sorting kind of?
-	 * 			- store one value and compare each new pixel against it. Replace with a pixel that is more different until end
 	 * Traverse that line and find where the boundary is. Calculate both individual pixel boundaries and trail of 3 for blurred edges
 	 * 		- Play with early quitting or full traversal
 	 * Move vertex to position
@@ -31,6 +31,13 @@ function calculateNearestColorLine() {
 
 	let checkedPixels = [];
 	let diffPixels = [];
+	let totalOperations = 0;
+	let onOperation = 0;
+
+	// let regularReport = setInterval(() => {
+	// 	console.log("Sending back progress report...")
+	// 	returnOutput({ type: "progress", data: onOperation / totalOperations, complete: false });
+	// }, DEFAULTS.reportInt);
 
 	for (let [vertexID, vertex] of Object.entries(values.selectedVertices)) {
 		
@@ -41,6 +48,8 @@ function calculateNearestColorLine() {
 		};
 
 		let radiusSqr = values.radius ** 2;
+
+		totalOperations += values.radius * 4; 
 
 		// top half: starts at right (0 radians) and goes to left
 		for (let x = values.radius; x > -values.radius; x--) {
@@ -66,6 +75,8 @@ function calculateNearestColorLine() {
 					y: yCheck
 				};
 			}
+
+			onOperation++;
 		}
 
 		// bottom half: starts at left (pi radians) and goes to right
@@ -92,10 +103,14 @@ function calculateNearestColorLine() {
 					y: yCheck
 				};
 			}
+
+			onOperation++;
 		}
 
 		diffPixels.push([max.x, max.y]);
 	}
+
+	// clearInterval(regularReport);
 
 	returnOutput({ type: "debug-drawPixels-radius", data: checkedPixels, complete: false });
 

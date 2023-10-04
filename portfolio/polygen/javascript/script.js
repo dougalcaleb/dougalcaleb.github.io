@@ -3,10 +3,10 @@
 const DEFAULTS = {
 	ui: {
 		csize: [5, 200],
-		editCircleColor: "rgba(0,0,0,0.5)",
-		brushDrawColor: "rgba(255,255,255,0.05)",
-		selectedVertexColor: { color: "rgba(255,255,255,1)", size: 5 },
-		brushLineWeight: 3,
+		brushIndicatorColor: "rgba(0,0,0,0.5)",
+		brushIndicatorWeight: 3,
+		brushDrawColor: "rgba(255,255,255,0.3)",
+		selectedVertex: { color: "rgba(255,255,255,1)", size: 5 },
 		selectionBrushKeybinds: { "b": true, " ": true },
 	},
 	inputs: {
@@ -17,7 +17,7 @@ const DEFAULTS = {
 
 /*
 
-TODO:
+TO DO:
 
 Features:
 - Brush tool:
@@ -26,15 +26,14 @@ Features:
    - Drag individual vertices
       - Transparency mode?
 
-- Refactor: change brush drawing to be smooth.
-	- Check this JSFiddle: https://jsfiddle.net/aesthaddicts/PEKyw/
-	- Try to use requestAnimationFrame to draw instead of overusing the mousemove event. Should help performance?
-
-- Optimization:
-	- Add a web worker for calculating nearby color changes (required - start with it this way, it will likely be computationally intense)
-	- Add a web worker for vertex generation (optional - it isn't noticeable now)
-
 - Add Delete Color Palette
+
+Other ideas:
+- Reactive brush indicator colors? For indicator, brush, and vertices, based on underlying pixel color. Better contrast
+
+WORKING ON NEXT:
+
+- Vertex moving traversing line to selected pixel
 
 */
 
@@ -651,6 +650,8 @@ class Editor {
 		this.canvas = document.getElementById("canvas-edit");
 		this.ctx = this.canvas.getContext("2d");
 
+		this.preDrawImage = null;
+
 		this.canvasCompressionRatio = 1;
 
 		this.isClean = true;
@@ -666,6 +667,7 @@ class Editor {
 			posY: null,
 			drawing: false,
 			active: false,
+			points: [],
 		};
 
 		this.selectedVertices = {};
@@ -689,7 +691,7 @@ class Editor {
 		Thread.send({
 			verts: PreviewLayer.verts,
 			selectedVerts: this.selectedVertices,
-			canvas: PreviewLayer.ctx.getImageData(0, 0, Control.settings.x, Control.settings.y),
+			canvas: PreviewLayer.imageData,
 			radius: PreviewLayer.vertexMeta.dist,
 		});
 
@@ -699,6 +701,8 @@ class Editor {
 				case "progress":
 					if (data.data == 100) {
 						document.querySelector(".loader-wrap").style.visibility = "hidden";
+					} else {
+						console.log(`Progress: ${(data.data * 100).toFixed(1)}%`);
 					}
 					break;
 				case "debug":
@@ -741,11 +745,6 @@ class Editor {
 		let isInCanvasWindow = false;
 		this.canvasCompressionRatio = this.canvas.offsetWidth / Control.settings.x;
 
-		// Set defaults for drawing
-		this.ctx.strokeStyle = DEFAULTS.ui.editCircleColor;
-		this.ctx.fillStyle = DEFAULTS.ui.brushDrawColor;
-		this.ctx.lineWidth = DEFAULTS.ui.brushLineWeight / this.canvasCompressionRatio;
-
 		// Mouse down and mouse up: set for paint
 		window.addEventListener("mousedown", (Event) => {
 			if (isInPreviewWindow && isInCanvasWindow) {
@@ -774,6 +773,7 @@ class Editor {
 			if (!this.brush.drawing) {
 				this.ctx.clearRect(0, 0, Control.settings.x, Control.settings.y);
 				this.ctx.beginPath();
+				this.ctx.lineWidth = DEFAULTS.ui.brushIndicatorWeight / this.canvasCompressionRatio;
 				this.ctx.arc(this.brush.posX, this.brush.posY, this.brush.size / this.canvasCompressionRatio, 0, 2 * Math.PI);
 				this.ctx.stroke();
 			}
@@ -808,20 +808,25 @@ class Editor {
 		// Calculate cursor position relative to canvas
 		this.brush.posX = ((Event.clientX - this.canvas.getBoundingClientRect().x) / this.canvasCompressionRatio);
 		this.brush.posY = ((Event.clientY - this.canvas.getBoundingClientRect().y) / this.canvasCompressionRatio);
-
-		// Setup common canvas necessities between area indicator and paint
-		this.ctx.beginPath();
-		this.ctx.arc(this.brush.posX, this.brush.posY, this.brush.size / this.canvasCompressionRatio, 0, 2 * Math.PI);
-		this.ctx.fillStyle = DEFAULTS.ui.brushDrawColor;
+		
 
 		// If not drawing, clear the canvas and exit. If drawing, draw the overlay and continue executing.
 		if (!this.brush.drawing) {
-			this.ctx.clearRect(0, 0, Control.settings.x, Control.settings.y);				
+			this.ctx.beginPath();
+			this.ctx.arc(this.brush.posX, this.brush.posY, this.brush.size / this.canvasCompressionRatio, 0, 2 * Math.PI);
+			this.ctx.strokeStyle = DEFAULTS.ui.brushIndicatorColor;
+			this.ctx.lineWidth = DEFAULTS.ui.brushIndicatorWeight / this.canvasCompressionRatio;
+			
+			this.brush.points = [];
+
+			this.ctx.clearRect(0, 0, Control.settings.x, Control.settings.y);
+
 			this.ctx.stroke();
 			this.drawSelectedVertices();
 			return;
 		} else {
-			this.ctx.fill();
+			this.brush.points.push([this.brush.posX, this.brush.posY]);
+			this.drawBrushStroke()
 		}
 
 		// Calculate the nearest vertex to start checking for vertices in the paint area
@@ -889,12 +894,27 @@ class Editor {
 
 		// Debug: draw single nearest vertex
 		if (PreviewLayer.debug.drawNearestVert) {
-			this.ctx.beginPath()
+			this.ctx.beginPath();
 			this.ctx.arc(nearestVert[0], nearestVert[1], 10, 0, 2 * Math.PI);
 			this.ctx.fillStyle = "rgba(255,0,0,1)";
 			this.ctx.fill();
 			this.ctx.fillStyle = DEFAULTS.ui.brushDrawColor;
 		}
+	}
+
+	// Draw the solid edit brush
+	drawBrushStroke() {
+		this.ctx.lineWidth = (this.brush.size * 2) / this.canvasCompressionRatio;
+		this.ctx.lineCap = "round";
+		this.ctx.lineJoin = "round";
+		this.ctx.strokeStyle = DEFAULTS.ui.brushDrawColor;
+		this.ctx.clearRect(0, 0, Control.settings.x, Control.settings.y);
+		this.ctx.beginPath();
+		this.ctx.moveTo(this.brush.points[0][0], this.brush.points[0][1]);
+		for (let point of this.brush.points) {
+			this.ctx.lineTo(point[0], point[1]);
+		}
+		this.ctx.stroke();
 	}
 
 	// Clean up after brush is deactivated
@@ -904,6 +924,7 @@ class Editor {
       	this.brush.FollowEvent.abort();
 		this.brush.FollowEvent = new AbortController();
 		this.brush.active = false;
+		this.brush.points = [];
 		this.ctx.clearRect(0, 0, Control.settings.x, Control.settings.y);
 		this.drawSelectedVertices();
 	}
@@ -912,8 +933,9 @@ class Editor {
 	drawSelectedVertices() {
 		for (let [key, value] of Object.entries(this.selectedVertices)) {
 			this.ctx.beginPath();
-			this.ctx.arc(value.coord[0], value.coord[1], DEFAULTS.ui.selectedVertexColor.size / this.canvasCompressionRatio, 0, 2 * Math.PI);
-			this.ctx.fillStyle = DEFAULTS.ui.selectedVertexColor.color;
+			this.ctx.fillStyle = DEFAULTS.ui.selectedVertex.color;
+			this.ctx.moveTo(value.coord[0], value.coord[1]);
+			this.ctx.arc(value.coord[0], value.coord[1], DEFAULTS.ui.selectedVertex.size / this.canvasCompressionRatio, 0, 2 * Math.PI);
 			this.ctx.fill();
 		}
 	}
@@ -948,9 +970,9 @@ class Preview {
 			drawPoints: false,
 			drawAvgs: false,
 			drawGradientLine: false,
-			draw: true,
-			drawNearestVert: true,
-			drawAllNearestVerts: true,
+			drawGradient: true,
+			drawNearestVert: false,
+			drawAllNearestVerts: false,
 			drawAllCheckedVerts: false,
 		};
 
@@ -1170,7 +1192,7 @@ class Preview {
 		}
 
 		// Draw
-		if (this.debug.draw) {
+		if (this.debug.drawGradient) {
 			this.ctx.fillStyle = gradient;
 			this.ctx.fillRect(0, 0, Control.settings.x, Control.settings.y);
 		}
