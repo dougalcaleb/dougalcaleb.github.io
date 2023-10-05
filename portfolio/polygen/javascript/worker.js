@@ -15,10 +15,14 @@ self.onmessage = (data) => {
 	values.selectedVertices = structuredClone(data.data.selectedVerts);
 	values.radius = data.data.radius;
 
-	calculateNearestColorLine();
+	if (data.data.performance) {
+		calculateNearestColorLineFast();
+	} else {
+		calculateNearestColorLineQuality();
+	}
 };
 
-function calculateNearestColorLine() {
+function calculateNearestColorLineFast() {
 	/**
 	 * Process:
 	 * check in a circle around vertex
@@ -30,6 +34,8 @@ function calculateNearestColorLine() {
 	 */
 
 	let checkedPixels = [];
+	let traversedPixels = [];
+	let actualDiffs = [];
 	let diffPixels = [];
 	let totalOperations = 0;
 	let onOperation = 0;
@@ -41,11 +47,14 @@ function calculateNearestColorLine() {
 
 	for (let [vertexID, vertex] of Object.entries(values.selectedVertices)) {
 		
-		let max = {
+		let otherColor = {
 			diff: 0,
 			x: null,
 			y: null
 		};
+
+		let xOrigin = validateCoord(vertex.coord[0], vertex.coord[1])[0];
+		let yOrigin = validateCoord(vertex.coord[0], vertex.coord[1])[1];
 
 		let radiusSqr = values.radius ** 2;
 
@@ -53,9 +62,6 @@ function calculateNearestColorLine() {
 
 		// top half: starts at right (0 radians) and goes to left
 		for (let x = values.radius; x > -values.radius; x--) {
-			let xOrigin = validateCoord(vertex.coord[0], vertex.coord[1])[0];
-			let yOrigin = validateCoord(vertex.coord[0], vertex.coord[1])[1];
-
 			let xCheck = xOrigin + x;
 			let yCheck = yOrigin + Math.sqrt(Math.abs(radiusSqr - x ** 2));
 			
@@ -68,8 +74,8 @@ function calculateNearestColorLine() {
 				{ x: xCheck, y: yCheck } // checked pixel
 			);
 
-			if (diff > max.diff) {
-				max = {
+			if (diff > otherColor.diff) {
+				otherColor = {
 					diff: diff,
 					x: xCheck,
 					y: yCheck
@@ -81,9 +87,6 @@ function calculateNearestColorLine() {
 
 		// bottom half: starts at left (pi radians) and goes to right
 		for (let x = -values.radius; x < values.radius; x++) {
-			let xOrigin = validateCoord(vertex.coord[0], vertex.coord[1])[0];
-			let yOrigin = validateCoord(vertex.coord[0], vertex.coord[1])[1];
-
 			let xCheck = xOrigin + x;
 			let yCheck = yOrigin - Math.sqrt(Math.abs(radiusSqr - x ** 2));
 			
@@ -96,8 +99,8 @@ function calculateNearestColorLine() {
 				{ x: xCheck, y: yCheck } // checked pixel
 			);
 
-			if (diff > max.diff) {
-				max = {
+			if (diff > otherColor.diff) {
+				otherColor = {
 					diff: diff,
 					x: xCheck,
 					y: yCheck
@@ -107,22 +110,54 @@ function calculateNearestColorLine() {
 			onOperation++;
 		}
 
-		diffPixels.push([max.x, max.y]);
+		diffPixels.push([otherColor.x, otherColor.y]);
+
+		// line traversal
+		let slope = (otherColor.y - yOrigin) / (otherColor.x - xOrigin);
+
+		for (let x = 0; x < Math.abs(otherColor.x - xOrigin); x++) {
+			let travY, travX;
+			if (otherColor.x >= xOrigin) { // point is on the right
+				travY = (x * slope) + yOrigin;
+				travX = xOrigin + x;
+				traversedPixels.push([travX, travY]);
+			} else { // point is on the left
+				travY = (-x * slope) + yOrigin;
+				travX = xOrigin - x;
+				traversedPixels.push([travX, travY]);
+			}
+
+			let diffAtTrav = calcPixelDiff({ x: xOrigin, y: yOrigin }, { x: travX, y: travY });
+
+			if (diffAtTrav >= otherColor.diff) {
+				console.log("Found point or a point greater");
+				otherColor.x = travX;
+				otherColor.y = travY;
+				actualDiffs.push([otherColor.x, otherColor.y]);
+				break;
+			}
+		}
 	}
 
 	// clearInterval(regularReport);
 
 	returnOutput({ type: "debug-drawPixels-radius", data: checkedPixels, complete: false });
+	returnOutput({ type: "debug-drawPixels-line", data: traversedPixels, complete: false });
 
 	returnOutput({ type: "debug-drawPixels-diff", data: diffPixels, complete: false });
+	returnOutput({ type: "debug-drawPixels-diffFinals", data: actualDiffs, complete: false });
 
 	returnOutput({ type: "progress", data: 100, complete: true});
 }
 
+function calculateNearestColorLineQuality() {
+	console.warn("Not implemented");
+}
+
 // return the difference (0-1) of two pixels bases on the RGB averages
-function calcPixelDiff(pix1, pix2) {
-	let rgb1 = getPixelColor(pix1.x, pix1.y);
-	let rgb2 = getPixelColor(pix2.x, pix2.y);
+function calcPixelDiff(origin, checkAgainst) {
+	let rgb1 = getPixelColor(origin.x, origin.y);
+	let rgb2 = getPixelColor(checkAgainst.x, checkAgainst.y);
 
 	let avg1 = (rgb1.r + rgb1.g + rgb1.b + rgb1.a) / 4;
 	let avg2 = (rgb2.r + rgb2.g + rgb2.b + rgb1.a) / 4;
