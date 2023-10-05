@@ -34,6 +34,7 @@ Other ideas:
 WORKING ON NEXT:
 
 - Vertex moving traversing line to selected pixel
+- Add modes: performance or quality (current method = performance | quality = sample a lot more points)
 
 */
 
@@ -693,6 +694,7 @@ class Editor {
 			selectedVerts: this.selectedVertices,
 			canvas: PreviewLayer.imageData,
 			radius: PreviewLayer.vertexMeta.dist,
+			performance: true,
 		});
 
 		Thread.recieve((data) => {
@@ -707,11 +709,16 @@ class Editor {
 					break;
 				case "debug":
 					if (operation[1] == "drawPixels" && operation[2] == "radius") {
-						PreviewLayer.drawBatchPixels(data.data);
+						PreviewLayer.drawBatchPixels(data.data, 2, "black");
 					}
-
 					if (operation[1] == "drawPixels" && operation[2] == "diff") {
-						PreviewLayer.drawBatchPixels(data.data, 10, "orange");
+						PreviewLayer.drawBatchPixels(data.data, 20, "orange");
+					}
+					if (operation[1] == "drawPixels" && operation[2] == "diffFinals") {
+						PreviewLayer.drawBatchPixels(data.data, 20, "blue");
+					}
+					if (operation[1] == "drawPixels" && operation[2] == "line") {
+						PreviewLayer.drawBatchPixels(data.data, 10, "green");
 					}
 					break;
 			}
