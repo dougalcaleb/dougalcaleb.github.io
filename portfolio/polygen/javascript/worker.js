@@ -4,22 +4,37 @@ const DEFAULTS = {
 	reportInt: 5,
 }
 
+const DEBUG = {
+	drawCheckedRadius: false,
+	drawTraversal: true,
+	drawDiffPoint: true,
+}
+
 const values = {
 	imageData: null,
 	selectedVertices: null,
-	radius: 0,
+	radius: 0
 };
 
 self.onmessage = (data) => {
 	values.imageData = data.data.canvas;
 	values.selectedVertices = structuredClone(data.data.selectedVerts);
 	values.radius = data.data.radius;
+	values.grayscale = data.data.grayscale;
 
 	if (data.data.performance) {
 		calculateNearestColorLineFast();
 	} else {
 		calculateNearestColorLineQuality();
 	}
+	/** Try a couple different kernels for the Quality mode:
+	 * [0, -1, 0, -1, 4, -1, 0, -1, 0]
+	 * [-1, -1, -1, -1, 8, -1, -1, -1, -1]
+	 * 
+	 * sobel:
+	 * x: [1, 0, -1, -2, 0, -2, 1, 0, 1]
+	 * y: [1, 2, 1, 0, 0, 0, -1, -2, -1]
+	 */
 };
 
 function calculateNearestColorLineFast() {
@@ -39,6 +54,8 @@ function calculateNearestColorLineFast() {
 	let diffPixels = [];
 	let totalOperations = 0;
 	let onOperation = 0;
+
+	let vertexAdjustment = {};
 
 	// let regularReport = setInterval(() => {
 	// 	console.log("Sending back progress report...")
@@ -129,29 +146,64 @@ function calculateNearestColorLineFast() {
 
 			let diffAtTrav = calcPixelDiff({ x: xOrigin, y: yOrigin }, { x: travX, y: travY });
 
-			if (diffAtTrav >= otherColor.diff) {
-				console.log("Found point or a point greater");
+			if (diffAtTrav >= otherColor.diff && diffAtTrav >= values.threshold && otherColor.diff >= values.threshold) {
 				otherColor.x = travX;
 				otherColor.y = travY;
-				actualDiffs.push([otherColor.x, otherColor.y]);
+				actualDiffs.push([otherColor.x, otherColor.y, diffAtTrav]);
 				break;
 			}
 		}
+
+		console.log(actualDiffs);
+
+		vertexAdjustment[vertexID] = [otherColor.x, otherColor.y];
 	}
 
-	// clearInterval(regularReport);
+	if (DEBUG.drawCheckedRadius) {
+		returnOutput({ type: "debug-drawPixels-radius", data: checkedPixels });
+	}
+	if (DEBUG.drawTraversal) {
+		returnOutput({ type: "debug-drawPixels-line", data: traversedPixels });
+	}
+	if (DEBUG.drawDiffPoint) {
+		returnOutput({ type: "debug-drawPixels-diff", data: diffPixels });
+		returnOutput({ type: "debug-drawPixels-diffFinals", data: actualDiffs });
+	}
 
-	returnOutput({ type: "debug-drawPixels-radius", data: checkedPixels, complete: false });
-	returnOutput({ type: "debug-drawPixels-line", data: traversedPixels, complete: false });
+	returnOutput({ type: "result", data: vertexAdjustment });
 
-	returnOutput({ type: "debug-drawPixels-diff", data: diffPixels, complete: false });
-	returnOutput({ type: "debug-drawPixels-diffFinals", data: actualDiffs, complete: false });
-
-	returnOutput({ type: "progress", data: 100, complete: true});
+	returnOutput({ type: "progress", data: 100});
 }
 
 function calculateNearestColorLineQuality() {
-	console.warn("Not implemented");
+	const grayscale = convertToGrayscale(values.imageData);
+	const smoothed = smoothImage(grayscale);
+}
+
+
+class Image {
+	constructor() { }
+	
+	static smoothImage(imageData) {
+
+	}
+}
+
+// apply a smoothing to image data. Takes ImageData.data returns ImageData.data
+function smoothImage(imageData) {
+
+}
+
+// convert canvas image data to grayscale. Takes canvas ImageData returns canvas ImageData.data
+function convertToGrayscale(canvasImageData) {
+	let grayscaleData = new Uint8ClampedArray(canvasImageData.data);
+	for (let i = 0; i < grayscaleData.length; i += 4) {
+		const avg = 0.299 * grayscaleData[i] + 0.587 * grayscaleData[i + 1] + 0.114 * grayscaleData[i + 2];
+		grayscaleData[i] = avg; // red
+		grayscaleData[i + 1] = avg; // green
+		grayscaleData[i + 2] = avg; // blue
+	}
+	return grayscaleData;
 }
 
 // return the difference (0-1) of two pixels bases on the RGB averages

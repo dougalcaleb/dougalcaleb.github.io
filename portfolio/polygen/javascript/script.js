@@ -111,10 +111,9 @@ class Controls {
 	// Handle controls changing
 	updateSettings(newSettings, redrawVerts = true, bypassDelay = false) {
 
-		
 		if (newSettings.mode == "image") {
-			delete newSettings.x;
-			delete newSettings.y;
+			newSettings.x = PreviewLayer.imgSrc.width;
+			newSettings.y = PreviewLayer.imgSrc.height;
 		}
 		// Refresh settings
 		this.settings = Object.assign(this.settings, newSettings);
@@ -249,6 +248,7 @@ class Controls {
 			document.querySelector(".choose-properties").classList.add("btn-active");
 			document.querySelector(".panel-image-tools").style.display = "none";
 			document.querySelector(".panel-image-properties").style.display = "inline";
+			EditLayer.deactivateBrush();
 		});
 		document.querySelector(".choose-tools").addEventListener("click", () => {
 			this.page = 1;
@@ -307,7 +307,6 @@ class Controls {
 			document.querySelector(".type-2").classList.add("btn-active");
 			this.activeType = 2;
 			this.settings.mode = "image";
-			this.updateSettings(this.settings);
 		});
 
 		// rotation snap buttons (adding/removing active styling)
@@ -689,10 +688,17 @@ class Editor {
 		
 		Thread.open();
 
+		console.log("invoking thread");
+
+		// use these to set the image data to an array of pixel values
+		// PreviewLayer.imageData.data.set(grayscaleData);
+		// PreviewLayer.ctx.putImageData(PreviewLayer.imageData, 0, 0);
+
 		Thread.send({
 			verts: PreviewLayer.verts,
 			selectedVerts: this.selectedVertices,
 			canvas: PreviewLayer.imageData,
+			grayscale: grayscaleData,
 			radius: PreviewLayer.vertexMeta.dist,
 			performance: true,
 		});
@@ -700,6 +706,19 @@ class Editor {
 		Thread.recieve((data) => {
 			let operation = data.type.split("-")
 			switch (operation[0]) {
+				case "result":
+					// console.log("Recieved adjusted vertices:");
+					// console.log(data.data);
+					// setTimeout(() => {
+					// 	for (const [vertexID, coords] of Object.entries(data.data)) {
+					// 		// console.log(vertexID);
+					// 		let assignIdx = [Number(vertexID.split(",")[0]), Number(vertexID.split(",")[1])];
+					// 		// console.log(assignIdx);
+					// 		PreviewLayer.verts[assignIdx[0]][assignIdx[1]] = coords;
+					// 	}
+					// 	PreviewLayer.draw(false);
+					// }, 5000);
+					break;
 				case "progress":
 					if (data.data == 100) {
 						document.querySelector(".loader-wrap").style.visibility = "hidden";
@@ -815,9 +834,8 @@ class Editor {
 		// Calculate cursor position relative to canvas
 		this.brush.posX = ((Event.clientX - this.canvas.getBoundingClientRect().x) / this.canvasCompressionRatio);
 		this.brush.posY = ((Event.clientY - this.canvas.getBoundingClientRect().y) / this.canvasCompressionRatio);
-		
 
-		// If not drawing, clear the canvas and exit. If drawing, draw the overlay and continue executing.
+		// If not drawing, clear the canvas, draw the indicator, and exit. If drawing, draw the overlay and continue executing.
 		if (!this.brush.drawing) {
 			this.ctx.beginPath();
 			this.ctx.arc(this.brush.posX, this.brush.posY, this.brush.size / this.canvasCompressionRatio, 0, 2 * Math.PI);
@@ -833,7 +851,7 @@ class Editor {
 			return;
 		} else {
 			this.brush.points.push([this.brush.posX, this.brush.posY]);
-			this.drawBrushStroke()
+			this.drawBrushStroke();
 		}
 
 		// Calculate the nearest vertex to start checking for vertices in the paint area
@@ -962,7 +980,10 @@ class Preview {
 		// HTML Canvas element
 		this.canvas = document.getElementById("canvas-main");
 		// Canvas context
-		this.ctx = this.canvas.getContext("2d", {willReadFrequently: true});
+		this.ctx = this.canvas.getContext("2d", { willReadFrequently: true });
+		
+		this.dummyCanvas = document.getElementById("canvas-dummy");
+		this.dummyCtx = this.dummyCanvas.getContext("2d");
 
 		this.xAngles = null;
 		this.yAngles = null;
@@ -1013,6 +1034,9 @@ class Preview {
 			return;
 		}
 
+		// console.log("Redrawing. Verts are:");
+		// console.log(this.verts);
+
 		// Clear canvas for new draw. Prevents contamination of colors between changes
 		this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 		EditLayer.clean();
@@ -1021,6 +1045,9 @@ class Preview {
 		if (Control.settings.mode != "image") {
 			this.canvas.height = Control.settings.y.toString();
 			this.canvas.width = Control.settings.x.toString();
+
+			this.dummyCanvas.height = Control.settings.y.toString();
+			this.dummyCanvas.width = Control.settings.x.toString();
 
 			EditLayer.canvas.height = Control.settings.y.toString();
 			EditLayer.canvas.width = Control.settings.x.toString();
@@ -1048,7 +1075,7 @@ class Preview {
 		}
 
 		// Create and draw polygons
-		this.polygons();
+		// this.polygons();
 	}
 
 	// Replace existing vertices with newly calculated vertices. Used by edit mode Recalculate Vertices functionality
