@@ -684,40 +684,29 @@ class Editor {
 	}
 
 	colorSnap() {
-		document.querySelector(".loader-wrap").style.visibility = "visible";
+		// document.querySelector(".loader-wrap").style.visibility = "visible";
 		
 		Thread.open();
 
-		console.log("invoking thread");
+		// console.log("invoking thread");
 
 		// use these to set the image data to an array of pixel values
 		// PreviewLayer.imageData.data.set(grayscaleData);
 		// PreviewLayer.ctx.putImageData(PreviewLayer.imageData, 0, 0);
 
 		Thread.send({
-			verts: PreviewLayer.verts,
+			// verts: PreviewLayer.verts,
 			selectedVerts: this.selectedVertices,
 			canvas: PreviewLayer.imageData,
-			grayscale: grayscaleData,
-			radius: PreviewLayer.vertexMeta.dist,
-			performance: true,
+			// grayscale: grayscaleData,
+			// radius: PreviewLayer.vertexMeta.dist,
+			// performance: true,
 		});
 
 		Thread.recieve((data) => {
 			let operation = data.type.split("-")
 			switch (operation[0]) {
 				case "result":
-					// console.log("Recieved adjusted vertices:");
-					// console.log(data.data);
-					// setTimeout(() => {
-					// 	for (const [vertexID, coords] of Object.entries(data.data)) {
-					// 		// console.log(vertexID);
-					// 		let assignIdx = [Number(vertexID.split(",")[0]), Number(vertexID.split(",")[1])];
-					// 		// console.log(assignIdx);
-					// 		PreviewLayer.verts[assignIdx[0]][assignIdx[1]] = coords;
-					// 	}
-					// 	PreviewLayer.draw(false);
-					// }, 5000);
 					break;
 				case "progress":
 					if (data.data == 100) {
@@ -727,17 +716,9 @@ class Editor {
 					}
 					break;
 				case "debug":
-					if (operation[1] == "drawPixels" && operation[2] == "radius") {
-						PreviewLayer.drawBatchPixels(data.data, 2, "black");
-					}
-					if (operation[1] == "drawPixels" && operation[2] == "diff") {
-						PreviewLayer.drawBatchPixels(data.data, 20, "orange");
-					}
-					if (operation[1] == "drawPixels" && operation[2] == "diffFinals") {
-						PreviewLayer.drawBatchPixels(data.data, 20, "blue");
-					}
-					if (operation[1] == "drawPixels" && operation[2] == "line") {
-						PreviewLayer.drawBatchPixels(data.data, 10, "green");
+					if (operation[1] == "drawFull") {
+						PreviewLayer.imageData.data.set(data.data);
+						PreviewLayer.ctx.putImageData(PreviewLayer.imageData, 0, 0);
 					}
 					break;
 			}
