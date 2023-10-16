@@ -1,41 +1,32 @@
 "use strict";
 
-const DEBUG = {
-	drawCheckedRadius: false,
-	drawTraversal: true,
-	drawDiffPoint: true,
-}
+// TODO:
+/**
+ * The basic edge detection kernels work, sort of, but need more aggressive smoothing.
+ * Try the Sobel operators and see if that works well enough, but that will likely also be affected by noise a lot.
+ * Try to find some way to fine-tune that threshold, because it's kinda just magic numbers right now. Slider maybe? Probably a UI slider.
+ */
 
-self.onmessage = (data) => {
-	Image.imageData = data.data.canvas;
-	Image.selectedVertices = structuredClone(data.data.selectedVerts);
-	Image.height = data.data.canvas.height;
-	Image.width = data.data.canvas.width;
+// Bind to thread manager for cleanliness
+self.onmessage = (data) => { ThreadManager.recieve(data); };
 
-	calculateNearestColorLine();
-	/** Try a couple different kernels:
-	 * [0, -1, 0, -1, 4, -1, 0, -1, 0]
-	 * [-1, -1, -1, -1, 8, -1, -1, -1, -1]
-	 * 
-	 * sobel:
-	 * x: [1, 0, -1, -2, 0, -2, 1, 0, 1]
-	 * y: [1, 2, 1, 0, 0, 0, -1, -2, -1]
-	 * 
-	 * gaussian blur:
-	 * 
-	 */
-};
-
+// Main function
 function calculateNearestColorLine() {
 	const grayscale = Image.convertToGrayscale(Image.imageData);
 	Image.draw(grayscale);
+
 	const smoothed = Image.smoothImage(grayscale);
 	setTimeout(() => {
 		Image.draw(smoothed);
+	}, 1000);
+
+	const edge = Image.edgeDetectSimple(smoothed);
+	setTimeout(() => {
+		Image.draw(edge);
 	}, 2000);
 }
 
-
+// Contains methods and properties to apply effects to the image
 class Image {
 	// generals
 	static imageData;
@@ -46,11 +37,15 @@ class Image {
 	// kernels
 	static gaussian = [1, 2, 1, 2, 4, 2, 1, 2, 1];
 	static gaussian_normalized = [0.0625, 0.125, 0.0625, 0.125, 0.25, 0.125, 0.0625, 0.125, 0.0625];
+
 	static sobel_x = [1, 0, -1, -2, 0, -2, 1, 0, 1];
 	static sobel_y = [1, 2, 1, 0, 0, 0, -1, -2, -1];
 
 	static edge_1 = [0, -1, 0, -1, 4, -1, 0, -1, 0];
+	static edge_1_normalized = [0, -0.25, 0, -0.25, 1, -0.25, 0, -0.25, 0];
+
 	static edge_2 = [-1, -1, -1, -1, 8, -1, -1, -1, -1];
+	static edge_2_normalized = [-1/9, -1/9, -1/9, -1/9, 8/9, -1/9, -1/9, -1/9, -1/9];
 
 	//* NOTE: 'index' always points to the first of the 4 pixel values (red value)
 
@@ -73,7 +68,7 @@ class Image {
 			b: index + (Image.width * 4),
 			br: index + (Image.width * 4) + 4
 		};
-		// index = Image.width * y * 4 + 4 * x
+		
 		const appliedPix = {
 			tl: [imageData[indices.tl] * kernel[0], imageData[indices.tl + 1] * kernel[0], imageData[indices.tl + 2] * kernel[0], imageData[indices.tl + 3] * kernel[0]],
 			t: [imageData[indices.t] * kernel[1], imageData[indices.t + 1] * kernel[1], imageData[indices.t + 2] * kernel[1], imageData[indices.t + 3] * kernel[1]],
@@ -134,9 +129,8 @@ class Image {
 	// Applies a minor Gaussian blur to the image to reduce noise
 	static smoothImage(imageData) {
 		let smoothedData = new Uint8ClampedArray(imageData);
-		Image.Iterate((index) => {
-			const smoothedPixel = Image.applyKernel(index, imageData, Image.gaussian_normalized);
-			// console.log(smoothedPixel);
+		Image.KernelSafeIterate((index) => {
+			let smoothedPixel = Image.applyKernel(index, imageData, Image.gaussian_normalized);
 			smoothedData[index] = smoothedPixel[0];
 			smoothedData[index + 1] = smoothedPixel[1];
 			smoothedData[index + 2] = smoothedPixel[2];
@@ -145,20 +139,24 @@ class Image {
 		return smoothedData;
 	}
 
-	// Iterates over the dimensions of the base image. Calls a callback, passing to it valid indices. A valid index is any pixel that is not an edge pixel.
-	static Iterate(callback) {//! not quite working - incorrectly marks strips
-		for (let a = Image.width * 4; a < Image.imageData.data.length - Image.width * 4; a += 4) {
-			// skip left and right edges
-			if (a % Image.width == 0) {
-				// console.log("Skipped left side: index is " + a);
-				continue;
-			}
-			if ((a + 4) % Image.width == 0) {
-				// console.log("skipped right side. index is " + a);
-				continue;
-			}
+	static edgeDetectSimple(imageData) {
+		let edgeData = new Uint8ClampedArray(imageData);
+		Image.KernelSafeIterate((index) => {
+			let edgePixel = Image.applyKernel(index, imageData, Image.edge_2_normalized);
+			edgeData[index] = edgePixel[0] > 5 ? edgePixel[0] * 100 : 0;
+			edgeData[index + 1] = edgePixel[1] > 5 ? edgePixel[0] * 100 : 0;
+			edgeData[index + 2] = edgePixel[2] > 5 ? edgePixel[0] * 100 : 0;
+			edgeData[index + 3] = 255;
+		});
+		return edgeData;
+	}
 
-			// return to the callback with a kernel-able pixel index
+	// Iterates over the dimensions of the base image. Calls a callback, passing to it valid indices. A valid index is any pixel that is not an edge pixel.
+	static KernelSafeIterate(callback) {
+		for (let a = Image.width * 4; a < (Image.width * (Image.height - 1)) * 4; a += 4) { // skip top & bottom
+			if (a % (Image.width * 4) == 0 || (a + 4) % (Image.width * 4) == 0) { // skip sides
+				continue;
+			}
 			callback(a);
 		}
 	}
@@ -174,53 +172,22 @@ class Image {
 		}
 		return grayscaleData;
 	}
-
-	// return the difference (0-1) of two pixels bases on the RGB averages
-	static calcPixelDiff(origin, checkAgainst) {
-		let rgb1 = getPixelColor(origin.x, origin.y);
-		let rgb2 = getPixelColor(checkAgainst.x, checkAgainst.y);
-
-		let avg1 = (rgb1.r + rgb1.g + rgb1.b + rgb1.a) / 4;
-		let avg2 = (rgb2.r + rgb2.g + rgb2.b + rgb1.a) / 4;
-
-		return Math.abs(avg2 - avg1);
-	}
-
-	// Returns an RGBA color of the color at a given pixel on the canvas
-	static getPixelColor(x, y) {
-		// Get pixel color from canvas and apply brightness alterations to RGB components
-		let r = Image.imageData.data[y * (Image.imageData.width * 4) + x * 4];
-		let g = Image.imageData.data[y * (Image.imageData.width * 4) + x * 4 + 1];
-		let b = Image.imageData.data[y * (Image.imageData.width * 4) + x * 4 + 2];
-		let a = Image.imageData.data[y * (Image.imageData.width * 4) + x * 4 + 3];
-		return { r: r, g: g, b: b, a: a };
-	}
-
-	// Adjust given XY coords to be valid if not
-	static validateCoord(x, y) {
-		x = Math.round(x);
-		y = Math.round(y);
-		if (x < 0) {
-			x = 0;
-		}
-		if (y < 0) {
-			y = 0;
-		}
-		if (x > Image.imageData.width - 1) {	
-			x = Image.imageData.width - 1;
-		}
-		if (y > Image.imageData.height - 1) {
-			y = Image.imageData.height - 1;
-		}
-
-		return [x, y];
-	}
 }
 
+// Handles the worker <--> main script connection
 class ThreadManager {
 	constructor() { return null; }
 
 	static post(data) {
 		postMessage(data);
+	}
+
+	static recieve(data) {
+		Image.imageData = data.data.canvas;
+		Image.selectedVertices = structuredClone(data.data.selectedVerts);
+		Image.height = data.data.canvas.height;
+		Image.width = data.data.canvas.width;
+
+		calculateNearestColorLine();
 	}
 }
