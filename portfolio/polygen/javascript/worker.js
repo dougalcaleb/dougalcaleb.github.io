@@ -1,5 +1,3 @@
-"use strict";
-
 // TODO:
 /**
  * The basic edge detection kernels work, sort of, but need more aggressive smoothing.

@@ -1,5 +1,3 @@
-"use strict"
-
 import { Preview } from "./previewController.js";
 import { Editor } from "./editorController.js";
 import { Controls } from "./uiController.js";
@@ -7,27 +5,26 @@ import { LoadingIndicator } from "./loadingbar.js";
 import { Modals } from "./modal.js";
 import { Store } from "./dataController.js";
 
-/*
+/* 
+TODO:
 
-TO DO:
+CURRENT:
+- Vertices align to detected edges
 
 Features:
-- Brush tool:
-   - Snap to color
-   - Falloff for snap to color?
-   - Drag individual vertices
-      - Transparency mode?
+- Vertex snap to color line
+	- Edit mode: draw to erase or restore sections of detected edges
+	- Adjustable threshold and proportional falloff
+- Individual vertex editing
+	- Proportional Falloff
+	- Transparency mode?
 
-- Add Delete Color Palette
+- Delete color palette
 
-WORKING ON NEXT:
-
-- Finish split of classes into files
-- Vertices move towards detected edges
+Fixes:
+- Fix color palette modal not applying on save
 - Rewrite modal to be a popup
-- Additional controls for edge detection
 
-- Fix new color palette not applying on save
 */
 
 

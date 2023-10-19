@@ -1,5 +1,3 @@
-"use strict"
-
 import { DEFAULTS } from "./globals.js";
 
 let DataStore;

@@ -1,10 +1,4 @@
-"use strict"
-
-// Create a web worker to run heavy processes in the background. Returns a promise
-/** Usage:
- * 	new Thread().then((returnsOutputHere) => {})
- *	Thread.send(inputData);
- */
+// Manages the web worker that runs the heavy image calculations in the background. Currently does not support more than one worker.
  export class Thread {
 
 	static supported = true;
