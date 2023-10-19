@@ -26,6 +26,8 @@ WORKING ON NEXT:
 - Vertices move towards detected edges
 - Rewrite modal to be a popup
 - Additional controls for edge detection
+
+- Fix new color palette not applying on save
 */
 
 
@@ -40,3 +42,4 @@ const LoadingBar = new LoadingIndicator();
 
 DataStore.route("EditLayer", EditLayer);
 DataStore.route("PreviewLayer", PreviewLayer);
+DataStore.route("Modal", Modal);

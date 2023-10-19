@@ -158,8 +158,8 @@ export class Controls {
 
 		// Create the edit pop up modal
 		opts.children[0].addEventListener("click", async () => {
-			let newColors = await Modal.modal("Edit Color Palette", this.palettes[pos]);
-			Modal.destroy();
+			let newColors = await DataStore.Modal.modal("Edit Color Palette", this.palettes[pos]);
+			DataStore.Modal.destroy();
 			if (newColors.length != 0) {
 				this.palettes[pos] = newColors;
 				localStorage.setItem(this.savePalettesAs, JSON.stringify(this.palettes));
@@ -459,8 +459,8 @@ export class Controls {
 
 		// add color palette
 		document.querySelector(".palette-add").addEventListener("click", async () => {
-			let colors = await Modal.modal("New Color Palette");
-			Modal.destroy();
+			let colors = await DataStore.Modal.modal("New Color Palette");
+			DataStore.Modal.destroy();
 			if (colors.length != 0) {
 				this.addPalette(colors);
 			}
