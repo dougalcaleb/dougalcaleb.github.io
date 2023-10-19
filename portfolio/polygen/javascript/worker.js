@@ -44,7 +44,7 @@ class Image {
 	// kernels
 	static gaussian = [1, 2, 1, 2, 4, 2, 1, 2, 1];
 	static gaussian_normalized = [0.0625, 0.125, 0.0625, 0.125, 0.25, 0.125, 0.0625, 0.125, 0.0625];
-	static gaussian_large_normalized = [0.00000067, 0.00002292, 0.00019117, 0.00038771, 0.00019117, 0.00002292, 0.00000067, 0.00002292, 0.00078633, 0.00655965, 0.01330373, 0.00655965, 0.00078633, 0.00002292, 0.00019117, 0.00655965, 0.05472157, 0.11098164, 0.05472157, 0.00655965, 0.00019117, 0.00038771, 0.01330373, 0.11098164, 0.22508352, 0.11098164, 0.01330373, 0.00038771, 0.00019117, 0.00655965, 0.05472157, 0.11098164, 0.05472157, 0.00655965, 0.00019117, 0.00002292, 0.00078633, 0.00655965, 0.01330373, 0.00655965, 0.00078633, 0.00002292, 0.00000067, 0.00002292, 0.00019117, 0.00038771, 0.00019117, 0.00002292, 0.00000067];;
+	static gaussian_large_normalized = [0.00000067, 0.00002292, 0.00019117, 0.00038771, 0.00019117, 0.00002292, 0.00000067, 0.00002292, 0.00078633, 0.00655965, 0.01330373, 0.00655965, 0.00078633, 0.00002292, 0.00019117, 0.00655965, 0.05472157, 0.11098164, 0.05472157, 0.00655965, 0.00019117, 0.00038771, 0.01330373, 0.11098164, 0.22508352, 0.11098164, 0.01330373, 0.00038771, 0.00019117, 0.00655965, 0.05472157, 0.11098164, 0.05472157, 0.00655965, 0.00019117, 0.00002292, 0.00078633, 0.00655965, 0.01330373, 0.00655965, 0.00078633, 0.00002292, 0.00000067, 0.00002292, 0.00019117, 0.00038771, 0.00019117, 0.00002292, 0.00000067];
 
 	static sobel_x = [1, 0, -1, 2, 0, -2, 1, 0, -1];
 	static sobel_y = [1, 2, 1, 0, 0, 0, -1, -2, -1];
@@ -203,14 +203,15 @@ class Image {
 	// Applies a minor Gaussian blur to the image to reduce noise
 	static smoothImage(imageData, useLargeGaussian = true, largeGaussianDec = 4) {
 		let smoothedData = new Uint8ClampedArray(imageData);
+		let adjGauss;
 
 		if (useLargeGaussian) {
-			Image.gaussian_large_normalized.forEach((val) => {
+			adjGauss = Image.gaussian_large_normalized.map((val) => {
 				return Number(val.toFixed(largeGaussianDec));
 			});
 		}
 
-		const kernel = useLargeGaussian ? Image.gaussian_large_normalized : Image.gaussian_normalized
+		const kernel = useLargeGaussian ? adjGauss : Image.gaussian_normalized;
 		Image.KernelSafeIterate((index) => {
 			let smoothedPixel = Image.applyKernel(index, imageData, kernel);
 			smoothedData[index] = smoothedPixel[0];
