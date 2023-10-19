@@ -12,18 +12,25 @@ self.onmessage = (data) => { ThreadManager.recieve(data); };
 
 // Main function
 function calculateNearestColorLine() {
+	let tStart, tEnd;
+
+	tStart = Date.now();
 	const grayscale = Image.convertToGrayscale(Image.imageData);
+	tEnd = Date.now();
 	Image.draw(grayscale);
+	console.log(`Grayscale conversion: ${tEnd - tStart}ms`);
 
+	tStart = Date.now();
 	const smoothed = Image.smoothImage(grayscale);
-	setTimeout(() => {
-		Image.draw(smoothed);
-	}, 1000);
+	tEnd = Date.now();
+	console.log(`Image smoothing: ${tEnd - tStart}ms`);
+	Image.draw(smoothed);
 
-	const edge = Image.edgeDetectSimple(smoothed);
-	setTimeout(() => {
-		Image.draw(edge);
-	}, 2000);
+	tStart = Date.now();
+	const edge_sobel = Image.edgeDetectSobel(smoothed);
+	tEnd = Date.now();
+	console.log(`Sobel edge detection: ${tEnd - tStart}ms`);
+	Image.draw(edge_sobel);
 }
 
 // Contains methods and properties to apply effects to the image
@@ -37,8 +44,9 @@ class Image {
 	// kernels
 	static gaussian = [1, 2, 1, 2, 4, 2, 1, 2, 1];
 	static gaussian_normalized = [0.0625, 0.125, 0.0625, 0.125, 0.25, 0.125, 0.0625, 0.125, 0.0625];
+	static gaussian_large_normalized = [0.00000067, 0.00002292, 0.00019117, 0.00038771, 0.00019117, 0.00002292, 0.00000067, 0.00002292, 0.00078633, 0.00655965, 0.01330373, 0.00655965, 0.00078633, 0.00002292, 0.00019117, 0.00655965, 0.05472157, 0.11098164, 0.05472157, 0.00655965, 0.00019117, 0.00038771, 0.01330373, 0.11098164, 0.22508352, 0.11098164, 0.01330373, 0.00038771, 0.00019117, 0.00655965, 0.05472157, 0.11098164, 0.05472157, 0.00655965, 0.00019117, 0.00002292, 0.00078633, 0.00655965, 0.01330373, 0.00655965, 0.00078633, 0.00002292, 0.00000067, 0.00002292, 0.00019117, 0.00038771, 0.00019117, 0.00002292, 0.00000067];;
 
-	static sobel_x = [1, 0, -1, -2, 0, -2, 1, 0, 1];
+	static sobel_x = [1, 0, -1, 2, 0, -2, 1, 0, -1];
 	static sobel_y = [1, 2, 1, 0, 0, 0, -1, -2, -1];
 
 	static edge_1 = [0, -1, 0, -1, 4, -1, 0, -1, 0];
@@ -52,11 +60,28 @@ class Image {
 	constructor() { return null; }
 
 	static draw(imageData) {
+		console.log("-- Sending image to be drawn");
 		ThreadManager.post({ type: "debug-drawFull", data: imageData });
 	}
 
-	// applies a kernel to a single pixel and returns the value. Currently only supports 3x3 kernels
+	// Router for the 2 different kernel application functions.
+	// applyKernelDynamic is something like 4x or 5x slower but allows kernels of different sizes.
+	// applyKernelFast is fast but only works for 3x3 kernels.
 	static applyKernel(index, imageData, kernel) {
+		if (Math.sqrt(kernel.length) % 1 !== 0) {
+			console.warn("Invalid kernel size. Must be an odd square kernel.");
+			return;
+		}
+
+		if (kernel.length == 9) {
+			return Image.applyKernelFast(index, imageData, kernel);
+		} else {
+			return Image.applyKernelDynamic(index, imageData, kernel);
+		}
+	}
+
+	// applies a kernel to a single pixel and returns the value. Currently only supports 3x3 kernels
+	static applyKernelFast(index, imageData, kernel) {
 		const indices = {
 			tl: index - (Image.width * 4) - 4,
 			t: index - (Image.width * 4),
@@ -125,37 +150,97 @@ class Image {
 		
 		return adjustedPixel;
 	}
+
+	static applyKernelDynamic(index, imageData, kernel) {
+		const kSize = Math.sqrt(kernel.length);
+		const halfKSize = Math.floor(kSize / 2);
+		const adjustedPixel = [null, null, null, null];
+		let kIdx = 0;
+		
+		for (let ky = -halfKSize; ky <= halfKSize; ky++) {
+			for (let kx = -halfKSize; kx <= halfKSize; kx++) {
+				const imgIdx = index + (ky * Image.width * 4) + (kx * 4);
+				const pixel = imageData.slice(imgIdx, imgIdx + 4);
+
+				adjustedPixel[0] += pixel[0] * kernel[kIdx];
+				adjustedPixel[1] += pixel[1] * kernel[kIdx];
+				adjustedPixel[2] += pixel[2] * kernel[kIdx];
+				adjustedPixel[3] += pixel[3] * kernel[kIdx];
+
+				kIdx++;
+			}
+		}
+
+		return adjustedPixel;
+	}
+
+	static edgeDetectSobel(imageData, edgeThreshold = 100) {
+		let gradientVectors = new Array(imageData.length);
+		Image.KernelSafeIterate((index) => {
+			// [magnitude, direction]
+			const gradientVector = [null, null];
+			let sx = Image.applyKernel(index, imageData, Image.sobel_x);
+			let sy = Image.applyKernel(index, imageData, Image.sobel_y);
+
+			gradientVector[0] = Math.sqrt(sx[0] ** 2 + sy[0] ** 2);
+			// gradientVector[1] = Math.atan2(sy[0], sx[0]);
+
+			if (gradientVector[0] >= edgeThreshold) {
+				gradientVectors[index] = 255;
+				gradientVectors[index + 1] = 255;
+				gradientVectors[index + 2] = 255;
+				gradientVectors[index + 3] = 255;
+			} else {
+				gradientVectors[index] = 0;
+				gradientVectors[index + 1] = 0;
+				gradientVectors[index + 2] = 0;
+				gradientVectors[index + 3] = 255;
+			}
+		}, Image.sobel_x);
+		return gradientVectors;
+	}
 	
 	// Applies a minor Gaussian blur to the image to reduce noise
-	static smoothImage(imageData) {
+	static smoothImage(imageData, useLargeGaussian = true, largeGaussianDec = 4) {
 		let smoothedData = new Uint8ClampedArray(imageData);
+
+		if (useLargeGaussian) {
+			Image.gaussian_large_normalized.forEach((val) => {
+				return Number(val.toFixed(largeGaussianDec));
+			});
+		}
+
+		const kernel = useLargeGaussian ? Image.gaussian_large_normalized : Image.gaussian_normalized
 		Image.KernelSafeIterate((index) => {
-			let smoothedPixel = Image.applyKernel(index, imageData, Image.gaussian_normalized);
+			let smoothedPixel = Image.applyKernel(index, imageData, kernel);
 			smoothedData[index] = smoothedPixel[0];
 			smoothedData[index + 1] = smoothedPixel[1];
 			smoothedData[index + 2] = smoothedPixel[2];
 			smoothedData[index + 3] = smoothedPixel[3];
-		});
+		}, kernel);
 		return smoothedData;
 	}
 
 	static edgeDetectSimple(imageData) {
+		const kernel = Image.edge_2_normalized;
 		let edgeData = new Uint8ClampedArray(imageData);
 		Image.KernelSafeIterate((index) => {
-			let edgePixel = Image.applyKernel(index, imageData, Image.edge_2_normalized);
+			let edgePixel = Image.applyKernel(index, imageData, kernel);
 			edgeData[index] = edgePixel[0] > 5 ? edgePixel[0] * 100 : 0;
 			edgeData[index + 1] = edgePixel[1] > 5 ? edgePixel[0] * 100 : 0;
 			edgeData[index + 2] = edgePixel[2] > 5 ? edgePixel[0] * 100 : 0;
 			edgeData[index + 3] = 255;
-		});
+		}, kernel);
 		return edgeData;
 	}
 
 	// Iterates over the dimensions of the base image. Calls a callback, passing to it valid indices. A valid index is any pixel that is not an edge pixel.
-	static KernelSafeIterate(callback) {
-		for (let a = Image.width * 4; a < (Image.width * (Image.height - 1)) * 4; a += 4) { // skip top & bottom
+	static KernelSafeIterate(callback, kernel) {
+		const halfKSize = Math.floor(Math.sqrt(kernel.length) / 2);
+		for (let a = (Image.width * 4 * halfKSize); a < (Image.width * (Image.height - (1 * halfKSize))) * 4; a += 4) { // skip top & bottom
 			if (a % (Image.width * 4) == 0 || (a + 4) % (Image.width * 4) == 0) { // skip sides
 				continue;
+
 			}
 			callback(a);
 		}
