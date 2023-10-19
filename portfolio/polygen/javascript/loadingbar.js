@@ -1,5 +1,3 @@
-"use strict"
-
 export class LoadingIndicator {
 	constructor() {
 		this.canvas = document.getElementById("loader");
