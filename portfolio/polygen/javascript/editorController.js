@@ -45,26 +45,17 @@ export class Editor {
 	}
 
 	colorSnap() {
-		// document.querySelector(".loader-wrap").style.visibility = "visible";
-		
-		Thread.open();
+		document.querySelector(".loader-wrap").style.visibility = "visible";
 
-		// console.log("invoking thread");
+		const ImageToolsWorker = new Thread();
+		ImageToolsWorker.open("imageToolsWorker");
 
-		// use these to set the image data to an array of pixel values
-		// PreviewLayer.imageData.data.set(grayscaleData);
-		// PreviewLayer.ctx.putImageData(PreviewLayer.imageData, 0, 0);
-
-		Thread.send({
-			// verts: PreviewLayer.verts,
+		ImageToolsWorker.send({
 			selectedVerts: this.selectedVertices,
-			canvas: DataStore.PreviewLayer.imageData,
-			// grayscale: grayscaleData,
-			// radius: PreviewLayer.vertexMeta.dist,
-			// performance: true,
+			canvas: DataStore.PreviewLayer.imageData
 		});
 
-		Thread.recieve((data) => {
+		ImageToolsWorker.recieve((data) => {
 			let operation = data.type.split("-")
 			switch (operation[0]) {
 				case "result":
