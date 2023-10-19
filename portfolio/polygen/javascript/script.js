@@ -963,7 +963,7 @@ class Preview {
 		// Canvas context
 		this.ctx = this.canvas.getContext("2d", { willReadFrequently: true });
 		
-		this.dummyCanvas = document.getElementById("canvas-dummy");
+		this.dummyCanvas = new OffscreenCanvas(1,1);
 		this.dummyCtx = this.dummyCanvas.getContext("2d");
 
 		this.xAngles = null;
