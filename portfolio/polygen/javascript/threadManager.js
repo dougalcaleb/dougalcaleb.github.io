@@ -1,42 +1,47 @@
-// Manages the web worker that runs the heavy image calculations in the background. Currently does not support more than one worker.
- export class Thread {
-
+// Manages web workers that run in the background.
+export class Thread {
 	static supported = true;
-	static worker = null;
-	static callback = null;
+	static openWorkers = [];
 
 	constructor() {
-		return null;
+		this.callback = null;
+		this.worker = null;
+		this.workerName = null;
 	}
 
-	static open() {
+	open(workerName) {
 		if (!Thread.supported || !window.Worker) {
 			console.warn("WebWorkers aren't supported. Features disabled: color line finding.");
 			Thread.supported = false;
 			return;
 		}
 
-		Thread.worker = new Worker("./javascript/worker.js");
+		if (Thread.openWorkers.includes(workerName)) throw new Error("Thread Error: attempting to open a worker that is already open");
 
-		Thread.worker.onmessage = (data) => {
-			Thread.#__handleMessageRecieved(data.data);
-		}
+		this.worker = new Worker(`./javascript/${workerName}.js`);
+		this.workerName = workerName;
 
-		Thread.worker.onerror = (e) => {
-			console.warn("Worker Error:");
-			console.warn(e);
-		}
+		Thread.openWorkers.push(workerName);
+
+		this.worker.onmessage = (data) => {
+			this.callback(data.data);
+		};
+
+		this.worker.onerror = (e) => {
+			console.error(e);
+		};
 	}
 
-	static send(data) {
-		Thread.worker.postMessage(data);
+	send(data) {
+		this.worker.postMessage(data);
 	}
 
-	static recieve(callback) {
-		Thread.callback = callback;
+	recieve(callback) {
+		this.callback = callback;
 	}
 
-	static #__handleMessageRecieved(data) {
-		Thread.callback(data);
+	close() {
+		this.worker.terminate();
+		Thread.openWorkers.splice(Thread.openWorkers.indexOf(this.workerName), 1);
 	}
 }
