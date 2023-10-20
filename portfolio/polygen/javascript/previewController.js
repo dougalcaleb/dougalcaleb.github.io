@@ -65,9 +65,6 @@ export class Preview {
 			return;
 		}
 
-		// console.log("Redrawing. Verts are:");
-		// console.log(this.verts);
-
 		// Clear canvas for new draw. Prevents contamination of colors between changes
 		this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 		DataStore.EditLayer.clean();
@@ -173,7 +170,7 @@ export class Preview {
 
 	// Calculate and draw the underlying gradient that will be used to determine the colors of the polygons
 	drawGradient() {
-		let gradient;
+		let gradient, gradData;
 		if (DataStore.settings.mode == "linear") {
 			// Center coords (also lengths to center)
 			let centerX = DataStore.settings.x / 2;
@@ -238,8 +235,25 @@ export class Preview {
 				this.ctx.stroke();
 			}
 
+			gradData = {
+				type: "linear",
+				x1: x1,
+				y1: y1,
+				x2: x2,
+				y2: y2,
+				stops: []
+			};
+
 			gradient = this.ctx.createLinearGradient(x1, y1, x2, y2);
 		} else {
+			gradData = {
+				type: "radial",
+				x: DataStore.settings.posx,
+				y: DataStore.settings.posy,
+				iRad: DataStore.settings.irad * Math.max(DataStore.settings.x, DataStore.settings.y),
+				oRad: DataStore.settings.orad * Math.max(DataStore.settings.x, DataStore.settings.y),
+				stops: []
+			};
 			gradient = this.ctx.createRadialGradient(
 				DataStore.settings.posx * DataStore.settings.x,
 				DataStore.settings.posy * DataStore.settings.y,
@@ -254,6 +268,7 @@ export class Preview {
 		for (let a = 0; a < DataStore.settings.colors.length; a++) {
 			let pos = (1 / (DataStore.settings.colors.length - 1)) * a;
 			gradient.addColorStop(pos, DataStore.settings.colors[a]);
+			gradData.stops.push([pos, DataStore.settings.colors[a]]);
 		}
 
 		// Draw
@@ -261,6 +276,8 @@ export class Preview {
 			this.ctx.fillStyle = gradient;
 			this.ctx.fillRect(0, 0, DataStore.settings.x, DataStore.settings.y);
 		}
+
+		DataStore.set("gradientData", gradData);
 	}
 
 	polygons() {
