@@ -3,7 +3,7 @@
 @mixin name - function (used @include name(param))
 $name - variable
 */
-.controls .control-palettes .palette-add svg, .controls .control-palettes .palette .palette-options svg, .controls .control-btn-wrap div svg, .controls .control-toggle-wrap div svg, .preview canvas, .edit-modal-bg .edit-modal, .edit-modal-bg .edit-modal .modal-color-add svg, .loader-center {
+.controls .control-palettes .palette-add svg, .controls .control-palettes .palette .palette-options svg, .controls .control-btn-wrap div svg, .controls .control-toggle-wrap div svg, .preview .main-canvas, .edit-modal-bg .edit-modal, .edit-modal-bg .edit-modal .modal-color-add svg, .loader-wrap #loader {
   position: absolute;
   left: 0;
   right: 0;
@@ -257,7 +257,7 @@ $name - variable
   background: #191919;
   z-index: 1;
 }
-.preview canvas {
+.preview .main-canvas {
   max-width: 90%;
   max-height: 90%;
 }
@@ -395,44 +395,8 @@ $name - variable
   width: 100%;
   background: rgba(0, 0, 0, 0.5);
   backdrop-filter: blur(3px);
-  visibility: hidden;
 }
-
-.loader-center {
-  height: 50px;
-  width: 50px;
-}
-
-.loader {
-  width: 48px;
-  height: 48px;
-  border: 3px solid #FFF;
-  border-radius: 50%;
-  display: inline-block;
-  position: absolute;
-  box-sizing: border-box;
-  animation: rotation 1s linear infinite;
-}
-
-.loader::after {
-  content: "";
-  box-sizing: border-box;
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  border: 3px solid transparent;
-  border-bottom-color: #FF3D00;
-}
-
-@keyframes rotation {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
+.loader-wrap #loader {
+  background: white;
+  max-width: 50%;
 }

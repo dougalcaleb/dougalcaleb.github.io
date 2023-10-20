@@ -27,6 +27,16 @@ export class Store {
 		return this.settings;
 	}
 
+	// updates this.objname. Always overwrites.
+	set(objName, settings) {
+		this[objName] = Object.assign(this[objName] || {}, settings);
+	}
+
+	// returns this.objName
+	get(objName) {
+		return this[objName];
+	}
+
 	// Creates a reference to other classes to avoid circular dependencies but allow inter-class side effects
 	route(objName, objRef) {
 		if (this[objName]) throw new Error(`Data Store routing rrror: Attempting to overwrite route ${objName}`);
