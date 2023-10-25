@@ -12,23 +12,109 @@ self.onmessage = (data) => { ThreadManager.recieve(data); };
 function calculateNearestColorLine() {
 	let tStart, tEnd;
 
+	ThreadManager.post({
+		type: "progress",
+		data: {
+			elapsedTime: 0,
+			new: true,
+			operation: "Grayscale Conversion",
+			begin: true,
+			startTime: Date.now()
+		}
+	})
+
 	tStart = Date.now();
 	const grayscale = Image.convertToGrayscale(Image.imageData);
 	tEnd = Date.now();
-	Image.draw(grayscale);
-	console.log(`Grayscale conversion: ${tEnd - tStart}ms`);
+
+	ThreadManager.post({
+		type: "progress",
+		data: {
+			elapsedTime: tEnd - tStart,
+			new: false,
+			operation: "Grayscale Conversion"
+		}
+	})
+
+	ThreadManager.post({
+		type: "progress",
+		data: {
+			elapsedTime: 0,
+			new: true,
+			operation: "Image Smoothing",
+			begin: true,
+			startTime: Date.now()
+		}
+	})
 
 	tStart = Date.now();
 	const smoothed = Image.smoothImage(grayscale);
 	tEnd = Date.now();
-	console.log(`Image smoothing: ${tEnd - tStart}ms`);
-	Image.draw(smoothed);
+
+	ThreadManager.post({
+		type: "progress",
+		data: {
+			elapsedTime: tEnd - tStart,
+			new: false,
+			operation: "Image Smoothing"
+		}
+	})
+
+	ThreadManager.post({
+		type: "progress",
+		data: {
+			elapsedTime: 0,
+			new: true,
+			operation: "Edge Detection",
+			begin: true,
+			startTime: Date.now()
+		}
+	})
 
 	tStart = Date.now();
 	const edge_sobel = Image.edgeDetectSobel(smoothed);
 	tEnd = Date.now();
-	console.log(`Sobel edge detection: ${tEnd - tStart}ms`);
 	Image.draw(edge_sobel);
+
+	ThreadManager.post({
+		type: "progress",
+		data: {
+			elapsedTime: tEnd - tStart,
+			new: false,
+			operation: "Edge Detection"
+		}
+	})
+
+	ThreadManager.post({
+		type: "progress",
+		data: {
+			elapsedTime: 0,
+			new: true,
+			operation: "Move Vertices",
+			begin: true,
+			startTime: Date.now()
+		}
+	})
+
+	tStart = Date.now();
+	Image.moveVerticesToLines(edge_sobel);
+	tEnd = Date.now();
+
+	ThreadManager.post({
+		type: "progress",
+		data: {
+			elapsedTime: tEnd - tStart,
+			new: false,
+			operation: "Move Vertices"
+		}
+	});
+
+	ThreadManager.post({
+		type: "progress",
+		data: {
+			complete: true
+		}
+	})
 }
 
 // Contains methods and properties to apply effects to the image
@@ -36,6 +122,7 @@ class Image {
 	// generals
 	static imageData;
 	static selectedVertices;
+	static vertexRadius;
 	static height;
 	static width;
 
@@ -256,6 +343,22 @@ class Image {
 		}
 		return grayscaleData;
 	}
+
+	static moveVerticesToLines(imageData) {
+		/** This function will:
+		 * 1. Iterate over all vertices
+		 * 2. For each vertex, find if there are positive pixels within its radius
+		 * 3. Calculate the total distance to move to that pixel
+		 * 4. Move the vertex to that pixel
+		 * 5. Move neighbors proportionally
+		 */
+		
+		// for (const vertex of Image.selectedVertices) {
+		// 	// check in a square, validate with radius
+		// 	for (let idx = -Image.vertexRadius; idx <)
+		// }
+
+	}
 }
 
 // Handles the worker <--> main script connection
@@ -271,6 +374,7 @@ class ThreadManager {
 		Image.selectedVertices = structuredClone(data.data.selectedVerts);
 		Image.height = data.data.canvas.height;
 		Image.width = data.data.canvas.width;
+		Image.vertexRadius = data.data.radius;
 
 		calculateNearestColorLine();
 	}

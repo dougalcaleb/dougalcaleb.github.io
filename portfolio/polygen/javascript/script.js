@@ -35,7 +35,7 @@ const PreviewLayer = new Preview(DataStore);
 const EditLayer = new Editor(DataStore);
 const Modal = new Modals();
 const Control = new Controls(DataStore, PreviewLayer, EditLayer);
-const LoadingBar = new LoadingIndicator(DataStore);
+// const LoadingBar = new LoadingIndicator(DataStore);
 
 DataStore.route("EditLayer", EditLayer);
 DataStore.route("PreviewLayer", PreviewLayer);

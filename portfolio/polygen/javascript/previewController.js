@@ -103,7 +103,7 @@ export class Preview {
 		}
 
 		// Create and draw polygons
-		// this.polygons();
+		this.polygons();
 	}
 
 	// Replace existing vertices with newly calculated vertices. Used by edit mode Recalculate Vertices functionality

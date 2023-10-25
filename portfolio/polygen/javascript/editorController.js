@@ -46,14 +46,24 @@ export class Editor {
 
 	colorSnap() {
 		document.querySelector(".loader-wrap").style.visibility = "visible";
+		document.querySelector(".loader-wrap").style.opacity = "1";
 
 		const ImageToolsWorker = new Thread();
 		ImageToolsWorker.open("imageToolsWorker");
 
 		ImageToolsWorker.send({
 			selectedVerts: this.selectedVertices,
+			radius: DataStore.PreviewLayer.vertexMeta.dist,
 			canvas: DataStore.PreviewLayer.imageData
 		});
+
+		let currentLine = {
+			element: null,
+			text: null,
+			elapsed: 0,
+			elapsedSince: null,
+		}
+		let updateInt;
 
 		ImageToolsWorker.recieve((data) => {
 			let operation = data.type.split("-")
@@ -61,10 +71,30 @@ export class Editor {
 				case "result":
 					break;
 				case "progress":
-					if (data.data == 100) {
-						document.querySelector(".loader-wrap").style.visibility = "hidden";
+					if (data.data.begin) {
+						clearInterval(updateInt);
+						updateInt = setInterval(() => {
+							currentLine.elapsedSince = data.data.startTime;
+							currentLine.elapsed = Date.now() - currentLine.elapsedSince;
+							currentLine.element.innerHTML = `${currentLine.text} (${Number((currentLine.elapsed / 1000).toFixed(0)) || 0}s)`;
+						}, 1000);
+						
+					}
+					if (data.data.complete) {
+						setTimeout(() => {
+							document.querySelector(".loader-wrap").style.visibility = "hidden";
+							document.querySelector(".loader-wrap").style.opacity = 0;
+						}, 400);
+						return;
+					}
+					if (data.data.new) {
+						currentLine.elapsedSince = Date.now();
+						currentLine.element = document.createElement("span");
+						currentLine.text = data.data.operation;
+						document.getElementById("loader-progress").prepend(currentLine.element)
+						currentLine.element.innerHTML = `${currentLine.text} (${data.data.elapsedTime || 0}s)`
 					} else {
-						console.log(`Progress: ${(data.data * 100).toFixed(1)}%`);
+						currentLine.element.innerHTML = `${currentLine.text} (${data.data.elapsedTime}ms)`
 					}
 					break;
 				case "debug":
