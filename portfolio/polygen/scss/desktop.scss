@@ -398,10 +398,45 @@
 	width: 100%;
 	background: rgba(0,0,0,0.5);
 	backdrop-filter: blur(3px);
-	// visibility: hidden;
+	visibility: hidden;
+	opacity: 0;
+	transition: 0.1s;
 	#loader {
 		background: white;
 		@extend %center;
 		max-width: 50%;
+	}
+	#loader-title {
+		@extend %center;
+		color: ext.$theme-white;
+		text-align: center;
+		height: 10px;
+		font-family: ext.$theme-font-title;
+		text-shadow: 2px 2px 2px #272424;
+		font-size: 30px;
+		top: -250px;
+	}
+	#loader-progress {
+		@extend %center;
+		color: ext.$theme-white;
+		text-align: center;
+		height: 10px;
+		font-family: ext.$theme-font-subtitle;
+		text-shadow: 2px 2px 2px #272424;
+		font-style: italic;
+		bottom: -50px;
+		span {
+			margin-bottom: 10px;
+			display: block;
+		}
+	}
+}
+
+@keyframes canvasAnim {
+	0% {
+		transform: translate(0px, 0px);
+	}
+	100% {
+		transform: translate(-100px, 0px)
 	}
 }
