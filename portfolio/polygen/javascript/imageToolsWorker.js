@@ -1,8 +1,6 @@
 // TODO:
 /**
- * The basic edge detection kernels work, sort of, but need more aggressive smoothing.
- * Try the Sobel operators and see if that works well enough, but that will likely also be affected by noise a lot.
- * Try to find some way to fine-tune that threshold, because it's kinda just magic numbers right now. Slider maybe? Probably a UI slider.
+ * Precompute isn't implemented yet. I have the original IF statement but nothing that actually follows it
  */
 
 // Bind to thread manager for cleanliness
@@ -11,6 +9,19 @@ self.onmessage = (data) => { ThreadManager.recieve(data); };
 // Main function
 function calculateNearestColorLine() {
 	let tStart, tEnd;
+
+	ThreadManager.post({
+		_threadStatus: {
+			running: true
+		}
+	});
+
+	//! this isn't doing anything right now
+	if (Image.preComputedEdges) {
+		tStart = Date.now();
+		const adjVerts = Image.moveVerticesToLines(Image.preComputedEdges);
+		tEnd = Date.now();
+	}
 
 	ThreadManager.post({
 		type: "progress",
@@ -97,7 +108,7 @@ function calculateNearestColorLine() {
 	})
 
 	tStart = Date.now();
-	Image.moveVerticesToLines(edge_sobel);
+	const adjVerts = Image.moveVerticesToLines(edge_sobel);
 	tEnd = Date.now();
 
 	ThreadManager.post({
@@ -115,6 +126,18 @@ function calculateNearestColorLine() {
 			complete: true
 		}
 	})
+
+	ThreadManager.post({
+		_threadStatus: {
+			running: false
+		}
+	});
+
+	ThreadManager.post({
+		type: "result",
+		data: adjVerts,
+		computed: edge_sobel,
+	});
 }
 
 // Contains methods and properties to apply effects to the image
@@ -122,9 +145,12 @@ class Image {
 	// generals
 	static imageData;
 	static selectedVertices;
+	static vertices;
 	static vertexRadius;
 	static height;
 	static width;
+
+	static preComputedEdges;
 
 	// kernels
 	static gaussian = [1, 2, 1, 2, 4, 2, 1, 2, 1];
@@ -236,6 +262,7 @@ class Image {
 		return adjustedPixel;
 	}
 
+	// applies a kernel to a single pixel and returns the value. Supports any size kernel. Significantly slower than the Fast mode.
 	static applyKernelDynamic(index, imageData, kernel) {
 		const kSize = Math.sqrt(kernel.length);
 		const halfKSize = Math.floor(kSize / 2);
@@ -259,6 +286,7 @@ class Image {
 		return adjustedPixel;
 	}
 
+	// given an imagedata array, use the Sobel kernel to edge detect the image
 	static edgeDetectSobel(imageData, edgeThreshold = 100) {
 		let gradientVectors = new Array(imageData.length);
 		Image.KernelSafeIterate((index) => {
@@ -290,12 +318,14 @@ class Image {
 		let smoothedData = new Uint8ClampedArray(imageData);
 		let adjGauss;
 
+		// trim the gaussian kernel's decimals to (hopefully) help with execution time
 		if (useLargeGaussian) {
 			adjGauss = Image.gaussian_large_normalized.map((val) => {
 				return Number(val.toFixed(largeGaussianDec));
 			});
 		}
 
+		// apply the smoothing kernel to the image
 		const kernel = useLargeGaussian ? adjGauss : Image.gaussian_normalized;
 		Image.KernelSafeIterate((index) => {
 			let smoothedPixel = Image.applyKernel(index, imageData, kernel);
@@ -307,6 +337,7 @@ class Image {
 		return smoothedData;
 	}
 
+	// given an image data array, use a simple kernel formula to detect edges (not in use)
 	static edgeDetectSimple(imageData) {
 		const kernel = Image.edge_2_normalized;
 		let edgeData = new Uint8ClampedArray(imageData);
@@ -326,7 +357,6 @@ class Image {
 		for (let a = (Image.width * 4 * halfKSize); a < (Image.width * (Image.height - (1 * halfKSize))) * 4; a += 4) { // skip top & bottom
 			if (a % (Image.width * 4) == 0 || (a + 4) % (Image.width * 4) == 0) { // skip sides
 				continue;
-
 			}
 			callback(a);
 		}
@@ -336,7 +366,8 @@ class Image {
 	static convertToGrayscale(canvasImageData) {
 		let grayscaleData = new Uint8ClampedArray(canvasImageData.data);
 		for (let i = 0; i < grayscaleData.length; i += 4) {
-			const avg = 0.299 * grayscaleData[i] + 0.587 * grayscaleData[i + 1] + 0.114 * grayscaleData[i + 2];
+			// proprietary grayscale algorithm, enjoy the magic numbers
+			const avg = 0.299 * grayscaleData[i] + 0.587 * grayscaleData[i + 1] + 0.114 * grayscaleData[i + 2]; 
 			grayscaleData[i] = avg; // red
 			grayscaleData[i + 1] = avg; // green
 			grayscaleData[i + 2] = avg; // blue
@@ -344,20 +375,61 @@ class Image {
 		return grayscaleData;
 	}
 
+	// given an array of vertices to alter and the binary edge-detected image data, moves vertices to the closest pixel identified as an edge
 	static moveVerticesToLines(imageData) {
-		/** This function will:
-		 * 1. Iterate over all vertices
-		 * 2. For each vertex, find if there are positive pixels within its radius
-		 * 3. Calculate the total distance to move to that pixel
-		 * 4. Move the vertex to that pixel
-		 * 5. Move neighbors proportionally
-		 */
-		
-		// for (const vertex of Image.selectedVertices) {
-		// 	// check in a square, validate with radius
-		// 	for (let idx = -Image.vertexRadius; idx <)
-		// }
+		let adjustedVertices = {};
 
+		// Iterates over each vertex. Checks a square around the vertex (2*radius) and finds increasingly closer positive pixels
+		for (const [id, vertex] of Object.entries(Image.selectedVertices)) {
+			let closestPixel = null;
+			let closestDistance = Infinity;
+			let origin = [~~vertex.coord[0], ~~vertex.coord[1]];
+
+			for (let x = origin[0] - Image.vertexRadius; x < origin[0] + Image.vertexRadius; x++) {
+				for (let y = origin[1] - Image.vertexRadius; y < origin[1] + Image.vertexRadius; y++) {
+					const distance = Math.sqrt((origin[0] - x) ** 2 + (origin[1] - y) ** 2);
+
+					if (distance < closestDistance) {
+						const index = (y * Image.width + x) * 4;
+						const r = imageData[index];
+						const g = imageData[index + 1];
+						const b = imageData[index + 2];
+						const a = imageData[index + 3];
+						if (r === 255 && g === 255 && b === 255 && a === 255) {
+							closestPixel = { x, y };
+							closestDistance = distance;
+						}
+					}
+				}
+			}
+
+			if (closestPixel) {
+				// console.log(`discovered: ${closestPixel.x},${closestPixel.y} is closest to ${origin[0]},${origin[1]} after checking ${checkIts} pixels with bounds ${~~vertex.coord[0] - Image.vertexRadius},${~~vertex.coord[1] - Image.vertexRadius} :: ${~~vertex.coord[0] + Image.vertexRadius},${~~vertex.coord[1] + Image.vertexRadius}`);
+				adjustedVertices[id] = {
+					id: vertex.id,
+					coord: [closestPixel.x, closestPixel.y]
+				};
+			}
+
+			// * Not sure if any of this is useful or not, but still need to add logic to move neighbors proportionally
+			// if (closestPixel) {
+			// 	const dx = closestPixel.x - vertex.x;
+			// 	const dy = closestPixel.y - vertex.y;
+			// 	vertex.x = closestPixel.x;
+			// 	vertex.y = closestPixel.y;
+
+			// 	// move neighbors proportionally
+			// 	for (const neighbor of vertex.neighbors) {
+			// 		const ndx = neighbor.x - vertex.x;
+			// 		const ndy = neighbor.y - vertex.y;
+			// 		const distance = Math.sqrt(ndx * ndx + ndy * ndy);
+			// 		neighbor.x = vertex.x + ndx / dx * distance;
+			// 		neighbor.y = vertex.y + ndy / dy * distance;
+			// 	}
+			// }
+		}
+
+		return adjustedVertices;
 	}
 }
 
@@ -371,10 +443,12 @@ class ThreadManager {
 
 	static recieve(data) {
 		Image.imageData = data.data.canvas;
-		Image.selectedVertices = structuredClone(data.data.selectedVerts);
+		Image.selectedVertices = data.data.selectedVerts;
+		Image.vertices = data.data.allVerts;
 		Image.height = data.data.canvas.height;
 		Image.width = data.data.canvas.width;
-		Image.vertexRadius = data.data.radius;
+		Image.vertexRadius = ~~data.data.radius;
+		Image.preComputedEdges = data.data.preCompute;
 
 		calculateNearestColorLine();
 	}
