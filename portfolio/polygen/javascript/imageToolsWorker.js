@@ -1,6 +1,6 @@
 // TODO:
 /**
- * Precompute isn't implemented yet. I have the original IF statement but nothing that actually follows it
+ * Proportional neighbor movement isn't implemented
  */
 
 // Bind to thread manager for cleanliness
@@ -8,7 +8,7 @@ self.onmessage = (data) => { ThreadManager.recieve(data); };
 
 // Main function
 function calculateNearestColorLine() {
-	let tStart, tEnd;
+	let tStart, tEnd, adjVerts, edge_result;
 
 	ThreadManager.post({
 		_threadStatus: {
@@ -16,109 +16,143 @@ function calculateNearestColorLine() {
 		}
 	});
 
-	//! this isn't doing anything right now
+	// If this has been run before (the user is selecting new vertices), there's no need to recompute the edge data
 	if (Image.preComputedEdges) {
+		console.log("FOUND PRECOMPUTED DATA")
+		ThreadManager.post({
+			type: "progress",
+			data: {
+				elapsedTime: 0,
+				new: true,
+				operation: "Using existing image data",
+				begin: true,
+				startTime: Date.now()
+			}
+		})
+
+		ThreadManager.post({
+			type: "progress",
+			data: {
+				elapsedTime: 0,
+				new: true,
+				operation: "Move Vertices",
+				begin: true,
+				startTime: Date.now()
+			}
+		})
+
 		tStart = Date.now();
-		const adjVerts = Image.moveVerticesToLines(Image.preComputedEdges);
+		adjVerts = Image.moveVerticesToLines(Image.preComputedEdges);
 		tEnd = Date.now();
+
+		ThreadManager.post({
+			type: "progress",
+			data: {
+				elapsedTime: tEnd - tStart,
+				new: false,
+				operation: "Move Vertices"
+			}
+		});
+	} else { // ==== FIRST - TIME IMAGE DATA GENERATION ====
+		ThreadManager.post({
+			type: "progress",
+			data: {
+				elapsedTime: 0,
+				new: true,
+				operation: "Grayscale Conversion",
+				begin: true,
+				startTime: Date.now()
+			}
+		})
+	
+		tStart = Date.now();
+		const grayscale = Image.convertToGrayscale(Image.imageData);
+		tEnd = Date.now();
+	
+		ThreadManager.post({
+			type: "progress",
+			data: {
+				elapsedTime: tEnd - tStart,
+				new: false,
+				operation: "Grayscale Conversion"
+			}
+		})
+	
+		ThreadManager.post({
+			type: "progress",
+			data: {
+				elapsedTime: 0,
+				new: true,
+				operation: "Image Smoothing",
+				begin: true,
+				startTime: Date.now()
+			}
+		})
+	
+		tStart = Date.now();
+		const smoothed = Image.smoothImage(grayscale);
+		tEnd = Date.now();
+	
+		ThreadManager.post({
+			type: "progress",
+			data: {
+				elapsedTime: tEnd - tStart,
+				new: false,
+				operation: "Image Smoothing"
+			}
+		})
+	
+		ThreadManager.post({
+			type: "progress",
+			data: {
+				elapsedTime: 0,
+				new: true,
+				operation: "Edge Detection",
+				begin: true,
+				startTime: Date.now()
+			}
+		})
+	
+		tStart = Date.now();
+		edge_result = Image.edgeDetectSobel(smoothed);
+		tEnd = Date.now();
+		Image.draw(edge_result);
+	
+		ThreadManager.post({
+			type: "progress",
+			data: {
+				elapsedTime: tEnd - tStart,
+				new: false,
+				operation: "Edge Detection"
+			}
+		})
+	
+		ThreadManager.post({
+			type: "progress",
+			data: {
+				elapsedTime: 0,
+				new: true,
+				operation: "Move Vertices",
+				begin: true,
+				startTime: Date.now()
+			}
+		})
+	
+		tStart = Date.now();
+		adjVerts = Image.moveVerticesToLines(edge_result);
+		tEnd = Date.now();
+	
+		ThreadManager.post({
+			type: "progress",
+			data: {
+				elapsedTime: tEnd - tStart,
+				new: false,
+				operation: "Move Vertices"
+			}
+		});
 	}
 
-	ThreadManager.post({
-		type: "progress",
-		data: {
-			elapsedTime: 0,
-			new: true,
-			operation: "Grayscale Conversion",
-			begin: true,
-			startTime: Date.now()
-		}
-	})
-
-	tStart = Date.now();
-	const grayscale = Image.convertToGrayscale(Image.imageData);
-	tEnd = Date.now();
-
-	ThreadManager.post({
-		type: "progress",
-		data: {
-			elapsedTime: tEnd - tStart,
-			new: false,
-			operation: "Grayscale Conversion"
-		}
-	})
-
-	ThreadManager.post({
-		type: "progress",
-		data: {
-			elapsedTime: 0,
-			new: true,
-			operation: "Image Smoothing",
-			begin: true,
-			startTime: Date.now()
-		}
-	})
-
-	tStart = Date.now();
-	const smoothed = Image.smoothImage(grayscale);
-	tEnd = Date.now();
-
-	ThreadManager.post({
-		type: "progress",
-		data: {
-			elapsedTime: tEnd - tStart,
-			new: false,
-			operation: "Image Smoothing"
-		}
-	})
-
-	ThreadManager.post({
-		type: "progress",
-		data: {
-			elapsedTime: 0,
-			new: true,
-			operation: "Edge Detection",
-			begin: true,
-			startTime: Date.now()
-		}
-	})
-
-	tStart = Date.now();
-	const edge_sobel = Image.edgeDetectSobel(smoothed);
-	tEnd = Date.now();
-	Image.draw(edge_sobel);
-
-	ThreadManager.post({
-		type: "progress",
-		data: {
-			elapsedTime: tEnd - tStart,
-			new: false,
-			operation: "Edge Detection"
-		}
-	})
-
-	ThreadManager.post({
-		type: "progress",
-		data: {
-			elapsedTime: 0,
-			new: true,
-			operation: "Move Vertices",
-			begin: true,
-			startTime: Date.now()
-		}
-	})
-
-	tStart = Date.now();
-	const adjVerts = Image.moveVerticesToLines(edge_sobel);
-	tEnd = Date.now();
-
-	ThreadManager.post({
-		type: "progress",
-		data: {
-			elapsedTime: tEnd - tStart,
-			new: false,
-			operation: "Move Vertices"
-		}
-	});
+	// FINAL
 
 	ThreadManager.post({
 		type: "progress",
@@ -136,7 +170,7 @@ function calculateNearestColorLine() {
 	ThreadManager.post({
 		type: "result",
 		data: adjVerts,
-		computed: edge_sobel,
+		computed: edge_result || Image.preComputedEdges,
 	});
 }
 
@@ -449,6 +483,9 @@ class ThreadManager {
 		Image.width = data.data.canvas.width;
 		Image.vertexRadius = ~~data.data.radius;
 		Image.preComputedEdges = data.data.preCompute;
+
+		console.log("WORK RECIEVED");
+		console.log(data.data.preCompute);
 
 		calculateNearestColorLine();
 	}
