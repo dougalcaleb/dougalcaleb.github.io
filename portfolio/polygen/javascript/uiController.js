@@ -16,10 +16,34 @@ export class Controls {
 
 		// Color palettes
 		this.defaultPalettes = [
-			["#f3e1af", "#f09c3d", "#f0693d", "#f03d72", "#9f3df0", "#3d81f0", "#037ac4"],
-			["#e7e98b", "#8be9d2", "#73b5dd", "#1074b1", "#014e7e"],
-			["#787878", "#454545", "#333333", "#454545", "#787878"],
-			["#011fb7", "#5c01b7", "#3b0e67"],
+			[
+				{ color: "#f3e1af", stop: 0 },
+				{ color: "#f09c3d", stop: 0.16 },
+				{ color: "#f0693d", stop: 0.33},
+				{ color: "#f03d72", stop: 0.5 },
+				{ color: "#9f3df0", stop: 0.66 },
+				{ color: "#3d81f0", stop: 0.83 },
+				{ color: "#037ac4", stop: 1 }
+			],
+			[
+				{ color: "#e7e98b", stop: 0 },
+				{ color: "#8be9d2", stop: 0.25 },
+				{ color: "#73b5dd", stop: 0.5 },
+				{ color: "#1074b1", stop: 0.75 },
+				{ color: "#014e7e", stop: 1 }
+			],
+			[
+				{ color: "#787878", stop: 0 },
+				{ color: "#454545", stop: 0.25 },
+				{ color: "#333333", stop: 0.5 },
+				{ color: "#454545", stop: 0.75 },
+				{ color: "#787878", stop: 1 }
+			],
+			[
+				{ color: "#011fb7", stop: 0 },
+				{ color: "#5c01b7", stop: 0.5 },
+				{ color: "#3b0e67", stop: 1 }
+			],
 		];
 		this.palettes = [];
 		
@@ -140,7 +164,7 @@ export class Controls {
 		for (let b = 0; b < colors.length; b++) {
 			let el = document.createElement("DIV");
 			el.classList.add("palette-color");
-			el.style.background = colors[b];
+			el.style.background = colors[b].color;
 			palette.appendChild(el);
 		}
 		let opts = document.createElement("DIV");

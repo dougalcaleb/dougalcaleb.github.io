@@ -107,6 +107,7 @@ export class Preview {
 	}
 
 	// Replace existing vertices with newly calculated vertices. Used by edit mode Recalculate Vertices functionality
+	//! BUGGED (one of the functions using this function is sending flipped coordinates. probably edge detection, because this is actually flipped)
 	replaceVertices(newVerts) {
 		for (let [key, value] of Object.entries(newVerts)) {
 			this.verts[value.id[0]][value.id[1]] = value.coord;
@@ -265,9 +266,8 @@ export class Preview {
 
 		// Add color stops
 		for (let a = 0; a < DataStore.settings.colors.length; a++) {
-			let pos = (1 / (DataStore.settings.colors.length - 1)) * a;
-			gradient.addColorStop(pos, DataStore.settings.colors[a]);
-			gradData.stops.push([pos, DataStore.settings.colors[a]]);
+			gradient.addColorStop(DataStore.settings.colors[a].stop, DataStore.settings.colors[a].color);
+			gradData.stops.push([DataStore.settings.colors[a].stop, DataStore.settings.colors[a].color]);
 		}
 
 		// Draw

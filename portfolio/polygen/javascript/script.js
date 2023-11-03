@@ -4,12 +4,13 @@ import { Controls } from "./uiController.js";
 import { LoadingIndicator } from "./loadingbar.js";
 import { Modals } from "./modal.js";
 import { Store } from "./dataController.js";
+import { GradientEditorPopup } from "./gradientEditorPopup.js";
 
 /* 
 TODO:
 
 CURRENT:
-- Vertices align to detected edges
+- Popup refactor
 
 Features:
 - Vertex snap to color line
@@ -24,6 +25,7 @@ Features:
 Fixes:
 - Fix color palette modal not applying on save
 - Rewrite modal to be a popup
+- Inconsistency with replace vertices function
 
 */
 
@@ -35,7 +37,7 @@ const PreviewLayer = new Preview(DataStore);
 const EditLayer = new Editor(DataStore);
 const Modal = new Modals();
 const Control = new Controls(DataStore, PreviewLayer, EditLayer);
-// const LoadingBar = new LoadingIndicator(DataStore);
+const test = new GradientEditorPopup(DataStore);
 
 DataStore.route("EditLayer", EditLayer);
 DataStore.route("PreviewLayer", PreviewLayer);

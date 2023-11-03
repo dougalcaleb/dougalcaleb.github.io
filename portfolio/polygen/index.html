@@ -61,7 +61,7 @@
 
 				<div class="control control-range vertex-prop-falloff">
 					<p>PROPORTIONAL FALLOFF [u]</p>
-					<input type="range" class="prop-falloff" min="0" max="100" step="1" value="0" />
+					<input type="range" class="prop-falloff control-slider" min="0" max="100" step="1" value="0" />
 				</div>
 
 				<div class="control control-inputs settings-undo-stack">
@@ -80,6 +80,7 @@
 			</div>
 
 			<div class="panel panel-image-properties">
+
 				<div class="control control-inputs dimensions">
 					<p>DIMENSIONS</p>
 					<div class="control-input-wrap">
@@ -105,15 +106,15 @@
 
 				<div class="control control-range variance">
 					<p>VERTEX VARIANCE</p>
-					<input type="range" class="i-variance" min="0" max="1.5" step="0.01" value="0.5" />
+					<input type="range" class="i-variance control-slider" min="0" max="1.5" step="0.01" value="0.5" />
 				</div>
 				<div class="control control-range verts">
 					<p>CELL SIZE</p>
-					<input type="range" class="i-verts" min="50" max="195" step="0.5" value="185" />
+					<input type="range" class="i-verts control-slider" min="50" max="195" step="0.5" value="185" />
 				</div>
 				<div class="control control-range bright-variance">
 					<p>BRIGHTNESS VARIANCE</p>
-					<input type="range" class="i-bright-variance" min="0" max="255" step="1" value="0" />
+					<input type="range" class="i-bright-variance control-slider" min="0" max="255" step="1" value="0" />
 				</div>
 				<div class="control control-btns brightness-mode">
 					<p>BRIGHTNESS VARIANCE MODE</p>
@@ -125,7 +126,7 @@
 
 				<div class="control control-range grad-rotation fortype-0">
 					<p>GRADIENT ROTATION</p>
-					<input type="range" class="i-0-rotation" min="0" max="360" step="1" value="0" />
+					<input type="range" class="i-0-rotation control-slider" min="0" max="360" step="1" value="0" />
 				</div>
 				<div class="control control-btns grad-rotation-snap fortype-0">
 					<p>GRADIENT ROTATION SNAP</p>
@@ -145,19 +146,19 @@
 
 				<div class="control control-range grad-posx fortype-1">
 					<p>GRADIENT POSITION X</p>
-					<input type="range" class="i-1-posx" min="0" max="1" step="0.01" value="0.5" />
+					<input type="range" class="i-1-posx control-slider" min="0" max="1" step="0.01" value="0.5" />
 				</div>
 				<div class="control control-range grad-posy fortype-1">
 					<p>GRADIENT POSITION Y</p>
-					<input type="range" class="i-1-posy" min="0" max="1" step="0.01" value="0.5" />
+					<input type="range" class="i-1-posy control-slider" min="0" max="1" step="0.01" value="0.5" />
 				</div>
 				<div class="control control-range grad-outrad fortype-1">
 					<p>GRADIENT OUTER RADIUS</p>
-					<input type="range" class="i-1-outrad" min="0" max="1" step="0.01" value="0.5" />
+					<input type="range" class="i-1-outrad control-slider" min="0" max="1" step="0.01" value="0.5" />
 				</div>
 				<div class="control control-range grad-inrad fortype-1">
 					<p>GRADIENT INNER RADIUS</p>
-					<input type="range" class="i-1-inrad" min="0" max="0.25" step="0.01" value="0" />
+					<input type="range" class="i-1-inrad control-slider" min="0" max="0.25" step="0.01" value="0" />
 				</div>
 				<div class="control control-color outline-color">
 					<p>OUTLINE COLOR</p>
@@ -167,7 +168,7 @@
 				</div>
 				<div class="control control-range outline-opacity">
 					<p>OUTLINE OPACITY</p>
-					<input type="range" class="i-outline" min="0" max="1" step="0.01" value="0" />
+					<input type="range" class="i-outline control-slider" min="0" max="1" step="0.01" value="0" />
 				</div>
 				<div class="control control-palettes">
 					<p>COLOR PALETTE</p>
@@ -194,12 +195,27 @@
 					<div class="loader-tri"></div>
 				</div> -->
 				<div id="loader-title">Processing Image</div>
-				<div id="loader-progress">
-					<!-- <span>Smoothing Image... (3s)</span>
-					<span>Converted to Grayscale (74ms)</span> -->
-				</div>
+				<div id="loader-progress"></div>
 			</div>
 		</div>
+
+		<template id="gradient-editor-popup">
+			<div class="popup-bg">
+				<div class="popup">
+					<div class="popup-title">Create Gradient</div>
+					<div class="popup-pointer"></div>
+					<div class="popup-preview-wrap">
+						<canvas class="popup-preview"></canvas>
+					</div>
+		
+					<div class="popup-button-wrap">
+						<button class="popup-cancel">Cancel</button>
+						<button class="popup-save">Save</button>
+					</div>
+				</div>
+			</div>
+		</template>
+
 	</body>
 
 	<script src="javascript/script.js" type="module"></script>
