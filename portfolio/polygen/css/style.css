@@ -108,3 +108,14 @@ input[type=range].control-slider::-webkit-slider-thumb {
   border-right: 6px solid transparent;
   border-top: 10px solid #00b7ff;
 }
+input[type=range].control-slider::-moz-range-thumb {
+  appearance: none;
+  border: none;
+  background: #00b7ff;
+}
+input[type=range].control-slider::-moz-range-track {
+  appearance: none;
+  border-radius: 100px;
+  height: 5px;
+  background: #00b7ff;
+}

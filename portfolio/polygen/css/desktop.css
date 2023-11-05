@@ -202,7 +202,7 @@ $name - variable
 }
 .controls .control-btn-wrap div.btn-active {
   background: #00b7ff;
-  color: #070707;
+  color: white;
 }
 .controls .control-toggle-wrap {
   display: flex;
@@ -459,12 +459,22 @@ $name - variable
   position: absolute;
   top: calc(50% + 5px);
   appearance: none;
+  background: transparent;
 }
 .popup-bg .popup input[type=range]::-webkit-slider-runnable-track {
   appearance: none;
   border-radius: 100px;
   height: 0px;
   background: #333;
+}
+.popup-bg .popup input[type=range]::-moz-range-track {
+  appearance: none;
+  background: transparent;
+}
+.popup-bg .popup input[type=range]::-moz-range-thumb {
+  border: none;
+  height: 15px;
+  width: 15px;
 }
 .popup-bg .popup input[type=range]::-webkit-slider-thumb {
   appearance: none;
@@ -498,4 +508,11 @@ $name - variable
 }
 .popup-bg .popup button {
   justify-self: flex-end;
+}
+
+.popup-stop-selected::-webkit-slider-thumb {
+  border: 2px solid white;
+}
+.popup-stop-selected::-moz-range-thumb {
+  border: 2px solid white;
 }

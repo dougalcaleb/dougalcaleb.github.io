@@ -38,7 +38,7 @@ export class GradientEditorPopup {
 		// Create an object that is identical to the provided color data, but with the corresponding slider ID as the key
 		for (let [idx, color] of colors.entries()) {
 			this.colorsBySliderID[String(idx)] = color;
-			styleSheet.innerHTML += `#range-stop-${idx}::-webkit-slider-thumb {background: ${color.color};} `;
+			styleSheet.innerHTML += `#range-stop-${idx}::-webkit-slider-thumb {background: ${color.color};} #range-stop-${idx}::-moz-range-thumb {background: ${color.color};}`;
 		}
 
 		// Create sliders and set up event listeners

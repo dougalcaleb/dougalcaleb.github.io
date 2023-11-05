@@ -185,7 +185,7 @@
 			}
 			&.btn-active {
 				background: ext.$theme-blue-light;
-				color: ext.$theme-black-dark;
+				color: white;
 			}
 		}
 	}
@@ -463,11 +463,21 @@
 			position: absolute;
 			top: calc(50% + 5px);
 			appearance: none;
+			background: transparent;
 			&::-webkit-slider-runnable-track {
 				appearance: none;
 				border-radius: 100px;
 				height: 0px;
 				background: ext.$theme-gray;
+			}
+			&::-moz-range-track {
+				appearance: none;
+				background: transparent;
+			}
+			&::-moz-range-thumb {
+				border: none;
+				height: 15px;
+				width: 15px;
 			}
 			&::-webkit-slider-thumb {
 				appearance: none;
@@ -503,5 +513,14 @@
 		button {
 			justify-self: flex-end;
 		}
+	}
+}
+
+.popup-stop-selected {
+	&::-webkit-slider-thumb {
+		border: 2px solid white;
+	}
+	&::-moz-range-thumb {
+		border: 2px solid white;
 	}
 }
