@@ -37,7 +37,7 @@ const PreviewLayer = new Preview(DataStore);
 const EditLayer = new Editor(DataStore);
 const Modal = new Modals();
 const Control = new Controls(DataStore, PreviewLayer, EditLayer);
-const test = new GradientEditorPopup(DataStore);
+new GradientEditorPopup(DataStore);
 
 DataStore.route("EditLayer", EditLayer);
 DataStore.route("PreviewLayer", PreviewLayer);
