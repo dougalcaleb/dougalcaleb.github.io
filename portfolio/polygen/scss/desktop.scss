@@ -457,8 +457,28 @@
 			flex-direction: column;
 			position: relative;
 			align-items: center;
+			.popup-add-color-stop {
+				width: 80%;
+				@extend %center;
+				height: 25px;
+				top: 25px;
+				cursor: copy;
+				appearance: none;
+				background: transparent;
+				&::-webkit-slider-runnable-track {
+					appearance: none;
+					background: transparent;
+				}
+				&::-webkit-slider-thumb {
+					appearance: none;
+					border-radius: 0;
+					height:10px;
+					width: 10px;
+					background: transparent;
+				}
+			}
 		}
-		input[type="range"] {
+		input[type="range"]:not(.popup-add-color-stop) {
 			width: 80%;
 			position: absolute;
 			top: calc(50% + 5px);
