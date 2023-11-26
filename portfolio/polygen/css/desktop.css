@@ -572,4 +572,5 @@ $name - variable
 #popup-stop-controls-wrap div svg {
   height: 60%;
   filter: saturate(0) grayscale(1) brightness(0.7) contrast(1000%) invert(1);
+  cursor: pointer;
 }
