@@ -7,6 +7,7 @@ let DataStore;
  * Error handling? Use returnError
  * Restyle popup, make it more responsive and fix those buttons, figure out what to do with that BL corner
  * Draggable?
+ * Fix: dragging input instead of singe click
  */
 
 export class GradientEditorPopup {
@@ -226,11 +227,22 @@ export class GradientEditorPopup {
 
 			this.return(output);
 			this.destroy();
-		}, { signal: this.aborts.general.signal });
+      }, { signal: this.aborts.general.signal });
+      
+      let addNewStopAllowed = true;
 
 		// Add new color stop
-		document.querySelector(".popup-add-color-stop").addEventListener("input", (event) => {
-			this.addNewStop(event.target.value);
+      document.querySelector(".popup-add-color-stop").addEventListener("input", (event) => {
+         if (!addNewStopAllowed) return;
+
+         addNewStopAllowed = false;
+         this.addNewStop(event.target.value);
+         let localAbort = new AbortController();
+         
+         event.target.addEventListener("mouseup", () => {
+            addNewStopAllowed = true;
+            localAbort.abort();
+         }, { signal: localAbort.signal });
 		}, { signal: this.aborts.general.signal });
 
 		// Exit color stop edit popup
