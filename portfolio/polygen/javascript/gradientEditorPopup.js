@@ -1,3 +1,5 @@
+import { DEFAULTS } from "./globals.js";
+
 let DataStore;
 
 /**
@@ -40,7 +42,8 @@ export class GradientEditorPopup {
 		});
 
 		this.mouseIsOver = null;
-		this.stopControlsOpen = false;
+      this.stopControlsOpen = false;
+      this.addNewStopAllowed = true;
 		this.currentStopControlElement = null;
 		this.rangeStops = [];
 		
@@ -70,11 +73,11 @@ export class GradientEditorPopup {
 	}
 
 	// Clones the popup controls template for color stops and handles inputs
-	openStopControls(stopID, event) {
+	openStopControls(stopID, pos) {
 		this.currentStopControlElement = document.getElementById("popup-color-picker-stop-edit").content.children[0].cloneNode(true);
 				
 		document.body.appendChild(this.currentStopControlElement);
-		this.currentStopControlElement.style = `transform: translate(${event.clientX}px, ${event.clientY}px); z-index: 10; position: relative;`;
+		this.currentStopControlElement.style = `transform: translate(${pos.x}px, ${pos.y}px); z-index: 10; position: relative;`;
 		document.querySelector(".popup-color-picker-wrap").style.background = this.colorsBySliderID[String(stopID)].color;
 
 		document.querySelector(".popup-color-picker-input").value = this.colorsBySliderID[String(stopID)].color;
@@ -88,20 +91,25 @@ export class GradientEditorPopup {
 			this.colorsBySliderID[String(stopID)].color = event.target.value;
 		}, { signal: this.aborts.stopPopup.signal });
 
-		this.stopControlsOpen = true;
+      this.stopControlsOpen = true;
+      this.addNewStopAllowed = false;
 	}
 
 	// Closes and deletes the popup controls for color stops
-	closeStopControls() {
-		this.currentStopControlElement.parentElement.removeChild(this.currentStopControlElement);
+   closeStopControls() {
+      if (this.currentStopControlElement) {
+         this.currentStopControlElement.parentElement.removeChild(this.currentStopControlElement);
+      }
 
 		this.aborts.stopPopup.abort();
 		this.aborts.stopPopup = new AbortController();
-		this.stopControlsOpen = false;
+      this.stopControlsOpen = false;
+      this.addNewStopAllowed = true;
+      this.currentStopControlElement = null;
 	}
 
 	// Adds data for a new color stop, then recreates the stops and refreshes the preview
-	addNewStop(newStopPos) {
+   addNewStop(newStopPos, position) {
 		newStopPos = Number(newStopPos);
 		for (let [id, color] of Object.entries(this.colorsBySliderID)) {
 			if (color.stop > newStopPos) {
@@ -109,7 +117,8 @@ export class GradientEditorPopup {
 				colorsArr.splice(id, 0, { color: "#ffffff", stop: newStopPos });
 				this.colorsBySliderID = Object.assign({}, colorsArr);
 				this.createStops(colorsArr, true);
-				this.refreshPreview()
+            this.refreshPreview();
+            this.openStopControls(id, position);
 				break;
 			}
 		}
@@ -123,12 +132,14 @@ export class GradientEditorPopup {
 	 * @param {Array<Object>} colorSetArr An array of objects with color and stop position values
 	 * @param {Boolean} deleteExisting Deletes the existing color stop elements entirely in preparation for a new set
 	 */
-	createStops(colorSetArr, deleteExisting = false) {
+	createStops(colorSetArr, deleteExisting = false, returnElementsFor = []) {
 		if (deleteExisting) {
 			document.querySelectorAll(".popup-range-stop").forEach((element) => {
 				element.parentElement.removeChild(element);
 			});
-		}
+      }
+
+      const elementsToReturn = [];
 
 		// Create sliders and set up event listeners
 		for (let [idx, color] of colorSetArr.entries()) {
@@ -160,8 +171,7 @@ export class GradientEditorPopup {
 				rangeStop.classList.add("popup-stop-selected");
 				this.currentClick = { x: event.clientX };
 
-				const prevStopControlsWrap = document.getElementById("popup-stop-controls-wrap");
-				prevStopControlsWrap?.parentElement.removeChild(prevStopControlsWrap);
+            this.closeStopControls();
 
 			}, { signal: this.aborts.general.signal });
 
@@ -174,7 +184,7 @@ export class GradientEditorPopup {
 
 				if (this.selectedStop !== id || dX > 2) return
 
-				this.openStopControls(id, event);
+				this.openStopControls(id, {x: event.clientX, y: event.clientY });
 
 			}, { signal: this.aborts.general.signal })
 
@@ -191,10 +201,16 @@ export class GradientEditorPopup {
 				{ signal: this.aborts.general.signal }
 			);
 
-			this.rangeStops.push({el: rangeStop, id: String(idx)});
-		}
-	}
-
+         this.rangeStops.push({ el: rangeStop, id: String(idx) });
+         
+         if (returnElementsFor.includes(String(idx))) {
+            elementsToReturn.push(rangeStop);
+         }
+      }
+      
+      return elementsToReturn;
+   }
+   
 	// Updates colors for all color stops and re-draws the canvas preview
 	refreshPreview() {
 		this.rangeStops.forEach((element) => {
@@ -228,21 +244,15 @@ export class GradientEditorPopup {
 			this.return(output);
 			this.destroy();
       }, { signal: this.aborts.general.signal });
-      
-      let addNewStopAllowed = true;
 
 		// Add new color stop
-      document.querySelector(".popup-add-color-stop").addEventListener("input", (event) => {
-         if (!addNewStopAllowed) return;
+      document.querySelector(".popup-add-color-stop").addEventListener("mousedown", (event) => {
+         if (!this.addNewStopAllowed || Object.keys(this.colorsBySliderID).length === DEFAULTS.limits.colorStops) return;
 
-         addNewStopAllowed = false;
-         this.addNewStop(event.target.value);
-         let localAbort = new AbortController();
-         
-         event.target.addEventListener("mouseup", () => {
-            addNewStopAllowed = true;
-            localAbort.abort();
-         }, { signal: localAbort.signal });
+         this.addNewStopAllowed = false;
+         setTimeout(() => {
+            this.addNewStop(event.target.value, { x: event.clientX, y: event.clientY });
+         }, 0);
 		}, { signal: this.aborts.general.signal });
 
 		// Exit color stop edit popup
@@ -259,6 +269,6 @@ export class GradientEditorPopup {
 	destroy() {
 		this.aborts.general.abort();
 		this.aborts.stopPopup.abort();
-		//* Remove elements
+		// todo: Remove elements
 	}
 }
