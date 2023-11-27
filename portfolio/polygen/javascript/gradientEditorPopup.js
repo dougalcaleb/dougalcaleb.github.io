@@ -4,12 +4,12 @@ import { Draggable } from "./draggable.js";
 let DataStore;
 
 export class GradientEditorPopup {
-   constructor(gradient = []) {
+   constructor(position, gradient = []) {
 
 		this.gradientColorSet = gradient.length > 0 ? structuredClone(gradient) : structuredClone(DataStore.settings.colors);
 		this.colorsBySliderID = {};
 		
-		this.template = document.getElementById("gradient-editor-popup").content.children[0].cloneNode(true);
+      this.template = document.getElementById("gradient-editor-popup").content.children[0].cloneNode(true);
 
 		this.canvas = this.template.querySelector(".popup-preview");
 		this.ctx = this.canvas.getContext("2d");
@@ -34,16 +34,33 @@ export class GradientEditorPopup {
       this.stopControlsOpen = false;
       this.addNewStopAllowed = true;
 		this.currentStopControlElement = null;
-		this.rangeStops = [];
+      this.rangeStops = [];
+      this.position = position;
 		
 		this.#createGradientEditor(this.gradientColorSet);
       this.#setListeners();
+      this.#setPosition();
       
       this.dragHandler = new Draggable(this.template.querySelector(".popup-drag-trigger"), this.template.querySelector(".popup"));
    }
    
    static setStore(store) {
       DataStore = store;
+   }
+
+   #setPosition() {
+      let popupHeight = this.template.querySelector(".popup").offsetHeight;
+      let popupWidth = this.template.querySelector(".popup").offsetWidth;
+      if (this.position.centerX) {
+         this.position.x -= (popupWidth / 2);
+      }
+      if (this.position.centerY) {
+         this.position.y -= (popupHeight / 2);
+      }
+      if (this.position.y + popupHeight > window.innerHeight) {
+         this.position.y = window.innerHeight - popupHeight;
+      }
+      this.template.querySelector(".popup").style.transform = `translate(${this.position.x}px, ${this.position.y}px)`;
    }
 
 	/**

@@ -180,9 +180,9 @@ export class Controls {
 		document.querySelector(".control-palettes").appendChild(wrap);
 
 		// Create the edit pop up modal
-      opts.children[0].addEventListener("click", async () => {
+      opts.children[0].addEventListener("click", async (event) => {
          try {
-            let newColors = await new GradientEditorPopup(this.palettes[pos]).colorSet;
+            let newColors = await new GradientEditorPopup({x: event.clientX + 50, y: event.clientY, centerY: true, centerX: false }, this.palettes[pos]).colorSet;
             if (newColors.length != 0) {
                this.palettes[pos] = newColors;
                localStorage.setItem(this.savePalettesAs, JSON.stringify(this.palettes));
@@ -488,9 +488,9 @@ export class Controls {
 		});
 
 		// add color palette
-      document.querySelector(".palette-add").addEventListener("click", async () => {
+      document.querySelector(".palette-add").addEventListener("click", async (event) => {
          try {
-            let colors = await new GradientEditorPopup().colorSet;
+            let colors = await new GradientEditorPopup({x: event.clientX + 50, y: event.clientY, centerY: true, centerX: false }).colorSet;
             if (colors.length != 0) {
                this.addPalette(colors);
             }
