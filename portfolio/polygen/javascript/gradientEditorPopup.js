@@ -4,9 +4,9 @@ import { Draggable } from "./draggable.js";
 let DataStore;
 
 export class GradientEditorPopup {
-	constructor(gradient = []) {
+   constructor(gradient = []) {
 
-		this.gradientColorSet = gradient.length > 0 ? gradient : DataStore.settings.colors;
+		this.gradientColorSet = gradient.length > 0 ? structuredClone(gradient) : structuredClone(DataStore.settings.colors);
 		this.colorsBySliderID = {};
 		
 		this.template = document.getElementById("gradient-editor-popup").content.children[0].cloneNode(true);
@@ -285,6 +285,7 @@ export class GradientEditorPopup {
       this.dragHandler.destroy();
       let rootEl = document.querySelector(".popup-bg");
       rootEl.parentElement.removeChild(rootEl);
+      this.colorsBySliderID = {};
 	}
 }
 
