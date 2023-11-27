@@ -109,7 +109,7 @@ $name - variable
   border: none;
   font-family: "Miriam Libre", "Segoe UI", sans-serif, monospace;
   background: none;
-  font-size: min(0.9vw, 25px);
+  font-size: max(15px, min(0.9vw, 25px));
   cursor: pointer;
 }
 .popup .popup-button-wrap .popup-save {

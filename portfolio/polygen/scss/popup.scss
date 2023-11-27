@@ -97,7 +97,7 @@
          border: none;
          font-family: ext.$theme-font-button;
          background: none;
-         font-size: min(0.9vw, 25px);
+         font-size: max(15px, min(0.9vw, 25px));
          cursor: pointer;
       }
       .popup-save {
