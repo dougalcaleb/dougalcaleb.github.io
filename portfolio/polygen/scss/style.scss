@@ -76,7 +76,7 @@ header {
       display: flex;
       align-items: center;
       cursor: pointer;
-      font-size: 18px;
+      font-size: max(15px, min(1vw, 30px));
       svg {
          height: max(25px, 2vh);
          color: ext.$theme-white;

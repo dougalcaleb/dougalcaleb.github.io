@@ -6,7 +6,6 @@ let DataStore;
  * TODO:
  * 
  * Error handling? Use returnError
- * Restyle popup, make it more responsive and fix those buttons, figure out what to do with that BL corner
  * Draggable?
  */
 
