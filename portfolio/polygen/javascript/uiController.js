@@ -1,5 +1,6 @@
 import { DEFAULTS } from "./globals.js"
 import { Preview } from "./previewController.js";
+import { GradientEditorPopup } from "./gradientEditorPopup.js";
 
 let DataStore, PreviewLayer, EditLayer;
 
@@ -179,22 +180,29 @@ export class Controls {
 		document.querySelector(".control-palettes").appendChild(wrap);
 
 		// Create the edit pop up modal
-		opts.children[0].addEventListener("click", async () => {
-			let newColors = await DataStore.Modal.modal("Edit Color Palette", this.palettes[pos]);
-			DataStore.Modal.destroy();
-			if (newColors.length != 0) {
-				this.palettes[pos] = newColors;
-				localStorage.setItem(this.savePalettesAs, JSON.stringify(this.palettes));
-				while (palette.childElementCount > 0) {
-					palette.removeChild(palette.children[0]);
-				}
-				for (let a = 0; a < newColors.length; a++) {
-					let el = document.createElement("DIV");
-					el.classList.add("palette-color");
-					el.style.background = newColors[a];
-					palette.appendChild(el);
-				}
-			}
+      opts.children[0].addEventListener("click", async () => {
+         try {
+            let newColors = await new GradientEditorPopup(this.palettes[pos]).colorSet;
+            if (newColors.length != 0) {
+               this.palettes[pos] = newColors;
+               localStorage.setItem(this.savePalettesAs, JSON.stringify(this.palettes));
+               while (palette.childElementCount > 0) {
+                  palette.removeChild(palette.children[0]);
+               }
+               for (let a = 0; a < newColors.length; a++) {
+                  let el = document.createElement("DIV");
+                  el.classList.add("palette-color");
+                  el.style.background = newColors[a].color;
+                  palette.appendChild(el);
+               }
+               DataStore.settings.colors = this.palettes[pos];
+               this.updateSettings(DataStore.settings, false);
+            }
+         } catch (e) {
+            if (e !== "Cancel") {
+               console.warn(e);
+            }
+         }
 		});
 
 		// Add its event listener for selecting
@@ -480,12 +488,18 @@ export class Controls {
 		});
 
 		// add color palette
-		document.querySelector(".palette-add").addEventListener("click", async () => {
-			let colors = await DataStore.Modal.modal("New Color Palette");
-			DataStore.Modal.destroy();
-			if (colors.length != 0) {
-				this.addPalette(colors);
-			}
+      document.querySelector(".palette-add").addEventListener("click", async () => {
+         try {
+            let colors = await new GradientEditorPopup().colorSet;
+            if (colors.length != 0) {
+               this.addPalette(colors);
+            }
+         } catch (e) {
+            if (e !== "Cancel") {
+               console.warn(e);
+            }
+         }
+         
 		});
 
 		// download image

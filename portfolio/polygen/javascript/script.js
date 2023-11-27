@@ -1,7 +1,7 @@
 import { Preview } from "./previewController.js";
 import { Editor } from "./editorController.js";
 import { Controls } from "./uiController.js";
-import { LoadingIndicator } from "./loadingbar.js";
+// import { LoadingIndicator } from "./loadingbar.js";
 import { Store } from "./dataController.js";
 import { GradientEditorPopup } from "./gradientEditorPopup.js";
 
@@ -23,7 +23,6 @@ Features:
 
 Fixes:
 - Fix color palette modal not applying on save
-- Rewrite modal to be a popup
 - Inconsistency with replace vertices function
 
 */
@@ -35,7 +34,8 @@ const DataStore = new Store();
 const PreviewLayer = new Preview(DataStore);
 const EditLayer = new Editor(DataStore);
 const Control = new Controls(DataStore, PreviewLayer, EditLayer);
-new GradientEditorPopup(DataStore);
+GradientEditorPopup.setStore(DataStore);
 
+// Adds singular instances to datastore to allow access from multiple components
 DataStore.route("EditLayer", EditLayer);
 DataStore.route("PreviewLayer", PreviewLayer);

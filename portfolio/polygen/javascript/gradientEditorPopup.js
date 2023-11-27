@@ -3,26 +3,17 @@ import { Draggable } from "./draggable.js";
 
 let DataStore;
 
-/**
- * TODO:
- * 
- * Error handling? Use returnError
- * Draggable?
- */
-
 export class GradientEditorPopup {
-	constructor(store, gradient = []) {
-
-		DataStore = store;
+	constructor(gradient = []) {
 
 		this.gradientColorSet = gradient.length > 0 ? gradient : DataStore.settings.colors;
 		this.colorsBySliderID = {};
 		
-		this.template = document.getElementById("gradient-editor-popup").content.children[0];
+		this.template = document.getElementById("gradient-editor-popup").content.children[0].cloneNode(true);
 
 		this.canvas = this.template.querySelector(".popup-preview");
 		this.ctx = this.canvas.getContext("2d");
-		this.canvas.height = 40;
+		this.canvas.height = 50;
 		this.canvas.width = 400;
 
 		this.aborts = {
@@ -34,9 +25,9 @@ export class GradientEditorPopup {
 
 		this.currentClick = null;
 
-		this.promiseOut = new Promise((resolve, reject) => {
+		this.colorSet = new Promise((resolve, reject) => {
 			this.return = resolve;
-			this.returnError = reject;
+			this.reject = reject;
 		});
 
 		this.mouseIsOver = null;
@@ -45,35 +36,37 @@ export class GradientEditorPopup {
 		this.currentStopControlElement = null;
 		this.rangeStops = [];
 		
-		this.createGradientEditor(this.gradientColorSet);
-      this.setListeners();
+		this.#createGradientEditor(this.gradientColorSet);
+      this.#setListeners();
       
       this.dragHandler = new Draggable(this.template.querySelector(".popup-drag-trigger"), this.template.querySelector(".popup"));
-
-		return this.promiseOut; // Returns a promise
-	}
+   }
+   
+   static setStore(store) {
+      DataStore = store;
+   }
 
 	/**
 	 * Sets up the color stop draggers and the data to keep track of the colors and positions
 	 * @param {Array<Object>} colors An array of objects containing a color and a stop - { color: "colCode", stop: dec }
 	 */
-	createGradientEditor(colors) {
+	#createGradientEditor(colors) {
 
 		// Create an object that is identical to the provided color data, but with the corresponding slider ID as the key
 		for (let [idx, color] of colors.entries()) {
 			this.colorsBySliderID[String(idx)] = color;
 		}
 
-		this.createStops(colors);
+		this.#createStops(colors);
 
 		// Clone the HTML popup template to the DOM
 		document.body.appendChild(this.template);
 
-		this.drawGradientPreview();
+		this.#drawGradientPreview();
 	}
 
 	// Clones the popup controls template for color stops and handles inputs
-	openStopControls(stopID, pos) {
+	#openStopControls(stopID, pos) {
 		this.currentStopControlElement = document.getElementById("popup-color-picker-stop-edit").content.children[0].cloneNode(true);
 				
 		document.body.appendChild(this.currentStopControlElement);
@@ -92,8 +85,8 @@ export class GradientEditorPopup {
       }, { signal: this.aborts.stopPopup.signal });
 
       document.querySelector(".popup-color-stop-delete").addEventListener("click", (event) => {
-         this.removeStop(stopID);
-         this.closeStopControls();
+         this.#removeStop(stopID);
+         this.#closeStopControls();
 		}, { signal: this.aborts.stopPopup.signal });
 
       this.stopControlsOpen = true;
@@ -101,7 +94,7 @@ export class GradientEditorPopup {
 	}
 
 	// Closes and deletes the popup controls for color stops
-   closeStopControls() {
+   #closeStopControls() {
       if (this.currentStopControlElement) {
          this.currentStopControlElement.parentElement.removeChild(this.currentStopControlElement);
       }
@@ -114,7 +107,7 @@ export class GradientEditorPopup {
 	}
 
 	// Adds data for a new color stop, then recreates the stops and refreshes the preview
-   addNewStop(newStopPos, mousePos) {
+   #addNewStop(newStopPos, mousePos) {
 		newStopPos = Number(newStopPos);
       for (let [id, color] of Object.entries(this.colorsBySliderID)) {
          let colorDataLength = Object.entries(this.colorsBySliderID).length;
@@ -122,23 +115,23 @@ export class GradientEditorPopup {
             const colorsArr = Object.values(this.colorsBySliderID).map(val => val);
 				colorsArr.splice(id, 0, { color: "#ffffff", stop: newStopPos });
 				this.colorsBySliderID = Object.assign({}, colorsArr);
-				this.createStops(colorsArr, true);
-            this.refreshPreview();
-            this.openStopControls(id, mousePos);
+				this.#createStops(colorsArr, true);
+            this.#refreshPreview();
+            this.#openStopControls(id, mousePos);
 				break;
 			}
 		}
 	}
 
 	// Deletes data for an existing color stop, then recreates the stops and refreshes the preview
-   removeStop(stopID) {
+   #removeStop(stopID) {
       if (Object.entries(this.colorsBySliderID).length == 1) return
 
       delete this.colorsBySliderID[String(stopID)];
       const colorsArr = Object.values(this.colorsBySliderID).map(val => val);
       this.colorsBySliderID = Object.assign({}, colorsArr);
-      this.createStops(colorsArr, true);
-      this.refreshPreview();
+      this.#createStops(colorsArr, true);
+      this.#refreshPreview();
    }
 
 	/**
@@ -146,7 +139,7 @@ export class GradientEditorPopup {
 	 * @param {Array<Object>} colorSetArr An array of objects with color and stop position values
 	 * @param {Boolean} deleteExisting Deletes the existing color stop elements entirely in preparation for a new set
 	 */
-	createStops(colorSetArr, deleteExisting = false, returnElementsFor = []) {
+	#createStops(colorSetArr, deleteExisting = false, returnElementsFor = []) {
 		if (deleteExisting) {
 			document.querySelectorAll(".popup-range-stop").forEach((element) => {
 				element.parentElement.removeChild(element);
@@ -186,7 +179,7 @@ export class GradientEditorPopup {
 				rangeStop.classList.add("popup-stop-selected");
 				this.currentClick = { x: event.clientX };
 
-            this.closeStopControls();
+            this.#closeStopControls();
 
 			}, { signal: this.aborts.general.signal });
 
@@ -199,7 +192,7 @@ export class GradientEditorPopup {
 
 				if (this.selectedStop !== id || dX > 2) return
 
-				this.openStopControls(id, {x: event.clientX, y: event.clientY });
+				this.#openStopControls(id, {x: event.clientX, y: event.clientY });
 
 			}, { signal: this.aborts.general.signal })
 
@@ -211,7 +204,7 @@ export class GradientEditorPopup {
 					const col = this.colorsBySliderID[String(id)];
 					col.stop = Number(rangeStop.value);
 					this.colorsBySliderID[String(id)] = col;
-					this.drawGradientPreview();
+					this.#drawGradientPreview();
 				},
 				{ signal: this.aborts.general.signal }
 			);
@@ -227,15 +220,15 @@ export class GradientEditorPopup {
    }
    
 	// Updates colors for all color stops and re-draws the canvas preview
-	refreshPreview() {
+	#refreshPreview() {
 		this.rangeStops.forEach((element) => {
 			element.el.style.setProperty("--thumb-color", this.colorsBySliderID[element.id].color);
 		});
-		this.drawGradientPreview();
+		this.#drawGradientPreview();
 	}
 
 	// Draw the live preview gradient to the popup's preview canvas
-	drawGradientPreview() {
+	#drawGradientPreview() {
 		const gradient = this.ctx.createLinearGradient(0, this.canvas.height / 2, this.canvas.width, this.canvas.height / 2);
 		
 		for (let [id, colorPair] of Object.entries(this.colorsBySliderID)) {
@@ -247,7 +240,7 @@ export class GradientEditorPopup {
 	}
 
 	// Sets some general listeners that apply to the entirety of the popup
-	setListeners() {
+	#setListeners() {
 
 		// Save and exit
 		document.querySelector(".popup-save").addEventListener("click", () => {
@@ -259,6 +252,11 @@ export class GradientEditorPopup {
 			this.return(output);
 			this.destroy();
       }, { signal: this.aborts.general.signal });
+      
+      document.querySelector(".popup-cancel").addEventListener("click", () => {
+         this.reject("Cancel");
+         this.destroy();
+      });
 
 		// Add new color stop
       document.querySelector(".popup-add-color-stop").addEventListener("mousedown", (event) => {
@@ -266,7 +264,7 @@ export class GradientEditorPopup {
 
          this.addNewStopAllowed = false;
          setTimeout(() => {
-            this.addNewStop(event.target.value, { x: event.clientX, y: event.clientY });
+            this.#addNewStop(event.target.value, { x: event.clientX, y: event.clientY });
          }, 0);
 		}, { signal: this.aborts.general.signal });
 
@@ -274,17 +272,19 @@ export class GradientEditorPopup {
       document.body.addEventListener("mousedown", (event) => {
 			if (!this.mouseIsOver && this.stopControlsOpen && !isDescendant(this.currentStopControlElement, event.target)) {
 				event.preventDefault();
-				this.closeStopControls();
-				this.refreshPreview();
+				this.#closeStopControls();
+				this.#refreshPreview();
 			}
 		}, { signal: this.aborts.general.signal });
 	}
 
 	// Destroy the popup
-	destroy() {
+   destroy() {
 		this.aborts.general.abort();
-		this.aborts.stopPopup.abort();
-		// todo: Remove elements
+      this.aborts.stopPopup.abort();
+      this.dragHandler.destroy();
+      let rootEl = document.querySelector(".popup-bg");
+      rootEl.parentElement.removeChild(rootEl);
 	}
 }
 
