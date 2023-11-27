@@ -1,4 +1,5 @@
 import { DEFAULTS } from "./globals.js";
+import { Draggable } from "./draggable.js";
 
 let DataStore;
 
@@ -45,7 +46,9 @@ export class GradientEditorPopup {
 		this.rangeStops = [];
 		
 		this.createGradientEditor(this.gradientColorSet);
-		this.setListeners();
+      this.setListeners();
+      
+      this.dragHandler = new Draggable(this.template.querySelector(".popup"));
 
 		return this.promiseOut; // Returns a promise
 	}
