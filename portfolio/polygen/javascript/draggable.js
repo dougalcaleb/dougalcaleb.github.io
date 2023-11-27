@@ -1,8 +1,11 @@
 export class Draggable {
    root = null;
 
-   constructor(element) {
-      this.root = element;
+   constructor(trigger, toDrag = null) {
+
+      this.trigger = trigger;
+      this.toDrag = toDrag || trigger;
+
       this.offset = { x: null, y: null };
       this.dragging = false;
 
@@ -17,12 +20,12 @@ export class Draggable {
    }
 
    #addListeners() {
-      this.root.addEventListener("mousedown", (event) => {
+      this.trigger.addEventListener("mousedown", (event) => {
          event.preventDefault();
          this.dragging = true;
          this.offset = {
-            x: this.root.getBoundingClientRect().x - event.clientX,
-            y: this.root.getBoundingClientRect().y - event.clientY,
+            x: this.trigger.getBoundingClientRect().x - event.clientX,
+            y: this.trigger.getBoundingClientRect().y - event.clientY,
          }
       }, {signal: this.aborts.general.signal });
 
@@ -33,7 +36,7 @@ export class Draggable {
       document.body.addEventListener("mousemove", (event) => {
          if (!this.dragging) return;
          event.preventDefault();
-         this.root.style.transform = `translate(${event.clientX + this.offset.x}px, ${event.clientY + this.offset.y}px)`;
+         this.toDrag.style.transform = `translate(${event.clientX + this.offset.x}px, ${event.clientY + this.offset.y}px)`;
       }, { signal: this.aborts.live.signal });
 
       document.body.addEventListener("mouseup", (event) => {
@@ -54,7 +57,8 @@ export class Draggable {
    destroy() {
       this.aborts.live.abort();
       this.aborts.general.abort();
-      this.root = null;
+      this.toDrag = null;
+      this.trigger = null;
       this.dragging = false;
    }
 }

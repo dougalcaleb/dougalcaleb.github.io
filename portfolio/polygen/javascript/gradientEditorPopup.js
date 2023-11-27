@@ -48,7 +48,7 @@ export class GradientEditorPopup {
 		this.createGradientEditor(this.gradientColorSet);
       this.setListeners();
       
-      this.dragHandler = new Draggable(this.template.querySelector(".popup"));
+      this.dragHandler = new Draggable(this.template.querySelector(".popup-drag-trigger"), this.template.querySelector(".popup"));
 
 		return this.promiseOut; // Returns a promise
 	}

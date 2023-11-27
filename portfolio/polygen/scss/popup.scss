@@ -21,6 +21,15 @@
    flex-direction: column;
    align-items: center;
    justify-content: space-around;
+   .popup-drag-trigger {
+      // background: orange;
+      position: absolute;
+      width: 100%;
+      height: 10%;
+      top: 0;
+      z-index: 10;
+      cursor: move
+   }
    .popup-preview-wrap {
       width: 100%;
       display: flex;
