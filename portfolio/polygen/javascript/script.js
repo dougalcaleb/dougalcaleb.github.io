@@ -2,7 +2,6 @@ import { Preview } from "./previewController.js";
 import { Editor } from "./editorController.js";
 import { Controls } from "./uiController.js";
 import { LoadingIndicator } from "./loadingbar.js";
-import { Modals } from "./modal.js";
 import { Store } from "./dataController.js";
 import { GradientEditorPopup } from "./gradientEditorPopup.js";
 
@@ -35,10 +34,8 @@ Fixes:
 const DataStore = new Store();
 const PreviewLayer = new Preview(DataStore);
 const EditLayer = new Editor(DataStore);
-const Modal = new Modals();
 const Control = new Controls(DataStore, PreviewLayer, EditLayer);
 new GradientEditorPopup(DataStore);
 
 DataStore.route("EditLayer", EditLayer);
 DataStore.route("PreviewLayer", PreviewLayer);
-DataStore.route("Modal", Modal);
