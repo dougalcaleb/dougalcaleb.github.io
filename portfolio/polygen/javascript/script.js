@@ -8,9 +8,6 @@ import { GradientEditorPopup } from "./gradientEditorPopup.js";
 /* 
 TODO:
 
-CURRENT:
-- Popup refactor
-
 Features:
 - Vertex snap to color line
 	- Edit mode: draw to erase or restore sections of detected edges
@@ -22,7 +19,6 @@ Features:
 - Delete color palette
 
 Fixes:
-- Fix color palette modal not applying on save
 - Inconsistency with replace vertices function
 
 */

@@ -122,13 +122,13 @@ export class Editor {
 		
 		for (let [key, value] of Object.entries(this.selectedVertices)) {
 			let dist = DataStore.PreviewLayer.vertexMeta.dist;
-			let vertX = dist * value.id[1];
-			let vertY = dist * value.id[0];
+			let vertX = dist * value.id[0];
+			let vertY = dist * value.id[1];
 			let xVari = Math.random() * DataStore.settings.vvar * dist - (DataStore.settings.vvar * dist) / 2;
 			let yVari = Math.random() * DataStore.settings.vvar * dist - (DataStore.settings.vvar * dist) / 2;
 			recalculated.push({
-				id: value.id,
-				coords: [vertX + xVari - DataStore.PreviewLayer.vertexMeta.xShift, vertY + yVari - DataStore.PreviewLayer.vertexMeta.yShift]
+				id: value.id.reverse(),
+				coord: [vertX + xVari - DataStore.PreviewLayer.vertexMeta.xShift, vertY + yVari - DataStore.PreviewLayer.vertexMeta.yShift]
 			});
 		}
 

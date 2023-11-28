@@ -33,6 +33,7 @@ export class Preview {
 			drawNearestVert: false,
 			drawAllNearestVerts: false,
 			drawAllCheckedVerts: false,
+			drawVertexCoords: false,
 		};
 
 		// These are accessed externally by the brush mode
@@ -107,10 +108,9 @@ export class Preview {
 	}
 
 	// Replace existing vertices with newly calculated vertices. Used by edit mode Recalculate Vertices functionality
-	//! BUGGED (one of the functions using this function is sending flipped coordinates. probably edge detection, because this is actually flipped)
 	replaceVertices(newVerts) {
 		for (let [key, value] of Object.entries(newVerts)) {
-			this.verts[value.id[0]][value.id[1]] = value.coord;
+			this.verts[value.id[1]][value.id[0]] = value.coord.reverse();
 		}
 		this.draw(false);
 	}
@@ -294,6 +294,12 @@ export class Preview {
 				// Skip over edges
 				if (!this.verts[a + 1] || !this.verts[a][b + 1] || !this.verts[a + 1][b + 1]) {
 					continue;
+				}
+
+				if (this.debug.drawVertexCoords) {
+					this.ctx.fillStyle = "black";
+					this.ctx.font = "20px serif"
+					this.ctx.fillText(`(${b},${a})`, this.verts[a][b][0] - 40, this.verts[a][b][1])
 				}
 				
 				// top left to bottom right distance
