@@ -127,7 +127,7 @@ export class Editor {
 			let xVari = Math.random() * DataStore.settings.vvar * dist - (DataStore.settings.vvar * dist) / 2;
 			let yVari = Math.random() * DataStore.settings.vvar * dist - (DataStore.settings.vvar * dist) / 2;
 			recalculated.push({
-				id: value.id.reverse(),
+				id: value.id,
 				coord: [vertX + xVari - DataStore.PreviewLayer.vertexMeta.xShift, vertY + yVari - DataStore.PreviewLayer.vertexMeta.yShift]
 			});
 		}
@@ -267,7 +267,7 @@ export class Editor {
 				// Calculate if vertex is actually inside circle
 				let diff = (Math.hypot(dx, dy));
 				if (diff < (this.brush.size)  / this.canvasCompressionRatio) {
-					let data = [[nearestY + a, nearestX + b], DataStore.PreviewLayer.verts[nearestY + a][nearestX + b]]
+					let data = [[nearestX + b, nearestY + a], DataStore.PreviewLayer.verts[nearestY + a][nearestX + b]]
 					nearbyVerts.push(data);
 
 					// Debug: draw verts inside circle

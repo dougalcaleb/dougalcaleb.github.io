@@ -110,7 +110,7 @@ export class Preview {
 	// Replace existing vertices with newly calculated vertices. Used by edit mode Recalculate Vertices functionality
 	replaceVertices(newVerts) {
 		for (let [key, value] of Object.entries(newVerts)) {
-			this.verts[value.id[1]][value.id[0]] = value.coord.reverse();
+			this.verts[value.id[1]][value.id[0]] = value.coord;
 		}
 		this.draw(false);
 	}
