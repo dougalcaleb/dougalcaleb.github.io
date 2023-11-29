@@ -399,18 +399,18 @@ export class Controls {
 	// Event listeners for range sliders
 	rangeListeners() {
 		// general - vertex variance and cell size
-		document.querySelector(".i-variance").addEventListener("input", () => {
-			DataStore.settings.vvar = document.querySelector(".i-variance").value;
+		document.querySelector(".i-variance").addEventListener("input", (event) => {
+			DataStore.settings.vvar = event.target.value;
 			this.updateSettings(DataStore.settings);
 		});
-		document.querySelector(".i-verts").addEventListener("input", () => {
-			DataStore.settings.csize = document.querySelector(".i-verts").value;
+		document.querySelector(".i-verts").addEventListener("input", (event) => {
+			DataStore.settings.csize = event.target.value;
 			this.updateSettings(DataStore.settings);
 		});
 
 		// linear gradient
-		document.querySelector(".i-0-rotation").addEventListener("input", () => {
-			DataStore.settings.rot = document.querySelector(".i-0-rotation").value;
+		document.querySelector(".i-0-rotation").addEventListener("input", (event) => {
+			DataStore.settings.rot = event.target.value;
 			this.updateSettings(DataStore.settings, false);
 			if (document.querySelector(".rot-snap.btn-active")) {
 				document.querySelector(".rot-snap.btn-active").classList.remove("btn-active");
@@ -418,26 +418,26 @@ export class Controls {
 		});
 
 		// radial gradient
-		document.querySelector(".i-1-posx").addEventListener("input", () => {
-			DataStore.settings.posx = document.querySelector(".i-1-posx").value;
+		document.querySelector(".i-1-posx").addEventListener("input", (event) => {
+			DataStore.settings.posx = event.target.value;
 			this.updateSettings(DataStore.settings, false);
 		});
-		document.querySelector(".i-1-posy").addEventListener("input", () => {
-			DataStore.settings.posy = document.querySelector(".i-1-posy").value;
+		document.querySelector(".i-1-posy").addEventListener("input", (event) => {
+			DataStore.settings.posy = event.target.value;
 			this.updateSettings(DataStore.settings, false);
 		});
-		document.querySelector(".i-1-inrad").addEventListener("input", () => {
-			DataStore.settings.irad = document.querySelector(".i-1-inrad").value;
+		document.querySelector(".i-1-inrad").addEventListener("input", (event) => {
+			DataStore.settings.irad = event.target.value;
 			this.updateSettings(DataStore.settings, false);
 		});
-		document.querySelector(".i-1-outrad").addEventListener("input", () => {
-			DataStore.settings.orad = document.querySelector(".i-1-outrad").value;
+		document.querySelector(".i-1-outrad").addEventListener("input", (event) => {
+			DataStore.settings.orad = event.target.value;
 			this.updateSettings(DataStore.settings, false);
 		});
 
 		// brightness variance
-		document.querySelector(".i-bright-variance").addEventListener("input", () => {
-			DataStore.settings.bvar = document.querySelector(".i-bright-variance").value;
+		document.querySelector(".i-bright-variance").addEventListener("input", (event) => {
+			DataStore.settings.bvar = event.target.value;
 			this.updateSettings(DataStore.settings, false);
 		});
 		document.querySelector(".lighten").addEventListener("click", () => {
@@ -450,8 +450,14 @@ export class Controls {
 		});
 
 		// outline
-		document.querySelector(".i-outline").addEventListener("input", () => {
-			DataStore.settings.lineOp = parseFloat(document.querySelector(".i-outline").value);
+		document.querySelector(".i-outline").addEventListener("input", (event) => {
+			DataStore.settings.lineOp = parseFloat(event.target.value);
+			this.updateSettings(DataStore.settings, false);
+		});
+
+		// proportional falloff (tools)
+		document.querySelector(".prop-falloff").addEventListener("input", (event) => {
+			DataStore.settings.propFalloff = parseInt(event.target.value);
 			this.updateSettings(DataStore.settings, false);
 		});
 	}
@@ -462,17 +468,17 @@ export class Controls {
 		let wDimDebounce = null;
 
 		// outline color picker
-		document.querySelector(".i-outline-color").addEventListener("input", () => {
-			document.querySelector(".outline-color-wrap").style.background = document.querySelector(".i-outline-color").value;
+		document.querySelector(".i-outline-color").addEventListener("input", (event) => {
+			document.querySelector(".outline-color-wrap").style.background = event.target.value;
 			DataStore.settings.line = document.querySelector(".i-outline-color").value;
 			this.updateSettings(DataStore.settings, false);
 		});
 
 		// dimensions
-		document.querySelector(".image-height").addEventListener("input", () => {
+		document.querySelector(".image-height").addEventListener("input", (event) => {
 			clearTimeout(hDimDebounce);
 			hDimDebounce = setTimeout(() => {
-				DataStore.settings.y = document.querySelector(".image-height").value;
+				DataStore.settings.y = event.target.value;
 				if (DataStore.settings.y !== "0" && DataStore.settings.y !== undefined && DataStore.settings.y !== "") {
 					this.updateSettings(DataStore.settings);
 				} else {
@@ -480,10 +486,10 @@ export class Controls {
 				}
 			}, DEFAULTS.inputs.debounce);
 		});
-		document.querySelector(".image-width").addEventListener("input", () => {
+		document.querySelector(".image-width").addEventListener("input", (event) => {
 			clearTimeout(wDimDebounce);
 			wDimDebounce = setTimeout(() => {
-				DataStore.settings.x = document.querySelector(".image-width").value;
+				DataStore.settings.x = event.target.value;
 				if (DataStore.settings.x !== "0" && DataStore.settings.x !== undefined && DataStore.settings.x !== "") {
 					this.updateSettings(DataStore.settings);
 				} else {
