@@ -18,6 +18,7 @@ export class Store {
 			x: 1920,
 			y: 1080,
 			colors: [],
+			propFalloff: 4 
 		};
 	}
 

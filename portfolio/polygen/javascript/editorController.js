@@ -34,6 +34,16 @@ export class Editor {
 			points: [],
 		};
 
+		this.drag = {
+			DragEvent: new AbortController(),
+			MouseEvent: new AbortController(),
+			active: false,
+			dragStart: { x: null, y: null },
+			vertices: {},
+			lastRedraw: null,
+			redrawDelay: 15,
+		}
+
 		this.selectedVertices = {};
 	}
 
@@ -59,7 +69,8 @@ export class Editor {
 			selectedVerts: this.selectedVertices,
 			allVerts: DataStore.PreviewLayer.verts,
 			radius: DataStore.PreviewLayer.vertexMeta.dist,
-			canvas: DataStore.PreviewLayer.imageData
+			canvas: DataStore.PreviewLayer.imageData,
+			propFalloff: DataStore.settings.propFalloff,
 		});
 
 		let currentLine = {
@@ -337,11 +348,86 @@ export class Editor {
 		}
 	}
 
+	vertexDrag() {
+		this.drag.active = !this.drag.active;
+		if (this.drag.active) {
+			this.deactivateBrush();
+			this.prepareVertexDrag();
+		} else {
+			this.endCanvasDrag();
+		}
+	}
+
+	prepareVertexDrag() {
+		this.canvas.style.cursor = "grab";
+		this.drag.vertices = structuredClone(this.selectedVertices);
+		this.canvas.addEventListener("mousedown", (downEvent) => {
+			this.drag.dragStart = { x: downEvent.clientX, y: downEvent.clientY };
+			this.canvas.addEventListener("mousemove", (dragEvent) => {
+				// console.time("mdrag");
+				this.manualDrag(dragEvent);
+				// console.timeEnd("mdrag");
+			}, { signal: this.drag.DragEvent.signal });
+		}, { signal: this.drag.MouseEvent.signal });
+
+		this.canvas.addEventListener("mouseup", (event) => {
+			this.endCanvasDrag();
+		}, { signal: this.drag.MouseEvent.signal });
+	}
+
+	manualDrag(mouseEvent) {
+		for (const [id, vertex] of Object.entries(this.selectedVertices)) {
+
+			this.drag.vertices[id].coord = [
+				this.selectedVertices[id].coord[0] + (mouseEvent.clientX - this.drag.dragStart.x) / this.canvasCompressionRatio,
+				this.selectedVertices[id].coord[1] + (mouseEvent.clientY - this.drag.dragStart.y) / this.canvasCompressionRatio
+			];
+
+			// Grab vertices up to n radius (proportional falloff)
+			// Remove vertices that are already present in the adjusted vertices set
+			// Move each vertex by (pixel delta of original vertex) * (nth vertex / radius). 
+			// Average all movements to each vertex to account for multiple vertices claiming the same vertex as a neighbor
+
+			// console.log(DataStore.settings.propFalloff);
+
+			let startX = Math.max(vertex.id[0] - DataStore.settings.propFalloff, 0);
+			let startY = Math.max(vertex.id[1] - DataStore.settings.propFalloff, 0);
+			let endX = Math.min(vertex.id[0] + DataStore.settings.propFalloff, DataStore.PreviewLayer.verts[0].length - 1);
+			let endY = Math.min(vertex.id[1] + DataStore.settings.propFalloff, DataStore.PreviewLayer.verts.length - 1);
+
+			// console.log(startX,startY, endX,endY);
+
+			// for (let x = startX; x < endX; x++) {
+			// 	for (let y = startY; y < endY; y++) {
+			// 		if (this.selectedVertices[`${x},${y}}`]) continue;
+
+			// 		let d = Math.sqrt(Math.abs(vertex.id[0] - x) + Math.abs(vertex.id[1] - y));
+
+			// 		if (d > DataStore.settings.propFalloff) {
+			// 			console.log(`skipping vertex ${vertex.id}, delta is ${d}`);
+			// 			continue;
+			// 		}
+			// 	}
+			// }
+		}
+		let now = Date.now();
+		if (now - this.drag.lastRedraw > this.drag.redrawDelay) {
+			DataStore.PreviewLayer.replaceVertices(this.drag.vertices);
+			this.drag.lastRedraw = Date.now();
+		}
+	}
+
+	endCanvasDrag() {
+		this.canvas.style.cursor = "default";
+		this.drag.DragEvent.abort();
+		this.drag.DragEvent = new AbortController();
+	}
+
 	// Helper function to wipe the edit layer
-	clean() {
+	clean(resetSelectedVerts = true) {
 		if (this.isClean) return;
 
-		this.selectedVertices = {};
+		if (resetSelectedVerts) this.selectedVertices = {};
 		this.ctx.clearRect(0, 0, DataStore.settings.x, DataStore.settings.y);
 	}
 }

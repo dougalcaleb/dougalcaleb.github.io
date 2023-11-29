@@ -68,7 +68,7 @@ export class Preview {
 
 		// Clear canvas for new draw. Prevents contamination of colors between changes
 		this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-		DataStore.EditLayer.clean();
+		DataStore.EditLayer.clean(false);
 
 		// Set canvas dimensions
 		if (DataStore.settings.mode != "image") {
@@ -109,6 +109,8 @@ export class Preview {
 
 	// Replace existing vertices with newly calculated vertices. Used by edit mode Recalculate Vertices functionality
 	replaceVertices(newVerts) {
+		// console.log("replacting verts. verts before:");
+		// console.log(this.verts);
 		for (let [key, value] of Object.entries(newVerts)) {
 			this.verts[value.id[1]][value.id[0]] = value.coord;
 		}

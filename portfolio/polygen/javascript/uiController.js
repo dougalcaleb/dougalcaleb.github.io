@@ -373,6 +373,11 @@ export class Controls {
 		document.querySelector(".vertex-color-snap").addEventListener("click", () => {
 			EditLayer.colorSnap();
 		});
+
+		document.querySelector(".vertex-manual-drag").addEventListener("click", (event) => {
+			event.target.classList.toggle("btn-active");
+			EditLayer.vertexDrag();
+		});
 	}
 
 	// Event listeners for keypresses
