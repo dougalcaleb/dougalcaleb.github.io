@@ -108,13 +108,18 @@ export class Preview {
 	}
 
 	// Replace existing vertices with newly calculated vertices. Used by edit mode Recalculate Vertices functionality
-	replaceVertices(newVerts) {
-		// console.log("replacting verts. verts before:");
-		// console.log(this.verts);
+	replaceVertices(newVerts, redraw = true) {
 		for (let [key, value] of Object.entries(newVerts)) {
-			this.verts[value.id[1]][value.id[0]] = value.coord;
+			if (!!value.delta) {
+				this.verts[value.id[1]][value.id[0]][0] = value.delta[0] + value.coord[0];
+				this.verts[value.id[1]][value.id[0]][1] = value.delta[1] + value.coord[1];
+			} else {
+				this.verts[value.id[1]][value.id[0]] = value.coord;
+			}
 		}
-		this.draw(false);
+		if (redraw) {
+			this.draw(false);
+		}
 	}
 
 	// Generates and returns the verticies

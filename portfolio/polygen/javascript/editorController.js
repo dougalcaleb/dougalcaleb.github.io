@@ -42,7 +42,8 @@ export class Editor {
 			vertices: {},
 			lastRedraw: null,
 			redrawDelay: 15,
-			neighbors: {}
+			neighbors: {},
+			maxVertexIndex: 0,
 		}
 
 		this.selectedVertices = {};
@@ -364,13 +365,10 @@ export class Editor {
 		this.drag.vertices = structuredClone(this.selectedVertices);
 		this.drag.neighbors = this.getNeighbors();
 		DataStore.PreviewLayer.debugDrawListOfVerts(this.drag.neighbors);
-		return
 		this.canvas.addEventListener("mousedown", (downEvent) => {
 			this.drag.dragStart = { x: downEvent.clientX, y: downEvent.clientY };
 			this.canvas.addEventListener("mousemove", (dragEvent) => {
-				console.time("mdrag");
 				this.manualDrag(dragEvent);
-				console.timeEnd("mdrag");
 			}, { signal: this.drag.DragEvent.signal });
 		}, { signal: this.drag.MouseEvent.signal });
 
@@ -380,27 +378,31 @@ export class Editor {
 	}
 
 	//? IDEA: if this gets too heavy, just draw the vertices on the edit layer and then redraw the preview on release
+	//? IDEA: if edge vertices are detected to enter the frame because of extreme falloff, generate a new line of vertices on that edge
 
+	// Handler for manually dragging vertices. Handles selected vertices and proportional falloff
 	manualDrag(mouseEvent) {
-		for (const [id, vertex] of Object.entries(this.selectedVertices)) {
+		for (const id of Object.keys(this.selectedVertices)) {
+
+			let offsetX = (mouseEvent.clientX - this.drag.dragStart.x) / this.canvasCompressionRatio;
+			let offsetY = (mouseEvent.clientY - this.drag.dragStart.y) / this.canvasCompressionRatio;
 
 			this.drag.vertices[id].coord = [
-				this.selectedVertices[id].coord[0] + (mouseEvent.clientX - this.drag.dragStart.x) / this.canvasCompressionRatio,
-				this.selectedVertices[id].coord[1] + (mouseEvent.clientY - this.drag.dragStart.y) / this.canvasCompressionRatio
+				this.selectedVertices[id].coord[0] + offsetX,
+				this.selectedVertices[id].coord[1] + offsetY
 			];
 
-			// Grab vertices up to n radius (proportional falloff)
-			// Remove vertices that are already present in the adjusted vertices set
-			// Move each vertex by (pixel delta of original vertex) * (nth vertex / radius). 
-			// Average all movements to each vertex to account for multiple vertices claiming the same vertex as a neighbor
-
-			// console.log(DataStore.settings.propFalloff);
-
-			
+			for (let [nID, data] of Object.entries(this.drag.neighbors)) {
+				let prop = (this.drag.maxVertexIndex - data.index + 1) / this.drag.maxVertexIndex;
+				this.drag.neighbors[nID].delta = [offsetX * prop, offsetY * prop];
+			}
 		}
+
+		// Throttle the redraw since that's the most expensive part of this operation by far
 		let now = Date.now();
 		if (now - this.drag.lastRedraw > this.drag.redrawDelay) {
-			DataStore.PreviewLayer.replaceVertices(this.drag.vertices);
+			DataStore.PreviewLayer.replaceVertices(this.drag.vertices, false);
+			DataStore.PreviewLayer.replaceVertices(this.drag.neighbors);
 			this.drag.lastRedraw = Date.now();
 		}
 	}
@@ -413,13 +415,14 @@ export class Editor {
 			let startY = Math.max(vertex.id[1] - DataStore.settings.propFalloff + 1, 0);
 			let endX = Math.min(vertex.id[0] + DataStore.settings.propFalloff, DataStore.PreviewLayer.verts[0].length - 1);
 			let endY = Math.min(vertex.id[1] + DataStore.settings.propFalloff, DataStore.PreviewLayer.verts.length - 1);
-			console.log(this.selectedVertices);
+			
 			for (let x = startX; x < endX; x++) {
 				for (let y = startY; y < endY; y++) {
-					if (this.selectedVertices[`${x},${y}`]) {
+					if (!!this.selectedVertices[`${x},${y}`]) {
 						continue;
 					}
-					
+
+					// get distance from vertex (trim vertices that aren't in a circle)
 					let d = Math.sqrt(
 						Math.abs(vertex.coord[0] - DataStore.PreviewLayer.verts[y][x][0]) ** 2  +
 						Math.abs(vertex.coord[1] - DataStore.PreviewLayer.verts[y][x][1]) ** 2
@@ -429,7 +432,17 @@ export class Editor {
 						continue;
 					}
 
-					neighbors[`${x},${y}`] = { id: [x, y], coord: DataStore.PreviewLayer.verts[y][x] };
+					// nth point away from the origin (roughly)
+					let idx = Math.max(1, Math.round(Math.sqrt((vertex.id[0] - x) ** 2 + (vertex.id[1] - y) ** 2)));
+
+					this.drag.maxVertexIndex = idx > this.drag.maxVertexIndex ? idx : this.drag.maxVertexIndex;
+
+					// If the neighbor is already found, avoid overwrite and ensure the index is the lowest possible value
+					if (!!neighbors[`${x},${y}`]) {
+						neighbors[`${x},${y}`].index = idx < neighbors[`${x},${y}`].index ? idx : neighbors[`${x},${y}`].index;
+					} else {
+						neighbors[`${x},${y}`] = { id: [x, y], coord: structuredClone(DataStore.PreviewLayer.verts[y][x]), index: idx, delta: [] };
+					}
 				}
 			}
 		}
