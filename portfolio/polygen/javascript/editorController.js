@@ -42,6 +42,7 @@ export class Editor {
 			vertices: {},
 			lastRedraw: null,
 			redrawDelay: 15,
+			neighbors: {}
 		}
 
 		this.selectedVertices = {};
@@ -361,12 +362,15 @@ export class Editor {
 	prepareVertexDrag() {
 		this.canvas.style.cursor = "grab";
 		this.drag.vertices = structuredClone(this.selectedVertices);
+		this.drag.neighbors = this.getNeighbors();
+		DataStore.PreviewLayer.debugDrawListOfVerts(this.drag.neighbors);
+		return
 		this.canvas.addEventListener("mousedown", (downEvent) => {
 			this.drag.dragStart = { x: downEvent.clientX, y: downEvent.clientY };
 			this.canvas.addEventListener("mousemove", (dragEvent) => {
-				// console.time("mdrag");
+				console.time("mdrag");
 				this.manualDrag(dragEvent);
-				// console.timeEnd("mdrag");
+				console.timeEnd("mdrag");
 			}, { signal: this.drag.DragEvent.signal });
 		}, { signal: this.drag.MouseEvent.signal });
 
@@ -374,6 +378,8 @@ export class Editor {
 			this.endCanvasDrag();
 		}, { signal: this.drag.MouseEvent.signal });
 	}
+
+	//? IDEA: if this gets too heavy, just draw the vertices on the edit layer and then redraw the preview on release
 
 	manualDrag(mouseEvent) {
 		for (const [id, vertex] of Object.entries(this.selectedVertices)) {
@@ -390,31 +396,44 @@ export class Editor {
 
 			// console.log(DataStore.settings.propFalloff);
 
-			let startX = Math.max(vertex.id[0] - DataStore.settings.propFalloff, 0);
-			let startY = Math.max(vertex.id[1] - DataStore.settings.propFalloff, 0);
-			let endX = Math.min(vertex.id[0] + DataStore.settings.propFalloff, DataStore.PreviewLayer.verts[0].length - 1);
-			let endY = Math.min(vertex.id[1] + DataStore.settings.propFalloff, DataStore.PreviewLayer.verts.length - 1);
-
-			// console.log(startX,startY, endX,endY);
-
-			// for (let x = startX; x < endX; x++) {
-			// 	for (let y = startY; y < endY; y++) {
-			// 		if (this.selectedVertices[`${x},${y}}`]) continue;
-
-			// 		let d = Math.sqrt(Math.abs(vertex.id[0] - x) + Math.abs(vertex.id[1] - y));
-
-			// 		if (d > DataStore.settings.propFalloff) {
-			// 			console.log(`skipping vertex ${vertex.id}, delta is ${d}`);
-			// 			continue;
-			// 		}
-			// 	}
-			// }
+			
 		}
 		let now = Date.now();
 		if (now - this.drag.lastRedraw > this.drag.redrawDelay) {
 			DataStore.PreviewLayer.replaceVertices(this.drag.vertices);
 			this.drag.lastRedraw = Date.now();
 		}
+	}
+
+	getNeighbors() {
+		const neighbors = {};
+
+		for (const [id, vertex] of Object.entries(this.selectedVertices)) {
+			let startX = Math.max(vertex.id[0] - DataStore.settings.propFalloff + 1, 0);
+			let startY = Math.max(vertex.id[1] - DataStore.settings.propFalloff + 1, 0);
+			let endX = Math.min(vertex.id[0] + DataStore.settings.propFalloff, DataStore.PreviewLayer.verts[0].length - 1);
+			let endY = Math.min(vertex.id[1] + DataStore.settings.propFalloff, DataStore.PreviewLayer.verts.length - 1);
+			console.log(this.selectedVertices);
+			for (let x = startX; x < endX; x++) {
+				for (let y = startY; y < endY; y++) {
+					if (this.selectedVertices[`${x},${y}`]) {
+						continue;
+					}
+					
+					let d = Math.sqrt(
+						Math.abs(vertex.coord[0] - DataStore.PreviewLayer.verts[y][x][0]) ** 2  +
+						Math.abs(vertex.coord[1] - DataStore.PreviewLayer.verts[y][x][1]) ** 2
+					);
+
+					if (d > (DataStore.settings.propFalloff - 1) * DataStore.PreviewLayer.vertexMeta.dist) {
+						continue;
+					}
+
+					neighbors[`${x},${y}`] = { id: [x, y], coord: DataStore.PreviewLayer.verts[y][x] };
+				}
+			}
+		}
+		return neighbors;
 	}
 
 	endCanvasDrag() {

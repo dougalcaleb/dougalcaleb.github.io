@@ -170,6 +170,15 @@ export class Preview {
 		}
 	}
 
+	debugDrawListOfVerts(verts, drawData = null) {
+		this.ctx.fillStyle = drawData?.color || "red";
+		for (let [id, data] of Object.entries(verts)) {
+			this.ctx.beginPath();
+			this.ctx.arc(data.coord[0], data.coord[1], drawData?.size || 5, 0, Math.PI * 2);
+			this.ctx.fill();
+		}
+	}
+
 	// Calculate and draw the underlying gradient that will be used to determine the colors of the polygons
 	drawGradient() {
 		let gradient, gradData;
