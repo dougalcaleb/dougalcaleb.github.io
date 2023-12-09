@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Blank</title>
+    <title>Visual Rhetoric</title>
     <link rel="stylesheet" type="text/css" href="css/style.css">
 	<link rel="stylesheet" href="css/roundabout-style.css">
 
@@ -10,15 +10,29 @@
 </head>
 <body>
 
-	<div id="nav"></div>
+	<a id="learn-more-link" target="_blank" href="https://www.youtube.com/watch?v=dQw4w9WgXcQ"></a>
+
+	<div id="nav">
+		<div id="nav-wrap">
+			<div class="nav-option nav-option-active" id="nav-option-0"><span>INTRO</span></div>
+			<div class="nav-option" id="nav-option-1"><span>THE <br/> ISSUE</span></div>
+			<div class="nav-option" id="nav-option-2"><span>THE <br/> CONSEQUENCES</span></div>
+			<div class="nav-option" id="nav-option-3"><span>THE <br/> SOLUTION</span></div>
+		</div>
+		
+		<div id="learn-more">Learn More
+			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="currentColor" d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z" /></svg>
+		</div>
+	</div>
 	<div id="body"></div>
 
 	<template id="page-0">
 		<div>
-			<h1 class="animate-0">This is Heading Text</h1>
-			<p class="animate-0">This is some paragraph text. I'm going to make a point here.</p>
-			<p class="animate-0">Here's some supporting evidence. Isn't that cool?</p>
-			<p class="animate-0">Scroll to EXPERIENCE.</p>
+			<a href="./images/computer screens.jpg"></a>
+			<div id="page-0-bg-gradient"></div>
+			<h1 id="page-0-heading" class="animate-0">Safe AI development for the benefit of all humanity:</h1>
+			<h2 id="page-0-subheading" class="animate-0">We have work to do.</h2>
+			<p id="page-0-scroll" class="animate-0">Scroll to continue</p>
 		</div>
 		
 	</template>
@@ -31,6 +45,22 @@
 			<p class="animate-1">Scroll please.</p>
 		</div>
 		
+	</template>
+
+	<template id="page-2">
+		<div>
+			<h1 class="animate-2">Page 3 Heading. An Interesting Fact.</h1>
+			<p class="animate-2">This is the first of two paragraphs.</p>
+			<p class="animate-2">That should make this statement more impactful.</p>
+		</div>
+	</template>
+
+	<template id="page-3">
+		<div>
+			<h1 class="animate-3">THE SOLUTION IS HERE</h1>
+			<p class="animate-3">I, for one, welcome our new robotic overlords.</p>
+			<p class="animate-3">"I'm not going to create a world-destroying superintelligent AI. Trust me." - Sam Altman, AI daddy</p>
+		</div>
 	</template>
 
 </body>

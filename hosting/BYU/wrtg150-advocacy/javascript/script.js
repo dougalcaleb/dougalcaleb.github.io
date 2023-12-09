@@ -3,20 +3,27 @@ import { RoundaboutScripter } from "./roundabout-scripting.min.js";
 
 const RS = new RoundaboutScripter();
 
+// helper for the wonderful double transition we gotta do. but only once at least.
 function nodeToHTMLString(DOMnode) {
 	let parent = document.createElement("div");
 	parent.appendChild(DOMnode);
 	return parent.innerHTML.trim();
 }
 
-function page0setup() {
-	let root = document.querySelector("#page-0").content.children[0].cloneNode(true);
-	Store.pages.push({ html: nodeToHTMLString(root) });
-}
-
-function page1setup() {
-	let root = document.querySelector("#page-1").content.children[0].cloneNode(true);
-	Store.pages.push({ html: nodeToHTMLString(root) });
+// convert html template to html string which eventually gets reinterpreted as html template. wonderful.
+function pagesToRoundabout() {
+	document.querySelectorAll("template").forEach((element, idx) => {
+		let root = document.querySelector(`#page-${idx}`).content.children[0].cloneNode(true);
+		let bgImg = root.querySelector("a");
+		// console.log(bgImg.href);
+		let settings = {
+			html: nodeToHTMLString(root)
+		}
+		if (!!bgImg) {
+			settings.backgroundImage = bgImg.href;
+		}
+		Store.pages.push(settings);
+	});
 }
 
 function animOut(id) {
@@ -35,8 +42,7 @@ function animIn(id) {
 	});
 }
 
-page0setup();
-page1setup();
+pagesToRoundabout();
 
 
 let throttle = 1000;
@@ -45,6 +51,7 @@ let lastScroll;
 let active = 0;
 let incoming = null;
 
+// scroll advance
 document.body.addEventListener("wheel", (event) => {
 	if (event.deltaY < 0) {
 		if (Date.now() - lastScroll < throttle) return
@@ -79,4 +86,32 @@ document.body.addEventListener("wheel", (event) => {
 			RS.scrollNext(Store.main);
 		}, 800);
 	}
-})
+
+	document.querySelector(".nav-option-active").classList.remove("nav-option-active");
+	document.querySelector(`#nav-option-${active}`).classList.add("nav-option-active");
+});
+
+// click advance
+document.querySelectorAll(".nav-option").forEach((element, idx) => {
+	element.addEventListener("click", () => {
+
+		if (Date.now() - lastScroll < throttle || idx == active) return
+		lastScroll = Date.now();
+
+		document.querySelector(".nav-option-active").classList.remove("nav-option-active");
+		element.classList.add("nav-option-active");
+
+		animOut(active);
+		animIn(idx);
+
+		active = idx;
+
+		setTimeout(() => {
+			RS.scrollTo(Store.main, active);
+		}, 800);
+	});
+});
+
+document.querySelector("#learn-more").addEventListener("click", () => {
+	document.querySelector("#learn-more-link").click();
+});

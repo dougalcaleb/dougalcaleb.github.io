@@ -7,10 +7,9 @@ const main = new Roundabout({
 	type: "gallery",
 	swipe: false,
 	infinite: false,
-	// scrollwheel: true,
 	navigation: false,
 	buttons: false,
-	pages: Store.pages,
+	pages: Store.pages
 });
 
 Store.main = main;
