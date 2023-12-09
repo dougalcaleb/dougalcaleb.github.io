@@ -1,0 +1,66 @@
+@use "ext";
+
+body {
+	margin: 0;
+	// overflow: hidden;
+}
+
+* {
+	user-select: none;
+}
+
+#nav {
+	width: 15vw;
+	height: 100%;
+	position: fixed;
+	background: ext.$theme-black-dark;
+}
+
+#body {
+	width: 85vw;
+	height: 100%;
+	position: fixed;
+	right: 0;
+	background: ext.$theme-black-medium;
+}
+
+h1 {
+	font-family: ext.$theme-font-title;
+	color: ext.$theme-blue-light;
+	margin: none;
+	transform: translate(0px, 0px);
+	animation-fill-mode: forwards;
+}
+
+p {
+	font-family: ext.$theme-font-subtitle;
+	color: ext.$theme-white;
+	animation-fill-mode: forwards;
+}
+
+.roundabout-page {
+	padding: 30px;
+	box-sizing: border-box;
+}
+
+@keyframes animateOut {
+	0% {
+		transform: translate(0px, 0px);
+		opacity: 1;
+	} 
+	100%{
+		transform: translate(0px, -15px);
+		opacity: 0;
+	}
+}
+
+@keyframes animateIn {
+	0% {
+		transform: translate(0px, -15px);
+		opacity: 0;
+	} 
+	100%{
+		transform: translate(0px, 0px);
+		opacity: 1;
+	}
+}
