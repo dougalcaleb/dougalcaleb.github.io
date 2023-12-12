@@ -9,9 +9,13 @@ body {
 	user-select: none;
 }
 
-a {
+a:not(.in-text-link) {
 	text-decoration: none;
 	display: none;
+}
+
+.in-text-link {
+	color: theme.$blue-light;
 }
 
 #nav {
@@ -183,4 +187,92 @@ p {
 h1 {
 	font-size: 3vw;
 	margin-top: 0
+}
+
+.image-right {
+	position: absolute;
+	right: 0;
+	top: 0;
+	height: 100%;
+}
+
+.gradient-right {
+	height: 100vh;
+	position: absolute;
+	right: 0;
+	top: 0;
+	background-image: linear-gradient(to left, rgba(25,25,25,0.5) 0, rgba(25,25,25,1) 100%);
+}
+
+.p-wrap-full {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-evenly;
+	height: 100%;
+	position: absolute;
+	top: 0;
+	left: 50px;
+}
+
+.page-1-text, .page-2-text {
+	font-size: 2vw;
+}
+
+.text-blue {
+	color: theme.$blue-light
+}
+
+.idea-card {
+	border-radius: 10px;
+	border: 3px solid theme.$blue-light;
+	background: theme.$black-light;
+	padding: 20px;
+	box-sizing: border-box;
+	color: theme.$white;
+	font-family: theme.$font-paragraph;
+	margin-bottom: 20px;
+	font-size: 1.5vw;
+}
+
+.page-3-text {
+	font-size: 1.5vw;
+}
+
+.show-overflow {
+	overflow-y: auto;
+}
+
+#share-tray {
+	bottom: 20px;
+	height: 50px;
+	position: absolute;
+	width: calc(100% - 60px);
+	display: flex;
+	justify-content: space-evenly;
+	background: theme.$black-light;
+	align-items: center;
+	padding-top: 20px;
+	padding-bottom: 20px;
+	p {
+		color: theme.$blue-light;
+		font-size: 2vw;
+	}
+	svg {
+		height: 40px;
+		position: relative;
+		top: 0;
+		bottom: 0;
+		color: theme.$white;
+		cursor: pointer;
+		transition: 0.1s;
+		&:hover {
+			color: theme.$blue-light;
+		}
+	}
+}
+
+#twitter {
+	svg {
+		height: 34px;
+	}
 }

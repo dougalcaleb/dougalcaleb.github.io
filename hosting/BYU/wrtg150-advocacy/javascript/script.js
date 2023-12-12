@@ -14,8 +14,7 @@ function nodeToHTMLString(DOMnode) {
 function pagesToRoundabout() {
 	document.querySelectorAll("template").forEach((element, idx) => {
 		let root = document.querySelector(`#page-${idx}`).content.children[0].cloneNode(true);
-		let bgImg = root.querySelector("a");
-		// console.log(bgImg.href);
+		let bgImg = root.querySelector("a.bgImg");
 		let settings = {
 			html: nodeToHTMLString(root)
 		}
@@ -36,8 +35,8 @@ function animOut(id) {
 
 function animIn(id) {
 	document.querySelectorAll(`.animate-${id}`).forEach((element, idx) => {
-		element.style.animation = "0.3s animateIn";
-		element.style.animationDelay = `${idx * 0.1}s`;
+		element.style.animation = "0.1s animateIn";
+		element.style.animationDelay = `0s`;
 		element.style.animationFillMode = `forwards`;
 	});
 }
@@ -47,6 +46,7 @@ pagesToRoundabout();
 
 let throttle = 1000;
 let lastScroll;
+let scrollTimeout = 500;
 
 let active = 0;
 let incoming = null;
@@ -54,42 +54,57 @@ let incoming = null;
 // scroll advance
 document.body.addEventListener("wheel", (event) => {
 	if (event.deltaY < 0) {
-		if (Date.now() - lastScroll < throttle) return
-		
-		if (active > 0) {
-			lastScroll = Date.now();
-			incoming = active - 1;
-		
-			animIn(incoming);
-			animOut(active);
-
-			active--;
-		}
-
-		setTimeout(() => {
-			RS.scrollPrevious(Store.main);
-		}, 800);
+		attemptScrollPrev();
 	} else if (event.deltaY > 0) {
-		if (Date.now() - lastScroll < throttle) return
-		
-		if (active < Store.pages.length - 1) {
-			lastScroll = Date.now();
-			incoming = active + 1;
-		
-			animIn(incoming);
-			animOut(active)
-			
-			active++;
-		}
-
-		setTimeout(() => {
-			RS.scrollNext(Store.main);
-		}, 800);
+		attemptScrollNext();
 	}
+});
+
+document.body.addEventListener("click", () => {
+	attemptScrollNext();
+});
+
+function attemptScrollNext() {
+	if (Date.now() - lastScroll < throttle) return
+
+	if (active < Store.pages.length - 1) {
+		lastScroll = Date.now();
+		incoming = active + 1;
+	
+		animIn(incoming);
+		animOut(active)
+		
+		active++;
+	}
+
+	setTimeout(() => {
+		RS.scrollNext(Store.main);
+	}, scrollTimeout);
 
 	document.querySelector(".nav-option-active").classList.remove("nav-option-active");
 	document.querySelector(`#nav-option-${active}`).classList.add("nav-option-active");
-});
+}
+
+function attemptScrollPrev() {
+	if (Date.now() - lastScroll < throttle) return
+
+	if (active > 0) {
+		lastScroll = Date.now();
+		incoming = active - 1;
+	
+		animIn(incoming);
+		animOut(active);
+
+		active--;
+	}
+
+	setTimeout(() => {
+		RS.scrollPrevious(Store.main);
+	}, scrollTimeout);
+
+	document.querySelector(".nav-option-active").classList.remove("nav-option-active");
+	document.querySelector(`#nav-option-${active}`).classList.add("nav-option-active");
+}
 
 // click advance
 document.querySelectorAll(".nav-option").forEach((element, idx) => {
@@ -108,10 +123,20 @@ document.querySelectorAll(".nav-option").forEach((element, idx) => {
 
 		setTimeout(() => {
 			RS.scrollTo(Store.main, active);
-		}, 800);
+		}, scrollTimeout);
 	});
 });
 
 document.querySelector("#learn-more").addEventListener("click", () => {
 	document.querySelector("#learn-more-link").click();
 });
+
+setTimeout(() => {
+	document.querySelector("#page-1-gradient-right").style.width = document.querySelector("#page-1-img-right").offsetWidth + "px";
+	document.querySelector("#page-2-gradient-right").style.width = document.querySelector("#page-2-img-right").offsetWidth + "px";
+}, 100);
+
+window.onresize = () => {
+	document.querySelector("#page-1-gradient-right").style.width = document.querySelector("#page-1-img-right").offsetWidth + "px";
+	document.querySelector("#page-2-gradient-right").style.width = document.querySelector("#page-2-img-right").offsetWidth + "px";
+}
