@@ -1,4 +1,5 @@
 import { Thread } from "./threadManager.js";
+import { DEFAULTS } from "./globals.js";
 
 let DataStore;
 
@@ -16,6 +17,8 @@ export class Editor {
 		this.canvasCompressionRatio = 1;
 
 		this.isClean = true;
+
+		this.computedEdgeImage = null;
 
 		this.brush = {
 			FollowEvent: new AbortController(),
@@ -52,7 +55,9 @@ export class Editor {
 		ImageToolsWorker.open("imageToolsWorker");
 
 		ImageToolsWorker.send({
+			preCompute: this.computedEdgeImage,
 			selectedVerts: this.selectedVertices,
+			allVerts: DataStore.PreviewLayer.verts,
 			radius: DataStore.PreviewLayer.vertexMeta.dist,
 			canvas: DataStore.PreviewLayer.imageData
 		});
@@ -69,6 +74,9 @@ export class Editor {
 			let operation = data.type.split("-")
 			switch (operation[0]) {
 				case "result":
+					DataStore.PreviewLayer.replaceVertices(data.data);
+					this.computedEdgeImage = data.computed;
+					ImageToolsWorker.close();
 					break;
 				case "progress":
 					if (data.data.begin) {
@@ -84,6 +92,7 @@ export class Editor {
 						setTimeout(() => {
 							document.querySelector(".loader-wrap").style.visibility = "hidden";
 							document.querySelector(".loader-wrap").style.opacity = 0;
+							document.getElementById("loader-progress").innerHTML = "";
 						}, 400);
 						return;
 					}
