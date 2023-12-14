@@ -131,23 +131,25 @@ document.querySelector("#learn-more").addEventListener("click", () => {
 	document.querySelector("#learn-more-link").click();
 });
 
-// document.body.onload(() => {
-// 	console.log("Images loaded");
-// });
+window.onload(() => {
+	document.querySelector("#page-1-gradient-right").style.width = document.querySelector("#page-1-img-right").offsetWidth + "px";
+	document.querySelector("#page-2-gradient-right").style.width = document.querySelector("#page-2-img-right").offsetWidth + "px";
+});
 
 setTimeout(() => {
-	// document.querySelector("#page-1-img-right").addEventListener("load", () => {
-		document.querySelector("#page-1-gradient-right").style.width = document.querySelector("#page-1-img-right").offsetWidth + "px";
-	// })
-	// document.querySelector("#page-2-img-right").addEventListener("load", () => {
-		document.querySelector("#page-2-gradient-right").style.width = document.querySelector("#page-2-img-right").offsetWidth + "px";
-	// })
-}, 100);
-
-setTimeout(() => {
-	// document.querySelector("#page-1-gradient-right").style.width = document.querySelector("#page-1-img-right").offsetWidth + "px";
+	document.querySelector("#page-1-gradient-right").style.width = document.querySelector("#page-1-img-right").offsetWidth + "px";
 	document.querySelector("#page-2-gradient-right").style.width = document.querySelector("#page-2-img-right").offsetWidth + "px";
 }, 100);
+
+setTimeout(() => {
+	document.querySelector("#page-1-gradient-right").style.width = document.querySelector("#page-1-img-right").offsetWidth + "px";
+	document.querySelector("#page-2-gradient-right").style.width = document.querySelector("#page-2-img-right").offsetWidth + "px";
+}, 1000);
+
+setTimeout(() => {
+	document.querySelector("#page-1-gradient-right").style.width = document.querySelector("#page-1-img-right").offsetWidth + "px";
+	document.querySelector("#page-2-gradient-right").style.width = document.querySelector("#page-2-img-right").offsetWidth + "px";
+}, 3000);
 
 window.onresize = () => {
 	document.querySelector("#page-1-gradient-right").style.width = document.querySelector("#page-1-img-right").offsetWidth + "px";
