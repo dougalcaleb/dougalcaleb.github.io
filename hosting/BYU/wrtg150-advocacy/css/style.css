@@ -153,7 +153,7 @@ p {
   position: absolute;
   left: 0;
   top: 0;
-  background-image: linear-gradient(rgba(10, 31, 33, 0.5) 0%, black 80%);
+  background-image: linear-gradient(rgba(10, 31, 33, 0.5) 30%, black 80%);
 }
 
 #page-0-heading {
@@ -198,7 +198,14 @@ h1 {
   position: absolute;
   right: 0;
   top: 0;
-  background-image: linear-gradient(to left, rgba(25, 25, 25, 0.5) 0, #191919 100%);
+}
+
+#page-1-gradient-right {
+  background-image: linear-gradient(to left, rgba(25, 25, 25, 0.5) 50%, #191919 100%);
+}
+
+#page-2-gradient-right {
+  background-image: linear-gradient(to left, rgba(25, 25, 25, 0.5) 85%, #191919 100%);
 }
 
 .p-wrap-full {
@@ -270,4 +277,8 @@ h1 {
 
 #twitter svg {
   height: 34px;
+}
+
+#landing-img-loader {
+  display: none;
 }

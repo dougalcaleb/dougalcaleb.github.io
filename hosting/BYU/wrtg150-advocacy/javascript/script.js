@@ -136,13 +136,13 @@ document.querySelector("#learn-more").addEventListener("click", () => {
 // });
 
 setTimeout(() => {
-	document.querySelector("#page-1-img-right").addEventListener("load", () => {
+	// document.querySelector("#page-1-img-right").addEventListener("load", () => {
 		document.querySelector("#page-1-gradient-right").style.width = document.querySelector("#page-1-img-right").offsetWidth + "px";
-	})
-	document.querySelector("#page-2-img-right").addEventListener("load", () => {
+	// })
+	// document.querySelector("#page-2-img-right").addEventListener("load", () => {
 		document.querySelector("#page-2-gradient-right").style.width = document.querySelector("#page-2-img-right").offsetWidth + "px";
-	})
-}, 10);
+	// })
+}, 100);
 
 setTimeout(() => {
 	// document.querySelector("#page-1-gradient-right").style.width = document.querySelector("#page-1-img-right").offsetWidth + "px";
