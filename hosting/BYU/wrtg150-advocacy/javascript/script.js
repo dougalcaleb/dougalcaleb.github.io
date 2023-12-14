@@ -131,10 +131,10 @@ document.querySelector("#learn-more").addEventListener("click", () => {
 	document.querySelector("#learn-more-link").click();
 });
 
-window.onload(() => {
+window.onload = () => {
 	document.querySelector("#page-1-gradient-right").style.width = document.querySelector("#page-1-img-right").offsetWidth + "px";
 	document.querySelector("#page-2-gradient-right").style.width = document.querySelector("#page-2-img-right").offsetWidth + "px";
-});
+};
 
 setTimeout(() => {
 	document.querySelector("#page-1-gradient-right").style.width = document.querySelector("#page-1-img-right").offsetWidth + "px";
