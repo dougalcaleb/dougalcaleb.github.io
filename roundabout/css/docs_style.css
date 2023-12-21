@@ -47,6 +47,11 @@ span.code {
   padding-right: 3px;
 }
 
+#versionHelper {
+  display: none;
+  visibility: hidden;
+}
+
 .link {
   color: #00b7ff;
 }
