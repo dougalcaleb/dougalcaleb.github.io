@@ -80,56 +80,15 @@
                   </li>
                </ul>
              -->
-				The Roundabout scripting module is an optional but powerful tool to enhance the capabilities of Roundabout carousels.
+				The Roundabout scripting module is an optional but powerful tool to enhance the capabilities of Roundabout carousels. Methods are available for initiating scrolling, listening for scrolling, changing settings or pages on the fly, and more.
             <br/><br/>
-            To add the module to your project, it must be linked <i>after</i> <span class="code">roundabout.min.js</span> but <i>before</i> the settings file. It will look like this:
-            <div class="code html-codeblock">
-					&lt;!DOCTYPE html&gt;<br/>
-               &lt;html&gt;<br/>
-               &nbsp;&nbsp;&lt;head&gt;<br/>
-               &nbsp;&nbsp;&nbsp;&nbsp;&lt;!-- ... --&gt;<br/>
-               &nbsp;&nbsp;<br/>
-               &nbsp;&nbsp;&nbsp;&nbsp;&lt;link href="path/to/roundabout-style.css" rel="stylesheet" type="text/css" /&gt;<br/>
-               &nbsp;&nbsp;&lt;/head&gt;<br/>
-               &nbsp;&nbsp;&lt;body&gt;<br/>
-               &nbsp;&nbsp;&nbsp;&nbsp;&lt;!-- ... --&gt;<br/>
-               &nbsp;&nbsp;<br/>
-               &nbsp;&nbsp;&nbsp;&nbsp;&lt;script src="path/to/roundabout.min.js"&gt;&lt;/script&gt;<br/>
-               &nbsp;&nbsp;&nbsp;&nbsp;&lt;script src="path/to/roundabout-scripting.min.js"&gt;&lt;/script&gt;<br/>
-               &nbsp;&nbsp;&nbsp;&nbsp;&lt;script src="path/to/roundabout-settings.js"&gt;&lt;/script&gt;<br/>
-               &nbsp;&nbsp;&lt;/body&gt;<br/>
-               &lt;/html&gt;
-				</div>
-            Or, if your scripts are in your <span class="code">head</span>:
-            <div class="code html-codeblock">
-               &lt;!DOCTYPE html&gt;<br/>
-               &lt;html&gt;<br/>
-               &nbsp;&nbsp;&lt;head&gt;<br/>
-               &nbsp;&nbsp;&nbsp;&nbsp;&lt;!-- ... --&gt;<br/>
-               &nbsp;&nbsp;<br/>
-               &nbsp;&nbsp;&nbsp;&nbsp;&lt;link href="path/to/roundabout-style.css" rel="stylesheet" type="text/css" /&gt;<br/>
-               <br/>
-               &nbsp;&nbsp;&nbsp;&nbsp;&lt;script src="path/to/roundabout.min.js" defer&gt;&lt;/script&gt;<br/>
-               &nbsp;&nbsp;&nbsp;&nbsp;&lt;script src="path/to/roundabout-scripting.min.js" defer&gt;&lt;/script&gt;<br/>
-               &nbsp;&nbsp;&nbsp;&nbsp;&lt;script src="path/to/roundabout-settings.js" defer&gt;&lt;/script&gt;<br/>
-               &nbsp;&nbsp;&lt;/head&gt;<br/>
-               &nbsp;&nbsp;&lt;body&gt;<br/>
-               &nbsp;&nbsp;&nbsp;&nbsp;&lt;!-- ... --&gt;<br/>
-               &nbsp;&nbsp;&lt;/body&gt;<br/>
-               &lt;/html&gt;
-            </div>
-
-            Once your files are linked, you can start using the methods provided to interact with your carousel(s). Methods are available for initiating scrolling, listening for scrolling, changing settings or pages on the fly, and more.
-            <br/><br/>
-            Using the Roundabout Scripter is similar to creating a Roundabout carousel. It must be initialized and stored in a variable with the <span class="code">new</span> keyword, but <i>only one time per file.</i> This variable can then be used to invoke methods.
-            <br/><br/>
-            Note that when you intend to interact with a carousel, the <span class="code">new Roundabout</span> needs to be stored in a variable.
+            To add the module to your project, it does not need to be linked to your HTML document. The RoundaboutScripter module is a static class that contains methods where (usually) the first parameter is the carousel to modify, and the second parameter is a callback function to execute.
             <br/><br/>
             Shown is an example of what your settings file might look like:
             <div class="code js-codeblock">
-               // Get the scripter <br/>
-               const RS = new RoundaboutScripter();
-               <br/><br/>
+               import RoundaboutScripter from "./roundabout-scripter.js"; <br/>
+               import Roundabout from "./roundabout.js"; <br/>
+               <br/>
                // Define carousels <br/>
 					const firstCarousel = new Roundabout({<br />
 					&nbsp;&nbsp;// settings ...<br />
@@ -140,23 +99,13 @@
 					});
                <br/><br/>
                // Use the scripter <br/>
-               RS.onScroll(firstCarousel, () => {<br/>
+               RoundaboutScripter.onScroll(firstCarousel, () => {<br/>
                &nbsp;&nbsp;// execute some code ...<br/>
                });
                <br/><br/>
-               RS.onScrollNext(secondCarousel, () => {<br/>
+               RoundaboutScripter.onScrollNext(secondCarousel, () => {<br/>
                   &nbsp;&nbsp;// execute come code...<br/>
                });
-				</div>
-            The one scripter in a single file can be used for any number of carousels also defined in that file. The general syntax for methods looks like this (differences are noted on the respective documentation page):
-            <div class="code js-codeblock">
-               const RS = new RoundaboutScripter();
-               <br/><br/>
-               // Listeners: <br/>
-               RS.onSomeEvent(carouselToListenTo, callback);
-               <br/><br/>
-               // Interactions: <br/>
-               RS.executeSomeEvent(carouselToUse[, options]);
 				</div>
             The module is included with the rest of the Roundabout download, but can be deleted if not needed.
 				<footer></footer>

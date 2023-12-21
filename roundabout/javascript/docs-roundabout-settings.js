@@ -1,4 +1,4 @@
-import { Roundabout } from "/javascript/roundabout.min.js";
+import Roundabout from "/javascript/roundabout.min.js";
 
 new Roundabout({
    parent: ".roundabout-example",

@@ -121,6 +121,7 @@ jscode.forEach((block) => {
 				if (k != "") {
                if (line.includes(k)) {
                   if (k == "import") {
+                     variables.push(inProgress.split(" ")[1]);
                      inProgress = inProgress.replaceAll(new RegExp(/import\W(\S+)/, "gm"), `<span class="code-purple">${k}</span> <span class="code-blue-l">$1</span>`);
                   } else {
                      inProgress = inProgress.replaceAll(new RegExp(k, "gm"), `<span class="code-purple">${k}</span>`);

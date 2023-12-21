@@ -1,4 +1,4 @@
-import { Roundabout } from "./roundabout.min.js";
+import Roundabout from "./roundabout.min.js";
 import { RoundaboutScripter } from "./roundabout-scripting.min.js";
 
 const main = new Roundabout({
