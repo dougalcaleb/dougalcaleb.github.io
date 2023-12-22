@@ -79,9 +79,16 @@ jscode.forEach((block) => {
 				inProgress = inProgress.replace(new RegExp("`(.*)`", "gmi"), '<span class="code-orange">`$1`</span>');
 			}
 			if (line.includes(":")) {
-				if (line.includes(`"`) || line.includes("`") || line.includes("[") || line.includes("{")) {
+				if (line.includes("=&gt;")) {
+					inProgress = inProgress.replace(
+						new RegExp("^\\s*(\\S*):([^,]*)(,?)", "gmi"),
+						`<span class="code-blue-l">$1</span>:$2$3`
+					);
+				} else if (line.includes(`"`) || line.includes("`") || line.includes("[") || line.includes("{")) {
 					inProgress = inProgress.replace(new RegExp("^\\s*(\\S*):", "gmi"), `<span class="code-blue-l">$1</span>:`);
 				} else {
+					console.log("green span colon?");
+					console.log(line);
 					inProgress = inProgress.replace(
 						new RegExp("^\\s*(\\S*):([^,]*)(,?)", "gmi"),
 						`<span class="code-blue-l">$1</span>:<span class="code-green">$2</span>$3`
@@ -111,6 +118,7 @@ jscode.forEach((block) => {
 				}
 			});
 			objects.forEach((o) => {
+				console.log("green span object");
 				if (o != "") {
 					if (line.includes(o)) {
 						inProgress = inProgress.replaceAll(new RegExp(o, "gm"), `<span class="code-green">${o}</span>`);
