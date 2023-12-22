@@ -87,18 +87,16 @@ jscode.forEach((block) => {
 				} else if (line.includes(`"`) || line.includes("`") || line.includes("[") || line.includes("{")) {
 					inProgress = inProgress.replace(new RegExp("^\\s*(\\S*):", "gmi"), `<span class="code-blue-l">$1</span>:`);
 				} else {
-					console.log("green span colon?");
-					console.log(line);
 					inProgress = inProgress.replace(
 						new RegExp("^\\s*(\\S*):([^,]*)(,?)", "gmi"),
 						`<span class="code-blue-l">$1</span>:<span class="code-green">$2</span>$3`
 					);
 				}
 			}
+			inProgress = inProgress.replaceAll(new RegExp(/(\d+)/, "gmi"), "<span class='code-green'>$1</span>")
 			variables.forEach((v) => {
 				if (v != "") {
 					let matches = inProgress.match(new RegExp(`${v}\\.([^\\.\\s<>;\\[\\]]*)`, "gmi"));
-					// console.log(matches);
 					if (matches) {
                   matches.forEach((match) => {
                      if (!variables.includes(match.split(".")[1])) {
@@ -108,9 +106,7 @@ jscode.forEach((block) => {
 					}
 				}
          });
-         // console.log(variables);
          variables.forEach((v) => {
-            // console.log("checking", v);
 				if (v != "") {
 					if (line.includes(v)) {
 						inProgress = inProgress.replaceAll(new RegExp(v, "gm"), `<span class="code-blue-l">${v}</span>`);
@@ -118,7 +114,6 @@ jscode.forEach((block) => {
 				}
 			});
 			objects.forEach((o) => {
-				console.log("green span object");
 				if (o != "") {
 					if (line.includes(o)) {
 						inProgress = inProgress.replaceAll(new RegExp(o, "gm"), `<span class="code-green">${o}</span>`);
