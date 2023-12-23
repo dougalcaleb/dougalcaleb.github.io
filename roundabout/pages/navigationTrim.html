@@ -17,11 +17,6 @@
 		<iframe frameborder="0" class="ls-helper" id="ls-helper"></iframe>
 		<header>
 			<a href="/roundabout/docs.html"><p class="title"><span class="name">Roundabout</span> <span class="desc">DOCS</span></p></a>
-			<!-- <select name="version" class="version">
-				<option value="1.2.0">v1.2.0</option>
-				<option value="1.1.0">v1.1.0</option>
-				<option value="1.0.0">v1.0.0</option>
-			</select> -->
 			<div class="links">
 				<a href="https://github.com/dougalcaleb/roundabout" target="_blank"
 					><div class="download">
@@ -49,7 +44,6 @@
 		</header>
 
 		<nav>
-			<!-- <section class="links"></section> -->
 			<section class="setup">
 				<div class="sort-order">Sort order</div>
 				<div class="tab-behavior">Tabs</div>
@@ -67,24 +61,18 @@
 			</div>
 			<div class="info">
 				<div class="desc">Sets the trim mode for the navigation bar on non-infinite carousels.</div>
-				<!-- 
-               <ul>
-                  <li>
-                     <ul>
-                        <li></li>
-                     </ul>
-                  </li>
-               </ul>
-             -->
              This setting only applies when <span class="code">infinite</span> is set to <span class="code">false</span> and <span class="code">pagesToShow</span> is greater than 1.
              <br/><br/>
              <span class="code">true</span> trims the normally useless buttons at the end.
              <br/><br/>
              <span class="code">false</span> allows every page to have a corresponding navigation button.
              <br/><br/>
-             Turning this off is recommended for thumbnail-style navigation, where each page has a corresponding image. The additional buttons that would normally be trimmed will still allow for navigation and they will still gain their appropriate active/inactive classes.
+             Turning this off is recommended for thumbnail-style navigation, where each page has a corresponding image. 
+			 The additional buttons that would normally be trimmed will still allow for navigation and they will still gain their appropriate active/inactive classes.
              <br/><br/>
-             When 2 or more pages are shown and the carousel is not infinite, a certain number of navigation buttons (equivalent to <span class="code">pagesToShow</span> - 1) will be removed from the end of the set. This is because the focused page is always placed as the leftmost visible page. Then, because Roundabout will not scroll past the end, it cannot move the focused page all the way to the left. This leaves one or more pages at the end that cannot be fully focused, and so the unusable buttons are removed to avoid confusion when no scroll takes place on click.
+             When 2 or more pages are shown and the carousel is not infinite, a certain number of navigation buttons (equivalent to <span class="code">pagesToShow</span> - 1) will be removed from the end of the set. 
+			 This is because the clicked page is always placed as the leftmost visible page. Then, because Roundabout will not scroll past the end, it cannot move the focused page all the way to the left. 
+			 This leaves one or more pages at the end that cannot be fully focused, and so the unusable buttons are removed to avoid confusion when no scroll takes place on click.
              <br/><br/>
              
              The carousels on this page have a few extra settings edited for demonstration:
@@ -97,10 +85,8 @@
 				<footer></footer>
 			</div>
 		</section>
-		<!-- <table class="temp-settings"></table> -->
 	</body>
 
 	<script src="../javascript/docs.js" type="module"></script>
-	<script src="/javascript/roundabout.min.js" type="module"></script>
 	<script src="./javascript/navigationTrim-settings.js" type="module"></script>
 </html>
