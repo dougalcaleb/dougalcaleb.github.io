@@ -1,6 +1,6 @@
 let htmlcode = document.querySelectorAll(".html-codeblock");
 let jscode = document.querySelectorAll(".js-codeblock");
-let csscode = document.querySelectorAll(".css-codeblock"); 
+let csscode = document.querySelectorAll(".css-codeblock");
 
 /*
 Using this plugin:
@@ -17,15 +17,16 @@ CSS reference is stored in syntax.css
 jscode.forEach((block) => {
 	let lines = block.innerHTML.split("<br>");
 	let finalBlock = "";
-   let variables = ["document", "window"];
-   let keywords = ["import", "from"];
+	let variables = ["document", "window", "x", "length", "classList", "clientX"];
+	let keywords = ["import", "from"];
 	let objects = ["Math"];
 
 	lines.forEach((line) => {
 		let inProgress = line.trim();
-
-		if (line.includes("//")) {
-			inProgress = `<span class="code-comment">${inProgress}</span>`;
+		// comments
+		if (inProgress.match("^[&nbsp;]*//")) {
+			inProgress = inProgress.replace(new RegExp("(//.+)", "gmi"), `<span class="code-comment">$1</span>`);
+			
 		} else {
 			if (line.includes("new Roundabout")) {
 				inProgress = inProgress.replace(
@@ -78,12 +79,12 @@ jscode.forEach((block) => {
 			if (line.includes("`")) {
 				inProgress = inProgress.replace(new RegExp("`(.*)`", "gmi"), '<span class="code-orange">`$1`</span>');
 			}
+			if (line.includes("'")) {
+				inProgress = inProgress.replace(new RegExp("'(.*)'", "gmi"), `<span class="code-orange">'$1'</span>`);
+			}
 			if (line.includes(":")) {
 				if (line.includes("=&gt;")) {
-					inProgress = inProgress.replace(
-						new RegExp("^\\s*(\\S*):([^,]*)(,?)", "gmi"),
-						`<span class="code-blue-l">$1</span>:$2$3`
-					);
+					inProgress = inProgress.replace(new RegExp("^\\s*(\\S*):([^,]*)(,?)", "gmi"), `<span class="code-blue-l">$1</span>:$2$3`);
 				} else if (line.includes(`"`) || line.includes("`") || line.includes("[") || line.includes("{")) {
 					inProgress = inProgress.replace(new RegExp("^\\s*(\\S*):", "gmi"), `<span class="code-blue-l">$1</span>:`);
 				} else {
@@ -93,46 +94,61 @@ jscode.forEach((block) => {
 					);
 				}
 			}
-			inProgress = inProgress.replaceAll(new RegExp(/(\d+)/, "gmi"), "<span class='code-green'>$1</span>")
+			// numbers green
+			inProgress = inProgress.replaceAll(new RegExp(/(\b\d+\b)(?=([^"]*"[^"]*")*[^"]*$)/, "gmi"), "<span class='code-green'>$1</span>");
+	
+			// finding new variables (children of objects)
 			variables.forEach((v) => {
 				if (v != "") {
-					let matches = inProgress.match(new RegExp(`${v}\\.([^\\.\\s<>;\\[\\]]*)`, "gmi"));
+					// let matches = inProgress.match(new RegExp(`${v}\\.([^\\.\\s<>;\\[\\]]*)`, "gmi"));
+					let matches = inProgress.match(new RegExp(`${v}[\\[\\d\]]*\\.([^\\.\\s<>;\\[\\]]*)`, "gmi"));
 					if (matches) {
-                  matches.forEach((match) => {
-                     if (!variables.includes(match.split(".")[1])) {
-                        variables.push(match.split(".")[1]);
-                     }
+						matches.forEach((match) => {
+							if (!variables.includes(match.split(".")[1])) {
+								variables.push(match.split(".")[1]);
+							}
 						});
 					}
 				}
-         });
-         variables.forEach((v) => {
+			});
+			// variable blue
+			variables.forEach((v) => {
 				if (v != "") {
-					if (line.includes(v)) {
-						inProgress = inProgress.replaceAll(new RegExp(v, "gm"), `<span class="code-blue-l">${v}</span>`);
+					if (line.match(new RegExp(`\\b${v}\\b(?=([^"]*"[^"]*")*[^"]*$)`, "gmi"))) {
+						inProgress = inProgress.replaceAll(new RegExp(`\\b${v}\\b(?=([^"]*"[^"]*")*[^"]*$)`, "gmi"), `<span class="code-blue-l">${v}</span>`);
 					}
 				}
 			});
+			// objects green
 			objects.forEach((o) => {
 				if (o != "") {
 					if (line.includes(o)) {
 						inProgress = inProgress.replaceAll(new RegExp(o, "gm"), `<span class="code-green">${o}</span>`);
 					}
 				}
-         });
-         keywords.forEach((k) => {
+			});
+			// keywords purple
+			keywords.forEach((k) => {
 				if (k != "") {
-               if (line.includes(k)) {
-                  if (k == "import") {
-                     variables.push(inProgress.split(" ")[1]);
-                     inProgress = inProgress.replaceAll(new RegExp(/import\W(\S+)/, "gm"), `<span class="code-purple">${k}</span> <span class="code-blue-l">$1</span>`);
-                  } else {
-                     inProgress = inProgress.replaceAll(new RegExp(k, "gm"), `<span class="code-purple">${k}</span>`);
-                  }
+					if (line.includes(k)) {
+						if (k == "import") {
+							variables.push(inProgress.split(" ")[1]);
+							inProgress = inProgress.replaceAll(
+								new RegExp(/import\W(\S+)/, "gm"),
+								`<span class="code-purple">${k}</span> <span class="code-blue-l">$1</span>`
+							);
+						} else {
+							inProgress = inProgress.replaceAll(new RegExp(k, "gm"), `<span class="code-purple">${k}</span>`);
+						}
 					}
 				}
 			});
+			// comments
+			if (inProgress.includes("//")) {
+				inProgress = inProgress.replace(new RegExp("(//.+)", "gmi"), `<span class="code-comment">$1</span>`);
+			}
 		}
+		
 		finalBlock += inProgress + "<br>";
 	});
 	block.innerHTML = finalBlock;
@@ -186,25 +202,25 @@ htmlcode.forEach((block) => {
 		}
 		// Format brackets
 		inProgress = inProgress.replaceAll(new RegExp("&lt;/?!?-?", "gi"), (match) => {
-         if (match == "&lt;") {
-            return `<span class="code-gray">&lt;</span>`;
-         } else if (match == "&lt;/") {
-            return `<span class="code-gray">&lt;/</span>`;
-         } else if (match == "&lt;!-") {
-            return `<span class="code-comment">&lt;!-</span>`;
-         } else if (match == "&lt;!") { 
-            return `<span class="code-gray">&lt;!</span>`;
+			if (match == "&lt;") {
+				return `<span class="code-gray">&lt;</span>`;
+			} else if (match == "&lt;/") {
+				return `<span class="code-gray">&lt;/</span>`;
+			} else if (match == "&lt;!-") {
+				return `<span class="code-comment">&lt;!-</span>`;
+			} else if (match == "&lt;!") {
+				return `<span class="code-gray">&lt;!</span>`;
 			} else {
 				console.warn("Problem match.", match);
 			}
 		});
 		inProgress = inProgress.replaceAll(new RegExp("-?/?&gt;", "gi"), (match) => {
-         if (match == "&gt;") {
-            return `<span class="code-gray">&gt;</span>`;
-         } else if (match == "/&gt;") {
-            return `<span class="code-gray">/&gt;</span>`;
-         } else if (match == "-&gt;") {
-            return `<span class="code-comment">-&gt;</span>`;
+			if (match == "&gt;") {
+				return `<span class="code-gray">&gt;</span>`;
+			} else if (match == "/&gt;") {
+				return `<span class="code-gray">/&gt;</span>`;
+			} else if (match == "-&gt;") {
+				return `<span class="code-comment">-&gt;</span>`;
 			} else {
 				console.warn("Problem match.", match);
 			}
@@ -255,10 +271,10 @@ htmlcode.forEach((block) => {
 				}
 			});
 		}
-      inProgress = inProgress.replace(props, coloredProps);
-      
-      // comments
-      inProgress = inProgress.replace(new RegExp(/-\s([\S\s]*)\s-/, "gmi"), `<span class="code-comment">- $1 -</span>`) //${inProgress}`;
+		inProgress = inProgress.replace(props, coloredProps);
+
+		// comments
+		inProgress = inProgress.replace(new RegExp(/-\s([\S\s]*)\s-/, "gmi"), `<span class="code-comment">- $1 -</span>`); //${inProgress}`;
 
 		finalBlock += inProgress + "<br>";
 	});
