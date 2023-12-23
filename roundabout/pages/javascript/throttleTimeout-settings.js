@@ -1,8 +1,9 @@
-import { Roundabout } from "/javascript/roundabout.min.js";
+import Roundabout from "/javascript/roundabout.min.js";
 
 new Roundabout({
    parent: ".roundabout-example",
    throttleTimeout: 1000,
+   transition: 200,
    pages: [
       {
          backgroundImage: "../images/numbers/0.png"
@@ -28,6 +29,7 @@ new Roundabout({
 new Roundabout({
    parent: ".roundabout-example",
    throttleTimeout: 200,
+   transition: 200,
    id: ".second",
    pages: [
       {

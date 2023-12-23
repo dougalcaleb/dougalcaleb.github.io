@@ -47,11 +47,6 @@ span.code {
   padding-right: 3px;
 }
 
-#versionHelper {
-  display: none;
-  visibility: hidden;
-}
-
 .link {
   color: #00b7ff;
 }
@@ -95,7 +90,6 @@ span.code {
   padding: 10px;
   padding-left: 25px;
   padding-right: 25px;
-  text-align: justify;
   color: #111;
   font-family: "Miriam Libre", "Roboto", sans-serif;
   font-weight: 700;

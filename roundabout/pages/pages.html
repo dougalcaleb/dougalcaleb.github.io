@@ -19,11 +19,6 @@
 		<iframe frameborder="0" class="ls-helper" id="ls-helper"></iframe>
 		<header>
 			<a href="/roundabout/docs.html"><p class="title"><span class="name">Roundabout</span> <span class="desc">DOCS</span></p></a>
-			<!-- <select name="version" class="version">
-				<option value="1.2.0">v1.2.0</option>
-				<option value="1.1.0">v1.1.0</option>
-				<option value="1.0.0">v1.0.0</option>
-			</select> -->
 			<div class="links">
 				<a href="https://github.com/dougalcaleb/roundabout" target="_blank"
 					><div class="download">
@@ -51,7 +46,6 @@
 		</header>
 
 		<nav>
-			<!-- <section class="links"></section> -->
 			<section class="setup">
 				<div class="sort-order">Sort order</div>
 				<div class="tab-behavior">Tabs</div>
@@ -69,37 +63,35 @@
 			</div>
 			<div class="info">
 				<div class="desc">Sets the list of pages to generate.</div>
-				<!-- 
-               <ul>
-                  <li>
-                     <ul>
-                        <li></li>
-                     </ul>
-                  </li>
-               </ul>
-             -->
-             This setting is required for all carousels.
+             This setting is required when not using a <span class="code">template</span>.
+			 <br/>
+			 When using a <span class="code">template</span>, the number of objects in the <span class="code">pages</span> array must be less than or equal to
+			 the number of pages provided in the <span class="code">template</span>, as it takes precedence.
              <br/><br/>
              This array contains a list of objects that denote individual pages. Each object can define any of the following properties:
              <ul>
                <li><span class="code">backgroundImage</span>
                   <ul>
                      <li>Type: string</li>
-                     <li>Sets the CSS background-image property. Further styling can be done in the provided stylesheet. This must be set in order to enable lazy loading of any type.</li>
-                     <li>This path is either absolute or relative to the HTML file that the carousel is on.</li>
+                     <li>Sets the CSS background-image property. Further styling can be done in the provided stylesheet. 
+						This must be set in order to enable lazy loading of any type.</li>
+                     <li>This path is either absolute, or relative to the HTML file that the carousel is on.</li>
                   </ul>
                </li>
                <li><span class="code">html</span>
                   <ul>
-                     <li>Type: string</li>
+                     <li>Type: string, DOM object</li>
                      <li>Defines the HTML elements to insert into the page.</li>
-                     <li>Does not support elements created in JS.</li>
+                     <li>Supports both HTML strings and JS DOM objects.</li>
                   </ul>
                </li>
                <li><span class="code">css</span>
                   <ul>
                      <li>Type: string</li>
-                     <li>Defines the CSS to apply to the page. This setting is available purely for organizational purposes - styles can be applied to elements in any page by an external stylesheet. Additionally, the styles defined here do not apply exclusively to the elements in the corresponding page. Make use of selectors appropriately.</li>
+                     <li>Defines the CSS to apply to the page. 
+						This setting is available purely for organizational purposes - styles can be applied to elements in any page by an external stylesheet. 
+						Additionally, the styles defined here do not apply exclusively to the elements in the corresponding page. 
+						Make use of selectors appropriately.</li>
                      <li>Is not a path to a CSS file.</li>
                   </ul>
                </li>
@@ -129,21 +121,16 @@
                   &nbsp;&nbsp;}<br/>
                ]
             </div>
-            Note that when an element needs to be interactible, it must have a <span class="code">z-index</span> CSS property of 3 or greater. By default, they are placed underneath the swipe detector element, both to prevent swiping from being interrupted and to prevent annoying text selection. Setting them at z:3 or higher places them on top instead.
-             <!-- The carousel on this page has a few extra settings edited for demonstration:
-             <ul>
-               <li><span class="code">setting: value</span></li>
-            </ul> -->
-            <!-- The below carousel has been given an <span class="code">setting</span> value of <span class="code">value</span>. -->
+            Note that when an element needs to be interactible, it must have a <span class="code">z-index</span> CSS property of 3 or greater. 
+			By default, they are placed underneath the swipe detector element, both to prevent swiping from being interrupted and to prevent annoying text selection. 
+			Setting them at z:3 or higher places them on top instead.
             <div class="roundabout-example"></div>
 				<footer></footer>
 			</div>
 		</section>
-		<!-- <table class="temp-settings"></table> -->
 	</body>
 
 	<script src="../javascript/docs.js" type="module"></script>
-	<script src="/javascript/roundabout.min.js" type="module"></script>
 	<script src="./javascript/pages-settings.js" type="module"></script>
 	<script src="../javascript/syntax.js"></script>
 </html>

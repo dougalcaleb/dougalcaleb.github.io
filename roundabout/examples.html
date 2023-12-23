@@ -25,11 +25,6 @@
 					<span class="desc">DOCS</span>
 				</p>
 			</a>
-			<!-- <select name="version" class="version">
-				<option value="1.2.0">v1.2.0</option>
-				<option value="1.1.0">v1.1.0</option>
-				<option value="1.0.0">v1.0.0</option>
-			</select> -->
 			<div class="links">
 				<a href="https://github.com/dougalcaleb/roundabout" target="_blank">
 					<div class="download">
@@ -57,7 +52,6 @@
 		</header>
 
 		<nav>
-			<!-- <section class="links"></section> -->
 			<section class="setup">
 				<div class="sort-order">Sort order</div>
 				<div class="tab-behavior">Tabs</div>
@@ -68,26 +62,13 @@
 		<section class="spec">
 			<div class="basic">
 				<h1 class="title">Examples</h1>
-				<!-- <div class="basic-info">
-					<div class="type"><span class="deemp">Type:</span> <span class="normal">TYPE</span></div>
-					<div class="default"><span class="deemp">Default:</span> <span class="normal">DEFAULT</span></div>
-				</div> -->
 			</div>
 			<div class="info">
-				<!-- <div class="desc">QUICK DESCRIPTION</div> -->
-				<!-- 
-               <ul>
-                  <li>
-                     <ul>
-                        <li></li>
-                     </ul>
-                  </li>
-               </ul>
-             -->
 				&nbsp;&nbsp;
 				<section class="ex type-1">
 					<h3>Default</h3>
 					<div class="code js-codeblock code-collapse start-collapsed">
+						import Roundabout from "path/to/roundabout.min.js"; <br/><br/>
 						new Roundabout({
 						<br />
 						&nbsp;&nbsp;parent: ".type-1",
@@ -140,13 +121,12 @@
 				<section class="ex type-2">
 					<h3>Thumbnail Navigation</h3>
 					<div class="code js-codeblock code-collapse start-collapsed">
+						import Roundabout from "path/to/roundabout.min.js"; <br/><br/>
 						new Roundabout({
 						<br />
 						&nbsp;&nbsp;parent: ".type-2",
 						<br />
 						&nbsp;&nbsp;id: "#type-2",
-						<br />
-						&nbsp;&nbsp;navigationBehavior: "direction",
 						<br />
 						&nbsp;&nbsp;infinite: false,
 						<br />
@@ -317,6 +297,7 @@
 				<section class="ex type-3">
 					<h3>Showcase</h3>
 					<div class="code js-codeblock code-collapse start-collapsed">
+						import Roundabout from "path/to/roundabout.min.js"; <br/><br/>
 						new Roundabout({
 						<br />
 						&nbsp;&nbsp;parent: ".type-3",
@@ -333,15 +314,15 @@
 						<br />
 						&nbsp;&nbsp;&nbsp;&nbsp;{
 						<br />
-						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;between: [
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;values: {
 						<br />
-						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[0, 80],
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0: 80,
 						<br />
-						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[1, 100]
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1: 100
 						<br />
-						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;],
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;},
 						<br />
-						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;value: "height",
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;property: "height",
 						<br />
 						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;unit: "$%"
 						<br />
@@ -349,15 +330,15 @@
 						<br />
 						&nbsp;&nbsp;&nbsp;&nbsp;{
 						<br />
-						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;between: [
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;values: {
 						<br />
-						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[1, 100],
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1: 100,
 						<br />
-						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[2, 80]
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2: 80
 						<br />
-						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;],
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;},
 						<br />
-						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;value: "height",
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;property: "height",
 						<br />
 						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;unit: "$%"
 						<br />
@@ -436,6 +417,7 @@
 				<section class="ex type-4">
 					<h3>Gallery</h3>
 					<div class="code js-codeblock code-collapse start-collapsed">
+						import Roundabout from "path/to/roundabout.min.js"; <br/><br/>
 						new Roundabout({
 						<br />
 						&nbsp;&nbsp;parent: ".type-4",
@@ -494,6 +476,7 @@
 				<section class="ex type-5">
 					<h3>Item List</h3>
 					<div class="code js-codeblock code-collapse start-collapsed">
+						import Roundabout from "path/to/roundabout.min.js"; <br/><br/>
 						new Roundabout({
 						<br />
 						&nbsp;&nbsp;parent: ".type-5",
@@ -570,6 +553,8 @@
 				<section class="ex type-6">
 					<h3>Scrollable Thumbnail Navigation</h3>
 					<div class="code js-codeblock code-collapse start-collapsed">
+						import RoundaboutScripter from "path/to/roundabout-scripter.min.js"; <br/>
+						import Roundabout from "path/to/roundabout.min.js"; <br/><br/>
 						// Main carousel
 						<br />
 						const main = new Roundabout({
@@ -657,7 +642,7 @@
 						<br />
 						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;backgroundImage: "./images/numbers/0.png",
 						<br />
-						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;html: `&lt;div class="interactive-nav i-nav-0"&gt;&lt;/div&gt;`
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;html: '&lt;div class="interactive-nav i-nav-0"&gt;&lt;/div&gt;'
 						<br />
 						&nbsp;&nbsp;&nbsp;&nbsp;},
 						<br />
@@ -665,7 +650,7 @@
 						<br />
 						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;backgroundImage: "./images/numbers/1.png",
 						<br />
-						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;html: `&lt;div class="interactive-nav i-nav-1"&gt;&lt;/div&gt;`
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;html: '&lt;div class="interactive-nav i-nav-1"&gt;&lt;/div&gt;'
 						<br />
 						&nbsp;&nbsp;&nbsp;&nbsp;},
 						<br />
@@ -673,7 +658,7 @@
 						<br />
 						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;backgroundImage: "./images/numbers/2.png",
 						<br />
-						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;html: `&lt;div class="interactive-nav i-nav-2"&gt;&lt;/div&gt;`
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;html: '&lt;div class="interactive-nav i-nav-2"&gt;&lt;/div&gt;'
 						<br />
 						&nbsp;&nbsp;&nbsp;&nbsp;},
 						<br />
@@ -681,7 +666,7 @@
 						<br />
 						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;backgroundImage: "./images/numbers/3.png",
 						<br />
-						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;html: `&lt;div class="interactive-nav i-nav-3"&gt;&lt;/div&gt;`
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;html: '&lt;div class="interactive-nav i-nav-3"&gt;&lt;/div&gt;'
 						<br />
 						&nbsp;&nbsp;&nbsp;&nbsp;},
 						<br />
@@ -689,7 +674,7 @@
 						<br />
 						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;backgroundImage: "./images/numbers/4.png",
 						<br />
-						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;html: `&lt;div class="interactive-nav i-nav-4"&gt;&lt;/div&gt;`
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;html: '&lt;div class="interactive-nav i-nav-4"&gt;&lt;/div&gt;'
 						<br />
 						&nbsp;&nbsp;&nbsp;&nbsp;},
 						<br />
@@ -697,7 +682,7 @@
 						<br />
 						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;backgroundImage: "./images/numbers/5.png",
 						<br />
-						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;html: `&lt;div class="interactive-nav i-nav-5"&gt;&lt;/div&gt;`
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;html: '&lt;div class="interactive-nav i-nav-5"&gt;&lt;/div&gt;'
 						<br />
 						&nbsp;&nbsp;&nbsp;&nbsp;}
 						<br />
@@ -729,8 +714,7 @@
 						<br />
 						&nbsp;&nbsp;});
 						<br />
-						&nbsp;&nbsp;// On mouse up, track the end position. If the movement of the mouse was less than 5 pixels, we can assume it was a
-						click
+						&nbsp;&nbsp;// On mouse up, track the end position. If the movement of the mouse was less than 5 pixels, we can assume it was a click
 						<br />
 						&nbsp;&nbsp;// Otherwise, if the mouse moved more than 5 pixels, we assume it was a drag event, so we don't scroll
 						<br />
@@ -783,14 +767,11 @@
 				<footer></footer>
 			</div>
 		</section>
-		<!-- <table class="temp-settings"></table> -->
 	</body>
 
    <script src="./javascript/docs.js" type="module"></script>
 
 	<script src="/javascript/roundabout-scripting.min.js" type="module"></script>
-	<script src="/javascript/roundabout.min.js" type="module"></script>
-   
 	<script src="javascript/example-carousels.js" type="module"></script>
 	<script src="javascript/syntax.js"></script>
 </html>
