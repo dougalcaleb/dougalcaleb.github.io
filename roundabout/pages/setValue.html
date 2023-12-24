@@ -56,22 +56,21 @@
 			<div class="basic">
 				<h1 class="title">setValue</h1>
 				<div class="basic-info">
-					<div class="type"><span class="deemp">Parameters:</span> <span class="normal">(carousel, setting, value)</span></div>
-					<!-- <div class="default"><span class="deemp">Default:</span> <span class="normal">DEFAULT</span></div> -->
+					<div class="type"><span class="deemp">Parameters:</span> <span class="normal">(carousel, setting, value, refresh?)</span></div>
 				</div>
 			</div>
 			<div class="info">
-				<div class="desc">Sets a value for a specific carousel. Protects against overwriting critical variables.</div>
-				Inputs:
+				<div class="desc">Sets a setting value for a specific carousel.</div>
+				Parameters:
 				<ul>
-               <li>
+               		<li>
 						carousel
 						<ul>
 							<li>Type: Roundabout object</li>
-                     <li>Selects the carousel to modify</li>
+                     		<li>Selects the carousel to modify</li>
 						</ul>
 					</li>
-               <li>setting
+               		<li>setting
 						<ul>
 							<li>Type: string</li>
                      <li>Selects the name of the setting to modify</li>
@@ -80,24 +79,22 @@
 					<li>value
 						<ul>
 							<li>Type: any</li>
-                     <li>Defines the value that the setting will be set to</li>
+                     		<li>Defines the value that the setting will be set to</li>
+						</ul>
+					</li>
+					<li>refresh
+						<ul>
+							<li>Type: boolean</li>
+							<li>Optional input: defaults to false</li>
+							<li><span class="code">true</span>: the carousel will regenerate. Note that this resets to the initial position</li>
+							<li><span class="code">false</span>: the carousel will not regenerate. Note that some settings require a refresh to take effect</li>
 						</ul>
 					</li>
 				</ul>
-
-             <!-- The carousel on this page has a few extra settings edited for demonstration:
-             <ul>
-               <li><span class="code">setting: value</span></li>
-            </ul> -->
-            <!-- The below carousel has been given an <span class="code">setting</span> value of <span class="code">value</span>. -->
-            <!-- <div class="roundabout-example"></div> -->
 				<footer></footer>
 			</div>
 		</section>
 	</body>
 
 	<script src="../javascript/docs.js" type="module"></script>
-	<!-- <script src="/javascript/roundabout.min.js" type="module"></script>
-	<script src="./javascript/SETTING-settings.js" type="module"></script> -->
-   <!-- <script src="../javascript/syntax.js"></script> -->
 </html>
