@@ -85,7 +85,7 @@
                &lt;div class="roundabout-wrapper myCarousel"&gt;<br/>
                &nbsp;&nbsp;&lt;div class="roundabout-0-swipe-overlay roundabout-swipe-overlay"&gt;&lt;/div&gt;<br/>
                &nbsp;&nbsp;&lt;div class="roundabout-0-page-wrap roundabout-page-wrap roundabout-0-has-transition"&gt;<br/>
-               &nbsp;&nbsp;&nbsp;&nbsp;&lt;!-- Pages generate here--&gt;<br/>
+               &nbsp;&nbsp;&nbsp;&nbsp;&lt;!-- Pages generate here --&gt;<br/>
                &nbsp;&nbsp;&lt;/div&gt;<br/>
                &nbsp;&nbsp;&lt;div class="roundabout-0-ui roundabout-ui"&gt;<br/>
                &nbsp;&nbsp;&nbsp;&nbsp;&lt;div class="roundabout-0-btn-next roundabout-btn-next roundabout-scroll-btn"&gt;<br/>
@@ -104,13 +104,28 @@
                &nbsp;&nbsp;&lt;/div&gt;<br/>
                &lt;/div&gt;
              </div>
-             Note how all elements have multiple classes, and most have a class that has a number in it (for example, <span class="code">roundabout-0-ui</span>).
-             <br/><br/>
-             This number is the nth carousel on the page, starting at 0, which helps to differentiate multiple carousels on the same page. 
-             <br/><br/> 
+             The number included in some classes is the nth carousel on the page, starting at 0, which helps to differentiate multiple carousels on the same page. 
              For example, if you had 3 carousels on one page, the first would have an element with the class <span class="code">roundabout-0-ui</span>, the second would have <span class="code">roundabout-1-ui</span>, and the third would have <span class="code">roundabout-2-ui</span>.
              <br/><br/>
-             All available classes are detailed in the stylesheet included with the download.
+             The CSS class system is detailed in the CSS stylesheet included with the download.
+             <br/><br/>
+             Note that if you use the <span class="code">template</span> setting, selectors given to elements representing each page will apply to the corresponding page.
+             <div class="code html-codeblock">
+					&lt;!DOCTYPE html&gt;<br/>
+               &lt;html&gt;<br/>
+               &nbsp;&nbsp;&lt;body&gt;<br/>
+               <br/>
+               &nbsp;&nbsp;&nbsp;&nbsp;&lt;div id="my-roundabout-template"&gt; &lt;!-- Selectors at this level will be added to the element with .roundabout-wrapper in the example above --&gt;<br/>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;div class="carousel-page-1"&gt &lt;!-- Selectors at this level will be added to the corresponding page --&gt;<br/>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;!-- In-page elements. These elements are inserted as-is into the page, including selectors --&gt;<br/>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/div&gt;<br/>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;!-- More page templates --&gt;<br/>
+               &nbsp;&nbsp;&nbsp;&nbsp;&lt;/div&gt;<br/>
+               
+               <br/>
+               &nbsp;&nbsp;&lt;/body&gt;<br/>
+               &lt;/html&gt;
+				</div>
              <!-- The carousel on this page has a few extra settings edited for demonstration:
              <ul>
                <li><span class="code">setting: value</span></li>

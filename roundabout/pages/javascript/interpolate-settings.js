@@ -1,4 +1,4 @@
-import { Roundabout } from "/javascript/roundabout.min.js";
+import Roundabout from "/javascript/roundabout.min.js";
 
 new Roundabout({
    parent: ".roundabout-example",
@@ -7,36 +7,38 @@ new Roundabout({
    pageSpacing: 15,
    interpolate: [
       {
-         between: [
-            [0, 30],
-            [1, 100]
-         ],
-         value: "filter",
+		values: {
+			0: 30,
+			1: 100
+		},
+         property: "filter",
          unit: "brightness($%)"
       },
       {
-         between: [
-            [1, 100],
-            [2, 30]
-         ],
-         value: "filter",
+         values: {
+            1: 100,
+            2: 30
+		 },
+         property: "filter",
          unit: "brightness($%)"
       },
       {
-         between: [
-            [0, 80],
-            [1, 100]
-         ],
-         value: "height",
-         unit: "$%"
+         values: {
+            0: 80,
+            1: 100
+		 },
+         property: "height",
+         unit: "$%",
+		 curve: (x) => x ** 3
       },
       {
-         between: [
-            [1, 100],
-            [2, 80]
-         ],
-         value: "height",
-         unit: "$%"
+         values: {
+            1: 100,
+            2: 80
+		 },
+         property: "height",
+         unit: "$%",
+		 curve: (x) => x ** 3
       },
    ],
    pages: [

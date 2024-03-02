@@ -1,5 +1,5 @@
-import { Roundabout } from "/javascript/roundabout.min.js";
-import { RoundaboutScripter } from "/javascript/roundabout-scripting.min.js";
+import Roundabout from "/javascript/roundabout.min.js";
+import {RoundaboutScripter} from "/javascript/roundabout-scripting.min.js";
 
 new Roundabout({
 	parent: ".type-1",
@@ -29,10 +29,9 @@ new Roundabout({
 new Roundabout({
 	parent: ".type-2",
 	id: "#type-2",
-	navigationBehavior: "direction",
-   infinite: false,
-   pagesToShow: 2,
-   navigationTrim: false,
+	infinite: false,
+	pagesToShow: 2,
+	navigationTrim: false,
 	pages: [
 		{
 			backgroundImage: "./images/numbers/0.png",
@@ -63,19 +62,19 @@ new Roundabout({
 	pageSpacing: 10,
 	interpolate: [
 		{
-			between: [
-				[0, 80],
-				[1, 100],
-			],
-			value: "height",
+			values: {
+				0: 80,
+				1: 100,
+			},
+			property: "height",
 			unit: "$%",
-      },
+		},
 		{
-			between: [
-				[1, 100],
-				[2, 80],
-			],
-			value: "height",
+			values: {
+				1: 100,
+				2: 80,
+			},
+			property: "height",
 			unit: "$%",
 		},
 	],
@@ -138,8 +137,8 @@ new Roundabout({
 	infinite: false,
 	pagesToShow: 4,
 	pageSpacing: 25,
-   swipeResistance: 0.97,
-   keys: false,
+	swipeResistance: 0.97,
+	keys: false,
 	pages: [
 		{
 			backgroundImage: "./images/numbers/0.png",
@@ -257,60 +256,60 @@ document.querySelectorAll(".interactive-nav").forEach((navBtn) => {
 new Roundabout({
 	parent: ".type-7",
 	id: "#type-7",
-   pagesToShow: 3,
-   scrollwheel: true,
-   interpolate: [
-      // Size
+	pagesToShow: 3,
+	scrollwheel: true,
+	interpolate: [
+		// Size
 		{
-			between: [
-				[0, 80],
-				[1, 100],
-			],
-			value: "height",
+			values: {
+				0: 80,
+				1: 100,
+			},
+			property: "height",
 			unit: "$%",
-      },
-      {
-         between: [
-            [1, 100],
-            [2, 80],
-         ],
-         value: "height",
-         unit: "$%"
-      },
-      // Font size
-      {
-			between: [
-				[0, 5],
-				[1, 8],
-			],
-			value: "fontSize",
+		},
+		{
+			values: {
+				1: 100,
+				2: 80,
+			},
+			property: "height",
+			unit: "$%",
+		},
+		// Font size
+		{
+			values: {
+				0: 5,
+				1: 8,
+			},
+			property: "fontSize",
 			unit: "$vw",
-      },
-      {
-         between: [
-            [1, 8],
-            [2, 5],
-         ],
-         value: "fontSize",
-         unit: "$vw"
-      },
-      // Opacity
-      {
-			between: [
-				[0, 0.3],
-				[1, 1],
-			],
-			value: "opacity",
+		},
+		{
+			values: {
+				1: 8,
+				2: 5,
+			},
+			property: "fontSize",
+			unit: "$vw",
+		},
+		// Opacity
+		{
+			values: {
+				0: 0.3,
+				1: 1,
+			},
+			property: "opacity",
 			unit: "$",
-      },
-      {
-         between: [
-            [1, 1],
-            [2, 0.3],
-         ],
-         value: "opacity",
-         unit: "$"
-      }
+		},
+		{
+			values: {
+				1: 1,
+				2: 0.3,
+			},
+			property: "opacity",
+			unit: "$",
+		},
 	],
 	rotation: "right",
 	pageSpacing: 10,

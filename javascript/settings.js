@@ -21,8 +21,8 @@ export const settings = [
 	{name: "nextHTML", category: "General", type: "string", default: "&lt;SVG Right Arrow&gt;"},
 	{name: "pages", category: "General", type: "array", default: roundabout.defaults.pages},
 	{name: "pageSpacing", category: "General", type: "integer", default: roundabout.defaults.pageSpacing},
-	{name: "pageSpacingMode", category: "General", type: "string", default: roundabout.defaults.pageSpacingMode},
 	{name: "pageSpacingUnits", category: "General", type: "string", default: roundabout.defaults.pageSpacingUnits},
+	{name: "pageSpacingMode", category: "General", type: "string", default: roundabout.defaults.pageSpacingMode},
 	{name: "pagesToShow", category: "General", type: "integer", default: roundabout.defaults.pagesToShow},
 	{name: "parent", category: "General", type: "string", default: roundabout.defaults.parent},
 	{name: "prevHTML", category: "General", type: "string", default: "&lt;SVG Left Arrow&gt;"},
@@ -36,6 +36,7 @@ export const settings = [
 	{name: "swipeSnap", category: "Behavioral", type: "boolean", default: roundabout.defaults.swipeSnap},
 	{name: "swipeSpeedThreshold", category: "Behavioral", type: "integer", default: roundabout.defaults.swipeSpeedThreshold},
 	{name: "swipeThreshold", category: "Behavioral", type: "integer", default: roundabout.defaults.swipeThreshold},
+	{name: "template", category: "General", type: "string", defauly: roundabout.defaults.template},
 	{name: "throttle", category: "Behavioral", type: "boolean", default: roundabout.defaults.throttle},
 	{name: "throttleButtons", category: "Behavioral", type: "boolean", default: roundabout.defaults.throttleButtons},
 	{name: "throttleKeys", category: "Behavioral", type: "boolean", default: roundabout.defaults.throttleKeys},
@@ -47,9 +48,9 @@ export const settings = [
 	{name: "type", category: "General", type: "string", default: roundabout.defaults.type},
 	{name: "uiEnabled", category: "General", type: "boolean", default: roundabout.defaults.uiEnabled},
 	// pages
-	{name: "html", category: null, type: "string", default: '""'},
-	{name: "css", category: null, type: "string", default: '""'},
-	{name: "backgroundImage", category: null, type: "string", default: '""'},
+	// {name: "html", category: null, type: "string", default: '""'},
+	// {name: "css", category: null, type: "string", default: '""'},
+	// {name: "backgroundImage", category: null, type: "string", default: '""'},
 	// misc
 	// {name: "ignoreErrors", category: "Misc", type: "boolean", default: roundabout.defaults.ignoreErrors},
 ];

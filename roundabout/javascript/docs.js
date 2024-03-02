@@ -1,12 +1,12 @@
 import {settings, scripting} from "/javascript/settings.js";
 
-const VERSION = "v1.4.0";
+const VERSION = "v1.5.0 (PRERELEASE)";
 
 let sortOrder = "c";
 let sameTab = true;
 
 let msgSrc =
-	window.location.hostname == "127.0.0.1" ? "http://127.0.0.1:5501/roundabout/helper.html" : "https://dougalcaleb.github.io/roundabout/helper.html";
+	window.location.hostname == "127.0.0.1" ? "http://127.0.0.1:5500/roundabout/helper.html" : "https://dougalcaleb.github.io/roundabout/helper.html";
 
 function sendMessage(set = null) {
 	document.getElementById("ls-helper").contentWindow.postMessage(set, msgSrc);
