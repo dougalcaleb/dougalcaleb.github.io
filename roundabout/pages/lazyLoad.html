@@ -17,11 +17,6 @@
 		<iframe frameborder="0" class="ls-helper" id="ls-helper"></iframe>
 		<header>
 			<a href="/roundabout/docs.html"><p class="title"><span class="name">Roundabout</span> <span class="desc">DOCS</span></p></a>
-			<!-- <select name="version" class="version">
-				<option value="1.2.0">v1.2.0</option>
-				<option value="1.1.0">v1.1.0</option>
-				<option value="1.0.0">v1.0.0</option>
-			</select> -->
 			<div class="links">
 				<a href="https://github.com/dougalcaleb/roundabout" target="_blank"
 					><div class="download">
@@ -49,7 +44,6 @@
 		</header>
 
 		<nav>
-			<!-- <section class="links"></section> -->
 			<section class="setup">
 				<div class="sort-order">Sort order</div>
 				<div class="tab-behavior">Tabs</div>
@@ -67,40 +61,28 @@
 			</div>
 			<div class="info">
 				<div class="desc">Selects the type of lazy loading to use for background images</div>
-				<!-- 
-               <ul>
-                  <li>
-                     <ul>
-                        <li></li>
-                     </ul>
-                  </li>
-               </ul>
-             -->
              Possible values:
              <ul>
-                <li>"none"</li>
-                <li>"hidden"</li>
-                <li>"all"</li>
+                <li><span class="code">"none"</span></li>
+                <li><span class="code">"hidden"</span></li>
+                <li><span class="code">"all"</span></li>
+				<li><span class="code">"custom"</span></li>
             </ul>
-            "none" loads all supplied background images as the webpage is loading.
+            <span class="code">"none"</span> loads all supplied background images as soon as possible.
             <br/><br/>
-            "hidden" only loads initially visible background images as the webpage is loading, along with images within the reach of one scroll in either direction. Once a scroll occurs, the new pages within one scroll will be loaded. This is ideal for carousels that are less central to a page and might not be interacted with, so there isn't a need to spend the network usage to load additional images.
+            <span class="code">"hidden"</span> only loads initially visible background images as soon as possible, along with images within one scroll in either direction. Once a scroll occurs, the new pages within one scroll will be loaded. This is ideal for carousels that are less central to a page and might not be interacted with, so there isn't a need to spend the network usage to load images that may never be seen.
             <br/><br/>
-            "all" waits until the page has finished loading to load its images. Once the page is ready, it loads every background image one-by-one.
+            <span class="code">"all"</span> waits until the page has finished loading to load its images. Once the page is ready, it loads every background image one-by-one.
+			<br/><br/>
+			<span class="code">"custom"</span> loads no images. You can use the scripting module to specify which images are to be loaded and when.
             <br/><br/>
             For the example below, watch the 'network' tab in your browser inspector. You will see 3 images requested initially - one for the first page, one for the page to the right, and one for the page to the left. As you scroll, it will request more images.
-            <!-- <br/><br/>
-             The carousel on this page has an few extra setting edited for demonstration:
-             <ul>
-               <li><span class="code">pagesToShow: 1</span></li>
-            </ul> -->
             <br/><br/>
             The below carousel has been given a <span class="code">lazyLoad</span> value of <span class="code">hidden</span>.
             <div class="roundabout-example"></div>
 				<footer></footer>
 			</div>
 		</section>
-		<!-- <table class="temp-settings"></table> -->
 	</body>
 
 	<script src="../javascript/docs.js" type="module"></script>

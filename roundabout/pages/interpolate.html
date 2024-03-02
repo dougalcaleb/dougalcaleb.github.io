@@ -25,11 +25,6 @@
 					<span class="desc">DOCS</span>
 				</p>
 			</a>
-			<!-- <select name="version" class="version">
-				<option value="1.2.0">v1.2.0</option>
-				<option value="1.1.0">v1.1.0</option>
-				<option value="1.0.0">v1.0.0</option>
-			</select> -->
 			<div class="links">
 				<a href="https://github.com/dougalcaleb/roundabout" target="_blank">
 					<div class="download">
@@ -57,7 +52,6 @@
 		</header>
 
 		<nav>
-			<!-- <section class="links"></section> -->
 			<section class="setup">
 				<div class="sort-order">Sort order</div>
 				<div class="tab-behavior">Tabs</div>
@@ -81,76 +75,93 @@
 			</div>
 			<div class="info">
 				<div class="desc">Calculates intermediate values between active and non-active pages during swipe.</div>
-				<!-- 
-               <ul>
-                  <li>
-                     <ul>
-                        <li></li>
-                     </ul>
-                  </li>
-               </ul>
-             -->
 				Normally, when swiping, the visible pages will gain their respective focused and unfocused classes once a scroll occurs. For carousels
 				where focused and unfocused pages are visually identical, this poses no problem. However, in cases where focused pages appear different,
 				this setting will help to make the transition fluid.
 				<br />
 				<br />
-				Note that this only works for numerical CSS values. Additionally, be mindful of the scope and number of interpolations that are happening. Having many complex values changing can have performance issues on less powerful devices, since they are calculated, applied, and rendered at every instance of a swipe movement.
+				Note that this only works for numerical CSS values. Additionally, be mindful of the scope and number of interpolations that are happening. 
+				Having many complex values changing can have performance issues on less powerful devices, since they are calculated, applied, and rendered at every instance of a swipe movement.
 				<br />
 				<br />
 				Each item in the array is an object containing each of the following values:
 				<ul>
-					<li><span class="code">between</span></li>
-					<li><span class="code">value</span></li>
-					<li><span class="code">unit</span></li>
+					<li><span class="code">values</span> (type: object)</li>
+					<li><span class="code">property</span> (type: string)</li>
+					<li><span class="code">unit</span> (type: string)</li>
+					<li><span class="code">curve</span> (type: function) (optional)</li>
 				</ul>
 				The
-				<span class="code">between</span>
-				option is an array that must contain two arrays, each of which correspond to a page position. Both of these sub-arrays must contain two
-				values: the first value in the array selects the position of a page to be interpolated from, and the second value defines the numerical
-				value that the page will have when perfectly at that position. The second sub-array is the same, but for the other page to be interpolated
-				to. Note that these two pages MUST be directly adjacent to each other.
+				<span class="code">values</span>
+				option is an object that must contain two entries, each of which correspond to a page position. Both of these entries must contain follow a certain format: 
+				the key selects the index of a page (where the leftmost page is index 0), and the value defines the numerical
+				value that the page will have when at that index. Note that these two pages MUST be directly adjacent to each other.
 				<br />
 				<br />
 				For example, to tell Roundabout that we want a page at position 0 to have a height of 80%, and a page at position at position 1 to have a
 				height of 100%, our
-				<span class="code">between</span>
-				value would look like this:
+				<span class="code">values</span>
+				option would look like this:
 				<div class="code js-codeblock">
-					between: [
+					values: {
 					<br />
-					&nbsp;&nbsp;[0, 80],
+					&nbsp;&nbsp;0: 80,
 					<br />
-					&nbsp;&nbsp;[1, 100]
+					&nbsp;&nbsp;1: 100
 					<br />
-					],
+					}
 				</div>
+				<br/>
 				The
-				<span class="code">value</span>
-				option is a string that selects the CSS value to manipulate. This value must be in camelCase, not kebab-case. Continuing our example, the
-				<span class="code">value</span>
+				<span class="code">property</span>
+				option is a string that selects the CSS property to manipulate. This value must be in camelCase, not kebab-case. Continuing our example, the
+				<span class="code">property</span>
 				option will look like this:
-				<div class="code js-codeblock">value: "height",</div>
+				<div class="code js-codeblock">property: "height"</div>
+				<br/>
 				The
 				<span class="code">unit</span>
 				option defines the appropriate units to use for the CSS value. The string must contain a dollar sign ($) to mark the position that the
-				calculated numerical value should be placed. To use percent for height, it would look like this:
+				calculated numerical value should be inserted. To use percent for height, it would look like this:
 				<div class="code js-codeblock">unit: "$%"</div>
+				<br/>
+				The
+				<span class="code">curve</span>
+				option sets the motion curve that that transform will follow. By default, this is a 1:1 linear curve, but you can define a function to modify that. <br/>
+				The function is passed 1 parameter, which is a number from 0 to 1 that is the percentage of the position that the page is at from where it was (when considered an inactive page) to where it will be (when considered an active page).<br/>
+				The function should return a number from 0 to 1 (although this is not enforced, to allow for bounce-type curves) that is the new interpolation percentage. <br/>
+				For instance, if we want the motion to follow a cubic ease-out:
+				<div class="code js-codeblock">
+					curve: (x) =&gt; 1 - Math.pow(1 - x, 3)
+				</div>
+
+				Here are some other motion curves for reference:
+				<div class="code js-codeblock">
+					x ** 3 // ease in cubic <br/>
+					1 - Math.pow(1 - x, 3), // ease out cubic<br/>
+					x &lt; 0.5 ? 4 * x ** 3 : 1 - Math.pow(-2 * x + 2, 3) / 2 // ease in out cubic
+				</div>
+				See some other easing functions at <a class="link" target="_blank" href="https://easings.net/">easings.net</a>.
+				<br/>
+				If your motion curve function is particulatly expensive, you can set <span class="code">precomputeInterpolation</span> to precompute those values along a specified step. Note that this may introduce some visible steps in the movement, and may potentially end up being more expensive if your function isn't very complex.
+				<br/>
+
+				<br/>
 				All together, our
 				<span class="code">interpolate</span>
 				setting will look like this:
 				<div class="code js-codeblock">
 					interpolate: [<br />
 					&nbsp;&nbsp;{<br />
-					&nbsp;&nbsp;&nbsp;&nbsp;between: [
+					&nbsp;&nbsp;&nbsp;&nbsp;values: {
 					<br />
-					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[0, 80],
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0: 80,
 					<br />
-					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[1, 100]
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1: 100
 					<br />
-					&nbsp;&nbsp;&nbsp;&nbsp;],
+					&nbsp;&nbsp;&nbsp;&nbsp;},
 					<br />
-					&nbsp;&nbsp;&nbsp;&nbsp;value: "height",
+					&nbsp;&nbsp;&nbsp;&nbsp;property: "height",
 					<br />
 					&nbsp;&nbsp;&nbsp;&nbsp;unit: "$%"
                <br/>
@@ -163,36 +174,38 @@
             <div class="code js-codeblock">
                interpolate: [<br/>
                   &nbsp;&nbsp;{<br/>
-                  &nbsp;&nbsp;&nbsp;&nbsp;between: [<br/>
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[0, 30],<br/>
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[1, 100]<br/>
-                  &nbsp;&nbsp;&nbsp;&nbsp;],<br/>
-                  &nbsp;&nbsp;&nbsp;&nbsp;value: "filter",<br/>
+                  &nbsp;&nbsp;&nbsp;&nbsp;values: {<br/>
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0: 30,<br/>
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1: 100<br/>
+                  &nbsp;&nbsp;&nbsp;&nbsp;},<br/>
+                  &nbsp;&nbsp;&nbsp;&nbsp;property: "filter",<br/>
                   &nbsp;&nbsp;&nbsp;&nbsp;unit: "brightness($%)"<br/>
                   &nbsp;&nbsp;},<br/>
                   &nbsp;&nbsp;{<br/>
-                  &nbsp;&nbsp;&nbsp;&nbsp;between: [<br/>
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[1, 100],<br/>
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[2, 30]<br/>
-                  &nbsp;&nbsp;&nbsp;&nbsp;],<br/>
-                  &nbsp;&nbsp;&nbsp;&nbsp;value: "filter",<br/>
+                  &nbsp;&nbsp;&nbsp;&nbsp;values: {<br/>
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1: 100,<br/>
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2: 30<br/>
+                  &nbsp;&nbsp;&nbsp;&nbsp;},<br/>
+                  &nbsp;&nbsp;&nbsp;&nbsp;property: "filter",<br/>
                   &nbsp;&nbsp;&nbsp;&nbsp;unit: "brightness($%)"<br/>
                   &nbsp;&nbsp;},<br/>
                   &nbsp;&nbsp;{<br/>
-                  &nbsp;&nbsp;&nbsp;&nbsp;between: [<br/>
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[0, 80],<br/>
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[1, 100]<br/>
-                  &nbsp;&nbsp;&nbsp;&nbsp;],<br/>
-                  &nbsp;&nbsp;&nbsp;&nbsp;value: "height",<br/>
-                  &nbsp;&nbsp;&nbsp;&nbsp;unit: "$%"<br/>
+                  &nbsp;&nbsp;&nbsp;&nbsp;values: {<br/>
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0: 80,<br/>
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1: 100<br/>
+                  &nbsp;&nbsp;&nbsp;&nbsp;},<br/>
+                  &nbsp;&nbsp;&nbsp;&nbsp;property: "height",<br/>
+                  &nbsp;&nbsp;&nbsp;&nbsp;unit: "$%",<br/>
+				  &nbsp;&nbsp;&nbsp;&nbsp;curve: (x) => x ** 3 <br/>
                   &nbsp;&nbsp;},<br/>
                   &nbsp;&nbsp;{<br/>
-                  &nbsp;&nbsp;&nbsp;&nbsp;between: [<br/>
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[1, 100],<br/>
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[2, 80]<br/>
-                  &nbsp;&nbsp;&nbsp;&nbsp;],<br/>
-                  &nbsp;&nbsp;&nbsp;&nbsp;value: "height",<br/>
-                  &nbsp;&nbsp;&nbsp;&nbsp;unit: "$%"<br/>
+                  &nbsp;&nbsp;&nbsp;&nbsp;values: {<br/>
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1: 100,<br/>
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2: 80<br/>
+                  &nbsp;&nbsp;&nbsp;&nbsp;},<br/>
+                  &nbsp;&nbsp;&nbsp;&nbsp;property: "height",<br/>
+                  &nbsp;&nbsp;&nbsp;&nbsp;unit: "$%",<br/>
+				  &nbsp;&nbsp;&nbsp;&nbsp;curve: (x) => x ** 3 <br/>
                   &nbsp;&nbsp;},<br/>
                ]
             </div>
@@ -204,16 +217,13 @@
                <li><span class="code">pagesToShow: 3</span></li>
                <li><span class="code">pageSpacing: 15</span></li>
             </ul>
-				<!-- The below carousel has been given an <span class="code">setting</span> value of <span class="code">value</span>. -->
 				<div class="roundabout-example"></div>
 				<footer></footer>
 			</div>
 		</section>
-		<!-- <table class="temp-settings"></table> -->
 	</body>
 
 	<script src="../javascript/docs.js" type="module"></script>
-	<script src="/javascript/roundabout.min.js" type="module"></script> -->
 	<script src="./javascript/interpolate-settings.js" type="module"></script>
 	<script src="../javascript/syntax.js"></script>
 </html>
