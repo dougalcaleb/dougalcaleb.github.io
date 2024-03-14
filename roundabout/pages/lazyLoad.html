@@ -65,12 +65,15 @@
              <ul>
                 <li><span class="code">"none"</span></li>
                 <li><span class="code">"hidden"</span></li>
+                <li><span class="code">"lazy-hidden"</span></li>
                 <li><span class="code">"all"</span></li>
 				<li><span class="code">"custom"</span></li>
             </ul>
             <span class="code">"none"</span> loads all supplied background images as soon as possible.
             <br/><br/>
             <span class="code">"hidden"</span> only loads initially visible background images as soon as possible, along with images within one scroll in either direction. Once a scroll occurs, the new pages within one scroll will be loaded. This is ideal for carousels that are less central to a page and might not be interacted with, so there isn't a need to spend the network usage to load images that may never be seen.
+            <br/><br/>
+            <span class="code">"lazy-hidden"</span> loads initial images AFTER the page has finished loading, but otherwise behaves like <span class="code">hidden</span>.
             <br/><br/>
             <span class="code">"all"</span> waits until the page has finished loading to load its images. Once the page is ready, it loads every background image one-by-one.
 			<br/><br/>

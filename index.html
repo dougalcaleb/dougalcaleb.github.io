@@ -275,12 +275,12 @@
             if (Date.now() - start > 500) {
                extra = 0;
             }
-            console.log("Load complete");
+            // console.log("Load complete");
             setTimeout(() => {
                document.querySelector(".load").style.visibility = "hidden";
                document.querySelector(".load").style.opacity = "0";
                document.querySelector(".profile-image").setAttribute("src", "./images/landing card/profile-square.jpg");
-               console.log("Timeout expired");
+            //    console.log("Timeout expired");
             }, extra);
          });
       </script>
