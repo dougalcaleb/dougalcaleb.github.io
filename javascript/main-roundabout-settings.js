@@ -7,63 +7,48 @@ const main = new Roundabout({
    pagesToShow: 3,
    pageSpacing: 25,
    swipeThreshold: 150,
-   lazyLoad: "lazy-hidden",
+    lazyLoad: "lazy-hidden",
+   loadTimeout: 5000,
    breakpoints: [
       {
          width: 500,
          swipeThreshold: 60,
          swipeSpeedThreshold: 300,
       }
-   ],
-   interpolate: [
-      {
-         value: "height",
-         between: [
-            [0, 80],
-            [1, 100],
-         ],
-         unit: "calc($% - 40px)",
-      },
-      { 
-         value: "height",
-         between: [
-            [1, 100],
-            [2, 80],
-         ],
-         unit: "calc($% - 40px)",
-      },
-      // {
-      //    value: "filter",
-      //    between: [
-      //       [0, 50],
-      //       [1, 100],
-      //    ],
-      //    unit: "brightness($%)",
-      // },
-      // {
-      //    value: "filter",
-      //    between: [
-      //       [1, 100],
-      //       [2, 30],
-      //    ],
-      //    unit: "brightness($%)",
-      // },
-      {
-         value: "filter",
-         between: [
-            [1, 0],
-            [2, 2],
-         ],
-         unit: "blur($px)",
-      },
-      {
-         value: "filter",
-         between: [
-            [0, 2],
-            [1, 0],
-         ],
-         unit: "blur($px)",
-      },
+    ],
+    interpolate: [
+        {
+            values: {
+                0: 80,
+                1: 100
+            },
+            property: "height",
+            unit: "calc($% - 40px)"
+        },
+        {
+            values: {
+                1: 100,
+                2: 80
+            },
+            property: "height",
+            unit: "calc($% - 40px)"
+        },
+        {
+            values: {
+                1: 0,
+                2: 2
+            },
+            property: "filter",
+            unit: "blur($px)"
+        },
+        {
+            values: {
+                0: 2,
+                1: 0
+            },
+            property: "filter",
+            unit: "blur($px)"
+        }
    ],
    pages: [
       {
