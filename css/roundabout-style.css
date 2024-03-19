@@ -14,8 +14,8 @@ Main wrapper
 */
 
 .projects-slider {
-   width: 150%;
-   left: -25%;
+   width: 250%;
+   left: -75%;
    /* transform: rotate(90deg); */
    /* Cannot change: "position" and "overflow" */
 }
@@ -38,7 +38,7 @@ Swipe detector
 */
 
 .roundabout-swipe-overlay {
-	width: 52%;
+	width: 34%;
 	height: calc(100% - 40px);
 	top: 0;
 	left: 0;
@@ -57,7 +57,7 @@ UI wrapper
 
 .roundabout-0-ui {
 	height: 100%;
-	width: 66%;
+	width: 41%;
    /* left: 25%; */
    /* background: white; */
    margin: auto;
