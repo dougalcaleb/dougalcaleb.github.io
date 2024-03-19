@@ -691,11 +691,6 @@
 						})
 						<br />
 						<br />
-						// Initialize the scripting module
-						<br />
-						const RS = new RoundaboutScripter();
-						<br />
-						<br />
 						// Give each page a click handler
 						<br />
 						// We won't use the normal "click" listener, because that can cause drag interactions to be counted as clicks
@@ -726,7 +721,7 @@
 						<br />
 						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;let goToPage = parseInt(navBtn.classList[1].substring(navBtn.classList[1].length - 1));
 						<br />
-						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;RS.scrollTo(main, goToPage);
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;RoundaboutScripter.scrollTo(main, goToPage);
 						<br />
 						&nbsp;&nbsp;&nbsp;&nbsp;}
 						<br />

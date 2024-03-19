@@ -1,6 +1,6 @@
 import {settings, scripting} from "/javascript/settings.js";
 
-const VERSION = "v1.5.0 (PRERELEASE)";
+const VERSION = "v1.5.2";
 
 let sortOrder = "c";
 let sameTab = true;
