@@ -159,6 +159,10 @@ a.weblink {
    opacity: 0;
 }
 
+.skills .logo-invert {
+    filter: invert(1);
+}
+
 @keyframes moveUp {
 	0% {
 		top: 0;

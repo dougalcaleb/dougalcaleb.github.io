@@ -48,20 +48,24 @@ const main = new Roundabout({
             },
             property: "filter",
             unit: "blur($px)"
-        }
+        },
    ],
    pages: [
-      {
-         backgroundImage: "./images/carousel/projects/todo.png",
-         // html: "simple to-do"
-      },
+    //   {
+    //      backgroundImage: "./images/carousel/projects/todo.png",
+    //      // html: "simple to-do"
+       //   },
+       {
+        backgroundImage: "./images/carousel/projects/bubbles.png",
+        // html: "bubbles"
+        },
       {
          backgroundImage: "./images/carousel/projects/roundabout.png",
          // html: "roundabout"
       },
       {
 
-         backgroundImage: "./images/carousel/projects/spigot-status-bot.png",
+         backgroundImage: "./images/carousel/projects/spigot-status-bot-wide.png",
       },
       {
          backgroundImage: "./images/carousel/projects/triangles-2.png",
@@ -87,10 +91,7 @@ const main = new Roundabout({
          backgroundImage: "./images/carousel/projects/angulargolf.png",
          // html: "angular golf scorecard"
       },
-      {
-         backgroundImage: "./images/carousel/projects/bubbles.png",
-         // html: "bubbles"
-      },
+      
    ]
 });
 
@@ -128,17 +129,28 @@ const desc = new Roundabout({
    keys: false,
    transition: 200,
    pages: [
-      {
-         html: `
-         <div class="content-wrap">
-            <h3 class="desc-title">Simple To-Do App</h3>
-            <p class="desc-body">Featuring note groups, persistent browser storage, and both text and checklist items, this to-do app is a simple way to keep track of things.</p>
-            <h4 class="desc-skills-title">Skills:</h4>
-            <div class="desc-skills">${skills.js + skills.html + skills.css}</div>
-            <a href="https://dougalcaleb.github.io/portfolio/todo-app" target="_blank"><button class="border-button">View ${exBtn}</button></a>
-         </div>
-         `
-      },
+    //   {
+    //      html: `
+    //      <div class="content-wrap">
+    //         <h3 class="desc-title">Simple To-Do App</h3>
+    //         <p class="desc-body">Featuring note groups, persistent browser storage, and both text and checklist items, this to-do app is a simple way to keep track of things.</p>
+    //         <h4 class="desc-skills-title">Skills:</h4>
+    //         <div class="desc-skills">${skills.js + skills.html + skills.css}</div>
+    //         <a href="https://dougalcaleb.github.io/portfolio/todo-app" target="_blank"><button class="border-button">View ${exBtn}</button></a>
+    //      </div>
+    //      `
+       //   },
+       {
+        html: `
+        <div class="content-wrap">
+           <h3 class="desc-title">Reactive Bubbles</h3>
+           <p class="desc-body">This field of bubbles will react to your mouse movements as you swipe through it. This has been modified and used on the landing page of this site!</p>
+           <h4 class="desc-skills-title">Skills:</h4>
+           <div class="desc-skills">${skills.js + skills.html + skills.css}</div>
+           <a href="https://dougalcaleb.github.io/portfolio/bubbles/" target="_blank"><button class="border-button">View ${exBtn}</button></a>
+        </div>
+        `
+     },
       {
          html: `
          <div class="content-wrap">
@@ -225,17 +237,7 @@ const desc = new Roundabout({
          </div>
          `
       },
-      {
-         html: `
-         <div class="content-wrap">
-            <h3 class="desc-title">Reactive Bubbles</h3>
-            <p class="desc-body">Lots of fun to play with, this field of bubbles will react to your mouse movements as you swipe through it. This has been modified and used on the landing page of this site!</p>
-            <h4 class="desc-skills-title">Skills:</h4>
-            <div class="desc-skills">${skills.js + skills.html + skills.css}</div>
-            <a href="https://dougalcaleb.github.io/portfolio/bubbles/" target="_blank"><button class="border-button">View ${exBtn}</button></a>
-         </div>
-         `
-      },
+      
    ]
 });
 
