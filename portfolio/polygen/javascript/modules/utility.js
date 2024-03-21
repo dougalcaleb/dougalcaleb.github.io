@@ -19,4 +19,8 @@ export default class Utils {
 		}
 		return false;
 	}
+
+	static colorVariance(color, variance, direction) {
+		return color + (variance * direction);
+	}
 }

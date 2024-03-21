@@ -19,7 +19,7 @@ export default class SettingsStore {
 		edge: "varied",
 		x: 1920,
 		y: 1080,
-		colors: [],
+		// colors: [],
 		propFalloff: 4 
 	};
 	#pendingSettings = {};
@@ -41,7 +41,7 @@ export default class SettingsStore {
 	get edge() { return this.#settings.edge; }
 	get x() { return this.#settings.x; }
 	get y() { return this.#settings.y; }
-	get colors() { return this.#settings.colors; }
+	// get colors() { return this.#settings.colors; }
 	get propFalloff() { return this.#settings.propFalloff; }
 
 	set mode(value) {
@@ -68,7 +68,10 @@ export default class SettingsStore {
 	set cellSize(value) { this.#settings.cellSize = value; }
 	set bvar(value) { this.#settings.bvar = value; }
 	set bmode(value) { this.#settings.bmode = value; }
-	set rotation(value) { this.#settings.rotation = value; }
+	set rotation(value) {
+		this.#settings.rotation = value;
+		Store.Preview.baseCanvas.DrawGradient();
+	}
 	set posx(value) { this.#settings.posx = value; }
 	set posy(value) { this.#settings.posy = value; }
 	set irad(value) { this.#settings.irad = value; }
@@ -78,7 +81,7 @@ export default class SettingsStore {
 	set edge(value) { this.#settings.edge = value; }
 	set x(value) { this.#settings.x = value; }
 	set y(value) { this.#settings.y = value; }
-	set colors(value) { this.#settings.colors = value; }
+	// set colors(value) { this.#settings.colors = value; }
 	set propFalloff(value) { this.#settings.propFalloff = value; }
 
 	waitForManualUpdate() {

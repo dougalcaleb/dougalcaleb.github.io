@@ -14,6 +14,7 @@ export default class UI {
 		UI.#DisplayCorrectUI();
 		UI.#PopulateCommon();
 		UI.#ButtonListeners();
+		UI.#RangeListeners();
 		UI.#KeyListeners();
 		UI.#MiscListeners();
 	}
@@ -38,7 +39,7 @@ export default class UI {
 
 		wrap.appendChild(paletteElement);
 		wrap.appendChild(opts);
-		document.querySelector("control-palettes").appendChild(wrap);
+		document.querySelector(".control-palettes").appendChild(wrap);
 
 		// Add its event listener for editing
 		opts.children[0].addEventListener("click", async (event) => {
@@ -59,7 +60,7 @@ export default class UI {
 
 		// Add its event listener for selecting
 		wrap.addEventListener("click", () => {
-			Store.SelectPalette(palettePos);
+			Store.Preview.SelectPalette(palettePos);
 			document.querySelector(".active-palette").classList.remove("active-palette");
 			wrap.classList.add("active-palette");
 		});

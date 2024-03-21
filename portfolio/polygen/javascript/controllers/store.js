@@ -9,16 +9,21 @@ export default class Store {
 	constructor() { }
 
 	static Init() {
+		// Initialize data
+		Store.GetHTMLTemplates();
+		Store.GetSavedPalettes();
+
 		// Create initial canvases
 		const baseCanvas = new Canvas(false, true);
 		baseCanvas._isBaseCanvas = true;
 		Store.Preview.layers.push(baseCanvas);
 		Store.Preview.layers.push(new Canvas(true, true));
 
-		// Initialize data
-		Store.GetHTMLTemplates();
-		Store.GetSavedPalettes();
-		Store.activePalette = Store.palettes[0];
+		// Set view
+		Store.Preview.activePalette = Store.palettes[0];
+		Store.Preview.layers[0].DrawGradient();
+
+		Store.SavePalettes();
 	}
 
 	static defaultPalettes = [
@@ -53,7 +58,6 @@ export default class Store {
 	];
 	static palettes = [];
 	static htmlTemplates = {};
-	static activePalette = null;
 	static activePage = 0;
 	static activeType = 0;
 
@@ -69,18 +73,19 @@ export default class Store {
 	}
 
 	static GetSavedPalettes() {
-		const palettes = JSON.parse(localStorage.getItem(Store.#savePalettesAs)) || [];
+		const palettes = JSON.parse(localStorage.getItem(Store.#savePalettesAs)) || Store.defaultPalettes;
 		palettes.forEach(p => {
+			if (p instanceof Gradient) {
+				Store.palettes.push(p);
+				return;
+			}
 			Store.palettes.push(new Gradient(p));
 		});
 	}
 
 	static SavePalettes() {
-		localStorage.setItem(Store.#savePalettesAs, JSON.stringify(Store.palettes));
-	}
-
-	static SelectPalette(index) {
-		Store.activePalette = Store.palettes[index];
+		const palettes = Store.palettes.map(p => p.getSaveData());
+		localStorage.setItem(Store.#savePalettesAs, JSON.stringify(palettes));
 	}
 
 	static GetHTMLTemplates() {
