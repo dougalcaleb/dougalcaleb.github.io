@@ -190,8 +190,8 @@ export default class Canvas {
 	}
 
 	// Get pixel color from canvas. Optionally apply brightness variance
-	GetPixelColor(x, y, options = { return: "rgba", applyVariance: false, force: false }) {
-		if (!this.#willReadFrequently && !options.force) {
+	GetPixelColor(x, y, options = { return: "rgba", applyVariance: false, forceRead: false }) {
+		if (!this.#willReadFrequently && !options.forceRead) {
 			console.warn("This canvas is not set to read frequently. If you need to read pixel data frequently, please set the 'willReadFrequently' parameter to true.");
 		}
 		// Adjust and correct given XY coords to be valid
