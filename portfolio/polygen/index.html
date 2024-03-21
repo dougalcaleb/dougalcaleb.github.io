@@ -32,7 +32,7 @@
 			<div class="control control-buttons choose-panel">
 				<div class="control-btn-wrap">
 					<div class="choose-properties btn-active">Properties</div>
-					<div class="choose-tools">Tools</div>
+					<div class="choose-tools">Editor</div>
 				</div>
 			</div>
 
@@ -58,10 +58,13 @@
 					<div class="control control-btn-wrap">
 						<div class="vertex-manual-drag">Manual Edit</div>
 					</div>
+					<div class="control control-btn-wrap">
+						<div class="vertex-anchor">Anchor Vertices</div>
+					</div>
 				</div>
 
 				<div class="control control-range vertex-prop-falloff">
-					<p>PROPORTIONAL FALLOFF [u]</p>
+					<p>PROPORTIONAL FALLOFF</p>
 					<input type="range" class="prop-falloff control-slider" min="0" max="10" step="1" value="4" />
 				</div>
 
@@ -77,6 +80,20 @@
 					<div class="vertex-color-wrap">
 						<input type="color" value="#ffffff" class="v-outline-color" />
 					</div>
+				</div>
+
+				<div class="control control-list vertex-layer">
+					<p>LAYERS</p>
+					<template id="layer-template">
+						<div class="vertex-layer layer-active">
+							<span class="layer-name"></span>
+							<div class="layer-btn-wrap">
+								<svg class="layer-visible" viewBox="0 0 24 24"><title>Hide Layer</title><path fill="currentColor" d="M12,9A3,3 0 0,0 9,12A3,3 0 0,0 12,15A3,3 0 0,0 15,12A3,3 0 0,0 12,9M12,17A5,5 0 0,1 7,12A5,5 0 0,1 12,7A5,5 0 0,1 17,12A5,5 0 0,1 12,17M12,4.5C7,4.5 2.73,7.61 1,12C2.73,16.39 7,19.5 12,19.5C17,19.5 21.27,16.39 23,12C21.27,7.61 17,4.5 12,4.5Z" /></svg>
+								<svg class="layer-hidden" viewBox="0 0 24 24"><title>Show Layer</title><path fill="currentColor" d="M11.83,9L15,12.16C15,12.11 15,12.05 15,12A3,3 0 0,0 12,9C11.94,9 11.89,9 11.83,9M7.53,9.8L9.08,11.35C9.03,11.56 9,11.77 9,12A3,3 0 0,0 12,15C12.22,15 12.44,14.97 12.65,14.92L14.2,16.47C13.53,16.8 12.79,17 12,17A5,5 0 0,1 7,12C7,11.21 7.2,10.47 7.53,9.8M2,4.27L4.28,6.55L4.73,7C3.08,8.3 1.78,10 1,12C2.73,16.39 7,19.5 12,19.5C13.55,19.5 15.03,19.2 16.38,18.66L16.81,19.08L19.73,22L21,20.73L3.27,3M12,7A5,5 0 0,1 17,12C17,12.64 16.87,13.26 16.64,13.82L19.57,16.75C21.07,15.5 22.27,13.86 23,12C21.27,7.61 17,4.5 12,4.5C10.6,4.5 9.26,4.75 8,5.2L10.17,7.35C10.74,7.13 11.35,7 12,7Z" /></svg>
+								<svg class="layer-delete" viewBox="0 0 24 24"><title>Delete Layer</title><path fill="currentColor" d="M9,3V4H4V6H5V19A2,2 0 0,0 7,21H17A2,2 0 0,0 19,19V6H20V4H15V3H9M9,8H11V17H9V8M13,8H15V17H13V8Z" /></svg>
+							</div>
+						</div>
+					</template>
 				</div>
 			</div>
 
@@ -183,9 +200,8 @@
 		</div>
 
 		<div class="preview">
-			<canvas id="canvas-main" class="main-canvas"></canvas>
-			<canvas id="canvas-edit" class="main-canvas"></canvas>
-
+			<!-- <canvas id="canvas-main" class="main-canvas"></canvas> -->
+			<!-- <canvas id="canvas-edit" class="main-canvas"></canvas> -->
 			
 			<div class="loader-wrap">
 				<div id="loader-title">Processing Image</div>
@@ -221,6 +237,12 @@
 					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>Delete Color Stop</title><path fill="currentColor" d="M20.37,8.91L19.37,10.64L7.24,3.64L8.24,1.91L11.28,3.66L12.64,3.29L16.97,5.79L17.34,7.16L20.37,8.91M6,19V7H11.07L18,11V19A2,2 0 0,1 16,21H8A2,2 0 0,1 6,19M8,19H16V12.2L10.46,9H8V19Z" /></svg>
 				</div>
 			</div>
+		</template>
+
+		<template style="display: none" id="_JS_TEMPLATES">
+			<template id="PALETTE_CONTROLS">
+				<svg viewBox="0 0 24 24"><path fill="currentColor" d="M20.71,7.04C21.1,6.65 21.1,6 20.71,5.63L18.37,3.29C18,2.9 17.35,2.9 16.96,3.29L15.12,5.12L18.87,8.87M3,17.25V21H6.75L17.81,9.93L14.06,6.18L3,17.25Z" /></svg>
+			</template>
 		</template>
 
 	</body>

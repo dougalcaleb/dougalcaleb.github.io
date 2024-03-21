@@ -1,0 +1,405 @@
+import Store from "./store.js";
+import GradientEditorPopup from "../modules/gradientEditorPopup.js";
+import Gradient from "../models/Gradient.js";
+import Utils from "../modules/utility.js";
+
+export default class UI {
+	constructor() { }
+
+	//==================================
+	//	Public Methods
+	//==================================
+	
+	static Init() {
+		UI.#DisplayCorrectUI();
+		UI.#PopulateCommon();
+		UI.#ButtonListeners();
+		UI.#KeyListeners();
+		UI.#MiscListeners();
+	}
+
+	static AddPalette(palette) {
+		const palettePos = Store.palettes.length;
+
+		const wrap = document.createElement("DIV");
+		wrap.classList.add("palette");
+		const paletteElement = document.createElement("DIV");
+		paletteElement.classList.add("palette-colors");
+		palette.forEach((color) => {
+			const colorDiv = document.createElement("DIV");
+			colorDiv.classList.add("palette-color");
+			colorDiv.style.backgroundColor = color.color;
+			paletteElement.appendChild(colorDiv);
+		});
+
+		const opts = document.createElement("DIV");
+		opts.classList.add("palette-options");
+		opts.innerHTML = Store.htmlTemplates["PALETTE_CONTROLS"];
+
+		wrap.appendChild(paletteElement);
+		wrap.appendChild(opts);
+		document.querySelector("control-palettes").appendChild(wrap);
+
+		// Add its event listener for editing
+		opts.children[0].addEventListener("click", async (event) => {
+			try {
+				const GEopts = {x: event.clientX + 50, y: event.clientY, centerY: true, centerX: false }
+				const newColors = await new GradientEditorPopup(GEopts, Store.palettes[palettePos]).colorSet;
+				if (newColors.length != 0) {
+					Store.UpdatePalette(new Gradient(newColors), palettePos);
+					Store.SavePalettes();
+					updatePaletteColors(paletteElement, newColors);
+				}
+			} catch (e) {
+				if (e !== "Cancel") {
+					console.error(e);
+				}
+			}
+		});
+
+		// Add its event listener for selecting
+		wrap.addEventListener("click", () => {
+			Store.SelectPalette(palettePos);
+			document.querySelector(".active-palette").classList.remove("active-palette");
+			wrap.classList.add("active-palette");
+		});
+
+		// Add the palette to the store
+		Store.AddPalette(palette);
+	}
+
+	//==================================
+	//	Private Methods
+	//==================================
+
+	static #DisplayCorrectUI() {
+		for (let a = 0; a < document.querySelectorAll(".fortype-1").length; a++) {
+			if (!document.querySelectorAll(".fortype-1")[a].classList.contains("fortype-0")) {
+				document.querySelectorAll(".fortype-1")[a].style.height = "0px";
+			}
+		}
+		for (let a = 0; a < document.querySelectorAll(".fortype-2").length; a++) {
+			document.querySelectorAll(".fortype-2")[a].style.height = "0px";
+		}
+	}
+
+	// Populate different repetitive elements of the UI like buttons and palettes
+	static #PopulateCommon() {
+		// Fill in rotation buttons
+		let common = {
+			start: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="currentColor"',
+			startRotd: '<svg viewBox="0 0 24 24" style="transform: rotate(45deg)"><path fill="currentColor" ',
+			end: ' /></svg>'
+		}
+
+		let svgs = [
+			`${common.start}d="M14,20H10V11L6.5,14.5L4.08,12.08L12,4.16L19.92,12.08L17.5,14.5L14,11V20Z"${common.end}`, // up
+			`${common.start}d="M10,4H14V13L17.5,9.5L19.92,11.92L12,19.84L4.08,11.92L6.5,9.5L10,13V4Z"${common.end}`, // down
+			`${common.start}d="M20,10V14H11L14.5,17.5L12.08,19.92L4.16,12L12.08,4.08L14.5,6.5L11,10H20Z"${common.end}`, // left
+			`${common.start}d="M4,10V14H13L9.5,17.5L11.92,19.92L19.84,12L11.92,4.08L9.5,6.5L13,10H4Z"${common.end}`, // right
+
+			`${common.startRotd}d="M14,20H10V11L6.5,14.5L4.08,12.08L12,4.16L19.92,12.08L17.5,14.5L14,11V20Z"${common.end}`, // tr
+			`${common.startRotd}d="M10,4H14V13L17.5,9.5L19.92,11.92L12,19.84L4.08,11.92L6.5,9.5L10,13V4Z"${common.end}`, // bl
+			`${common.startRotd}d="M20,10V14H11L14.5,17.5L12.08,19.92L4.16,12L12.08,4.08L14.5,6.5L11,10H20Z"${common.end}`, // tl
+			`${common.startRotd}d="M4,10V14H13L9.5,17.5L11.92,19.92L19.84,12L11.92,4.08L9.5,6.5L13,10H4Z"${common.end}`, // br
+		];
+
+		for (let a = 0; a < document.querySelectorAll(".rot-snap").length; a++) {
+			document.querySelectorAll(".rot-snap")[a].innerHTML = svgs[a];
+		}
+
+		// Populate color palettes
+		Store.palettes.forEach((p) => {
+			UI.AddPalette(p);
+		});
+	}
+
+	static #ButtonListeners() {
+		// panels
+		document.querySelector(".choose-properties").addEventListener("click", () => {
+			Store.activePage = 0;
+			document.querySelector(".choose-tools").classList.remove("btn-active");
+			document.querySelector(".choose-properties").classList.add("btn-active");
+			document.querySelector(".panel-image-tools").style.display = "none";
+			document.querySelector(".panel-image-properties").style.display = "inline";
+			//! EditLayer.deactivateBrush();
+		});
+		document.querySelector(".choose-tools").addEventListener("click", () => {
+			Store.activePage = 1;
+			document.querySelector(".choose-properties").classList.remove("btn-active");
+			document.querySelector(".choose-tools").classList.add("btn-active");
+			document.querySelector(".panel-image-tools").style.display = "inline";
+			document.querySelector(".panel-image-properties").style.display = "none";
+		});
+
+		// show / hide relevant buttons for specific gradient types
+		document.querySelector(".type-0").addEventListener("click", () => {
+			document.querySelector(".type-btn.btn-active").classList.remove("btn-active");
+			document.querySelectorAll(".fortype-0")[a].forEach((el) => {
+				el.style.height = "";
+			});
+			document.querySelectorAll(".fortype-1").forEach((el) => {
+				if (!el.classList.contains("fortype-0")) {
+					el.style.height = "0px";
+				}
+			});
+			document.querySelectorAll(".fortype-2").forEach((el) => {
+				el.style.height = "0px";
+			});
+			document.querySelector(".type-0").classList.add("btn-active");
+			Store.activeType = 0;
+			Store.settings.mode = "linear";
+		});
+		document.querySelector(".type-1").addEventListener("click", () => {
+			document.querySelector(".type-btn.btn-active").classList.remove("btn-active");
+			document.querySelectorAll(".fortype-0").forEach((el) => {
+				el.style.height = "0px";
+			});
+			document.querySelectorAll(".fortype-1").forEach((el) => {
+				el.style.height = "";
+			});
+			document.querySelectorAll(".fortype-2").forEach((el) => {
+				el.style.height = "0px";
+			});
+			document.querySelector(".type-1").classList.add("btn-active");
+			Store.activeType = 1;
+			Store.settings.mode = "radial";
+		});
+		document.querySelector(".type-2").addEventListener("click", () => {
+			document.querySelector(".type-btn.btn-active").classList.remove("btn-active");
+			document.querySelectorAll(".fortype-0").forEach((el) => {
+				el.style.height = "0px";
+			});
+			document.querySelectorAll(".fortype-1").forEach((el) => {
+				el.style.height = "0px";
+			});
+			document.querySelectorAll(".fortype-2").forEach((el) => {
+				el.style.height = "";
+			});
+			document.querySelector(".type-2").classList.add("btn-active");
+			Store.activeType = 2;
+			Store.settings.mode = "image";
+		});
+
+		// rotation snap buttons (adding/removing active styling)
+		document.querySelectorAll(".rot-snap").forEach((el) => {
+			el.addEventListener("click", () => {
+				if (document.querySelector(".rot-snap.btn-active")) {
+					document.querySelector(".rot-snap.btn-active").classList.remove("btn-active");
+				}
+				el.classList.add("btn-active");
+			});
+		});
+
+		// brightness mode buttons (adding/removing active styling)
+		document.querySelectorAll(".bmode-btn").forEach((el) => {
+			el.addEventListener("click", () => {
+				if (document.querySelector(".bmode-btn.btn-active")) {
+					document.querySelector(".bmode-btn.btn-active").classList.remove("btn-active");
+				}
+				el.classList.add("btn-active");
+			});
+		});
+
+		// file picker
+		document.querySelector(".file-choose").addEventListener("click", async () => {
+			const img = await window.showOpenFilePicker({types: [{description: "Image", accept: {"image/*": [".png", ".jpeg", ".jpg"]}}]});
+			const file = await img[0].getFile();
+			Store.Preview.baseCanvas.DrawImage(file);
+		});
+
+		// rotation snap buttons (setting rotation)
+		document.querySelector(".snap-0").addEventListener("click", () => {
+			Store.settings.rotation = 90;
+		});
+		document.querySelector(".snap-1").addEventListener("click", () => {
+			Store.settings.rotation = 270;
+		});
+		document.querySelector(".snap-2").addEventListener("click", () => {
+			Store.settings.rotation = 180;
+		});
+		document.querySelector(".snap-3").addEventListener("click", () => {
+			Store.settings.rotation = 0;
+		});
+		document.querySelector(".snap-4").addEventListener("click", () => {
+			Store.settings.rotation = Utils.radToDeg(Store.idealAngle);
+		});
+		document.querySelector(".snap-5").addEventListener("click", () => {
+			Store.settings.rotation = Utils.radToDeg(Math.PI + Store.idealAngle);
+		});
+		document.querySelector(".snap-6").addEventListener("click", () => {
+			Store.settings.rotation = Utils.radToDeg(Math.PI - Store.idealAngle);
+		});
+		document.querySelector(".snap-7").addEventListener("click", () => {
+			Store.settings.rotation = Utils.radToDeg(-1 * Store.idealAngle);
+		});
+
+		// selection brush toggle
+		document.querySelector(".brush-btn").addEventListener("click", () => {
+			if (!Store.Editor.brush.active) {
+				Store.Editor.brush.active = true;
+				Store.Editor.activateBrush();
+			} else {
+				Store.Editor.deactivateBrush();
+			}
+		});
+
+		document.querySelector(".deselect-vertices").addEventListener("click", () => {
+			Store.Editor.clean();
+		});
+
+		document.querySelector(".vertex-recalc").addEventListener("click", () => {
+			Store.Editor.recalculateSelected();
+		});
+
+		document.querySelector(".vertex-color-snap").addEventListener("click", () => {
+			Store.Editor.colorSnap();
+		});
+
+		document.querySelector(".vertex-manual-drag").addEventListener("click", (event) => {
+			event.target.classList.toggle("btn-active");
+			Store.Editor.vertexDrag();
+		});
+	}
+
+	// Event listeners for keypresses
+	static #KeyListeners() {
+		// selection brush
+		window.addEventListener("keydown", (event) => {
+			if (Object.hasOwn(Store.Defaults.UI.SELECTION_BRUSH_KEYBINDS, event.key) && !Store.Editor.brush.active) {
+				Store.Editor.brush.active = true;
+				Store.Editor.activateBrush();
+			}
+		});
+		window.addEventListener("keyup", (event) => {
+			if (Object.hasOwn(Store.Defaults.UI.SELECTION_BRUSH_KEYBINDS, event.key)) {
+				Store.Editor.deactivateBrush();
+			}
+		});
+	}
+
+	static #RangeListeners() {
+		// general - vertex variance and cell size
+		document.querySelector(".i-variance").addEventListener("input", (event) => {
+			Store.settings.vvar = event.target.value;
+		});
+		document.querySelector(".i-verts").addEventListener("input", (event) => {
+			Store.settings.cellSize = event.target.value;
+		});
+
+		// linear gradient
+		document.querySelector(".i-0-rotation").addEventListener("input", (event) => {
+			Store.settings.rotation = event.target.value;
+			if (document.querySelector(".rot-snap.btn-active")) {
+				document.querySelector(".rot-snap.btn-active").classList.remove("btn-active");
+			}
+		});
+
+		// radial gradient
+		document.querySelector(".i-1-posx").addEventListener("input", (event) => {
+			Store.settings.posx = event.target.value;
+		});
+		document.querySelector(".i-1-posy").addEventListener("input", (event) => {
+			Store.settings.posy = event.target.value;
+		});
+		document.querySelector(".i-1-inrad").addEventListener("input", (event) => {
+			Store.settings.irad = event.target.value;
+		});
+		document.querySelector(".i-1-outrad").addEventListener("input", (event) => {
+			Store.settings.orad = event.target.value;
+		});
+
+		// brightness variance
+		document.querySelector(".i-bright-variance").addEventListener("input", (event) => {
+			Store.settings.bvar = event.target.value;
+		});
+		document.querySelector(".lighten").addEventListener("click", () => {
+			Store.settings.bmode = "lighten";
+		});
+		document.querySelector(".darken").addEventListener("click", () => {
+			Store.settings.bmode = "darken";
+		});
+
+		// outline
+		document.querySelector(".i-outline").addEventListener("input", (event) => {
+			Store.settings.lineOp = parseFloat(event.target.value);
+		});
+
+		// proportional falloff (tools)
+		document.querySelector(".prop-falloff").addEventListener("input", (event) => {
+			Store.settings.propFalloff = parseInt(event.target.value);
+		});
+	}
+
+	// Other event listeners
+	static #MiscListeners() {
+		let ySizeDebounce = null;
+		let xSizeDebounce = null;
+
+		// outline color picker
+		document.querySelector(".i-outline-color").addEventListener("input", (event) => {
+			document.querySelector(".outline-color-wrap").style.background = event.target.value;
+			Store.settings.line = document.querySelector(".i-outline-color").value;
+		});
+
+		// dimensions
+		document.querySelector(".image-height").addEventListener("input", (event) => {
+			clearTimeout(ySizeDebounce);
+			ySizeDebounce = setTimeout(() => {
+				if (event.target.value !== "0" && event.target.value !== undefined && event.target.value !== "") {
+					Store.settings.y = event.target.value;
+				} else {
+					console.warn("ERROR: Bad height dimension value. Enter a value of 1 or greater");
+				}
+			}, Store.Defaults.INPUTS.DEBOUNCE);
+		});
+		document.querySelector(".image-width").addEventListener("input", (event) => {
+			clearTimeout(xSizeDebounce);
+			xSizeDebounce = setTimeout(() => {
+				if (event.target.value !== "0" && event.target.value !== undefined && event.target.value !== "") {
+					Store.settings.x = event.target.value;
+				} else {
+					console.warn("ERROR: Bad width dimension value. Enter a value of 1 or greater");
+				}
+			}, Store.Defaults.INPUTS.DEBOUNCE);
+		});
+
+		// add color palette
+      document.querySelector(".palette-add").addEventListener("click", async (event) => {
+         try {
+            let colors = await new GradientEditorPopup({x: event.clientX + 50, y: event.clientY, centerY: true, centerX: false }).colorSet;
+            if (colors.length != 0) {
+               this.addPalette(colors);
+            }
+         } catch (e) {
+            if (e !== "Cancel") {
+               console.warn(e);
+            }
+         }
+         
+		});
+
+		// download image
+		document.querySelector(".download").addEventListener("click", () => {
+			let downloader = document.querySelector(".downloader");
+			downloader.setAttribute("download", "Polygen Image.png");
+			downloader.setAttribute("href", PreviewLayer.canvas.toDataURL("image/png").replace("image/png", "image/octet-stream"));
+			downloader.click();
+		});
+
+		window.addEventListener("resize", () => {
+			EditLayer.handleWindowResize();
+		});
+	}
+}
+
+
+function updatePaletteColors(paletteElement, colors) {
+	paletteElement.innerHTML = "";
+	colors.forEach((color) => {
+		const colorDiv = document.createElement("DIV");
+		colorDiv.classList.add("palette-color");
+		colorDiv.style.backgroundColor = color.color;
+		paletteElement.appendChild(colorDiv);
+	});
+}

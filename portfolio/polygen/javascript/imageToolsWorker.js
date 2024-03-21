@@ -467,9 +467,9 @@ class Image {
 	}
 }
 
-// Handles the worker <--> main script connection
+// Handles the worker --> main script connection
 class ThreadManager {
-	constructor() { return null; }
+	constructor() { }
 
 	static post(data) {
 		postMessage(data);

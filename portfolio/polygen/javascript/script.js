@@ -1,9 +1,5 @@
-import { Preview } from "./previewController.js";
-import { Editor } from "./editorController.js";
-import { Controls } from "./uiController.js";
-// import { LoadingIndicator } from "./loadingbar.js";
-import { Store } from "./dataController.js";
-import { GradientEditorPopup } from "./gradientEditorPopup.js";
+import Store from "./controllers/store.js";
+import UI from "./controllers/ui.js";
 
 /* 
 TODO:
@@ -23,15 +19,6 @@ Fixes:
 
 */
 
-
 // Init
-
-const DataStore = new Store();
-const PreviewLayer = new Preview(DataStore);
-const EditLayer = new Editor(DataStore);
-const Control = new Controls(DataStore, PreviewLayer, EditLayer);
-GradientEditorPopup.setStore(DataStore);
-
-// Adds singular instances to datastore to allow access from multiple components
-DataStore.route("EditLayer", EditLayer);
-DataStore.route("PreviewLayer", PreviewLayer);
+Store.Init();
+UI.Init();

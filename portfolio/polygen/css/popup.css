@@ -17,6 +17,7 @@ $name - variable
   width: 100%;
   z-index: 5;
   position: fixed;
+  background: rgba(255, 255, 255, 0.3);
 }
 
 .popup {

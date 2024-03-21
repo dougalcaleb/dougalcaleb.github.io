@@ -1,11 +1,10 @@
-import {DEFAULTS} from "./globals.js";
-import {Draggable} from "./draggable.js";
+import Draggable from "./draggable.js";
+import Store from "../controllers/store.js";
+import Utils from "./utility.js";
 
-let DataStore;
-
-export class GradientEditorPopup {
+export default class GradientEditorPopup {
 	constructor(position, gradient = []) {
-		this.gradientColorSet = gradient.length > 0 ? structuredClone(gradient) : structuredClone(DataStore.settings.colors);
+		this.gradientColorSet = gradient.length > 0 ? structuredClone(gradient) : structuredClone(Store.settings.colors);
 		this.colorsBySliderID = {};
 
 		this.template = document.getElementById("gradient-editor-popup").content.children[0].cloneNode(true);
@@ -41,10 +40,6 @@ export class GradientEditorPopup {
 		this.#setPosition();
 
 		this.dragHandler = new Draggable(this.template.querySelector(".popup-drag-trigger"), this.template.querySelector(".popup"));
-	}
-
-	static setStore(store) {
-		DataStore = store;
 	}
 
 	#setPosition() {
@@ -311,7 +306,7 @@ export class GradientEditorPopup {
 		document.querySelector(".popup-add-color-stop").addEventListener(
 			"mousedown",
 			(event) => {
-				if (!this.addNewStopAllowed || Object.keys(this.colorsBySliderID).length === DEFAULTS.limits.colorStops) return;
+				if (!this.addNewStopAllowed || Object.keys(this.colorsBySliderID).length === Store.Defaults.LIMITS.COLOR_STOPS) return;
 
 				this.addNewStopAllowed = false;
 				setTimeout(() => {
@@ -325,7 +320,7 @@ export class GradientEditorPopup {
 		document.body.addEventListener(
 			"mousedown",
 			(event) => {
-				if (!this.mouseIsOver && this.stopControlsOpen && !isDescendant(this.currentStopControlElement, event.target)) {
+				if (!this.mouseIsOver && this.stopControlsOpen && !Utils.isDescendant(this.currentStopControlElement, event.target)) {
 					event.preventDefault();
 					this.#closeStopControls();
 					this.#refreshPreview();
@@ -344,17 +339,4 @@ export class GradientEditorPopup {
 		rootEl.parentElement.removeChild(rootEl);
 		this.colorsBySliderID = {};
 	}
-}
-
-// helpers
-
-function isDescendant(parent, child) {
-	var node = child.parentNode;
-	while (node != null) {
-		if (node == parent) {
-			return true;
-		}
-		node = node.parentNode;
-	}
-	return false;
 }

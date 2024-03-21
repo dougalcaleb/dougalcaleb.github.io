@@ -20,6 +20,24 @@ export class Store {
 			colors: [],
 			propFalloff: 4 
 		};
+
+		this.layers = [ // Layer[]
+			{
+				name: "layer1",
+				vertices: null,
+				layer: 0,
+			},
+			{
+				name: "layer2",
+				vertices: null,
+				layer: 1,
+			},
+			{
+				name: "layer3",
+				vertices: null,
+				layer: 2,
+			},
+		]
 	}
 
 	// Updates settings

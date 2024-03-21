@@ -1,6 +1,6 @@
 import { DEFAULTS } from "./globals.js"
 import { Preview } from "./previewController.js";
-import { GradientEditorPopup } from "./gradientEditorPopup.js";
+import { GradientEditorPopup } from "./modules/gradientEditorPopup.js";
 
 let DataStore, PreviewLayer, EditLayer;
 
@@ -151,7 +151,26 @@ export class Controls {
 			this.addPalette(startingPalettes[a], false);
 		}
 
+		for (let a = 0; a < DataStore.layers.length; a++) {
+			this.addLayer(a);
+		}
+
 		localStorage.setItem(this.savePalettesAs, JSON.stringify(this.palettes));
+	}
+
+	addLayer(index) {
+		const template = document.getElementById("layer-template").content.children[0];
+		const newLayer = template.cloneNode(true);
+		document.querySelector(".vertex-layer").appendChild(newLayer);
+		newLayer.querySelector(".layer-name").innerText = DataStore.layers[index].name;
+		newLayer.querySelector(".layer-btn-wrap .layer-visible").addEventListener("click", () => {
+			newLayer.classList.add("layer-inactive");
+			newLayer.classList.remove("layer-active");
+		});
+		newLayer.querySelector(".layer-btn-wrap .layer-hidden").addEventListener("click", () => {
+			newLayer.classList.add("layer-active");
+			newLayer.classList.remove("layer-inactive");
+		});
 	}
 
 	// Add a color palette

@@ -240,6 +240,44 @@ $name - variable
   right: 10px;
   background: #00b7ff;
 }
+.controls .control-list .layer-active .layer-btn-wrap .layer-visible {
+  display: inline;
+}
+.controls .control-list .layer-active .layer-btn-wrap .layer-hidden {
+  display: none;
+}
+.controls .control-list .layer-inactive .layer-btn-wrap .layer-visible {
+  display: none;
+}
+.controls .control-list .layer-inactive .layer-btn-wrap .layer-hidden {
+  display: inline;
+}
+.controls .control-list div {
+  width: 100%;
+  background: #191919;
+  box-sizing: border-box;
+  font-family: "Miriam Libre", "Segoe UI", sans-serif, monospace;
+  color: #00b7ff;
+  display: flex;
+  align-items: center;
+  padding: 5px;
+}
+.controls .control-list div:hover {
+  background: #333;
+}
+.controls .control-list div span {
+  flex: 3;
+  padding-left: 10px;
+}
+.controls .control-list div .layer-btn-wrap {
+  flex: 1;
+  background: rgba(0, 0, 0, 0);
+}
+.controls .control-list div .layer-btn-wrap svg {
+  cursor: pointer;
+  margin-left: 5px;
+  height: 25px;
+}
 
 .preview {
   width: calc(100vw - max(20vw, 240px));
