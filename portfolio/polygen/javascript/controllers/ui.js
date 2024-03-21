@@ -17,6 +17,8 @@ export default class UI {
 		UI.#RangeListeners();
 		UI.#KeyListeners();
 		UI.#MiscListeners();
+
+		document.querySelectorAll(".palette")[0].classList.add("active-palette");
 	}
 
 	static AddPalette(palette) {
@@ -44,8 +46,9 @@ export default class UI {
 		// Add its event listener for editing
 		opts.children[0].addEventListener("click", async (event) => {
 			try {
+				Store.Preview.SelectPalette(palettePos);
 				const GEopts = {x: event.clientX + 50, y: event.clientY, centerY: true, centerX: false }
-				const newColors = await new GradientEditorPopup(GEopts, Store.palettes[palettePos]).colorSet;
+				const newColors = await new GradientEditorPopup(GEopts, Store.palettes[palettePos], false).colorSet;
 				if (newColors.length != 0) {
 					Store.UpdatePalette(new Gradient(newColors), palettePos);
 					Store.SavePalettes();
@@ -136,7 +139,7 @@ export default class UI {
 		// show / hide relevant buttons for specific gradient types
 		document.querySelector(".type-0").addEventListener("click", () => {
 			document.querySelector(".type-btn.btn-active").classList.remove("btn-active");
-			document.querySelectorAll(".fortype-0")[a].forEach((el) => {
+			document.querySelectorAll(".fortype-0").forEach((el) => {
 				el.style.height = "";
 			});
 			document.querySelectorAll(".fortype-1").forEach((el) => {
@@ -366,18 +369,17 @@ export default class UI {
 		});
 
 		// add color palette
-      document.querySelector(".palette-add").addEventListener("click", async (event) => {
-         try {
-            let colors = await new GradientEditorPopup({x: event.clientX + 50, y: event.clientY, centerY: true, centerX: false }).colorSet;
-            if (colors.length != 0) {
-               this.addPalette(colors);
-            }
-         } catch (e) {
-            if (e !== "Cancel") {
-               console.warn(e);
-            }
-         }
-         
+    	document.querySelector(".palette-add").addEventListener("click", async (event) => {
+         	try {
+				let colors = await new GradientEditorPopup({x: event.clientX + 50, y: event.clientY, centerY: true, centerX: false}).colorSet;
+				if (colors.length != 0) {
+					this.AddPalette(colors);
+				}
+			} catch (e) {
+				if (e !== "Cancel") {
+					console.warn(e);
+				}
+			}
 		});
 
 		// download image

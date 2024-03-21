@@ -31,7 +31,18 @@ export default class PreviewStore {
 	}
 
 	SelectPalette(index) {
-		activePalette = Store.palettes[index];
+		this.activePalette = Store.palettes[index];
+		this.RedrawAll();
+	}
+
+	RedrawAll() {
+		this.layers.forEach((layer) => {
+			layer.Draw();
+		});
+	}
+
+	Redraw(index) {
+		this.layers[index].Draw();
 	}
 
 	setAngles() {

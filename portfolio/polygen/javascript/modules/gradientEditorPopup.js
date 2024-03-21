@@ -1,13 +1,18 @@
 import Draggable from "./draggable.js";
 import Store from "../controllers/store.js";
 import Utils from "./utility.js";
+import Gradient from "../models/Gradient.js";
 
 export default class GradientEditorPopup {
-	constructor(position, gradient = []) {
-		this.gradientColorSet = gradient.length > 0 ? structuredClone(gradient) : structuredClone(Store.settings.colors);
+	constructor(position, gradient = [], createNew = true) {
+		this.gradientColorSet = gradient.length > 0
+			? new Gradient(gradient)
+			: new Gradient(Store.Preview.activePalette);
+		
 		this.colorsBySliderID = {};
 
 		this.template = document.getElementById("gradient-editor-popup").content.children[0].cloneNode(true);
+		this.template.querySelector(".popup-title").innerText = createNew ? "Create New Gradient" : "Edit Gradient";
 
 		this.canvas = this.template.querySelector(".popup-preview");
 		this.ctx = this.canvas.getContext("2d");
@@ -59,13 +64,13 @@ export default class GradientEditorPopup {
 
 	/**
 	 * Sets up the color stop draggers and the data to keep track of the colors and positions
-	 * @param {Array<Object>} colors An array of objects containing a color and a stop - { color: "colCode", stop: dec }
+	 * @param {Gradient} colors The gradient color data
 	 */
 	#createGradientEditor(colors) {
 		// Create an object that is identical to the provided color data, but with the corresponding slider ID as the key
-		for (let [idx, color] of colors.entries()) {
+		colors.forEach((color, idx) => {
 			this.colorsBySliderID[String(idx)] = color;
-		}
+		});
 
 		this.#createStops(colors);
 
@@ -112,7 +117,7 @@ export default class GradientEditorPopup {
 
 		document.querySelector(".popup-color-stop-delete").addEventListener(
 			"click",
-			(event) => {
+			() => {
 				this.#removeStop(stopID);
 				this.#closeStopControls();
 			},
@@ -166,10 +171,10 @@ export default class GradientEditorPopup {
 
 	/**
 	 * Creates a set of color stop range inputs with their corresponding colors and input handlers
-	 * @param {Array<Object>} colorSetArr An array of objects with color and stop position values
+	 * @param {Gradient} gradient Gradient data
 	 * @param {Boolean} deleteExisting Deletes the existing color stop elements entirely in preparation for a new set
 	 */
-	#createStops(colorSetArr, deleteExisting = false, returnElementsFor = []) {
+	#createStops(gradient, deleteExisting = false, returnElementsFor = []) {
 		if (deleteExisting) {
 			document.querySelectorAll(".popup-range-stop").forEach((element) => {
 				element.parentElement.removeChild(element);
@@ -180,7 +185,7 @@ export default class GradientEditorPopup {
 		const elementsToReturn = [];
 
 		// Create sliders and set up event listeners
-		for (let [idx, color] of colorSetArr.entries()) {
+		gradient.forEach((color, idx) => {
 			// Create element, add attributes, add to body
 			const rangeStop = document.createElement("input");
 			[
@@ -255,7 +260,7 @@ export default class GradientEditorPopup {
 			if (returnElementsFor.includes(String(idx))) {
 				elementsToReturn.push(rangeStop);
 			}
-		}
+		});
 
 		return elementsToReturn;
 	}
@@ -272,7 +277,7 @@ export default class GradientEditorPopup {
 	#drawGradientPreview() {
 		const gradient = this.ctx.createLinearGradient(0, this.canvas.height / 2, this.canvas.width, this.canvas.height / 2);
 
-		for (let [id, colorPair] of Object.entries(this.colorsBySliderID)) {
+		for (let colorPair of Object.values(this.colorsBySliderID)) {
 			gradient.addColorStop(colorPair.stop, colorPair.color);
 		}
 

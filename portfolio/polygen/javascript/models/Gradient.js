@@ -3,6 +3,9 @@ export default class Gradient {
 	#cache = [];
 
 	constructor(gradient) {
+		if (gradient instanceof this.constructor) {
+			gradient = gradient.stops;
+		}
 		this.type = "Gradient";
 		this._values = Array.from(gradient);
 	}
