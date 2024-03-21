@@ -11,7 +11,7 @@ export default class Defaults {
 	};
 	static INPUTS = {
 		DEBOUNCE: 500,
-		PREVIEW_REDRAW_DELAY: 50,
+		PREVIEW_REDRAW_DELAY: 100,
 	};
 	static LIMITS = {
 		COLOR_STOPS: 15,

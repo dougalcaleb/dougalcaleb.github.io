@@ -4,13 +4,16 @@ import Utils from "../modules/utility.js";
 export default class Canvas {
 	index = null;
 	ctx = null;
+	drawType = "polygons"; // "gradient" "image" "polygons"
 
 	_imgSrc = null;
 	_imageData = null;
 	_isBaseCanvas = false;
 	_canvasElement = null;
 
-	#lastDraw = null;
+	#lastDraw = 0;
+	#redrawPending = false;
+	#redrawTimeout = null;
 
 	#willReadFrequently = false;
 
@@ -42,8 +45,13 @@ export default class Canvas {
 	}
 
 	Draw() {
-		if (Date.now() - this.#lastDraw < Store.Defaults.INPUTS.PREVIEW_REDRAW_DELAY) return;
-		this.#lastDraw = Date.now();
+		if (this.drawType == "gradient") {
+			this.DrawGradient();
+		} else if (this.drawType == "image") {
+			this.#imgToCanvas();
+		} else if (this.drawType == "polygons") {
+			//! Draw polygons
+		}
 	}
 
 	// Calculate and draw a gradient on this canvas. Only the base canvas can draw gradients.
@@ -52,8 +60,25 @@ export default class Canvas {
 			console.error("The canvas you are trying to draw on is not the base canvas. Please use the base canvas to draw gradients.");
 			return;
 		}
-		if (Date.now() - this.#lastDraw < Store.Defaults.INPUTS.PREVIEW_REDRAW_DELAY) return;
+		// Throttle redraws
+		if (Date.now() - this.#lastDraw < Store.Defaults.INPUTS.PREVIEW_REDRAW_DELAY) {
+			if (!this.#redrawPending) {
+				this.#redrawPending = true;
+				this.#redrawTimeout = setTimeout(() => {
+					this.DrawGradient();
+					this.#redrawPending = false;
+				}, Store.Defaults.INPUTS.PREVIEW_REDRAW_DELAY);
+			}
+			return;
+		}
+
+		clearTimeout(this.#redrawTimeout);
+		this.#redrawPending = false;
+		this.#redrawTimeout = null;
+
 		this.#lastDraw = Date.now();
+		this.drawType = "gradient";
+
 		let gradient, gradData;
 		if (Store.settings.mode == "linear") {
 			// Center coords (also lengths to center)
@@ -210,6 +235,8 @@ export default class Canvas {
 			console.error("The canvas you are trying to draw on is not the base canvas. Please use the base canvas to draw images.");
 			return;
 		}
+		this.drawType = "image";
+
 		const fr = new window.FileReader();
 		fr.readAsDataURL(image);
 		fr.onload = () => {
@@ -223,9 +250,16 @@ export default class Canvas {
 				Store.settings.x = img.width;
 				Store.settings.y = img.height;
 				this.imgSrc = img;
-				this.ctx.drawImage(img, 0, 0);
-				//! this.draw(true);
+				this.#imgToCanvas();
 			};
 		};
+	}
+
+	#imgToCanvas() {
+		if (!this._isBaseCanvas) {
+			console.error("The canvas you are trying to draw on is not the base canvas. Please use the base canvas to draw images.");
+			return;
+		}
+		this.ctx.drawImage(img, 0, 0);
 	}
 }

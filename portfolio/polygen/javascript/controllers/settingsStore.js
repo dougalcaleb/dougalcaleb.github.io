@@ -70,7 +70,7 @@ export default class SettingsStore {
 	set bmode(value) { this.#settings.bmode = value; }
 	set rotation(value) {
 		this.#settings.rotation = value;
-		Store.Preview.baseCanvas.DrawGradient();
+		this.#RefreshAll();
 	}
 	set posx(value) { this.#settings.posx = value; }
 	set posy(value) { this.#settings.posy = value; }
@@ -79,8 +79,20 @@ export default class SettingsStore {
 	set line(value) { this.#settings.line = value; }
 	set lineOp(value) { this.#settings.lineOp = value; }
 	set edge(value) { this.#settings.edge = value; }
-	set x(value) { this.#settings.x = value; }
-	set y(value) { this.#settings.y = value; }
+	set x(value) {
+		this.#settings.x = value;
+		Store.Preview.layers.forEach((layer) => {
+			layer._canvasElement.width = value;
+		});
+		this.#RefreshAll();
+	}
+	set y(value) {
+		this.#settings.y = value;
+		Store.Preview.layers.forEach((layer) => {
+			layer._canvasElement.height = value;
+		});
+		this.#RefreshAll();
+	}
 	// set colors(value) { this.#settings.colors = value; }
 	set propFalloff(value) { this.#settings.propFalloff = value; }
 
@@ -96,5 +108,11 @@ export default class SettingsStore {
 		this.#pendingActions.forEach(action => action());
 		this.#pendingSettings = {};
 		this.#pendingActions = [];
+	}
+
+	#RefreshAll() {
+		Store.Preview.layers.forEach((layer) => {
+			layer.Draw();
+		});
 	}
 }
