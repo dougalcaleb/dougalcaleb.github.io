@@ -19,7 +19,6 @@ export default class SettingsStore {
 		edge: "varied",
 		x: 1920,
 		y: 1080,
-		// colors: [],
 		propFalloff: 4 
 	};
 	#pendingSettings = {};
@@ -41,7 +40,6 @@ export default class SettingsStore {
 	get edge() { return this.#settings.edge; }
 	get x() { return this.#settings.x; }
 	get y() { return this.#settings.y; }
-	// get colors() { return this.#settings.colors; }
 	get propFalloff() { return this.#settings.propFalloff; }
 
 	set mode(value) {
@@ -61,23 +59,54 @@ export default class SettingsStore {
 				Store.Preview.setAngles();
 			}
 			this.#settings.mode = value;
+			this.#RefreshAll();
 		}
 	}
 
-	set vvar(value) { this.#settings.vvar = value; }
-	set cellSize(value) { this.#settings.cellSize = value; }
-	set bvar(value) { this.#settings.bvar = value; }
-	set bmode(value) { this.#settings.bmode = value; }
+	set vvar(value) { 
+		this.#settings.vvar = value; 
+		this.#RefreshAll();
+	}
+	set cellSize(value) {
+		this.#settings.cellSize = value; 
+		this.#RefreshAll();
+	}
+	set bvar(value) { 
+		this.#settings.bvar = value; 
+		this.#RefreshAll();
+	}
+	set bmode(value) {
+		this.#settings.bmode = value; 
+		this.#RefreshAll();
+	}
 	set rotation(value) {
 		this.#settings.rotation = value;
 		this.#RefreshAll();
 	}
-	set posx(value) { this.#settings.posx = value; }
-	set posy(value) { this.#settings.posy = value; }
-	set irad(value) { this.#settings.irad = value; }
-	set orad(value) { this.#settings.orad = value; }
-	set line(value) { this.#settings.line = value; }
-	set lineOp(value) { this.#settings.lineOp = value; }
+	set posx(value) { 
+		this.#settings.posx = value; 
+		this.#RefreshAll();
+	}
+	set posy(value) { 
+		this.#settings.posy = value; 
+		this.#RefreshAll();
+	}
+	set irad(value) { 
+		this.#settings.irad = value; 
+		this.#RefreshAll();
+	}
+	set orad(value) { 
+		this.#settings.orad = value; 
+		this.#RefreshAll();
+	}
+	set line(value) { 
+		this.#settings.line = value; 
+		this.#RefreshAll();
+	}
+	set lineOp(value) {
+		this.#settings.lineOp = value; 
+		this.#RefreshAll();
+	}
 	set edge(value) { this.#settings.edge = value; }
 	set x(value) {
 		this.#settings.x = value;
@@ -93,7 +122,6 @@ export default class SettingsStore {
 		});
 		this.#RefreshAll();
 	}
-	// set colors(value) { this.#settings.colors = value; }
 	set propFalloff(value) { this.#settings.propFalloff = value; }
 
 	waitForManualUpdate() {

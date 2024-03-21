@@ -4,7 +4,7 @@ import Utils from "../modules/utility.js";
 export default class Canvas {
 	index = null;
 	ctx = null;
-	drawType = "polygons"; // "gradient" "image" "polygons"
+	drawType = ""; // "gradient" "image" "polygons"
 
 	_imgSrc = null;
 	_imageData = null;
@@ -54,7 +54,7 @@ export default class Canvas {
 		}
 	}
 
-	// Calculate and draw a gradient on this canvas. Only the base canvas can draw gradients.
+	// Calculate and draw a gradient on this canvas
 	DrawGradient() {
 		if (!this._isBaseCanvas) {
 			console.error("The canvas you are trying to draw on is not the base canvas. Please use the base canvas to draw gradients.");
@@ -81,6 +81,7 @@ export default class Canvas {
 
 		let gradient, gradData;
 		if (Store.settings.mode == "linear") {
+			// Linear gradient
 			// Center coords (also lengths to center)
 			let centerX = Store.settings.x / 2;
 			let centerY = Store.settings.y / 2;
@@ -155,6 +156,7 @@ export default class Canvas {
 
 			gradient = this.ctx.createLinearGradient(x1, y1, x2, y2);
 		} else {
+			// Radial gradient
 			gradData = {
 				type: "radial",
 				x: Store.settings.posx,
@@ -180,15 +182,14 @@ export default class Canvas {
 		});
 
 		// Draw
-		// if (this.#debug.drawGradient) {
 		this.ctx.clearRect(0, 0, this._canvasElement.width, this._canvasElement.height);
 		this.ctx.fillStyle = gradient;
 		this.ctx.fillRect(0, 0, Store.settings.x, Store.settings.y);
-		// }
 
 		Store.Preview.gradientData = gradData;
 	}
 
+	// Get pixel color from canvas. Optionally apply brightness variance
 	GetPixelColor(x, y, options = { return: "rgba", applyVariance: false, force: false }) {
 		if (!this.#willReadFrequently && !options.force) {
 			console.warn("This canvas is not set to read frequently. If you need to read pixel data frequently, please set the 'willReadFrequently' parameter to true.");
@@ -230,6 +231,7 @@ export default class Canvas {
 		}
 	}
 
+	// Draw an image on this canvas
 	DrawImage(image) {
 		if (!this._isBaseCanvas) {
 			console.error("The canvas you are trying to draw on is not the base canvas. Please use the base canvas to draw images.");
@@ -255,6 +257,7 @@ export default class Canvas {
 		};
 	}
 
+	// Helper
 	#imgToCanvas() {
 		if (!this._isBaseCanvas) {
 			console.error("The canvas you are trying to draw on is not the base canvas. Please use the base canvas to draw images.");
