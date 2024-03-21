@@ -3,7 +3,7 @@ import Store from "../store.js";
 import Utils from "../modules/utility.js";
 
 export default class Polygon {
-	vertices = [];
+	vertices = []; // references to vertices
 	color = null;
 
 	constructor(vertices) {
@@ -34,5 +34,17 @@ export default class Polygon {
 			y += this.vertices[i].y;
 		}
 		return { x: x / this.vertices.length, y: y / this.vertices.length };
+	}
+
+	GetNeighborsOfVertex(vertex) {
+		const neighbors = [];
+		for (let i = 0; i < this.vertices.length; i++) {
+			if (this.vertices[i] == vertex) {
+				neighbors.push(this.vertices[i - 1]);
+				neighbors.push(this.vertices[i + 1]);
+				break;
+			}
+		}
+		return neighbors;
 	}
 }

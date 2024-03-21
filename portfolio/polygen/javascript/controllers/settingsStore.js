@@ -45,16 +45,16 @@ export default class SettingsStore {
 	set mode(value) {
 		if (this.#waitForManualUpdate) {
 			if (value == "image" && this.#settings.mode != "image") {
-				this.#pendingSettings.x = Store.Preview.layers[0]._imgSrc.width;
-				this.#pendingSettings.y = Store.Preview.layers[0]._imgSrc.height;
+				this.#pendingSettings.x = Store.Preview.layers[0].canvas._imgSrc.width;
+				this.#pendingSettings.y = Store.Preview.layers[0].canvas._imgSrc.height;
 			} else {
 				this.#pendingActions.push(Store.Preview.setAngles);
 			}
 			this.#pendingSettings.mode = value;
 		} else {
 			if (value == "image" && this.#settings.mode != "image") {
-				this.#settings.x = Store.Preview.layers[0]._imgSrc.width;
-				this.#settings.y = Store.Preview.layers[0]._imgSrc.height;
+				this.#settings.x = Store.Preview.layers[0].canvas._imgSrc.width;
+				this.#settings.y = Store.Preview.layers[0].canvas._imgSrc.height;
 			} else if (value != "image") {
 				Store.Preview.setAngles();
 			}
@@ -111,14 +111,14 @@ export default class SettingsStore {
 	set x(value) {
 		this.#settings.x = value;
 		Store.Preview.layers.forEach((layer) => {
-			layer._canvasElement.width = value;
+			layer.canvas._canvasElement.width = value;
 		});
 		this.#RefreshAll();
 	}
 	set y(value) {
 		this.#settings.y = value;
 		Store.Preview.layers.forEach((layer) => {
-			layer._canvasElement.height = value;
+			layer.canvas._canvasElement.height = value;
 		});
 		this.#RefreshAll();
 	}
@@ -140,7 +140,7 @@ export default class SettingsStore {
 
 	#RefreshAll() {
 		Store.Preview.layers.forEach((layer) => {
-			layer.Draw();
+			layer.canvas.Draw();
 		});
 	}
 }

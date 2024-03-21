@@ -2,7 +2,6 @@ import Store from "./store.js";
 import Utils from "../modules/utility.js";
 
 export default class Canvas {
-	index = null;
 	ctx = null;
 	drawType = ""; // "gradient" "image" "polygons"
 
@@ -35,7 +34,6 @@ export default class Canvas {
 		this._canvasElement.width = Store.settings.x;
 		this._canvasElement.height = Store.settings.y;
 		this._canvasElement.classList.add("main-canvas");
-		this.index = Store.Preview.layers.length;
 		if (this.index === 0) {
 			this._canvasElement.id = "canvas-main";
 		}

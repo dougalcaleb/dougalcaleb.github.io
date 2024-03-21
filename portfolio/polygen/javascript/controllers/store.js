@@ -4,6 +4,7 @@ import SettingsStore from "./settingsStore.js";
 import Defaults from "./internalDefaultStore.js";
 import Gradient from "../models/Gradient.js";
 import Canvas from "./canvas.js";
+import Layer from "../models/Layer.js";
 
 export default class Store {
 	constructor() { }
@@ -14,14 +15,14 @@ export default class Store {
 		Store.GetSavedPalettes();
 
 		// Create initial canvases
-		const baseCanvas = new Canvas(false, true);
-		baseCanvas._isBaseCanvas = true;
-		Store.Preview.layers.push(baseCanvas);
-		Store.Preview.layers.push(new Canvas(true, true));
+		const baseLayer = new Layer(new Canvas(false, true));
+		baseLayer.canvas._isBaseCanvas = true;
+		Store.Preview.layers.push(baseLayer);
+		Store.Preview.layers.push(new Layer());
 
 		// Set view
 		Store.Preview.activePalette = Store.palettes[0];
-		Store.Preview.layers[0].DrawGradient();
+		Store.Preview.layers[0].canvas.DrawGradient();
 
 		Store.SavePalettes();
 	}

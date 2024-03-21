@@ -1,6 +1,7 @@
 import Defaults from "./internalDefaultStore.js";
 import Utils from "../modules/utility.js";
 import Store from "./store.js";
+import Layer from "../models/Layer.js";
 
 export default class PreviewStore {
 	constructor() { }
@@ -15,7 +16,7 @@ export default class PreviewStore {
 	#yAngles = null;
 
 	get baseCanvas() {
-		return this.layers[0];
+		return this.layers[0].canvas;
 	}
 	get xAngles() {
 		if (this.#xAngles === null) {
@@ -37,12 +38,12 @@ export default class PreviewStore {
 
 	RedrawAll() {
 		this.layers.forEach((layer) => {
-			layer.Draw();
+			layer.canvas.Draw();
 		});
 	}
 
 	Redraw(index) {
-		this.layers[index].Draw();
+		this.layers[index].canvas.Draw();
 	}
 
 	setAngles() {

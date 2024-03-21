@@ -21,9 +21,7 @@ export default class UI {
 		document.querySelectorAll(".palette")[0].classList.add("active-palette");
 	}
 
-	static AddPalette(palette) {
-		const palettePos = Store.palettes.length;
-
+	static AddPalette(palette, index) {
 		const wrap = document.createElement("DIV");
 		wrap.classList.add("palette");
 		const paletteElement = document.createElement("DIV");
@@ -46,13 +44,14 @@ export default class UI {
 		// Add its event listener for editing
 		opts.children[0].addEventListener("click", async (event) => {
 			try {
-				Store.Preview.SelectPalette(palettePos);
+				Store.Preview.SelectPalette(index);
 				const GEopts = {x: event.clientX + 50, y: event.clientY, centerY: true, centerX: false }
-				const newColors = await new GradientEditorPopup(GEopts, Store.palettes[palettePos], false).colorSet;
+				const newColors = await new GradientEditorPopup(GEopts, Store.palettes[index], false).colorSet;
 				if (newColors.length != 0) {
-					Store.UpdatePalette(new Gradient(newColors), palettePos);
+					Store.UpdatePalette(new Gradient(newColors), index);
 					Store.SavePalettes();
 					updatePaletteColors(paletteElement, newColors);
+					Store.Preview.SelectPalette(index);
 				}
 			} catch (e) {
 				if (e !== "Cancel") {
@@ -63,13 +62,10 @@ export default class UI {
 
 		// Add its event listener for selecting
 		wrap.addEventListener("click", () => {
-			Store.Preview.SelectPalette(palettePos);
+			Store.Preview.SelectPalette(index);
 			document.querySelector(".active-palette").classList.remove("active-palette");
 			wrap.classList.add("active-palette");
 		});
-
-		// Add the palette to the store
-		Store.AddPalette(palette);
 	}
 
 	//==================================
@@ -113,8 +109,8 @@ export default class UI {
 		}
 
 		// Populate color palettes
-		Store.palettes.forEach((p) => {
-			UI.AddPalette(p);
+		Store.palettes.forEach((p, idx) => {
+			UI.AddPalette(p, idx);
 		});
 	}
 
@@ -391,7 +387,7 @@ export default class UI {
 		});
 
 		window.addEventListener("resize", () => {
-			EditLayer.handleWindowResize();
+			//! EditLayer.handleWindowResize();
 		});
 	}
 }
