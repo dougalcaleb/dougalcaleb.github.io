@@ -256,6 +256,14 @@
 				display: inline;
 			}
 		}
+		.layer-wrap:not(.layer-selected) {
+			border: 3px solid ext.$theme-black-medium;
+		}
+		.layer-selected {
+			border-radius: 2px;
+			box-sizing: border-box;
+			border: 3px solid ext.$theme-blue-light;
+		}
 		div {
 			width: 100%;
 			background: ext.$theme-black-medium;
@@ -265,8 +273,9 @@
 			display: flex;
 			align-items: center;
 			padding: 5px;
-			&:hover {
+			&:hover:not(.layer-selected) {
 				background: ext.$theme-gray;
+				border: 3px solid ext.$theme-gray;
 			}
 			
 			span {

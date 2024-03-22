@@ -252,6 +252,14 @@ $name - variable
 .controls .control-list .layer-inactive .layer-btn-wrap .layer-hidden {
   display: inline;
 }
+.controls .control-list .layer-wrap:not(.layer-selected) {
+  border: 3px solid #191919;
+}
+.controls .control-list .layer-selected {
+  border-radius: 2px;
+  box-sizing: border-box;
+  border: 3px solid #00b7ff;
+}
 .controls .control-list div {
   width: 100%;
   background: #191919;
@@ -262,8 +270,9 @@ $name - variable
   align-items: center;
   padding: 5px;
 }
-.controls .control-list div:hover {
+.controls .control-list div:hover:not(.layer-selected) {
   background: #333;
+  border: 3px solid #333;
 }
 .controls .control-list div span {
   flex: 3;

@@ -19,6 +19,7 @@ export default class UI {
 		UI.#MiscListeners();
 
 		document.querySelectorAll(".palette")[0].classList.add("active-palette");
+		document.querySelectorAll(".layer-wrap")[0].classList.add("layer-selected");
 	}
 
 	static AddPalette(palette, index) {
@@ -68,6 +69,27 @@ export default class UI {
 		});
 	}
 
+	static AddLayer(layerData, index) {
+		const template = document.getElementById("layer-template").content.children[0];
+		const newLayer = template.cloneNode(true);
+		document.querySelector(".vertex-layer").appendChild(newLayer);
+		newLayer.querySelector(".layer-name").innerText = layerData.name;
+		console.log(newLayer);
+		newLayer.addEventListener("click", () => {
+			document.querySelector(".layer-selected").classList.remove("layer-selected");
+			newLayer.classList.add("layer-selected");
+			Store.Preview.SelectLayer(index);
+		});
+		newLayer.querySelector(".layer-btn-wrap .layer-visible").addEventListener("click", () => {
+			newLayer.classList.add("layer-inactive");
+			newLayer.classList.remove("layer-active");
+		});
+		newLayer.querySelector(".layer-btn-wrap .layer-hidden").addEventListener("click", () => {
+			newLayer.classList.add("layer-active");
+			newLayer.classList.remove("layer-inactive");
+		});
+	}
+
 	//==================================
 	//	Private Methods
 	//==================================
@@ -111,6 +133,11 @@ export default class UI {
 		// Populate color palettes
 		Store.palettes.forEach((p, idx) => {
 			UI.AddPalette(p, idx);
+		});
+
+		// Populate layers
+		Store.Preview.layers.forEach((l, idx) => {
+			UI.AddLayer(l, idx);
 		});
 	}
 
@@ -366,10 +393,12 @@ export default class UI {
 
 		// add color palette
     	document.querySelector(".palette-add").addEventListener("click", async (event) => {
-         	try {
+			try {
 				let colors = await new GradientEditorPopup({x: event.clientX + 50, y: event.clientY, centerY: true, centerX: false}).colorSet;
 				if (colors.length != 0) {
-					this.AddPalette(colors);
+					Store.AddPalette(new Gradient(colors));
+					Store.SavePalettes();
+					this.AddPalette(colors, Store.palettes.length - 1);
 				}
 			} catch (e) {
 				if (e !== "Cancel") {

@@ -3,7 +3,7 @@ import Utils from "../modules/utility.js";
 
 export default class Canvas {
 	ctx = null;
-	drawType = ""; // "gradient" "image" "polygons"
+	drawType = "polygons"; // "gradient" "image" "polygons"
 
 	_imgSrc = null;
 	_imageData = null;
