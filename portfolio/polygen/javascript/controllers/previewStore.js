@@ -8,7 +8,7 @@ export default class PreviewStore {
 
 	layers = [];
 	activePalette = null;
-	activeLayer = 0;
+	activeLayerIndex = 1;
 	allowRedraw = true;
 	redrawTimeout = null;
 	gradientData = null;
@@ -20,7 +20,7 @@ export default class PreviewStore {
 		return this.layers[0].canvas;
 	}
 	get activeLayer() {
-		return this.layers[this.activeLayer];
+		return this.layers[this.activeLayerIndex];
 	}
 	get xAngles() {
 		if (this.#xAngles === null) {
@@ -41,7 +41,7 @@ export default class PreviewStore {
 	}
 
 	SelectLayer(index) {
-		this.activeLayer = index;
+		this.activeLayerIndex = index;
 	}
 
 	RedrawAll() {

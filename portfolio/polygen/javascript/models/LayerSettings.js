@@ -1,10 +1,10 @@
 export default class LayerSettings {
-	variance = 1;   	// positional variance
-	distance = 100; 	// distance between vertices
-	colorRand = 0;		// random color variance
-	colorMode = -1;		// -1 = darken 1 = lighten
-	lineColor = "#fff"; // polygon outline color
-	lineOpacity = 0;	// polygon outline opacity
+	#variance = 0.2;   	// positional variance
+	#cellSize = 100; 	// distance between vertices
+	#colorRand = 0;		// random color variance
+	#colorMode = -1;		// -1 = darken 1 = lighten
+	#lineColor = "#fff"; // polygon outline color
+	#lineOpacity = 0;	// polygon outline opacity
 
 	#redrawCallback = null;
 	
@@ -12,39 +12,39 @@ export default class LayerSettings {
 		this.#redrawCallback = redrawCallback;
 	}
 	
-	get variance() { return this.variance; }
+	get variance() { return this.#variance; }
 	set variance(value) {
-		this.variance = value;
+		this.#variance = value;
+		this.#redrawCallback(true);
+	}
+
+	get cellSize() { return this.#cellSize; }
+	set cellSize(value) {
+		this.#cellSize = value;
 		this.#redrawCallback();
 	}
 
-	get distance() { return this.distance; }
-	set distance(value) {
-		this.distance = value;
-		this.#redrawCallback();
-	}
-
-	get colorRand() { return this.colorRand; }
+	get colorRand() { return this.#colorRand; }
 	set colorRand(value) {
-		this.colorRand = value;
+		this.#colorRand = value;
 		this.#redrawCallback();
 	}
 
-	get colorMode() { return this.colorMode; }
+	get colorMode() { return this.#colorMode; }
 	set colorMode(value) {
-		this.colorMode = value;
+		this.#colorMode = value;
 		this.#redrawCallback();
 	}
 
-	get lineColor() { return this.lineColor; }
+	get lineColor() { return this.#lineColor; }
 	set lineColor(value) {
-		this.lineColor = value;
+		this.#lineColor = value;
 		this.#redrawCallback();
 	}
 
-	get lineOpacity() { return this.lineOpacity; }
+	get lineOpacity() { return this.#lineOpacity; }
 	set lineOpacity(value) {
-		this.lineOpacity = value;
+		this.#lineOpacity = value;
 		this.#redrawCallback();
 	}
 }

@@ -24,6 +24,10 @@ export default class Utils {
 		return color + (variance * direction);
 	}
 
+	static randPosNeg() {
+		return Math.random() < 0.5 ? -1 : 1;
+	}
+
 	// Create a convex hull from a set of vertices (Andrew's Monotone Chain algorithm)
 	static createPolygon(vertices) {
 		function orientation(p, q, r) {

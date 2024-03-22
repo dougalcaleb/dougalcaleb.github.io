@@ -42,7 +42,10 @@ export default class Canvas {
 		this.ctx = this._canvasElement.getContext("2d", { alpha: transparency, willReadFrequently: willReadFrequently });
 	}
 
-	Draw() {
+	Draw(clearCanvas = true) {
+		if (clearCanvas) {
+			this.ctx.clearRect(0, 0, this._canvasElement.width, this._canvasElement.height);
+		}
 		if (this.drawType == "gradient") {
 			this.DrawGradient();
 		} else if (this.drawType == "image") {

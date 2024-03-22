@@ -74,7 +74,6 @@ export default class UI {
 		const newLayer = template.cloneNode(true);
 		document.querySelector(".vertex-layer").appendChild(newLayer);
 		newLayer.querySelector(".layer-name").innerText = layerData.name;
-		console.log(newLayer);
 		newLayer.addEventListener("click", () => {
 			document.querySelector(".layer-selected").classList.remove("layer-selected");
 			newLayer.classList.add("layer-selected");
@@ -308,7 +307,7 @@ export default class UI {
 	static #RangeListeners() {
 		// general - vertex variance and cell size
 		document.querySelector(".i-variance").addEventListener("input", (event) => {
-			Store.settings.vvar = event.target.value;
+			Store.Preview.activeLayer.settings.variance = event.target.value;
 		});
 		document.querySelector(".i-verts").addEventListener("input", (event) => {
 			Store.settings.cellSize = event.target.value;

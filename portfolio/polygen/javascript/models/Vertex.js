@@ -4,7 +4,7 @@ export default class Vertex {
 	neighbors = [];
 	polygons = [];
 
-	constructor(x, y) {
+	constructor(x = null, y = null) {
 		this.x = x;
 		this.y = y;
 	}

@@ -25,6 +25,8 @@ export default class Store {
 		Store.Preview.layers[0].canvas.DrawGradient();
 
 		Store.SavePalettes();
+
+		Store.Preview.layers[1].Fill(); // debug
 	}
 
 	static defaultPalettes = [
