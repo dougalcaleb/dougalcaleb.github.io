@@ -1,10 +1,10 @@
 export default class LayerSettings {
-	#variance = 0.2;   	// positional variance
-	#cellSize = 100; 	// distance between vertices
-	#colorRand = 0;		// random color variance
+	#variance = 0.4;   		// positional variance
+	#cellSize = 100; 		// distance between vertices
+	#colorRand = 0;			// random color variance
 	#colorMode = -1;		// -1 = darken 1 = lighten
-	#lineColor = "#fff"; // polygon outline color
-	#lineOpacity = 0;	// polygon outline opacity
+	#lineColor = "#ffffff"; // polygon outline color
+	#lineOpacity = 0;		// polygon outline opacity
 
 	#redrawCallback = null;
 	

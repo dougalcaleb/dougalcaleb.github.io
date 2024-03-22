@@ -27,6 +27,7 @@ export default class Store {
 		Store.SavePalettes();
 
 		Store.Preview.layers[1].Fill(); // debug
+		Store.Preview.layers[1].InitialPolygons(); // debug
 	}
 
 	static defaultPalettes = [

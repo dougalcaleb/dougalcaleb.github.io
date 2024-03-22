@@ -28,6 +28,19 @@ export default class Utils {
 		return Math.random() < 0.5 ? -1 : 1;
 	}
 
+	static hexToRgb(color, returnAsString = false) {
+		let hex = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(color);
+		let rgb = {
+			r: parseInt(hex[1], 16),
+			g: parseInt(hex[2], 16),
+			b: parseInt(hex[3], 16)
+		};
+		if (returnAsString) {
+			return `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, 1)`;
+		}
+		return rgb;
+	}
+
 	// Create a convex hull from a set of vertices (Andrew's Monotone Chain algorithm)
 	static createPolygon(vertices) {
 		function orientation(p, q, r) {

@@ -53,6 +53,9 @@ export default class Canvas {
 		} else if (this.drawType == "polygons") {
 			//! Draw polygons
 		}
+		if (this.#willReadFrequently) {
+			this._imageData = this.ctx.getImageData(0, 0, this._canvasElement.width, this._canvasElement.height);
+		}
 	}
 
 	// Calculate and draw a gradient on this canvas
@@ -188,6 +191,10 @@ export default class Canvas {
 		this.ctx.fillRect(0, 0, Store.settings.x, Store.settings.y);
 
 		Store.Preview.gradientData = gradData;
+
+		if (this.#willReadFrequently) {
+			this._imageData = this.ctx.getImageData(0, 0, this._canvasElement.width, this._canvasElement.height);
+		}
 	}
 
 	// Get pixel color from canvas. Optionally apply brightness variance
@@ -217,13 +224,13 @@ export default class Canvas {
 		let a = this._imageData.data[y * (this._imageData.width * 4) + x * 4 + 3];
 		// Apply brightness alterations to RGB components
 		if (options.applyVariance) {
-			let bvar = Math.floor(Math.random() * Store.settings.bvar);
-			let posNeg = Store.settings.bmode == "lighten" ? 1 : -1;
+			let bvar = Math.floor(Math.random() * Store.Preview.activeLayer.settings.colorRand);
+			let posNeg = Store.Preview.activeLayer.settings.colorMode;
 			r = Utils.colorVariance(r, bvar, posNeg);
 			g = Utils.colorVariance(g, bvar, posNeg);
 			b = Utils.colorVariance(b, bvar, posNeg);
 		}
-		if (options.return == "rgba") {
+		if (!options.return || options.return == "rgba") {
 			return "rgba(" + r + "," + g + "," + b + "," + a + ")";
 		} else if (options.return == "object") {
 			return { r, g, b, a };

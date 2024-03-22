@@ -19,6 +19,9 @@ export default class PreviewStore {
 	get baseCanvas() {
 		return this.layers[0].canvas;
 	}
+	get baseLayer() {
+		return this.layers[0];
+	}
 	get activeLayer() {
 		return this.layers[this.activeLayerIndex];
 	}

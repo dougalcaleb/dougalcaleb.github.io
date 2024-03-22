@@ -14,6 +14,8 @@ export default class Layer {
 
 	settings = null;
 
+	#arranged = []; // 2D array of vertices. Used only for initial polygon creation
+
 	constructor(canvas = null) {
 		this.canvas = canvas;
 		if (canvas === null) {
@@ -39,8 +41,9 @@ export default class Layer {
 		const yShift = (Store.settings.y - this.settings.cellSize * (yCount - 1)) / 2;
 
 		// Create vertex placements
-		for (let x = 0; x < xCount; x++) {
-			for (let y = 0; y < yCount; y++) {
+		for (let y = 0; y < yCount; y++) {
+			const row = [];
+			for (let x = 0; x < xCount; x++) {
 				const vertex = new Vertex();
 
 				if (x === 0) {
@@ -62,10 +65,100 @@ export default class Layer {
 				}
 
 				this.vertices.push(vertex);
+				row.push(vertex);
+			}
+			this.#arranged.push(row);
+		}
+	}
+
+	InitialPolygons() {
+		const outlineColorRaw = Utils.hexToRgb(this.settings.lineColor);
+		const outlineColor = `rgba(${outlineColorRaw.r}, ${outlineColorRaw.g}, ${outlineColorRaw.b}, ${this.settings.lineOpacity})`;
+		this.canvas.ctx.strokeStyle = outlineColor;
+		const ctx = this.canvas.ctx;
+		const baseCanvas = Store.Preview.baseCanvas;
+
+		for (let y = 0; y < this.#arranged.length; y++) {
+			const row = this.#arranged[y];
+			for (let x = 0; x < row.length; x++) {
+				const vertex = row[x];
+				const verts = this.#arranged;
+				
+				// Skip over edges
+				if (!this.#arranged[y + 1] || !this.#arranged[y][x + 1] || !this.#arranged[y + 1][x + 1]) {
+					continue;
+				}
+
+				const centerLeft = { x: null, y: null };
+				const centerRight = { x: null, y: null };
+
+				// top left to bottom right distance
+				const tlbrLength = Math.hypot(this.#arranged[y + 1][x + 1].x - vertex.x, this.#arranged[y + 1][x].y - vertex.y).toFixed(2);
+				// top right to bottom left distance
+				const trblLength = Math.hypot(this.#arranged[y][x + 1].x - vertex.x, this.#arranged[y + 1][x + 1].y - vertex.y).toFixed(2);
+
+				// Decide which way the triangle points
+				let tri;
+				if (tlbrLength < trblLength) { // choose the direction that makes the cut shorter
+					tri = 0;
+				} else if (tlbrLength == trblLength) { // if they're equal (in the case of 0 vertex variance) make it random
+					tri = Math.floor(Math.random() * 2);
+				} else {
+					tri = 1;
+				}
+
+				// Draw triangle line
+				ctx.beginPath();
+				if (tri == 0) {
+					// tl to br
+					// Get centers
+					centerLeft.x = (verts[y][x].x + verts[y][x+1].x + verts[y+1][x+1].x) / 3;
+					centerLeft.y = (verts[y][x].y + verts[y][x+1].y + verts[y+1][x+1].y) / 3;
+					centerRight.x = (verts[y][x].x + verts[y+1][x].x + verts[y+1][x+1].x) / 3;
+					centerRight.y = (verts[y][x].y + verts[y+1][x].y + verts[y+1][x+1].y) / 3;
+					// Upper right triangle
+					ctx.fillStyle = baseCanvas.GetPixelColor(centerLeft.x, centerLeft.y, {applyVariance: true});
+					ctx.moveTo(verts[y][x].x, verts[y][x].y);
+					ctx.lineTo(verts[y][x+1].x, verts[y][x+1].y);
+					ctx.lineTo(verts[y+1][x+1].x, verts[y+1][x+1].y);
+					ctx.closePath();
+					ctx.fill();
+					ctx.stroke();
+					// Bottom left triangle
+					ctx.fillStyle = baseCanvas.GetPixelColor(centerRight.x, centerRight.y, {applyVariance: true});
+					ctx.beginPath();
+					ctx.moveTo(verts[y][x].x, verts[y][x].y);
+					ctx.lineTo(verts[y+1][x].x, verts[y+1][x].y);
+					ctx.lineTo(verts[y+1][x+1].x, verts[y+1][x+1].y);
+					ctx.closePath();
+					ctx.fill();
+					ctx.stroke();
+				} else {
+					// tr to bl
+					// Bottom right triangle
+					centerLeft.x = (verts[y][x].x + verts[y+1][x].x + verts[y+1][x+1].x) / 3;
+					centerLeft.y = (verts[y][x].y + verts[y+1][x].y + verts[y+1][x+1].y) / 3;
+					centerRight.x = (verts[y][x].x + verts[y][x+1].x + verts[y+1][x+1].x) / 3;
+					centerRight.y = (verts[y][x].y + verts[y][x+1].y + verts[y+1][x+1].y) / 3;
+					ctx.fillStyle = baseCanvas.GetPixelColor(centerLeft.x, centerLeft.y, {applyVariance: true});
+					ctx.moveTo(verts[y][x+1].x, verts[y][x+1].y);
+					ctx.lineTo(verts[y+1][x+1].x, verts[y+1][x+1].y);
+					ctx.lineTo(verts[y+1][x].x, verts[y+1][x].y);
+					ctx.closePath();
+					ctx.fill();
+					ctx.stroke();
+					// Upper left triangle
+					ctx.fillStyle = baseCanvas.GetPixelColor(centerRight.x, centerRight.y, {applyVariance: true});
+					ctx.beginPath();
+					ctx.moveTo(verts[y][x].x, verts[y][x].y);
+					ctx.lineTo(verts[y][x+1].x, verts[y][x+1].y);
+					ctx.lineTo(verts[y+1][x].x, verts[y+1][x].y);
+					ctx.closePath();
+					ctx.fill();
+					ctx.stroke();
+				}
 			}
 		}
-
-		DebugUtils.drawPoints(this.canvas.ctx, this.vertices);
 	}
 
 	Redraw(generateNewVertices = false) {
@@ -74,6 +167,5 @@ export default class Layer {
 			this.Fill();
 		}
 		this.canvas.Draw();
-		DebugUtils.drawPoints(this.canvas.ctx, this.vertices);
 	}
 }
