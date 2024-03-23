@@ -9,6 +9,7 @@ export default class Canvas {
 	_imageData = null;
 	_isBaseCanvas = false;
 	_canvasElement = null;
+	_parentLayer = null;
 
 	#lastDraw = 0;
 	#redrawPending = false;
@@ -43,25 +44,63 @@ export default class Canvas {
 	}
 
 	Draw(clearCanvas = true) {
-		if (clearCanvas) {
-			this.ctx.clearRect(0, 0, this._canvasElement.width, this._canvasElement.height);
-		}
 		if (this.drawType == "gradient") {
-			this.DrawGradient();
+			this.DrawGradient(clearCanvas);
 		} else if (this.drawType == "image") {
 			this.#imgToCanvas();
 		} else if (this.drawType == "polygons") {
-			//! Draw polygons
+			this.DrawPolygons(clearCanvas);
 		}
 		if (this.#willReadFrequently) {
 			this._imageData = this.ctx.getImageData(0, 0, this._canvasElement.width, this._canvasElement.height);
 		}
 	}
 
+	DrawPolygons(clearBeforeDraw = true) {
+		// Throttle redraws
+		if (Date.now() - this.#lastDraw < Store.Defaults.INPUTS.PREVIEW_REDRAW_DELAY) {
+			if (!this.#redrawPending) {
+				this.#redrawPending = true;
+				this.#redrawTimeout = setTimeout(() => {
+					this.DrawPolygons();
+					this.#redrawPending = false;
+				}, Store.Defaults.INPUTS.PREVIEW_REDRAW_DELAY);
+			}
+			return;
+		}
+		clearTimeout(this.#redrawTimeout);
+		this.#redrawPending = false;
+		this.#redrawTimeout = null;
+
+		this.#lastDraw = Date.now();
+		this.drawType = "polygons";
+
+		if (clearBeforeDraw) {
+			this.ctx.clearRect(0, 0, this._canvasElement.width, this._canvasElement.height);
+		}
+
+		this._parentLayer.polygons.forEach((polygon) => {
+			const outlineColorRaw = Utils.hexToRgb(this._parentLayer.settings.lineColor);
+			const outlineColor = `rgba(${outlineColorRaw.r}, ${outlineColorRaw.g}, ${outlineColorRaw.b}, ${this._parentLayer.settings.lineOpacity})`;
+			this.ctx.strokeStyle = outlineColor;
+			const color = polygon.GetColor(true);
+			this.ctx.fillStyle = color;
+			this.ctx.beginPath();
+			this.ctx.moveTo(polygon.vertices[0].x, polygon.vertices[0].y);
+			for (let i = 1; i < polygon.vertices.length; i++) {
+				this.ctx.lineTo(polygon.vertices[i].x, polygon.vertices[i].y);
+			}
+			this.ctx.closePath();
+			this.ctx.fill();
+			this.ctx.stroke();
+		});
+	}
+
 	// Calculate and draw a gradient on this canvas
-	DrawGradient() {
+	DrawGradient(clearBeforeDraw = true) {
 		if (!this._isBaseCanvas) {
 			console.error("The canvas you are trying to draw on is not the base canvas. Please use the base canvas to draw gradients.");
+			console.trace();
 			return;
 		}
 		// Throttle redraws
@@ -82,6 +121,10 @@ export default class Canvas {
 
 		this.#lastDraw = Date.now();
 		this.drawType = "gradient";
+
+		if (clearBeforeDraw) {
+			this.ctx.clearRect(0, 0, this._canvasElement.width, this._canvasElement.height);
+		}
 
 		let gradient, gradData;
 		if (Store.settings.mode == "linear") {

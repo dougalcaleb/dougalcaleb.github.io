@@ -310,7 +310,7 @@ export default class UI {
 			Store.Preview.activeLayer.settings.variance = event.target.value;
 		});
 		document.querySelector(".i-verts").addEventListener("input", (event) => {
-			Store.settings.cellSize = event.target.value;
+			Store.Preview.activeLayer.settings.cellSize = event.target.value;
 		});
 
 		// linear gradient
@@ -337,18 +337,18 @@ export default class UI {
 
 		// brightness variance
 		document.querySelector(".i-bright-variance").addEventListener("input", (event) => {
-			Store.settings.bvar = event.target.value;
+			Store.Preview.activeLayer.settings.colorRand = event.target.value;
 		});
 		document.querySelector(".lighten").addEventListener("click", () => {
-			Store.settings.bmode = "lighten";
+			Store.Preview.activeLayer.settings.colorMode = 1;
 		});
 		document.querySelector(".darken").addEventListener("click", () => {
-			Store.settings.bmode = "darken";
+			Store.Preview.activeLayer.settings.colorMode = -1;
 		});
 
 		// outline
 		document.querySelector(".i-outline").addEventListener("input", (event) => {
-			Store.settings.lineOp = parseFloat(event.target.value);
+			Store.Preview.activeLayer.settings.lineOpacity = parseFloat(event.target.value);
 		});
 
 		// proportional falloff (tools)
@@ -365,7 +365,7 @@ export default class UI {
 		// outline color picker
 		document.querySelector(".i-outline-color").addEventListener("input", (event) => {
 			document.querySelector(".outline-color-wrap").style.background = event.target.value;
-			Store.settings.line = document.querySelector(".i-outline-color").value;
+			Store.Preview.activeLayer.settings.lineColor = document.querySelector(".i-outline-color").value;
 		});
 
 		// dimensions

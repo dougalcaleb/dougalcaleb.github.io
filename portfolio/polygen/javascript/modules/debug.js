@@ -2,6 +2,7 @@ export default class DebugUtils {
 	constructor() { }
 	
 	static drawPoints(ctx, vertices, textFn = null) {
+		// DebugUtils.drawPoints(this.canvas.ctx, this.vertices);
 		for (const vertex of vertices) {
 			ctx.fillStyle = "red";
 			ctx.beginPath();

@@ -23,6 +23,7 @@ export default class Layer {
 		if (canvas === null) {
 			this.canvas = new Canvas();
 		}
+		this.canvas._parentLayer = this;
 		this.index = Store.Preview.layers.length;
 		this.name = "Layer " + (this.index + 1);
 		this.settings = new LayerSettings(this.Redraw.bind(this));
@@ -49,7 +50,7 @@ export default class Layer {
 				const vertex = new Vertex();
 
 				if (x === 0) {
-					vertex.x = 0
+					vertex.x = 0;
 				} else if (x == xCount - 1) {
 					vertex.x = Store.settings.x;
 				} else {
@@ -78,18 +79,18 @@ export default class Layer {
 		for (let y = 0; y < this.#arranged.length; y++) {
 			const row = this.#arranged[y];
 			for (let x = 0; x < row.length; x++) {
-				const vertex = row[x];
+				const vertex = this.#arranged[y][x];
 				const verts = this.#arranged;
 				
-				// Skip over edges
-				if (!this.#arranged[y + 1] || !this.#arranged[y][x + 1] || !this.#arranged[y + 1][x + 1]) {
+				// Skip over bottom and right edges
+				if (!verts[y + 1] || !verts[y][x + 1] || !verts[y + 1][x + 1]) {
 					continue;
 				}
 
 				// top left to bottom right distance
-				const tlbrLength = Math.hypot(this.#arranged[y + 1][x + 1].x - vertex.x, this.#arranged[y + 1][x].y - vertex.y).toFixed(2);
+				const tlbrLength = Math.hypot(verts[y + 1][x + 1].x - vertex.x, verts[y + 1][x].y - vertex.y).toFixed(2);
 				// top right to bottom left distance
-				const trblLength = Math.hypot(this.#arranged[y][x + 1].x - vertex.x, this.#arranged[y + 1][x + 1].y - vertex.y).toFixed(2);
+				const trblLength = Math.hypot(verts[y][x + 1].x - vertex.x, verts[y + 1][x + 1].y - vertex.y).toFixed(2);
 
 				// Decide which way the triangle points
 				let tri;
@@ -105,42 +106,32 @@ export default class Layer {
 				let poly1 = null;
 				let poly2 = null;
 				if (tri == 0) {
+					// Upper right triangle
 					poly1 = new Polygon([verts[y][x], verts[y][x + 1], verts[y + 1][x + 1]]);
+					// Lower left triangle
 					poly2 = new Polygon([verts[y][x], verts[y + 1][x], verts[y + 1][x + 1]]);
 				} else {
-					poly1 = new Polygon([verts[y][x], verts[y+1][x], verts[y + 1][x + 1]]);
-					poly2 = new Polygon([verts[y][x], verts[y][x + 1], verts[y + 1][x + 1]]);
+					// Upper left triangle
+					poly1 = new Polygon([verts[y][x], verts[y][x + 1], verts[y + 1][x]]);
+					// Lower right triangle
+					poly2 = new Polygon([verts[y][x + 1], verts[y + 1][x + 1], verts[y + 1][x]]);
 				}
 
 				this.polygons.push(poly1, poly2);
 			}
 		}
-	}
-
-	DrawPolygons() {
-		this.polygons.forEach((polygon) => {
-			const outlineColorRaw = Utils.hexToRgb(this.settings.lineColor);
-			const outlineColor = `rgba(${outlineColorRaw.r}, ${outlineColorRaw.g}, ${outlineColorRaw.b}, ${this.settings.lineOpacity})`;
-			this.canvas.ctx.strokeStyle = outlineColor;
-			const color = polygon.GetColor();
-			this.canvas.ctx.fillStyle = color;
-			this.canvas.ctx.beginPath();
-			this.canvas.ctx.moveTo(polygon.vertices[0].x, polygon.vertices[0].y);
-			for (let i = 1; i < polygon.vertices.length; i++) {
-				this.canvas.ctx.lineTo(polygon.vertices[i].x, polygon.vertices[i].y);
-			}
-			this.canvas.ctx.closePath();
-			this.canvas.ctx.fill();
-			this.canvas.ctx.stroke();
-		});
-	
+		this.canvas.Draw();
 	}
 
 	Redraw(generateNewVertices = false) {
 		if (generateNewVertices) {
 			this.vertices = [];
+			this.#arranged = [];
 			this.Fill();
+			this.polygons = [];
+			this.InitialPolygons();
+		} else {
+			this.canvas.Draw();
 		}
-		this.canvas.Draw();
 	}
 }

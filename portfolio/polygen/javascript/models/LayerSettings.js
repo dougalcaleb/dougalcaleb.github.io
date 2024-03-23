@@ -21,7 +21,7 @@ export default class LayerSettings {
 	get cellSize() { return this.#cellSize; }
 	set cellSize(value) {
 		this.#cellSize = value;
-		this.#redrawCallback();
+		this.#redrawCallback(true);
 	}
 
 	get colorRand() { return this.#colorRand; }

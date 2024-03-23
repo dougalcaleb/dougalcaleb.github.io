@@ -20,9 +20,9 @@ export default class Polygon {
 		}
 	}
 	
-	GetColor() {
+	GetColor(variance = false) {
 		const center = this.GetCenter();
-		this.color = Store.Preview.baseCanvas.GetPixelColor(center.x, center.y);
+		this.color = Store.Preview.baseCanvas.GetPixelColor(center.x, center.y, {applyVariance: variance});
 		return this.color;
 	}
 
