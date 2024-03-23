@@ -15,4 +15,10 @@ export default class DebugUtils {
 			}
 		}
 	}
+
+	static drawTextAt(ctx, x, y, text) {
+		ctx.fillStyle = "black";
+		ctx.font = "15px Arial";
+		ctx.fillText(text, x, y);
+	}
 }

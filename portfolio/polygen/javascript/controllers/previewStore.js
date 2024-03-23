@@ -12,6 +12,7 @@ export default class PreviewStore {
 	allowRedraw = true;
 	redrawTimeout = null;
 	gradientData = null;
+	pixelRatio = 1;
 
 	#xAngles = null;
 	#yAngles = null;

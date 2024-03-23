@@ -393,7 +393,7 @@ export default class UI {
 			clearTimeout(ySizeDebounce);
 			ySizeDebounce = setTimeout(() => {
 				if (event.target.value !== "0" && event.target.value !== undefined && event.target.value !== "") {
-					Store.settings.y = event.target.value;
+					Store.settings.y = Number(event.target.value);
 				} else {
 					console.warn("ERROR: Bad height dimension value. Enter a value of 1 or greater");
 				}
@@ -403,7 +403,7 @@ export default class UI {
 			clearTimeout(xSizeDebounce);
 			xSizeDebounce = setTimeout(() => {
 				if (event.target.value !== "0" && event.target.value !== undefined && event.target.value !== "") {
-					Store.settings.x = event.target.value;
+					Store.settings.x = Number(event.target.value);
 				} else {
 					console.warn("ERROR: Bad width dimension value. Enter a value of 1 or greater");
 				}

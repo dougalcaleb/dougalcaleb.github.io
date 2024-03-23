@@ -14,9 +14,6 @@ export default class SettingsStore {
 		y: 1080,
 		propFalloff: 4 
 	};
-	#pendingSettings = {};
-	#pendingActions = [];
-	#waitForManualUpdate = false;
 
 	get mode() { return this.#settings.mode; }
 	get rotation() { return this.#settings.rotation; }
@@ -72,20 +69,34 @@ export default class SettingsStore {
 		Store.Preview.layers.forEach((layer) => {
 			layer.canvas._canvasElement.width = value;
 		});
-		this.#RefreshAll();
+		Store.Preview.pixelRatio = this.#settings.x / Store.Preview.baseCanvas._canvasElement.offsetWidth;
+		this.#RegenerateAll();
 	}
 	set y(value) {
 		this.#settings.y = value;
 		Store.Preview.layers.forEach((layer) => {
 			layer.canvas._canvasElement.height = value;
 		});
-		this.#RefreshAll();
+		Store.Preview.pixelRatio = this.#settings.x / Store.Preview.baseCanvas._canvasElement.offsetWidth;
+		this.#RegenerateAll();
 	}
 	set propFalloff(value) { this.#settings.propFalloff = value; }
 
 	setFromImg(x, y) {
 		this.#settings.x = x;
 		this.#settings.y = y;
+		Store.Preview.pixelRatio = this.#settings.x / Store.Preview.baseCanvas._canvasElement.offsetWidth;
+		this.#RegenerateAll();
+	}
+
+	#RefreshAll() {
+		Store.Preview.layers.forEach((layer) => {
+			layer.canvas.Draw();
+		});
+	}
+
+	#RegenerateAll() {
+		Store.Preview.baseCanvas.Draw();
 		Store.Preview.layers.forEach((layer, idx) => {
 			if (idx != 0) {
 				layer.canvas._canvasElement.height = this.#settings.y;
@@ -93,26 +104,6 @@ export default class SettingsStore {
 				layer.Fill();
 				layer.InitialPolygons();
 			}
-		});
-	}
-
-	waitForManualUpdate() {
-		this.#waitForManualUpdate = true;
-	}
-
-	manualUpdate() {
-		this.#waitForManualUpdate = false;
-		for (const key in this.#pendingSettings) {
-			this.#settings[key] = this.#pendingSettings[key];
-		}
-		this.#pendingActions.forEach(action => action());
-		this.#pendingSettings = {};
-		this.#pendingActions = [];
-	}
-
-	#RefreshAll() {
-		Store.Preview.layers.forEach((layer) => {
-			layer.canvas.Draw();
 		});
 	}
 }
