@@ -1,10 +1,10 @@
 import Canvas from "../controllers/canvas.js";
 import Store from "../controllers/store.js";
 import LayerSettings from "./LayerSettings.js";
-import DebugUtils from "../modules/debug.js";
 import Vertex from "./vertex.js";
 import Utils from "../modules/utility.js";
 import Polygon from "./Polygon.js";
+import DebugUtils from "../modules/debug.js";
 
 export default class Layer {
 	name = "";

@@ -1,7 +1,5 @@
-import Defaults from "./internalDefaultStore.js";
 import Utils from "../modules/utility.js";
 import Store from "./store.js";
-import Layer from "../models/Layer.js";
 
 export default class PreviewStore {
 	constructor() { }

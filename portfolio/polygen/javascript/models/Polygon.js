@@ -1,4 +1,3 @@
-import Vertex from "./vertex.js";
 import Store from "../controllers/store.js";
 import Utils from "../modules/utility.js";
 
