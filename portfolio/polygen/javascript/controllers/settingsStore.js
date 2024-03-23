@@ -29,23 +29,22 @@ export default class SettingsStore {
 	get propFalloff() { return this.#settings.propFalloff; }
 
 	set mode(value) {
-		if (this.#waitForManualUpdate) {
-			if (value == "image" && this.#settings.mode != "image") {
-				this.#pendingSettings.x = Store.Preview.layers[0].canvas._imgSrc.width;
-				this.#pendingSettings.y = Store.Preview.layers[0].canvas._imgSrc.height;
-			} else {
-				this.#pendingActions.push(Store.Preview.setAngles);
-			}
-			this.#pendingSettings.mode = value;
-		} else {
-			if (value == "image" && this.#settings.mode != "image") {
-				this.#settings.x = Store.Preview.layers[0].canvas._imgSrc.width;
-				this.#settings.y = Store.Preview.layers[0].canvas._imgSrc.height;
-			} else if (value != "image") {
-				Store.Preview.setAngles();
+		if (value === "linear" || value === "radial") {
+			if (this.#settings.mode === "image") {
+				Store.Preview.baseCanvas.DrawGradient();
+				Store.Preview.layers.forEach((layer, idx) => {
+					if (idx != 0) {
+						layer.canvas._canvasElement.height = this.#settings.y;
+						layer.canvas._canvasElement.width = this.#settings.x;
+						layer.Fill();
+						layer.InitialPolygons();
+					}
+				});
 			}
 			this.#settings.mode = value;
 			this.#RefreshAll();
+		} else if (value === "image") {
+			this.#settings.mode = value;
 		}
 	}
 	set rotation(value) {
@@ -83,6 +82,19 @@ export default class SettingsStore {
 		this.#RefreshAll();
 	}
 	set propFalloff(value) { this.#settings.propFalloff = value; }
+
+	setFromImg(x, y) {
+		this.#settings.x = x;
+		this.#settings.y = y;
+		Store.Preview.layers.forEach((layer, idx) => {
+			if (idx != 0) {
+				layer.canvas._canvasElement.height = this.#settings.y;
+				layer.canvas._canvasElement.width = this.#settings.x;
+				layer.Fill();
+				layer.InitialPolygons();
+			}
+		});
+	}
 
 	waitForManualUpdate() {
 		this.#waitForManualUpdate = true;

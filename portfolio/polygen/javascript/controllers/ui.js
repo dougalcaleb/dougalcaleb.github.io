@@ -172,6 +172,9 @@ export default class UI {
 			document.querySelectorAll(".fortype-2").forEach((el) => {
 				el.style.height = "0px";
 			});
+			document.querySelectorAll(".image-dimensions").forEach((el) => {
+				el.disabled = false;
+			});
 			document.querySelector(".type-0").classList.add("btn-active");
 			Store.activeType = 0;
 			Store.settings.mode = "linear";
@@ -187,6 +190,9 @@ export default class UI {
 			document.querySelectorAll(".fortype-2").forEach((el) => {
 				el.style.height = "0px";
 			});
+			document.querySelectorAll(".image-dimensions").forEach((el) => {
+				el.disabled = false;
+			});
 			document.querySelector(".type-1").classList.add("btn-active");
 			Store.activeType = 1;
 			Store.settings.mode = "radial";
@@ -201,6 +207,9 @@ export default class UI {
 			});
 			document.querySelectorAll(".fortype-2").forEach((el) => {
 				el.style.height = "";
+			});
+			document.querySelectorAll(".image-dimensions").forEach((el) => {
+				el.disabled = true;
 			});
 			document.querySelector(".type-2").classList.add("btn-active");
 			Store.activeType = 2;
@@ -291,17 +300,28 @@ export default class UI {
 	// Event listeners for keypresses
 	static #KeyListeners() {
 		// selection brush
+		let ctrlHeld = false;
 		window.addEventListener("keydown", (event) => {
 			if (Object.hasOwn(Store.Defaults.UI.SELECTION_BRUSH_KEYBINDS, event.key) && !Store.Editor.brush.active) {
 				Store.Editor.brush.active = true;
 				Store.Editor.activateBrush();
+			}
+			if (event.key === Store.Defaults.UI.UNDO_KEYBINDS.CTRL) {
+				ctrlHeld = true;
+			}
+			if (ctrlHeld && event.key === Store.Defaults.UI.UNDO_KEYBINDS.Z) {
+				Store.Preview.Undo();
 			}
 		});
 		window.addEventListener("keyup", (event) => {
 			if (Object.hasOwn(Store.Defaults.UI.SELECTION_BRUSH_KEYBINDS, event.key)) {
 				Store.Editor.deactivateBrush();
 			}
+			if (event.key === Store.Defaults.UI.UNDO_KEYBINDS.CTRL) {
+				ctrlHeld = false;
+			}
 		});
+		
 	}
 
 	static #RangeListeners() {

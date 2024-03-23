@@ -36,6 +36,7 @@ export default class Layer {
 	}
 
 	Fill() {
+		// Number of vertices in each direction
 		const xCount = Math.ceil(Store.settings.x / this.settings.cellSize) + 1;
 		const yCount = Math.ceil(Store.settings.y / this.settings.cellSize) + 1;
 
@@ -123,8 +124,15 @@ export default class Layer {
 		this.canvas.Draw();
 	}
 
+	DrawFromState(layerState) {
+		this.polygons = layerState.polygons;
+		this.vertices = layerState.vertices;
+		this.Redraw();
+	}
+
 	Redraw(generateNewVertices = false) {
 		if (generateNewVertices) {
+			Store.Preview.AddUndoState(this.index);
 			this.vertices = [];
 			this.#arranged = [];
 			this.Fill();

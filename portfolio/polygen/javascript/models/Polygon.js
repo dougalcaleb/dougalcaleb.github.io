@@ -11,6 +11,14 @@ export default class Polygon {
 			this.vertices = Utils.createPolygon(vertices);
 		}
 	}
+
+	static CopySet(polygonSet) {
+		const newSet = [];
+		polygonSet.forEach((polygon) => {
+			newSet.push(new Polygon(polygon.vertices));
+		});
+		return newSet;
+	}
 	
 	AddVertex(vertex) {
 		this.vertices.push(vertex);

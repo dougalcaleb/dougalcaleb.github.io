@@ -9,6 +9,14 @@ export default class Vertex {
 		this.y = y;
 	}
 
+	static CopySet(vertexSet) {
+		const newSet = [];
+		vertexSet.forEach((vertex) => {
+			newSet.push(new Vertex(vertex.x, vertex.y));
+		});
+		return newSet;
+	}
+
 	GetNeighbors() {
 		this.neighbors = [];
 		this.polygons.forEach((polygon) => {

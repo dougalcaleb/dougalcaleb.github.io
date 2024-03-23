@@ -300,10 +300,10 @@ export default class Canvas {
 				this._canvasElement.height = img.height;
 				document.querySelector(".image-height").value = img.height;
 				document.querySelector(".image-width").value = img.width;
-				Store.settings.x = img.width;
-				Store.settings.y = img.height;
 				this.imgSrc = img;
 				this.#imgToCanvas();
+				Store.settings.setFromImg(img.width, img.height);
+				Store.Preview.setAngles();
 			};
 		};
 	}
@@ -314,6 +314,9 @@ export default class Canvas {
 			console.error("The canvas you are trying to draw on is not the base canvas. Please use the base canvas to draw images.");
 			return;
 		}
-		this.ctx.drawImage(img, 0, 0);
+		this.ctx.drawImage(this.imgSrc, 0, 0);
+		if (this.#willReadFrequently) {
+			this._imageData = this.ctx.getImageData(0, 0, this._canvasElement.width, this._canvasElement.height);
+		}
 	}
 }

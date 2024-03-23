@@ -8,6 +8,7 @@ export default class Defaults {
 		BRUSH_DRAW_COLOR: "rgba(255,255,255,0.3)",
 		SELECTED_VERTEX: { COLOR: "rgba(255,255,255,1)", SIZE: 5 },
 		SELECTION_BRUSH_KEYBINDS: { "b": true, " ": true },
+		UNDO_KEYBINDS: { "CTRL": "Control", "Z": "z" },
 	};
 	static INPUTS = {
 		DEBOUNCE: 500,
@@ -15,5 +16,6 @@ export default class Defaults {
 	};
 	static LIMITS = {
 		COLOR_STOPS: 15,
+		UNDO_LIMIT: 10,
 	};
 }
