@@ -4,11 +4,13 @@ import LayerSettings from "./LayerSettings.js";
 import DebugUtils from "../modules/debug.js";
 import Vertex from "./vertex.js";
 import Utils from "../modules/utility.js";
+import Polygon from "./Polygon.js";
 
 export default class Layer {
 	name = "";
 	canvas = null;
 	vertices = [];
+	polygons = [];
 	index = null;
 	visible = true;
 
@@ -71,13 +73,8 @@ export default class Layer {
 		}
 	}
 
+	// Generates initial grid-based triangle polygons
 	InitialPolygons() {
-		const outlineColorRaw = Utils.hexToRgb(this.settings.lineColor);
-		const outlineColor = `rgba(${outlineColorRaw.r}, ${outlineColorRaw.g}, ${outlineColorRaw.b}, ${this.settings.lineOpacity})`;
-		this.canvas.ctx.strokeStyle = outlineColor;
-		const ctx = this.canvas.ctx;
-		const baseCanvas = Store.Preview.baseCanvas;
-
 		for (let y = 0; y < this.#arranged.length; y++) {
 			const row = this.#arranged[y];
 			for (let x = 0; x < row.length; x++) {
@@ -88,9 +85,6 @@ export default class Layer {
 				if (!this.#arranged[y + 1] || !this.#arranged[y][x + 1] || !this.#arranged[y + 1][x + 1]) {
 					continue;
 				}
-
-				const centerLeft = { x: null, y: null };
-				const centerRight = { x: null, y: null };
 
 				// top left to bottom right distance
 				const tlbrLength = Math.hypot(this.#arranged[y + 1][x + 1].x - vertex.x, this.#arranged[y + 1][x].y - vertex.y).toFixed(2);
@@ -107,58 +101,39 @@ export default class Layer {
 					tri = 1;
 				}
 
-				// Draw triangle line
-				ctx.beginPath();
+				// Create polygons
+				let poly1 = null;
+				let poly2 = null;
 				if (tri == 0) {
-					// tl to br
-					// Get centers
-					centerLeft.x = (verts[y][x].x + verts[y][x+1].x + verts[y+1][x+1].x) / 3;
-					centerLeft.y = (verts[y][x].y + verts[y][x+1].y + verts[y+1][x+1].y) / 3;
-					centerRight.x = (verts[y][x].x + verts[y+1][x].x + verts[y+1][x+1].x) / 3;
-					centerRight.y = (verts[y][x].y + verts[y+1][x].y + verts[y+1][x+1].y) / 3;
-					// Upper right triangle
-					ctx.fillStyle = baseCanvas.GetPixelColor(centerLeft.x, centerLeft.y, {applyVariance: true});
-					ctx.moveTo(verts[y][x].x, verts[y][x].y);
-					ctx.lineTo(verts[y][x+1].x, verts[y][x+1].y);
-					ctx.lineTo(verts[y+1][x+1].x, verts[y+1][x+1].y);
-					ctx.closePath();
-					ctx.fill();
-					ctx.stroke();
-					// Bottom left triangle
-					ctx.fillStyle = baseCanvas.GetPixelColor(centerRight.x, centerRight.y, {applyVariance: true});
-					ctx.beginPath();
-					ctx.moveTo(verts[y][x].x, verts[y][x].y);
-					ctx.lineTo(verts[y+1][x].x, verts[y+1][x].y);
-					ctx.lineTo(verts[y+1][x+1].x, verts[y+1][x+1].y);
-					ctx.closePath();
-					ctx.fill();
-					ctx.stroke();
+					poly1 = new Polygon([verts[y][x], verts[y][x + 1], verts[y + 1][x + 1]]);
+					poly2 = new Polygon([verts[y][x], verts[y + 1][x], verts[y + 1][x + 1]]);
 				} else {
-					// tr to bl
-					// Bottom right triangle
-					centerLeft.x = (verts[y][x].x + verts[y+1][x].x + verts[y+1][x+1].x) / 3;
-					centerLeft.y = (verts[y][x].y + verts[y+1][x].y + verts[y+1][x+1].y) / 3;
-					centerRight.x = (verts[y][x].x + verts[y][x+1].x + verts[y+1][x+1].x) / 3;
-					centerRight.y = (verts[y][x].y + verts[y][x+1].y + verts[y+1][x+1].y) / 3;
-					ctx.fillStyle = baseCanvas.GetPixelColor(centerLeft.x, centerLeft.y, {applyVariance: true});
-					ctx.moveTo(verts[y][x+1].x, verts[y][x+1].y);
-					ctx.lineTo(verts[y+1][x+1].x, verts[y+1][x+1].y);
-					ctx.lineTo(verts[y+1][x].x, verts[y+1][x].y);
-					ctx.closePath();
-					ctx.fill();
-					ctx.stroke();
-					// Upper left triangle
-					ctx.fillStyle = baseCanvas.GetPixelColor(centerRight.x, centerRight.y, {applyVariance: true});
-					ctx.beginPath();
-					ctx.moveTo(verts[y][x].x, verts[y][x].y);
-					ctx.lineTo(verts[y][x+1].x, verts[y][x+1].y);
-					ctx.lineTo(verts[y+1][x].x, verts[y+1][x].y);
-					ctx.closePath();
-					ctx.fill();
-					ctx.stroke();
+					poly1 = new Polygon([verts[y][x], verts[y+1][x], verts[y + 1][x + 1]]);
+					poly2 = new Polygon([verts[y][x], verts[y][x + 1], verts[y + 1][x + 1]]);
 				}
+
+				this.polygons.push(poly1, poly2);
 			}
 		}
+	}
+
+	DrawPolygons() {
+		this.polygons.forEach((polygon) => {
+			const outlineColorRaw = Utils.hexToRgb(this.settings.lineColor);
+			const outlineColor = `rgba(${outlineColorRaw.r}, ${outlineColorRaw.g}, ${outlineColorRaw.b}, ${this.settings.lineOpacity})`;
+			this.canvas.ctx.strokeStyle = outlineColor;
+			const color = polygon.GetColor();
+			this.canvas.ctx.fillStyle = color;
+			this.canvas.ctx.beginPath();
+			this.canvas.ctx.moveTo(polygon.vertices[0].x, polygon.vertices[0].y);
+			for (let i = 1; i < polygon.vertices.length; i++) {
+				this.canvas.ctx.lineTo(polygon.vertices[i].x, polygon.vertices[i].y);
+			}
+			this.canvas.ctx.closePath();
+			this.canvas.ctx.fill();
+			this.canvas.ctx.stroke();
+		});
+	
 	}
 
 	Redraw(generateNewVertices = false) {

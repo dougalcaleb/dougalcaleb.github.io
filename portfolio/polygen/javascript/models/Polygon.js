@@ -1,5 +1,5 @@
 import Vertex from "./vertex.js";
-import Store from "../store.js";
+import Store from "../controllers/store.js";
 import Utils from "../modules/utility.js";
 
 export default class Polygon {
