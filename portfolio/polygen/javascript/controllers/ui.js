@@ -69,24 +69,32 @@ export default class UI {
 		});
 	}
 
-	static AddLayer(layerData, index) {
+	static AddLayer(layer) {
 		const template = document.getElementById("layer-template").content.children[0];
 		const newLayer = template.cloneNode(true);
 		document.querySelector(".vertex-layer").appendChild(newLayer);
-		newLayer.querySelector(".layer-name").innerText = layerData.name;
-		newLayer.addEventListener("click", () => {
-			document.querySelector(".layer-selected").classList.remove("layer-selected");
+		newLayer.querySelector(".layer-name").innerText = layer.name;
+		newLayer.addEventListener("click", function (event) {
+			if ((event.target !== this) && !event.target.classList.contains("layer-name")) return;
+			document.querySelector(".layer-selected")?.classList.remove("layer-selected");
 			newLayer.classList.add("layer-selected");
-			Store.Preview.SelectLayer(index);
+			Store.Preview.SelectLayer(layer.id);
 		});
 		newLayer.querySelector(".layer-btn-wrap .layer-visible").addEventListener("click", () => {
 			newLayer.classList.add("layer-inactive");
 			newLayer.classList.remove("layer-active");
+			Store.Preview.layerMap[layer.id].visible = false;
 		});
 		newLayer.querySelector(".layer-btn-wrap .layer-hidden").addEventListener("click", () => {
 			newLayer.classList.add("layer-active");
 			newLayer.classList.remove("layer-inactive");
+			Store.Preview.layerMap[layer.id].visible = true;
 		});
+		newLayer.querySelector(".layer-btn-wrap .layer-delete").addEventListener("click", () => {
+			Store.Preview.RemoveLayer(layer.id);
+			newLayer.remove();
+		});
+		Store.Preview.layerMap[layer.id].uiElement = newLayer;
 	}
 
 	//==================================
@@ -136,7 +144,9 @@ export default class UI {
 
 		// Populate layers
 		Store.Preview.layers.forEach((l, idx) => {
-			UI.AddLayer(l, idx);
+			if (idx != 0) {
+				UI.AddLayer(l);
+			}
 		});
 	}
 
@@ -426,6 +436,12 @@ export default class UI {
 			}
 		});
 
+		document.querySelector(".layer-add").addEventListener("click", () => {
+			const newLayer = Store.Preview.NewLayer();
+			UI.AddLayer(newLayer);
+			Store.Preview.SelectLayer(newLayer.id);
+		});
+
 		// download image
 		document.querySelector(".download").addEventListener("click", () => {
 			let downloader = document.querySelector(".downloader");
@@ -435,7 +451,7 @@ export default class UI {
 		});
 
 		window.addEventListener("resize", () => {
-			//! EditLayer.handleWindowResize();
+			Store.Preview.pixelRatio = Store.settings.x / Store.Preview.baseCanvas._canvasElement.offsetWidth;
 		});
 	}
 }

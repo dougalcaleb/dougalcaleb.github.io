@@ -21,6 +21,6 @@ export default class Vertex {
 		this.neighbors = [];
 		this.polygons.forEach((polygon) => {
 			this.neighbors.push(...polygon.GetNeighborsOfVertex(this));
-		})
+		});
 	}
 }

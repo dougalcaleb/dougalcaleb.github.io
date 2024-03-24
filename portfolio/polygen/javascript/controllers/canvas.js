@@ -29,18 +29,31 @@ export default class Canvas {
 		drawVertexCoords: false,
 	};
 
-	constructor(transparency = true, willReadFrequently = false) {
-		this.#willReadFrequently = willReadFrequently;
-		this._canvasElement = document.createElement("canvas");;
-		this._canvasElement.width = Store.settings.x;
-		this._canvasElement.height = Store.settings.y;
-		this._canvasElement.classList.add("main-canvas");
-		if (this.index === 0) {
+	#optionsDefaults =    { transparency: true, willReadFrequently: false, offscreenCanvas: false, parentLayer: null };
+	constructor(options = { transparency: true, willReadFrequently: false, offscreenCanvas: false, parentLayer: null }) {
+		options = Object.assign(this.#optionsDefaults, options);
+		this.#willReadFrequently = !!options.willReadFrequently;
+		this._parentLayer = options.parentLayer;
+		if (!!options.offscreenCanvas) {
+			this._canvasElement = new OffscreenCanvas(Store.settings.x, Store.settings.y);
+			this.ctx = this._canvasElement.getContext("2d", { alpha: !!options.transparency, willReadFrequently: !!options.willReadFrequently, desynchronized: true });
+			return;
+		} else {
+			this._canvasElement = document.createElement("canvas");;
+			this._canvasElement.width = Store.settings.x;
+			this._canvasElement.height = Store.settings.y;
+			this._canvasElement.classList.add("main-canvas");
+		}
+		if (!this._parentLayer || this._parentLayer.index === 0) {
 			this._canvasElement.id = "canvas-main";
+		} else if (!!this._parentLayer) {
+			this._canvasElement.classList.add("preview-canvas-" + this._parentLayer.index);
 		}
 		document.querySelector(".preview").appendChild(this._canvasElement);
-
-		this.ctx = this._canvasElement.getContext("2d", { alpha: transparency, willReadFrequently: willReadFrequently });
+		this._canvasElement.addEventListener("contextmenu", (event) => {
+			event.preventDefault();
+		});
+		this.ctx = this._canvasElement.getContext("2d", { alpha: !!options.transparency, willReadFrequently: !!options.willReadFrequently });
 	}
 
 	Draw(clearCanvas = true) {
@@ -54,6 +67,10 @@ export default class Canvas {
 		if (this.#willReadFrequently) {
 			this._imageData = this.ctx.getImageData(0, 0, this._canvasElement.width, this._canvasElement.height);
 		}
+	}
+
+	CopyFrom(layer) {
+
 	}
 
 	DrawPolygons(clearBeforeDraw = true) {

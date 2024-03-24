@@ -3,7 +3,7 @@
 @mixin name - function (used @include name(param))
 $name - variable
 */
-.controls .control-palettes .palette-add svg, .controls .control-palettes .palette .palette-options svg, .controls .control-btn-wrap div svg, .controls .control-toggle-wrap div svg, .preview .main-canvas {
+.controls .control-palettes .palette-add svg, .controls .control-palettes .palette .palette-options svg, .controls .control-btn-wrap div svg, .controls .control-toggle-wrap div svg, .controls .control-list .layer-add svg, .preview .main-canvas {
   position: absolute;
   left: 0;
   right: 0;
@@ -240,6 +240,22 @@ $name - variable
   right: 10px;
   background: #00b7ff;
 }
+.controls .control-list .layer-add {
+  width: 100%;
+  height: 30px;
+  position: relative;
+  background: #191919;
+  cursor: pointer;
+  margin-bottom: 15px;
+}
+.controls .control-list .layer-add:hover {
+  background: #333;
+}
+.controls .control-list .layer-add svg {
+  height: 20px;
+  width: 20px;
+  color: #00b7ff;
+}
 .controls .control-list .layer-active .layer-btn-wrap .layer-visible {
   display: inline;
 }
@@ -267,25 +283,27 @@ $name - variable
   font-family: "Miriam Libre", "Segoe UI", sans-serif, monospace;
   color: #00b7ff;
   display: flex;
+  justify-content: flex-end;
   align-items: center;
   padding: 5px;
 }
-.controls .control-list div:hover:not(.layer-selected) {
-  background: #333;
-  border: 3px solid #333;
+.controls .control-list div svg:hover {
+  color: white;
 }
 .controls .control-list div span {
   flex: 3;
   padding-left: 10px;
 }
 .controls .control-list div .layer-btn-wrap {
-  flex: 1;
+  flex: 0;
   background: rgba(0, 0, 0, 0);
 }
 .controls .control-list div .layer-btn-wrap svg {
   cursor: pointer;
-  margin-left: 5px;
   height: 25px;
+}
+.controls .control-list div .layer-btn-wrap .layer-delete {
+  margin-left: 5px;
 }
 
 .preview {

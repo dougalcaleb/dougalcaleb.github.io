@@ -1,6 +1,6 @@
 export default class Utils {
-	constructor() { }
-	
+	constructor() {}
+
 	static radToDeg(rad) {
 		return rad * (180 / Math.PI);
 	}
@@ -21,7 +21,7 @@ export default class Utils {
 	}
 
 	static colorVariance(color, variance, direction) {
-		return color + (variance * direction);
+		return color + variance * direction;
 	}
 
 	static randPosNeg() {
@@ -33,12 +33,28 @@ export default class Utils {
 		let rgb = {
 			r: parseInt(hex[1], 16),
 			g: parseInt(hex[2], 16),
-			b: parseInt(hex[3], 16)
+			b: parseInt(hex[3], 16),
 		};
 		if (returnAsString) {
 			return `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, 1)`;
 		}
 		return rgb;
+	}
+
+	static UUID() {
+		let d = new Date().getTime(),
+			d2 = (typeof performance !== "undefined" && performance.now && performance.now() * 1000) || 0;
+		return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, (c) => {
+			let r = Math.random() * 16;
+			if (d > 0) {
+				r = (d + r) % 16 | 0;
+				d = Math.floor(d / 16);
+			} else {
+				r = (d2 + r) % 16 | 0;
+				d2 = Math.floor(d2 / 16);
+			}
+			return (c == "x" ? r : (r & 0x7) | 0x8).toString(16);
+		});
 	}
 
 	// Create a convex hull from a set of vertices (Andrew's Monotone Chain algorithm)
@@ -56,7 +72,7 @@ export default class Utils {
 			if (n < 3) {
 				return null; // Convex hull not possible with less than 3 points
 			}
-		
+
 			// Sort points x-first, y-second
 			points.sort((a, b) => {
 				if (a.x !== b.x) {
@@ -64,9 +80,9 @@ export default class Utils {
 				}
 				return a.y - b.y;
 			});
-		
+
 			const hull = [];
-		
+
 			// Lower hull
 			for (const p of points) {
 				while (hull.length >= 2 && orientation(hull[hull.length - 2], hull[hull.length - 1], p) !== 2) {
@@ -74,7 +90,7 @@ export default class Utils {
 				}
 				hull.push(p);
 			}
-		
+
 			// Upper hull
 			const upperHullStart = hull.length;
 			for (let i = n - 2; i >= 0; i--) {
@@ -84,7 +100,7 @@ export default class Utils {
 				}
 				hull.push(p);
 			}
-		
+
 			return hull;
 		}
 

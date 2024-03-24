@@ -11,28 +11,52 @@ export default class Layer {
 	canvas = null;
 	vertices = [];
 	polygons = [];
-	index = null;
-	visible = true;
-
+	id = null;
+	uiElement = null;
+	
 	settings = null;
-
+	
+	#index = null;
 	#arranged = []; // 2D array of vertices. Used only for initial polygon creation
+	#visible = true;
 
 	constructor(canvas = null) {
-		this.canvas = canvas;
+		this.#index = Store.Preview.layers.length;
 		if (canvas === null) {
-			this.canvas = new Canvas();
+			this.canvas = new Canvas({ parentLayer: this });
+		} else {
+			this.canvas = canvas;
+			this.canvas._parentLayer = this;
 		}
-		this.canvas._parentLayer = this;
-		this.index = Store.Preview.layers.length;
-		this.name = "Layer " + (this.index + 1);
+		this.canvas._canvasElement.style.zIndex = this.#index + 1;
+		this.name = "Layer " + (this.index);
 		this.settings = new LayerSettings(this.Redraw.bind(this));
+		this.id = Utils.UUID();
 	}
 
-	static Swap(Layer1, Layer2) {
-		let temp = Layer1.layer;
-		Layer1.layer = Layer2.layer;
-		Layer2.layer = temp;
+	static Swap(layer1, layer2) {
+		let temp = layer1.index;
+		layer1.index = layer2.index;
+		layer2.index = temp;
+	}
+
+	get index() {
+		return this.#index;
+	}
+	set index(value) {
+		this.#index = value;
+		this.canvas._canvasElement.style.zIndex = value+1;
+	}
+	get visible() {
+		return this.#visible;
+	}
+	set visible(value) {
+		this.#visible = value;
+		this.canvas._canvasElement.style.visibility = value ? "visible" : "hidden";
+	}
+
+	Delete() {
+		this.canvas._canvasElement.remove();
 	}
 
 	Fill() {
