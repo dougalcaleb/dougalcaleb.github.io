@@ -2,6 +2,7 @@ import Store from "./store.js";
 import GradientEditorPopup from "../modules/gradientEditorPopup.js";
 import Gradient from "../models/Gradient.js";
 import Utils from "../modules/utility.js";
+import Compiler from "./compiler.js";
 
 export default class UI {
 	constructor() { }
@@ -445,8 +446,17 @@ export default class UI {
 		// download image
 		document.querySelector(".download").addEventListener("click", () => {
 			let downloader = document.querySelector(".downloader");
-			downloader.setAttribute("download", "Polygen Image.png");
-			downloader.setAttribute("href", PreviewLayer.canvas.toDataURL("image/png").replace("image/png", "image/octet-stream"));
+			let type = "svg";
+			if (type === "png") {
+				downloader.setAttribute("download", "Polygen Image.png");
+				const compiled = Compiler.CompileToPNG();
+				downloader.setAttribute("href", compiled._canvasElement.toDataURL("image/png").replace("image/png", "image/octet-stream"));
+			} else {
+				downloader.setAttribute("download", "Polygen Image.svg");
+				const compiled = Compiler.CompileToSVG();
+				downloader.setAttribute("href", "data:image/svg+xml," + encodeURIComponent(compiled));
+				// console.log(compiled);
+			}
 			downloader.click();
 		});
 

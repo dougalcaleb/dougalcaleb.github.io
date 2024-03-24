@@ -8,8 +8,10 @@ export default class Canvas {
 	_imgSrc = null;
 	_imageData = null;
 	_isBaseCanvas = false;
+	_isCompileCanvas = false;
 	_canvasElement = null;
 	_parentLayer = null;
+	_ignoreThrottle = false;
 
 	#lastDraw = 0;
 	#redrawPending = false;
@@ -29,8 +31,8 @@ export default class Canvas {
 		drawVertexCoords: false,
 	};
 
-	#optionsDefaults =    { transparency: true, willReadFrequently: false, offscreenCanvas: false, parentLayer: null };
-	constructor(options = { transparency: true, willReadFrequently: false, offscreenCanvas: false, parentLayer: null }) {
+	#optionsDefaults =    { transparency: true, willReadFrequently: false, offscreenCanvas: false, compiler: false, parentLayer: null };
+	constructor(options = { transparency: true, willReadFrequently: false, offscreenCanvas: false, compiler: false, parentLayer: null }) {
 		options = Object.assign(this.#optionsDefaults, options);
 		this.#willReadFrequently = !!options.willReadFrequently;
 		this._parentLayer = options.parentLayer;
@@ -38,6 +40,12 @@ export default class Canvas {
 			this._canvasElement = new OffscreenCanvas(Store.settings.x, Store.settings.y);
 			this.ctx = this._canvasElement.getContext("2d", { alpha: !!options.transparency, willReadFrequently: !!options.willReadFrequently, desynchronized: true });
 			return;
+		} else if (options.compiler) {
+			this._isCompileCanvas = true;
+			this._canvasElement = document.createElement("canvas");
+			this._canvasElement.width = Store.settings.x;
+			this._canvasElement.height = Store.settings.y;
+			this._canvasElement.classList.add("compile-canvas");
 		} else {
 			this._canvasElement = document.createElement("canvas");;
 			this._canvasElement.width = Store.settings.x;
@@ -60,7 +68,7 @@ export default class Canvas {
 		if (this.drawType == "gradient") {
 			this.DrawGradient(clearCanvas);
 		} else if (this.drawType == "image") {
-			this.#imgToCanvas();
+			this._imgToCanvas();
 		} else if (this.drawType == "polygons") {
 			this.DrawPolygons(clearCanvas);
 		}
@@ -75,7 +83,7 @@ export default class Canvas {
 
 	DrawPolygons(clearBeforeDraw = true) {
 		// Throttle redraws
-		if (Date.now() - this.#lastDraw < Store.Defaults.INPUTS.PREVIEW_REDRAW_DELAY) {
+		if (!this._ignoreThrottle && Date.now() - this.#lastDraw < Store.Defaults.INPUTS.PREVIEW_REDRAW_DELAY) {
 			if (!this.#redrawPending) {
 				this.#redrawPending = true;
 				this.#redrawTimeout = setTimeout(() => {
@@ -114,14 +122,14 @@ export default class Canvas {
 	}
 
 	// Calculate and draw a gradient on this canvas
-	DrawGradient(clearBeforeDraw = true) {
-		if (!this._isBaseCanvas) {
+	DrawGradient(clearBeforeDraw = true, source = null) {
+		if (!this._isBaseCanvas && !this._isCompileCanvas) {
 			console.error("The canvas you are trying to draw on is not the base canvas. Please use the base canvas to draw gradients.");
 			console.trace();
 			return;
 		}
 		// Throttle redraws
-		if (Date.now() - this.#lastDraw < Store.Defaults.INPUTS.PREVIEW_REDRAW_DELAY) {
+		if (!this._ignoreThrottle && Date.now() - this.#lastDraw < Store.Defaults.INPUTS.PREVIEW_REDRAW_DELAY) {
 			if (!this.#redrawPending) {
 				this.#redrawPending = true;
 				this.#redrawTimeout = setTimeout(() => {
@@ -143,7 +151,7 @@ export default class Canvas {
 			this.ctx.clearRect(0, 0, this._canvasElement.width, this._canvasElement.height);
 		}
 
-		let gradient, gradData;
+		let gradient;
 		if (Store.settings.mode == "linear") {
 			// Linear gradient
 			// Center coords (also lengths to center)
@@ -209,26 +217,9 @@ export default class Canvas {
 				this.ctx.stroke();
 			}
 
-			gradData = {
-				type: "linear",
-				x1: x1,
-				y1: y1,
-				x2: x2,
-				y2: y2,
-				stops: []
-			};
-
 			gradient = this.ctx.createLinearGradient(x1, y1, x2, y2);
 		} else {
 			// Radial gradient
-			gradData = {
-				type: "radial",
-				x: Store.settings.posx,
-				y: Store.settings.posy,
-				iRad: Store.settings.irad * Math.max(Store.settings.x, Store.settings.y),
-				oRad: Store.settings.orad * Math.max(Store.settings.x, Store.settings.y),
-				stops: []
-			};
 			gradient = this.ctx.createRadialGradient(
 				Store.settings.posx * Store.settings.x,
 				Store.settings.posy * Store.settings.y,
@@ -242,15 +233,17 @@ export default class Canvas {
 		// Add color stops
 		Store.Preview.activePalette.forEach((color) => {
 			gradient.addColorStop(color.stop, color.color);
-			gradData.stops.push([color.stop, color.color]);
 		});
 
-		// Draw
+		this._gradientToCanvas(gradient);
+	}
+
+	_gradientToCanvas(source) {
 		this.ctx.clearRect(0, 0, this._canvasElement.width, this._canvasElement.height);
-		this.ctx.fillStyle = gradient;
+		this.ctx.fillStyle = source;
 		this.ctx.fillRect(0, 0, Store.settings.x, Store.settings.y);
 
-		Store.Preview.gradientData = gradData;
+		Store.Preview.gradientData = source;
 
 		if (this.#willReadFrequently) {
 			this._imageData = this.ctx.getImageData(0, 0, this._canvasElement.width, this._canvasElement.height);
@@ -301,7 +294,7 @@ export default class Canvas {
 
 	// Draw an image on this canvas
 	DrawImage(image) {
-		if (!this._isBaseCanvas) {
+		if (!this._isBaseCanvas && !this._isCompileCanvas) {
 			console.error("The canvas you are trying to draw on is not the base canvas. Please use the base canvas to draw images.");
 			return;
 		}
@@ -318,7 +311,8 @@ export default class Canvas {
 				document.querySelector(".image-height").value = img.height;
 				document.querySelector(".image-width").value = img.width;
 				this.imgSrc = img;
-				this.#imgToCanvas();
+				Store.Preview.imageData = img;
+				this._imgToCanvas();
 				Store.settings.setFromImg(img.width, img.height);
 				Store.Preview.setAngles();
 			};
@@ -326,12 +320,12 @@ export default class Canvas {
 	}
 
 	// Helper
-	#imgToCanvas() {
+	_imgToCanvas(source = this.imgSrc) {
 		if (!this._isBaseCanvas) {
 			console.error("The canvas you are trying to draw on is not the base canvas. Please use the base canvas to draw images.");
 			return;
 		}
-		this.ctx.drawImage(this.imgSrc, 0, 0);
+		this.ctx.drawImage(source, 0, 0);
 		if (this.#willReadFrequently) {
 			this._imageData = this.ctx.getImageData(0, 0, this._canvasElement.width, this._canvasElement.height);
 		}

@@ -323,3 +323,7 @@ $name - variable
   box-shadow: 0px 0px 20px black;
   background: #282828;
 }
+
+.compile-canvas {
+  display: none;
+}

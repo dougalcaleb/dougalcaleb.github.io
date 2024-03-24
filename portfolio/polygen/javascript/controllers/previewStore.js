@@ -14,6 +14,7 @@ export default class PreviewStore {
 	allowRedraw = true;
 	redrawTimeout = null;
 	gradientData = null;
+	imageData = null;
 	pixelRatio = 1;
 	overlayLayer = null;
 

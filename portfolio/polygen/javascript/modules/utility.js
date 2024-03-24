@@ -41,6 +41,14 @@ export default class Utils {
 		return rgb;
 	}
 
+	static rgbToHex(color) {
+		const components = color.match(/\d+/g);
+		const r = parseInt(components[0]);
+		const g = parseInt(components[1]);
+		const b = parseInt(components[2]);
+		return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
+	}
+
 	static UUID() {
 		let d = new Date().getTime(),
 			d2 = (typeof performance !== "undefined" && performance.now && performance.now() * 1000) || 0;
