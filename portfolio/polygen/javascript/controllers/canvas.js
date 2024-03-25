@@ -106,9 +106,12 @@ export default class Canvas {
 
 		this._parentLayer.polygons.forEach((polygon) => {
 			const outlineColorRaw = Utils.hexToRgb(this._parentLayer.settings.lineColor);
-			const outlineColor = `rgba(${outlineColorRaw.r}, ${outlineColorRaw.g}, ${outlineColorRaw.b}, ${this._parentLayer.settings.lineOpacity})`;
-			this.ctx.strokeStyle = outlineColor;
+			let outlineColor = `rgba(${outlineColorRaw.r}, ${outlineColorRaw.g}, ${outlineColorRaw.b}, ${this._parentLayer.settings.lineOpacity})`;
 			const color = polygon.GetColor(true);
+			if (this._parentLayer.settings.lineOpacity === 0) {
+				outlineColor = color;
+			}
+			this.ctx.strokeStyle = outlineColor;
 			this.ctx.fillStyle = color;
 			this.ctx.beginPath();
 			this.ctx.moveTo(polygon.vertices[0].x, polygon.vertices[0].y);

@@ -37,7 +37,12 @@ export default class Compiler {
 							current += `L ${vertex.x} ${vertex.y} `;
 						}
 					});
-					current += `z" fill="${Utils.rgbToHex(polygon.color)}" />`;
+					const fillColor = Utils.rgbToHex(polygon.color);
+					current += `z" fill="${fillColor}" `;
+					const lineColor = (layer.settings.lineOpacity === 0 ? fillColor : layer.settings.lineColor);
+					current += `stroke="${lineColor}" `;
+					const lineWidth = (layer.settings.lineOpacity === 0 ? 1 : ~~(layer.settings.lineOpacity * 2));
+					current += `stroke-width="${lineWidth}" />`
 					parts.push(current);
 				});
 			}
