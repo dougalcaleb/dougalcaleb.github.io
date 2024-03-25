@@ -444,19 +444,18 @@ export default class UI {
 		});
 
 		// download image
-		document.querySelector(".download").addEventListener("click", () => {
+		document.querySelector(".download-as-png").addEventListener("click", () => {
 			let downloader = document.querySelector(".downloader");
-			let type = "svg";
-			if (type === "png") {
-				downloader.setAttribute("download", "Polygen Image.png");
-				const compiled = Compiler.CompileToPNG();
-				downloader.setAttribute("href", compiled._canvasElement.toDataURL("image/png").replace("image/png", "image/octet-stream"));
-			} else {
-				downloader.setAttribute("download", "Polygen Image.svg");
-				const compiled = Compiler.CompileToSVG();
-				downloader.setAttribute("href", "data:image/svg+xml," + encodeURIComponent(compiled));
-				// console.log(compiled);
-			}
+			downloader.setAttribute("download", "Polygen Image.png");
+			const compiled = Compiler.CompileToPNG();
+			downloader.setAttribute("href", compiled._canvasElement.toDataURL("image/png").replace("image/png", "image/octet-stream"));
+			downloader.click();
+		});
+		document.querySelector(".download-as-svg").addEventListener("click", () => {
+			let downloader = document.querySelector(".downloader");
+			downloader.setAttribute("download", "Polygen Image.svg");
+			const compiled = Compiler.CompileToSVG();
+			downloader.setAttribute("href", "data:image/svg+xml," + encodeURIComponent(compiled));
 			downloader.click();
 		});
 

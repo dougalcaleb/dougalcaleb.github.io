@@ -80,7 +80,7 @@ export default class Layer {
 					vertex.x = Store.settings.x;
 				} else {
 					const xVariance = Math.random() * this.settings.variance * this.settings.cellSize * Utils.randPosNeg();
-					vertex.x = (this.settings.cellSize * x) + xShift + xVariance;
+					vertex.x = ~~((this.settings.cellSize * x) + xShift + xVariance);
 				}
 
 				if (y === 0) {
@@ -89,7 +89,7 @@ export default class Layer {
 					vertex.y = Store.settings.y;
 				} else {
 					const yVariance = Math.random() * this.settings.variance * this.settings.cellSize * Utils.randPosNeg();
-					vertex.y = (this.settings.cellSize * y) + yShift + yVariance;
+					vertex.y = ~~((this.settings.cellSize * y) + yShift + yVariance);
 				}
 
 				this.vertices.push(vertex);

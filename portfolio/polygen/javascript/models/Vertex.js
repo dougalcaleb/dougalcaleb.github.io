@@ -5,8 +5,8 @@ export default class Vertex {
 	polygons = [];
 
 	constructor(x = null, y = null) {
-		this.x = x;
-		this.y = y;
+		this.x = ~~x;
+		this.y = ~~y;
 	}
 
 	static CopySet(vertexSet) {

@@ -77,11 +77,46 @@ header {
       align-items: center;
       cursor: pointer;
       font-size: max(15px, min(1vw, 30px));
-      svg {
+      > svg {
          height: max(25px, 2vh);
          color: ext.$theme-white;
          margin-left: max(0.5vw, 5px);
       }
+	  &:hover {
+		.download-dropdown {
+			visibility: visible;
+		}
+	}
+	.download-dropdown {
+		visibility: hidden;
+		background: ext.$theme-gray;
+		width: max(8vw, 100px);
+		position: absolute;
+		top: 50px;
+		right: -100%;
+		left: -100%;
+		margin: auto;
+		border-bottom-left-radius: 5px;
+		border-bottom-right-radius: 5px;
+		box-shadow: -3px 5px 5px rgba(16,16,16,0.7), 5px 5px 5px rgba(16,16,16,0.5);
+		overflow: hidden;
+		div {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			background: #003d54;
+			color: ext.$theme-white;
+			padding: 10px;
+			&:hover {
+				color: ext.$theme-black-light;
+				background: ext.$theme-blue-light;
+			}
+			> svg {
+				height: max(25px, 2vh);
+				margin-left: max(1vw, 10px);
+			}
+		}
+	}
    }
 }
 

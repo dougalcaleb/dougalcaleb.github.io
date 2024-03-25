@@ -28,8 +28,6 @@ export default class Compiler {
 
 		Store.Preview.layers.forEach((layer) => {
 			if (layer.canvas.drawType === "polygons") {
-				console.log("compiling layer polys");
-				console.log(layer.polygons);
 				layer.polygons.forEach((polygon) => {
 					let current = '<path d="';
 					polygon.vertices.forEach((vertex, idx) => {
