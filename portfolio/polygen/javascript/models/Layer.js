@@ -9,6 +9,7 @@ import DebugUtils from "../modules/debug.js";
 export default class Layer {
 	name = "";
 	canvas = null;
+	refCanvas = null;
 	vertices = [];
 	polygons = [];
 	id = null;
@@ -20,16 +21,12 @@ export default class Layer {
 	#arranged = []; // 2D array of vertices. Used only for initial polygon creation
 	#visible = true;
 
-	constructor(canvas = null) {
+	constructor(drawType) {
 		this.#index = Store.Preview.layers.length;
-		if (canvas === null) {
-			this.canvas = new Canvas({ parentLayer: this });
-		} else {
-			this.canvas = canvas;
-			this.canvas._parentLayer = this;
-		}
+		this.canvas = new Canvas({ parentLayer: this, drawType: "polygons" });
+		this.refCanvas = new Canvas({ offscreenCanvas: true, willReadFrequently: true, parentLayer: this, drawType: drawType });
 		this.canvas._canvasElement.style.zIndex = this.#index + 1;
-		this.name = "Layer " + (this.index);
+		this.name = "Layer " + (this.index + 1);
 		this.settings = new LayerSettings(this.Redraw.bind(this));
 		this.id = Utils.UUID();
 	}
@@ -132,20 +129,24 @@ export default class Layer {
 				let poly2 = null;
 				if (tri == 0) {
 					// Upper right triangle
-					poly1 = new Polygon([verts[y][x], verts[y][x + 1], verts[y + 1][x + 1]]);
+					poly1 = new Polygon([verts[y][x], verts[y][x + 1], verts[y + 1][x + 1]], this);
 					// Lower left triangle
-					poly2 = new Polygon([verts[y][x], verts[y + 1][x], verts[y + 1][x + 1]]);
+					poly2 = new Polygon([verts[y][x], verts[y + 1][x], verts[y + 1][x + 1]], this);
 				} else {
 					// Upper left triangle
-					poly1 = new Polygon([verts[y][x], verts[y][x + 1], verts[y + 1][x]]);
+					poly1 = new Polygon([verts[y][x], verts[y][x + 1], verts[y + 1][x]], this);
 					// Lower right triangle
-					poly2 = new Polygon([verts[y][x + 1], verts[y + 1][x + 1], verts[y + 1][x]]);
+					poly2 = new Polygon([verts[y][x + 1], verts[y + 1][x + 1], verts[y + 1][x]], this);
 				}
 
 				this.polygons.push(poly1, poly2);
 			}
 		}
 		this.canvas.Draw();
+	}
+
+	DrawReference() {
+		this.refCanvas.DrawGradient();
 	}
 
 	DrawFromState(layerState) {
@@ -163,6 +164,7 @@ export default class Layer {
 			this.polygons = [];
 			this.InitialPolygons();
 		} else {
+			this.refCanvas.DrawGradient();
 			this.canvas.Draw();
 		}
 	}

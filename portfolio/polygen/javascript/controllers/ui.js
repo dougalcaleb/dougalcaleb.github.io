@@ -145,9 +145,7 @@ export default class UI {
 
 		// Populate layers
 		Store.Preview.layers.forEach((l, idx) => {
-			if (idx != 0) {
-				UI.AddLayer(l);
-			}
+			UI.AddLayer(l);
 		});
 	}
 
@@ -256,28 +254,28 @@ export default class UI {
 
 		// rotation snap buttons (setting rotation)
 		document.querySelector(".snap-0").addEventListener("click", () => {
-			Store.settings.rotation = 90;
+			Store.Preview.activeLayer.settings.gradRotation = 90;
 		});
 		document.querySelector(".snap-1").addEventListener("click", () => {
-			Store.settings.rotation = 270;
+			Store.Preview.activeLayer.settings.gradRotation = 270;
 		});
 		document.querySelector(".snap-2").addEventListener("click", () => {
-			Store.settings.rotation = 180;
+			Store.Preview.activeLayer.settings.gradRotation = 180;
 		});
 		document.querySelector(".snap-3").addEventListener("click", () => {
-			Store.settings.rotation = 0;
+			Store.Preview.activeLayer.settings.gradRotation = 0;
 		});
 		document.querySelector(".snap-4").addEventListener("click", () => {
-			Store.settings.rotation = Utils.radToDeg(Store.idealAngle);
+			Store.Preview.activeLayer.settings.gradRotation = Utils.radToDeg(Store.idealAngle);
 		});
 		document.querySelector(".snap-5").addEventListener("click", () => {
-			Store.settings.rotation = Utils.radToDeg(Math.PI + Store.idealAngle);
+			Store.Preview.activeLayer.settings.gradRotation = Utils.radToDeg(Math.PI + Store.idealAngle);
 		});
 		document.querySelector(".snap-6").addEventListener("click", () => {
-			Store.settings.rotation = Utils.radToDeg(Math.PI - Store.idealAngle);
+			Store.Preview.activeLayer.settings.gradRotation = Utils.radToDeg(Math.PI - Store.idealAngle);
 		});
 		document.querySelector(".snap-7").addEventListener("click", () => {
-			Store.settings.rotation = Utils.radToDeg(-1 * Store.idealAngle);
+			Store.Preview.activeLayer.settings.gradRotation = Utils.radToDeg(-1 * Store.idealAngle);
 		});
 
 		// selection brush toggle
@@ -354,16 +352,16 @@ export default class UI {
 
 		// radial gradient
 		document.querySelector(".i-1-posx").addEventListener("input", (event) => {
-			Store.settings.posx = event.target.value;
+			Store.Preview.activeLayer.settings.radialX = event.target.value;
 		});
 		document.querySelector(".i-1-posy").addEventListener("input", (event) => {
-			Store.settings.posy = event.target.value;
+			Store.Preview.activeLayer.settings.radialY = event.target.value;
 		});
 		document.querySelector(".i-1-inrad").addEventListener("input", (event) => {
-			Store.settings.irad = event.target.value;
+			Store.Preview.activeLayer.settings.innerRad = event.target.value;
 		});
 		document.querySelector(".i-1-outrad").addEventListener("input", (event) => {
-			Store.settings.orad = event.target.value;
+			Store.Preview.activeLayer.settings.outerRad = event.target.value;
 		});
 
 		// brightness variance

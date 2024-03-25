@@ -7,7 +7,7 @@ export default class Canvas {
 
 	_imgSrc = null;
 	_imageData = null;
-	_isBaseCanvas = false;
+	_isRefCanvas = false;
 	_isCompileCanvas = false;
 	_canvasElement = null;
 	_parentLayer = null;
@@ -31,12 +31,14 @@ export default class Canvas {
 		drawVertexCoords: false,
 	};
 
-	#optionsDefaults =    { transparency: true, willReadFrequently: false, offscreenCanvas: false, compiler: false, parentLayer: null };
-	constructor(options = { transparency: true, willReadFrequently: false, offscreenCanvas: false, compiler: false, parentLayer: null }) {
+	#optionsDefaults =    { transparency: true, willReadFrequently: false, offscreenCanvas: false, compiler: false, parentLayer: null, drawType: "polygons" };
+	constructor(options = { transparency: true, willReadFrequently: false, offscreenCanvas: false, compiler: false, parentLayer: null, drawType: "polygons" }) {
 		options = Object.assign(this.#optionsDefaults, options);
 		this.#willReadFrequently = !!options.willReadFrequently;
 		this._parentLayer = options.parentLayer;
+		this.drawType = options.drawType;
 		if (!!options.offscreenCanvas) {
+			this._isRefCanvas = true;
 			this._canvasElement = new OffscreenCanvas(Store.settings.x, Store.settings.y);
 			this.ctx = this._canvasElement.getContext("2d", { alpha: !!options.transparency, willReadFrequently: !!options.willReadFrequently, desynchronized: true });
 			return;
@@ -98,7 +100,6 @@ export default class Canvas {
 		this.#redrawTimeout = null;
 
 		this.#lastDraw = Date.now();
-		this.drawType = "polygons";
 
 		if (clearBeforeDraw) {
 			this.ctx.clearRect(0, 0, this._canvasElement.width, this._canvasElement.height);
@@ -125,9 +126,9 @@ export default class Canvas {
 	}
 
 	// Calculate and draw a gradient on this canvas
-	DrawGradient(clearBeforeDraw = true, source = null) {
-		if (!this._isBaseCanvas && !this._isCompileCanvas) {
-			console.error("The canvas you are trying to draw on is not the base canvas. Please use the base canvas to draw gradients.");
+	DrawGradient(clearBeforeDraw = true) {
+		if (!this._isRefCanvas && !this._isCompileCanvas) {
+			console.error("The canvas you are trying to draw on is not a reference canvas. Use a reference canvas to draw gradients.");
 			console.trace();
 			return;
 		}
@@ -148,19 +149,18 @@ export default class Canvas {
 		this.#redrawTimeout = null;
 
 		this.#lastDraw = Date.now();
-		this.drawType = "gradient";
 
 		if (clearBeforeDraw) {
 			this.ctx.clearRect(0, 0, this._canvasElement.width, this._canvasElement.height);
 		}
 
 		let gradient;
-		if (Store.settings.mode == "linear") {
+		if (this._parentLayer.settings.type == "linear") {
 			// Linear gradient
 			// Center coords (also lengths to center)
 			let centerX = Store.settings.x / 2;
 			let centerY = Store.settings.y / 2;
-			let rad = Utils.degToRad(Store.settings.rotation);
+			let rad = Utils.degToRad(this._parentLayer.settings.gradRotation);
 			let r;
 
 			let knownX = null;
@@ -224,17 +224,17 @@ export default class Canvas {
 		} else {
 			// Radial gradient
 			gradient = this.ctx.createRadialGradient(
-				Store.settings.posx * Store.settings.x,
-				Store.settings.posy * Store.settings.y,
-				Store.settings.irad * Math.max(Store.settings.x, Store.settings.y),
-				Store.settings.posx * Store.settings.x,
-				Store.settings.posy * Store.settings.y,
-				Store.settings.orad * Math.max(Store.settings.x, Store.settings.y)
+				this._parentLayer.settings.radialX * Store.settings.x,
+				this._parentLayer.settings.radialY * Store.settings.y,
+				this._parentLayer.settings.innerRad * Math.max(Store.settings.x, Store.settings.y),
+				this._parentLayer.settings.radialX * Store.settings.x,
+				this._parentLayer.settings.radialY * Store.settings.y,
+				this._parentLayer.settings.outerRad * Math.max(Store.settings.x, Store.settings.y)
 			);
 		}
 
 		// Add color stops
-		Store.Preview.activePalette.forEach((color) => {
+		this._parentLayer.settings.gradient.forEach((color) => {
 			gradient.addColorStop(color.stop, color.color);
 		});
 
@@ -297,11 +297,10 @@ export default class Canvas {
 
 	// Draw an image on this canvas
 	DrawImage(image) {
-		if (!this._isBaseCanvas && !this._isCompileCanvas) {
-			console.error("The canvas you are trying to draw on is not the base canvas. Please use the base canvas to draw images.");
+		if (!this._isRefCanvas && !this._isCompileCanvas) {
+			console.error("The canvas you are trying to draw on is not a reference canvas. Use a reference canvas to draw images.");
 			return;
 		}
-		this.drawType = "image";
 
 		const fr = new window.FileReader();
 		fr.readAsDataURL(image);

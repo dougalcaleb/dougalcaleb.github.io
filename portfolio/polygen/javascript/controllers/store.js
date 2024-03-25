@@ -14,24 +14,19 @@ export default class Store {
 		Store.GetHTMLTemplates();
 		Store.GetSavedPalettes();
 
-		// Create initial canvases
-		const baseLayer = new Layer(new Canvas({ transparency: false, willReadFrequently: true }));
-		baseLayer.canvas._isBaseCanvas = true;
-		Store.Preview.AddLayer(baseLayer);
-		Store.Preview.AddLayer(new Layer());
-
-		// Set view
+		// Create initial canvas
+		Store.Preview.AddLayer(new Layer("gradient"));
 		Store.Preview.activePalette = Store.palettes[0];
-		Store.Preview.layers[0].canvas.DrawGradient();
-
-		Store.SavePalettes();
-
-		Store.Preview.layers[1].Fill();
-		Store.Preview.layers[1].InitialPolygons();
-
+		Store.Preview.layers[0].DrawReference();
+		Store.Preview.layers[0].Fill();
+		Store.Preview.layers[0].InitialPolygons();
+		
+		// Create overlay layer
 		Store.Preview.overlayLayer = new Layer();
 		Store.Preview.overlayLayer.name = "OVERLAY";
 		Store.Preview.overlayLayer.index = 100;
+
+		Store.SavePalettes();
 	}
 
 	static defaultPalettes = [

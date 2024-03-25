@@ -5,8 +5,11 @@ export default class Polygon {
 	vertices = []; // references to vertices
 	color = null;
 
-	constructor(vertices) {
+	_parentLayer = null;
+
+	constructor(vertices, parentLayer = null) {
 		this.vertices = vertices;
+		this._parentLayer = parentLayer;
 		if (this.vertices.length > 2) {
 			this.vertices = Utils.createPolygon(vertices);
 		}
@@ -15,7 +18,7 @@ export default class Polygon {
 	static CopySet(polygonSet) {
 		const newSet = [];
 		polygonSet.forEach((polygon) => {
-			newSet.push(new Polygon(polygon.vertices));
+			newSet.push(new Polygon(polygon.vertices, polygon._parentLayer));
 		});
 		return newSet;
 	}
@@ -29,7 +32,7 @@ export default class Polygon {
 	
 	GetColor(variance = false) {
 		const center = this.GetCenter();
-		this.color = Store.Preview.baseCanvas.GetPixelColor(center.x, center.y, {applyVariance: variance});
+		this.color = this._parentLayer.refCanvas.GetPixelColor(center.x, center.y, {applyVariance: variance});
 		return this.color;
 	}
 

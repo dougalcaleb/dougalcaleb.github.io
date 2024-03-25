@@ -10,7 +10,7 @@ export default class PreviewStore {
 	layers = [];
 	layerMap = {};
 	activePalette = null;
-	activeLayerIndex = 1;
+	activeLayerIndex = 0;
 	allowRedraw = true;
 	redrawTimeout = null;
 	gradientData = null;
@@ -22,12 +22,6 @@ export default class PreviewStore {
 	#yAngles = null;
 	#undoStack = new Stack();
 
-	get baseCanvas() {
-		return this.layers[0].canvas;
-	}
-	get baseLayer() {
-		return this.layers[0];
-	}
 	get activeLayer() {
 		return this.layers[this.activeLayerIndex];
 	}
@@ -45,8 +39,7 @@ export default class PreviewStore {
 	}
 
 	SelectPalette(index) {
-		this.activePalette = Store.palettes[index];
-		this.RedrawAll();
+		this.activeLayer.settings.gradient = Store.palettes[index];
 	}
 
 	SelectLayer(identifier) {
@@ -100,6 +93,7 @@ export default class PreviewStore {
 
 	NewLayer() {
 		const layer = new Layer();
+		layer.DrawReference();
 		layer.Fill();
 		layer.InitialPolygons();
 		this.layers.push(layer);

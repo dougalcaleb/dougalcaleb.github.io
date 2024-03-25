@@ -4,6 +4,7 @@ import UI from "./controllers/ui.js";
 /* 
 TODO:
 
+- Sticky section in editor panel (panel side, layers)
 - Preview resolution scale slider
 
 */
