@@ -3,7 +3,7 @@
 @mixin name - function (used @include name(param))
 $name - variable
 */
-.controls .control-palettes .palette-add svg, .controls .control-palettes .palette .palette-options svg, .controls .control-btn-wrap div svg, .controls .control-toggle-wrap div svg, .controls .control-list .layer-add svg, .preview .main-canvas {
+.controls .control-palettes .palette-add svg, .controls .control-palettes .palette .palette-options svg, .controls .control-btn-wrap div svg, .controls .control-tab-wrap div svg, .controls .control-toggle-wrap div svg, .controls .control-list .layer-add svg, .preview .main-canvas {
   position: absolute;
   left: 0;
   right: 0;
@@ -58,6 +58,9 @@ $name - variable
   font-size: 12px;
   margin-bottom: 15px;
   margin-top: 35px;
+}
+.controls .control-tabs {
+  width: 100%;
 }
 .controls .control-palettes .active-palette {
   margin-top: 30px;
@@ -196,6 +199,34 @@ $name - variable
 .controls .control-btn-wrap div.btn-active {
   background: #00b7ff;
   color: white;
+}
+.controls .control-tab-wrap {
+  display: flex;
+}
+.controls .control-tab-wrap div {
+  font-family: "Miriam Libre", "Segoe UI", sans-serif, monospace;
+  color: #e8e8e8;
+  cursor: pointer;
+  flex: 1;
+  text-align: center;
+  position: relative;
+  line-height: 40px;
+  height: 40px;
+  background: #191919;
+  z-index: 2;
+}
+.controls .control-tab-wrap div:hover {
+  background: #333;
+}
+.controls .control-tab-wrap div svg {
+  height: 30px;
+  width: 30px;
+}
+.controls .control-tab-wrap div.btn-active {
+  background: #282828;
+  color: #00b7ff;
+  box-shadow: 0px 0px 5px 5px #111;
+  z-index: 3;
 }
 .controls .control-toggle-wrap {
   display: flex;

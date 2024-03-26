@@ -42,6 +42,9 @@
 			margin-top: 35px;
 		}
 	}
+	.control-tabs {
+		width: 100%;
+	}
 	.control-palettes {
 		.active-palette {
 			margin-top: 30px;
@@ -186,6 +189,36 @@
 			&.btn-active {
 				background: ext.$theme-blue-light;
 				color: white;
+			}
+		}
+	}
+
+	.control-tab-wrap {
+		display: flex;
+		div {
+			font-family: ext.$theme-font-button;
+			color: ext.$theme-white;
+			cursor: pointer;
+			flex: 1;
+			text-align: center;
+			position: relative;
+			line-height: 40px;
+			height: 40px;
+			background: ext.$theme-black-medium;
+			z-index: 2;
+			&:hover {
+				background: ext.$theme-gray;
+			}
+			svg {
+				@extend %center;
+				height: 30px;
+				width: 30px;
+			}
+			&.btn-active {
+				background: ext.$theme-black-light;
+				color: ext.$theme-blue-light;
+				box-shadow: 0px 0px 5px 5px #111;
+				z-index: 3;
 			}
 		}
 	}
