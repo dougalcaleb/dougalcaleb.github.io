@@ -15,6 +15,8 @@ export default class LayerSettings {
 	#outerRad = 0.5;		// radial gradient outer radius
 	#type = "linear"; 		// gradient mode
 
+	gradientIndex = 0;
+
 	#redrawCallback = null;
 	
 	constructor(redrawCallback) {

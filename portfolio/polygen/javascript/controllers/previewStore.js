@@ -40,6 +40,7 @@ export default class PreviewStore {
 
 	SelectPalette(index) {
 		this.activeLayer.settings.gradient = Store.palettes[index];
+		this.activeLayer.settings.gradientIndex = index;
 	}
 
 	SelectLayer(identifier) {
@@ -50,6 +51,7 @@ export default class PreviewStore {
 		}
 		document.querySelector(".layer-selected")?.classList.remove("layer-selected");
 		this.activeLayer.uiElement.classList.add("layer-selected");
+		UI.SetUIToLayer(this.activeLayer);
 	}
 
 	RemoveLayer(identifier) {

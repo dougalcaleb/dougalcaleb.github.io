@@ -98,6 +98,37 @@ export default class UI {
 		Store.Preview.layerMap[layer.id].uiElement = newLayer;
 	}
 
+	static SetUIToLayer(layer) {
+		document.querySelector(".i-variance").value = layer.settings.variance;
+		document.querySelector(".i-verts").value = layer.settings.cellSize;
+		document.querySelector(".i-outline").value = layer.settings.lineOpacity;
+		document.querySelector(".i-outline-color").value = layer.settings.lineColor;
+		document.querySelector(".i-0-rotation").value = layer.settings.gradRotation;
+		document.querySelector(".i-1-posx").value = layer.settings.radialX;
+		document.querySelector(".i-1-posy").value = layer.settings.radialY;
+		document.querySelector(".i-1-inrad").value = layer.settings.innerRad;
+		document.querySelector(".i-1-outrad").value = layer.settings.outerRad;
+		document.querySelector(".i-bright-variance").value = layer.settings.colorRand;
+		document.querySelector(".lighten").classList.remove("btn-active");
+		document.querySelector(".darken").classList.remove("btn-active");
+		if (layer.settings.colorMode === 1) {
+			document.querySelector(".lighten").classList.add("btn-active");
+		}
+		if (layer.settings.colorMode === -1) {
+			document.querySelector(".darken").classList.add("btn-active");
+		}
+		document.querySelector(".i-outline-color").value = layer.settings.lineColor;
+		document.querySelector(".i-outline").value = layer.settings.lineOpacity;
+		document.querySelector(".i-variance").value = layer.settings.variance;
+		document.querySelectorAll(".palette").forEach((el) => {
+			el.classList.remove("active-palette");
+		});
+		document.querySelectorAll(".palette")[layer.settings.gradientIndex].classList.add("active-palette");
+		document.querySelector(".i-outline-color").value = layer.settings.lineColor;
+		document.querySelector(".outline-color-wrap").style.background = layer.settings.lineColor;
+	}
+
+
 	//==================================
 	//	Private Methods
 	//==================================
@@ -344,7 +375,7 @@ export default class UI {
 
 		// linear gradient
 		document.querySelector(".i-0-rotation").addEventListener("input", (event) => {
-			Store.settings.rotation = event.target.value;
+			Store.Preview.activeLayer.settings.gradRotation = event.target.value;
 			if (document.querySelector(".rot-snap.btn-active")) {
 				document.querySelector(".rot-snap.btn-active").classList.remove("btn-active");
 			}
