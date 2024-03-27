@@ -22,6 +22,10 @@ export default class Gradient {
 		return vals;
 	}
 
+	get length() {
+		return this._values.length;
+	}
+
 	add(color, position) {
 		this._values.push({ color: color, stop: position });
 		this.#changed = true;

@@ -20,11 +20,12 @@ export default class Layer {
 	#index = null;
 	#arranged = []; // 2D array of vertices. Used only for initial polygon creation
 	#visible = true;
+	#imageFileHandle = null;
 
-	constructor(drawType) {
+	constructor() {
 		this.#index = Store.Preview.layers.length;
-		this.canvas = new Canvas({ parentLayer: this, drawType: "polygons" });
-		this.refCanvas = new Canvas({ offscreenCanvas: true, willReadFrequently: true, parentLayer: this, drawType: drawType });
+		this.canvas = new Canvas({ parentLayer: this });
+		this.refCanvas = new Canvas({ offscreenCanvas: true, willReadFrequently: true, parentLayer: this });
 		this.canvas._canvasElement.style.zIndex = this.#index + 1;
 		this.name = "Layer " + (this.index + 1);
 		this.settings = new LayerSettings(this.Redraw.bind(this));
@@ -142,11 +143,22 @@ export default class Layer {
 				this.polygons.push(poly1, poly2);
 			}
 		}
-		this.canvas.Draw();
+		this.canvas.DrawPolygons();
 	}
 
 	DrawReference() {
 		this.refCanvas.DrawGradient();
+	}
+
+	DrawImage(file = null) {
+		if (file === null) {
+			file = this.#imageFileHandle;
+		}
+		this.#imageFileHandle = file;
+		this.refCanvas.DrawImage(file, () => {
+			this.Fill();
+			this.InitialPolygons();
+		});
 	}
 
 	DrawFromState(layerState) {
@@ -155,17 +167,22 @@ export default class Layer {
 		this.Redraw();
 	}
 
-	Redraw(generateNewVertices = false) {
+	Redraw(generateNewVertices = false, redrawRef = false) {
 		if (generateNewVertices) {
 			Store.Preview.AddUndoState(this.index);
 			this.vertices = [];
 			this.#arranged = [];
+			if (redrawRef) {
+				this.DrawReference();
+			}
 			this.Fill();
 			this.polygons = [];
 			this.InitialPolygons();
 		} else {
-			this.refCanvas.DrawGradient();
-			this.canvas.Draw();
+			if (this.settings.type != "image") {
+				this.refCanvas.DrawGradient();
+			}
+			this.canvas.DrawPolygons();
 		}
 	}
 }

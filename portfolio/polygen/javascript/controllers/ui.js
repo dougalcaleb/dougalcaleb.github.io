@@ -47,8 +47,11 @@ export default class UI {
 		opts.children[0].addEventListener("click", async (event) => {
 			try {
 				Store.Preview.SelectPalette(index);
-				const GEopts = {x: event.clientX + 50, y: event.clientY, centerY: true, centerX: false }
-				const newColors = await new GradientEditorPopup(GEopts, Store.palettes[index], false).colorSet;
+				const newColors = await new GradientEditorPopup(
+					{ x: event.clientX + 50, y: event.clientY, centerY: true, centerX: false },
+					Store.palettes[index],
+					false
+				).colorSet;
 				if (newColors.length != 0) {
 					Store.UpdatePalette(new Gradient(newColors), index);
 					Store.SavePalettes();
@@ -96,6 +99,7 @@ export default class UI {
 			newLayer.remove();
 		});
 		Store.Preview.layerMap[layer.id].uiElement = newLayer;
+		UI.SetUIToLayer(layer);
 	}
 
 	static SetUIToLayer(layer) {
@@ -123,9 +127,15 @@ export default class UI {
 		document.querySelectorAll(".palette").forEach((el) => {
 			el.classList.remove("active-palette");
 		});
-		document.querySelectorAll(".palette")[layer.settings.gradientIndex].classList.add("active-palette");
+		if (layer.settings.gradientIndex !== null) {
+			document.querySelectorAll(".palette")[layer.settings.gradientIndex].classList.add("active-palette");
+		}
 		document.querySelector(".i-outline-color").value = layer.settings.lineColor;
 		document.querySelector(".outline-color-wrap").style.background = layer.settings.lineColor;
+		document.querySelectorAll(".type-btn").forEach((el) => {
+			el.classList.remove("btn-active");
+		});
+		document.querySelector(`.type-${Store.Preview.activeLayer.settings.type}`).classList.add("btn-active");
 	}
 
 
@@ -212,12 +222,8 @@ export default class UI {
 			document.querySelectorAll(".fortype-2").forEach((el) => {
 				el.style.height = "0px";
 			});
-			document.querySelectorAll(".image-dimensions").forEach((el) => {
-				el.disabled = false;
-			});
 			document.querySelector(".type-0").classList.add("btn-active");
-			Store.activeType = 0;
-			Store.settings.mode = "linear";
+			Store.Preview.activeLayer.settings.type = "linear";
 		});
 		document.querySelector(".type-1").addEventListener("click", () => {
 			document.querySelector(".type-btn.btn-active").classList.remove("btn-active");
@@ -230,12 +236,8 @@ export default class UI {
 			document.querySelectorAll(".fortype-2").forEach((el) => {
 				el.style.height = "0px";
 			});
-			document.querySelectorAll(".image-dimensions").forEach((el) => {
-				el.disabled = false;
-			});
 			document.querySelector(".type-1").classList.add("btn-active");
-			Store.activeType = 1;
-			Store.settings.mode = "radial";
+			Store.Preview.activeLayer.settings.type = "radial";
 		});
 		document.querySelector(".type-2").addEventListener("click", () => {
 			document.querySelector(".type-btn.btn-active").classList.remove("btn-active");
@@ -248,12 +250,8 @@ export default class UI {
 			document.querySelectorAll(".fortype-2").forEach((el) => {
 				el.style.height = "";
 			});
-			document.querySelectorAll(".image-dimensions").forEach((el) => {
-				el.disabled = true;
-			});
 			document.querySelector(".type-2").classList.add("btn-active");
-			Store.activeType = 2;
-			Store.settings.mode = "image";
+			Store.Preview.activeLayer.settings.type = "image";
 		});
 
 		// rotation snap buttons (adding/removing active styling)
@@ -277,10 +275,8 @@ export default class UI {
 		});
 
 		// file picker
-		document.querySelector(".file-choose").addEventListener("click", async () => {
-			const img = await window.showOpenFilePicker({types: [{description: "Image", accept: {"image/*": [".png", ".jpeg", ".jpg"]}}]});
-			const file = await img[0].getFile();
-			Store.Preview.baseCanvas.DrawImage(file);
+		document.querySelector(".file-choose").addEventListener("click", () => {
+			Store.GetImageFile();
 		});
 
 		// rotation snap buttons (setting rotation)
@@ -489,7 +485,7 @@ export default class UI {
 		});
 
 		window.addEventListener("resize", () => {
-			Store.Preview.pixelRatio = Store.settings.x / Store.Preview.baseCanvas._canvasElement.offsetWidth;
+			Store.Preview.pixelRatio = Store.settings.x / Store.Preview.layers[0].canvas._canvasElement.offsetWidth;
 		});
 	}
 }

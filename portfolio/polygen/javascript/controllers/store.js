@@ -3,8 +3,8 @@ import PreviewStore from "./previewStore.js";
 import SettingsStore from "./settingsStore.js";
 import Defaults from "./internalDefaultStore.js";
 import Gradient from "../models/Gradient.js";
-import Canvas from "./canvas.js";
 import Layer from "../models/Layer.js";
+import ConfirmPopup from "../modules/confirmPopup.js";
 
 export default class Store {
 	constructor() { }
@@ -15,7 +15,7 @@ export default class Store {
 		Store.GetSavedPalettes();
 
 		// Create initial canvas
-		Store.Preview.AddLayer(new Layer("gradient"));
+		Store.Preview.AddLayer(new Layer());
 		Store.Preview.activePalette = Store.palettes[0];
 		Store.Preview.layers[0].DrawReference();
 		Store.Preview.layers[0].Fill();
@@ -62,7 +62,6 @@ export default class Store {
 	static palettes = [];
 	static htmlTemplates = {};
 	static activePage = 0;
-	static activeType = 0;
 
 	static #savePalettesAs = "polygen-saved-palettes";
 
@@ -104,5 +103,24 @@ export default class Store {
 
 	static UpdatePalette(palette, pos) {
 		Store.palettes[pos] = palette;
+	}
+
+	static async GetImageFile() {
+		if (Store.Preview.usingImgCount > 1) {
+			const confirm = await new ConfirmPopup({
+				body: "Because there is already an image in another layer, an image in this layer will not resize the canvas. Are you sure you want to continue?"
+			}).value;
+			if (confirm) {
+				const img = await window.showOpenFilePicker({types: [{description: "Image", accept: {"image/*": [".png", ".jpeg", ".jpg"]}}]});
+				const file = await img[0].getFile();
+				Store.Preview.activeLayer.canvas.DrawImage(file);
+			} else {
+				return;
+			}
+		} else {
+			const img = await window.showOpenFilePicker({types: [{description: "Image", accept: {"image/*": [".png", ".jpeg", ".jpg"]}}]});
+			const file = await img[0].getFile();
+			Store.Preview.activeLayer.DrawImage(file);
+		}
 	}
 }

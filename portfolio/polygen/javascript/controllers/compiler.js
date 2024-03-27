@@ -8,14 +8,8 @@ export default class Compiler {
 	static CompileToPNG() {
 		const canvas = new Canvas({ compiler: true});
 		Store.Preview.layers.forEach((layer) => {
-			if (layer.canvas.drawType === "gradient") {
-				canvas._gradientToCanvas(Store.Preview.gradientData);
-			} else if (layer.canvas.drawType === "image") {
-				canvas._imgToCanvas(Store.Preview.imageData);
-			} else {
-				canvas._parentLayer = layer;
-				canvas.DrawPolygons(false);
-			}
+			canvas._parentLayer = layer;
+			canvas.DrawPolygons(false);
 		});
 		return canvas;
 	}
@@ -27,25 +21,23 @@ export default class Compiler {
 		];
 
 		Store.Preview.layers.forEach((layer) => {
-			if (layer.canvas.drawType === "polygons") {
-				layer.polygons.forEach((polygon) => {
-					let current = '<path d="';
-					polygon.vertices.forEach((vertex, idx) => {
-						if (idx === 0) {
-							current += `M ${vertex.x} ${vertex.y} `;
-						} else {
-							current += `L ${vertex.x} ${vertex.y} `;
-						}
-					});
-					const fillColor = Utils.rgbToHex(polygon.color);
-					current += `z" fill="${fillColor}" `;
-					const lineColor = (layer.settings.lineOpacity === 0 ? fillColor : layer.settings.lineColor);
-					current += `stroke="${lineColor}" `;
-					const lineWidth = (layer.settings.lineOpacity === 0 ? 1 : ~~(layer.settings.lineOpacity * 2));
-					current += `stroke-width="${lineWidth}" />`
-					parts.push(current);
+			layer.polygons.forEach((polygon) => {
+				let current = '<path d="';
+				polygon.vertices.forEach((vertex, idx) => {
+					if (idx === 0) {
+						current += `M ${vertex.x} ${vertex.y} `;
+					} else {
+						current += `L ${vertex.x} ${vertex.y} `;
+					}
 				});
-			}
+				const fillColor = Utils.rgbToHex(polygon.color);
+				current += `z" fill="${fillColor}" `;
+				const lineColor = (layer.settings.lineOpacity === 0 ? fillColor : layer.settings.lineColor);
+				current += `stroke="${lineColor}" `;
+				const lineWidth = (layer.settings.lineOpacity === 0 ? 1 : ~~(layer.settings.lineOpacity * 2));
+				current += `stroke-width="${lineWidth}" />`
+				parts.push(current);
+			});
 		});
 		parts.push("</svg>");
 		return parts.join("");

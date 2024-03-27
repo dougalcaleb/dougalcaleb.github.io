@@ -3,7 +3,6 @@ import Utils from "../modules/utility.js";
 
 export default class Canvas {
 	ctx = null;
-	drawType = "polygons"; // "gradient" "image" "polygons"
 
 	_imgSrc = null;
 	_imageData = null;
@@ -31,12 +30,11 @@ export default class Canvas {
 		drawVertexCoords: false,
 	};
 
-	#optionsDefaults =    { transparency: true, willReadFrequently: false, offscreenCanvas: false, compiler: false, parentLayer: null, drawType: "polygons" };
-	constructor(options = { transparency: true, willReadFrequently: false, offscreenCanvas: false, compiler: false, parentLayer: null, drawType: "polygons" }) {
+	#optionsDefaults =    { transparency: true, willReadFrequently: false, offscreenCanvas: false, compiler: false, parentLayer: null };
+	constructor(options = { transparency: true, willReadFrequently: false, offscreenCanvas: false, compiler: false, parentLayer: null }) {
 		options = Object.assign(this.#optionsDefaults, options);
 		this.#willReadFrequently = !!options.willReadFrequently;
 		this._parentLayer = options.parentLayer;
-		this.drawType = options.drawType;
 		if (!!options.offscreenCanvas) {
 			this._isRefCanvas = true;
 			this._canvasElement = new OffscreenCanvas(Store.settings.x, Store.settings.y);
@@ -64,23 +62,6 @@ export default class Canvas {
 			event.preventDefault();
 		});
 		this.ctx = this._canvasElement.getContext("2d", { alpha: !!options.transparency, willReadFrequently: !!options.willReadFrequently });
-	}
-
-	Draw(clearCanvas = true) {
-		if (this.drawType == "gradient") {
-			this.DrawGradient(clearCanvas);
-		} else if (this.drawType == "image") {
-			this._imgToCanvas();
-		} else if (this.drawType == "polygons") {
-			this.DrawPolygons(clearCanvas);
-		}
-		if (this.#willReadFrequently) {
-			this._imageData = this.ctx.getImageData(0, 0, this._canvasElement.width, this._canvasElement.height);
-		}
-	}
-
-	CopyFrom(layer) {
-
 	}
 
 	DrawPolygons(clearBeforeDraw = true) {
@@ -296,7 +277,7 @@ export default class Canvas {
 	}
 
 	// Draw an image on this canvas
-	DrawImage(image) {
+	DrawImage(image, onDone = () => {}) {
 		if (!this._isRefCanvas && !this._isCompileCanvas) {
 			console.error("The canvas you are trying to draw on is not a reference canvas. Use a reference canvas to draw images.");
 			return;
@@ -317,14 +298,15 @@ export default class Canvas {
 				this._imgToCanvas();
 				Store.settings.setFromImg(img.width, img.height);
 				Store.Preview.setAngles();
+				onDone();
 			};
 		};
 	}
 
 	// Helper
 	_imgToCanvas(source = this.imgSrc) {
-		if (!this._isBaseCanvas) {
-			console.error("The canvas you are trying to draw on is not the base canvas. Please use the base canvas to draw images.");
+		if (!this._isRefCanvas) {
+			console.error("The canvas you are trying to draw on is not a reference canvas. Use a reference canvas to draw images.");
 			return;
 		}
 		this.ctx.drawImage(source, 0, 0);

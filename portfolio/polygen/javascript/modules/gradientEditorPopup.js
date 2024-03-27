@@ -12,9 +12,9 @@ export default class GradientEditorPopup {
 		this.colorsBySliderID = {};
 
 		this.template = document.getElementById("gradient-editor-popup").content.children[0].cloneNode(true);
-		this.template.querySelector(".popup-title").innerText = createNew ? "Create New Gradient" : "Edit Gradient";
+		this.template.querySelector(".popup-title-text").innerText = createNew ? "Create New Gradient" : "Edit Gradient";
 
-		this.canvas = this.template.querySelector(".popup-preview");
+		this.canvas = this.template.querySelector(".gradient-editor-preview");
 		this.ctx = this.canvas.getContext("2d");
 		this.canvas.height = 50;
 		this.canvas.width = 400;
@@ -44,7 +44,7 @@ export default class GradientEditorPopup {
 		this.#setListeners();
 		this.#setPosition();
 
-		this.dragHandler = new Draggable(this.template.querySelector(".popup-drag-trigger"), this.template.querySelector(".popup"));
+		this.dragHandler = new Draggable(this.template.querySelector(".popup-title"), this.template.querySelector(".popup"));
 	}
 
 	#setPosition() {
@@ -202,7 +202,7 @@ export default class GradientEditorPopup {
 
 			rangeStop.style.setProperty("--thumb-color", this.colorsBySliderID[String(idx)].color);
 
-			this.template.querySelector(".popup-preview-wrap").appendChild(rangeStop);
+			this.template.querySelector(".gradient-editor-stop-wrap").appendChild(rangeStop);
 
 			// Select color stop that had mousedown
 			rangeStop.addEventListener(
@@ -305,7 +305,12 @@ export default class GradientEditorPopup {
 		document.querySelector(".popup-cancel").addEventListener("click", () => {
 			this.reject("Cancel");
 			this.destroy();
-		});
+		}, {signal: this.aborts.general.signal});
+
+		document.querySelector(".popup-close").addEventListener("click", () => {
+			this.reject("Cancel");
+			this.destroy();
+		}, {signal: this.aborts.general.signal});
 
 		// Add new color stop
 		document.querySelector(".popup-add-color-stop").addEventListener(

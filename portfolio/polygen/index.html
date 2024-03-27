@@ -128,9 +128,9 @@
 				<div class="control control-btns type">
 					<p>TYPE</p>
 					<div class="control-btn-wrap">
-						<div class="type-btn type-0 btn-active">Linear</div>
-						<div class="type-btn type-1">Radial</div>
-						<div class="type-btn type-2">Image</div>
+						<div class="type-btn type-linear type-0 btn-active">Linear</div>
+						<div class="type-btn type-radial type-1">Radial</div>
+						<div class="type-btn type-image type-2">Image</div>
 					</div>
 				</div>
 
@@ -227,17 +227,47 @@
 
 		<template id="gradient-editor-popup">
 			<div class="popup-bg">
-				<div class="popup">
-               <div class="popup-drag-trigger"></div>
-					<div class="popup-title">Gradient</div>
-					<div class="popup-preview-wrap">
-						<canvas class="popup-preview"></canvas>
-						<input type="range" class="popup-add-color-stop" step="0.01" min="0" max="1" title="Add New Color Stop">
+				<div class="popup gradient-editor-popup">
+					<div class="popup-title">
+						<span class="popup-title-text">[POPUP TITLE]</span>
+						<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="popup-close">
+							<title>Close</title>
+							<path fill="currentColor" d="M20 6.91L17.09 4L12 9.09L6.91 4L4 6.91L9.09 12L4 17.09L6.91 20L12 14.91L17.09 20L20 17.09L14.91 12L20 6.91Z" />
+						</svg>
+					</div>
+					<div class="popup-body">
+						<div class="gradient-editor-body-wrap">
+							<canvas class="gradient-editor-preview"></canvas>
+							<div class="gradient-editor-stop-wrap">
+								<input type="range" class="popup-add-color-stop" step="0.01" min="0" max="1" title="Add New Color Stop">
+							</div>
+						</div>
 					</div>
 		
 					<div class="popup-button-wrap">
 						<button class="popup-cancel">Cancel</button>
 						<button class="popup-save">Save</button>
+					</div>
+				</div>
+			</div>
+		</template>
+
+		<template id="confirm-popup">
+			<div class="popup-bg">
+				<div class="popup">
+					<div class="popup-title">
+						<span class="popup-title-text">[POPUP TITLE]</span>
+						<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="popup-close">
+							<title>Close</title>
+							<path fill="currentColor" d="M20 6.91L17.09 4L12 9.09L6.91 4L4 6.91L9.09 12L4 17.09L6.91 20L12 14.91L17.09 20L20 17.09L14.91 12L20 6.91Z" />
+						</svg>
+					</div>
+					<div class="popup-body">
+						<p class="popup-body-text"></p>
+					</div>
+					<div class="popup-button-wrap">
+						<button class="popup-cancel">Cancel</button>
+						<button class="popup-save">OK</button>
 					</div>
 				</div>
 			</div>

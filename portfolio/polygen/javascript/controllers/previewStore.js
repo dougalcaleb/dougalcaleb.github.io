@@ -3,6 +3,7 @@ import Store from "./store.js";
 import Stack from "../models/Stack.js";
 import LayerState from "../models/LayerState.js";
 import Layer from "../models/Layer.js";
+import UI from "./ui.js";
 
 export default class PreviewStore {
 	constructor() {}
@@ -21,6 +22,7 @@ export default class PreviewStore {
 	#xAngles = null;
 	#yAngles = null;
 	#undoStack = new Stack();
+	#usingImgCount = 0;
 
 	get activeLayer() {
 		return this.layers[this.activeLayerIndex];
@@ -36,6 +38,21 @@ export default class PreviewStore {
 			this.setAngles();
 		}
 		return this.#yAngles;
+	}
+	get usingImgCount() {
+		return this.#usingImgCount;
+	}
+	set usingImgCount(value) {
+		this.#usingImgCount = value;
+		if (value) {
+			document.querySelectorAll(".image-dimensions").forEach((el) => {
+				el.disabled = true;
+			});
+		} else {
+			document.querySelectorAll(".image-dimensions").forEach((el) => {
+				el.disabled = false;
+			});
+		}
 	}
 
 	SelectPalette(index) {
@@ -68,16 +85,6 @@ export default class PreviewStore {
 			layer.index = idx;
 		});
 		this.SelectLayer(this.layers.length - 1);
-	}
-
-	RedrawAll() {
-		this.layers.forEach((layer) => {
-			layer.canvas.Draw();
-		});
-	}
-
-	Redraw(index) {
-		this.layers[index].canvas.Draw();
 	}
 
 	Undo() {

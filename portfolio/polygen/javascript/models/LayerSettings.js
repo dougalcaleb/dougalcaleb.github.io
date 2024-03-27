@@ -98,12 +98,23 @@ export default class LayerSettings {
 
 	get type() { return this.#type; }
 	set type(value) {
-		if (this.#type === "image") {
+		if (value === "linear" || value === "radial") {
+			if (this.#type === "image") {
+				this.#type = value;
+				// Check to see if any other layers are still using an image
+				let usingImgCount = 0;
+				Store.Preview.layers.forEach((layer) => {
+					if (layer.settings.type === "image") {
+						usingImgCount++;
+					}
+				});
+				Store.Preview.usingImgCount = usingImgCount;
+			}
 			this.#type = value;
-			this.#redrawCallback(true);
-		} else {
+			this.#redrawCallback(true, true);
+		} else if (value === "image") {
 			this.#type = value;
-			this.#redrawCallback();
+			Store.Preview.usingImgCount++;
 		}
 	}
 }
