@@ -54,10 +54,28 @@ export default class Store {
 			{ color: "#787878", stop: 1 }
 		]),
 		new Gradient([
-			{ color: "#011fb7", stop: 0 },
-			{ color: "#5c01b7", stop: 0.5 },
-			{ color: "#3b0e67", stop: 1 }
+			{ color: "#0b132b", stop: 0 },
+			{ color: "#1c2541", stop: 0.25 },
+			{ color: "#5bc0be", stop: 0.5 },
+			{ color: "#6fffe9", stop: 0.75 },
+			{ color: "#3a506b", stop: 1 }
 		]),
+		new Gradient([
+			{ color: "#231942", stop: 0 },
+			{ color: "#5e548e", stop: 0.25 },
+			{ color: "#9f86c0", stop: 0.5 },
+			{ color: "#be95c4", stop: 0.75 },
+			{ color: "#e0b1cb", stop: 1 }
+		]),
+		new Gradient([
+			{ color: "#7a93ac", stop: 0 },
+			{ color: "#f1c7c7", stop: 0.25 },
+			{ color: "#ae5656", stop: 0.5 },
+			{ color: "#7c2f2f", stop: 0.75 },
+			{ color: "#671b1b", stop: 1 }
+		])
+		//! BUG: custom palettes overwrite default ones? something wrong with the whole localstorage thing
+		//! ALSO could be an issue: gradient editor adds extra stops randomly?
 	];
 	static palettes = [];
 	static htmlTemplates = {};
