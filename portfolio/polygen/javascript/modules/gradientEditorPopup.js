@@ -283,7 +283,18 @@ export default class GradientEditorPopup {
 
 		this.ctx.fillStyle = gradient;
 		this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
-	}
+    }
+    
+    // Evenly space all stops from 0 to 1
+    #spaceStopsEvenly() {
+        const evenly = new Gradient([]);
+        for (let [id, color] of Object.entries(this.colorsBySliderID)) {
+            evenly.add(color.color, Number(id) / (Object.entries(this.colorsBySliderID).length - 1));
+            this.colorsBySliderID[id] = {color: color.color, stop: Number(id) / (Object.entries(this.colorsBySliderID).length - 1)};
+        }
+        this.#createStops(evenly.stops, true);
+        this.#refreshPreview();
+    }
 
 	// Sets some general listeners that apply to the entirety of the popup
 	#setListeners() {
@@ -303,14 +314,18 @@ export default class GradientEditorPopup {
 		);
 
 		document.querySelector(".popup-cancel").addEventListener("click", () => {
-			this.reject("Cancel");
 			this.destroy();
+			this.reject("Cancel");
 		}, {signal: this.aborts.general.signal});
 
 		document.querySelector(".popup-close").addEventListener("click", () => {
-			this.reject("Cancel");
 			this.destroy();
-		}, {signal: this.aborts.general.signal});
+			this.reject("Cancel");
+        }, { signal: this.aborts.general.signal });
+        
+        document.querySelector(".popup-space-stops").addEventListener("click", () => {
+            this.#spaceStopsEvenly();
+        }, { signal: this.aborts.general.signal });
 
 		// Add new color stop
 		document.querySelector(".popup-add-color-stop").addEventListener(

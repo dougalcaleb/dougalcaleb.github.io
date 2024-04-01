@@ -4,7 +4,7 @@ export default class Gradient {
 
 	constructor(gradient) {
 		if (gradient instanceof this.constructor) {
-			gradient = gradient.stops;
+			gradient = structuredClone(gradient.stops);
 		}
 		this.type = "Gradient";
 		this._values = Array.from(gradient);

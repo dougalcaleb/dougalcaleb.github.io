@@ -70,9 +70,9 @@
 			background: ext.$theme-black-light;
 			padding: 6px 25px;
 			border-radius: 5px;
-			font-size: max(15px, min(0.9vw, 25px));
+			font-size: max(10px, min(0.8vw, 15px));
 			cursor: pointer;
-			margin-left: 20px;
+			margin-left: 10px;
 		}
 		.popup-save {
 			color: ext.$theme-blue-light;
@@ -80,6 +80,12 @@
 		.popup-cancel {
 			color: ext.$theme-red-light;
 		}
+        .popup-space-stops {
+            color: ext.$theme-blue-light;
+            justify-self: flex-start;
+            margin-right: auto;
+            margin-left: 0;
+        }
 	}
 }
 

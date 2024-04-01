@@ -82,15 +82,21 @@ $name - variable
   background: #282828;
   padding: 6px 25px;
   border-radius: 5px;
-  font-size: max(15px, min(0.9vw, 25px));
+  font-size: max(10px, min(0.8vw, 15px));
   cursor: pointer;
-  margin-left: 20px;
+  margin-left: 10px;
 }
 .popup .popup-button-wrap .popup-save {
   color: #00b7ff;
 }
 .popup .popup-button-wrap .popup-cancel {
   color: #e77979;
+}
+.popup .popup-button-wrap .popup-space-stops {
+  color: #00b7ff;
+  justify-self: flex-start;
+  margin-right: auto;
+  margin-left: 0;
 }
 
 #popup-stop-controls-wrap {
