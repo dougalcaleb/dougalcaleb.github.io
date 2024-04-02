@@ -1,4 +1,4 @@
-import { Roundabout } from "/javascript/roundabout.min.js";
+import Roundabout from "/javascript/roundabout.min.js";
 
 new Roundabout({
    parent: ".roundabout-example",
@@ -27,7 +27,7 @@ new Roundabout({
 
 new Roundabout({
    parent: ".roundabout-example",
-   pagesToShow: 5,
+   pagesToShow: 4,
    id: ".second",
    pages: [
       {

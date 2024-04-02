@@ -79,6 +79,60 @@
                   </li>
                </ul>
              -->
+
+             <h2>1.5.2:</h2>
+             <h4>Bugfixes:</h4>
+             <ul>
+                <li>Fixed broken lazy loading when set to "lazy-hidden"</li>
+                <li>Fixed missing interpolation overhaul</li>
+             </ul>
+
+            <h2>1.5.0:</h2>
+            <h4>Features:</h4>
+            <ul>
+               <li>New setting: "template"
+                  <ul>
+                     <li>Value: string (a CSS selector)</li>
+					 <li>Default: null</li>
+                     <li>Create an HTML template to use instead of (or with) the 'pages' setting</li>
+                     <li>Can be more intuitive and easier to set up if your carousel contains more than just images</li>
+                  </ul>
+               </li>
+               <li>New setting: "loadTimeout"
+                  <ul>
+                     <li>Value: number (milliseconds)</li>
+                     <li>Default: 10000 (10 seconds)</li>
+                     <li>Specifies the number of milliseconds before attempting to load a background image from the "pages" setting is considered unsuccessful</li>
+                  </ul>
+               </li>
+			   <li>New setting: "precomputeInterpolation"
+				<ul>
+					<li>Value: number (between 0 and 1)</li>
+					<li>Default: null</li>
+					<li>Sets the step between values that are precomputed for the "interpolation" setting</li>
+					<li>Useful when using a relatively expensive motion curve. Otherwise, enabling this is probably more expensive</li>
+				</ul>
+			   </li>
+			   <li>Interpolation setting overhaul
+				<ul>
+					<li>Options within "interpolation" have been renamed for clarity and ease of use</li>
+					<li>Added the "curve" option: specify a function to make interpolation follow a curve instead of being linear</li>
+				</ul>
+			   </li>
+               <li>"html" within "pages" setting now supports JS DOM objects in addition to HTML strings</li>
+               <li>Scripting module <code>onDragStart</code> and <code>onDragEnd</code> callbacks are passed the mouse <code>event</code> object</li>
+               <li>Module files
+                  <ul>
+                     <li>All files are now modules. Use <code>import</code> to use the plugin</li>
+                  </ul>
+               </li>
+            </ul>
+            <h4>Bugfixes:</h4>
+            <ul>
+               <li>Fixed some issues with throttled scrolling</li>
+               <li>Fixed some issues with interactions being allowed during transitions</li>
+               <li>General performance improvements</li>
+            </ul>
 				<h2>1.4.0:</h2>
             <h4>Features:</h4>
             <ul>

@@ -5,6 +5,7 @@
 		<link rel="stylesheet" type="text/css" href="../css/docs_style.css" />
 		<link rel="stylesheet" type="text/css" href="../css/roundabout-style.css" />
       <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
+	  <link rel="stylesheet" href="../css/syntax.css">
 
 		<link rel="preconnect" href="https://fonts.gstatic.com" />
 		<link href="https://fonts.googleapis.com/css2?family=Miriam+Libre:wght@400;700&family=Roboto:wght@300;500;700&display=swap" rel="stylesheet" />
@@ -17,11 +18,6 @@
 		<iframe frameborder="0" class="ls-helper" id="ls-helper"></iframe>
 		<header>
 			<a href="/roundabout/docs.html"><p class="title"><span class="name">Roundabout</span> <span class="desc">DOCS</span></p></a>
-			<!-- <select name="version" class="version">
-				<option value="1.2.0">v1.2.0</option>
-				<option value="1.1.0">v1.1.0</option>
-				<option value="1.0.0">v1.0.0</option>
-			</select> -->
 			<div class="links">
 				<a href="https://github.com/dougalcaleb/roundabout" target="_blank"
 					><div class="download">
@@ -49,7 +45,6 @@
 		</header>
 
 		<nav>
-			<!-- <section class="links"></section> -->
 			<section class="setup">
 				<div class="sort-order">Sort order</div>
 				<div class="tab-behavior">Tabs</div>
@@ -66,19 +61,12 @@
 				</div>
 			</div>
 			<div class="info">
-				<div class="desc">Determines if a listener for window resize will be set in order to dynamically switch breakpoints.</div>
-				<!-- 
-               <ul>
-                  <li>
-                     <ul>
-                        <li></li>
-                     </ul>
-                  </li>
-               </ul>
-             -->
-             By default, when Roundabout loads in, it will apply the breakpoint that corresponds to the screen size, and it will remain in that state. With this enabled, it will listen for the window to resize, and will apply the best breakpoint for the screen size at that time.
+				<div class="desc">Sets a listener for window resize in order to dynamically switch breakpoints.</div>
+             By default, when Roundabout loads in, it will apply the breakpoint that corresponds to the screen size, and it will remain in that state. 
+			 With this enabled, it will listen for the window to resize, and will apply the appropriate breakpoint for the screen size at that time.
              <br/><br/>
-             Note that because the resize event occurs so frequently, having many breakpoints or many carousels on one page with this enabled can quickly cause significant performance degredation. Be sure that your breakpoints are optimized, or use your own criteria for applying breakpoints with the scripting module (coming soon).
+             Note that because the resize event occurs so frequently, having many breakpoints or many carousels on one page with this enabled can quickly cause significant performance degredation. 
+			 Be sure that your breakpoints are optimized, or create a customized system for applying breakpoints with the scripting module.
              <br/><br/>
              The carousels on this page have a few extra settings edited for demonstration:
              <div class="code js-codeblock">
@@ -94,7 +82,6 @@
                   &nbsp;&nbsp;}<br/>
                ]
              </div>
-             <br/>
              <ul>
                 <li><span class="code">pagesToShow: 3</span></li>
              </ul>
@@ -107,7 +94,6 @@
 	</body>
 
 	<script src="../javascript/docs.js" type="module"></script>
-	<script src="/javascript/roundabout.min.js" type="module"></script>
 	<script src="./javascript/listenForResize-settings.js" type="module"></script>
    <script src="../javascript/syntax.js"></script>
 </html>

@@ -21,12 +21,12 @@
 	</head>
 	<body>
 
-      <div class="load">
-         <!-- <img src="images/svgs/personal logo.svg"> -->
+      <!-- <div class="load">
+         <img src="images/svgs/personal logo.svg">
          <div class="load-logo">
             <p class="load-name">CALEB DOUGAL</p>
          </div>
-      </div>
+      </div> -->
 
       <div class="mobile-nav-return"></div>
 
@@ -163,8 +163,16 @@
 							<img src="./images/svgs/csharp.svg" loading="lazy" />
 							<span class="name">C#</span>
 						</div>
+                        <div class="skill">
+							<img src="./images/svgs/c++.svg" loading="lazy" />
+							<span class="name">C++</span>
+						</div>
+                        <div class="skill">
+							<img src="./images/svgs/python.svg" loading="lazy" />
+							<span class="name">Python</span>
+						</div>
                   <div class="skill">
-							<img src="./images/svgs/java.svg" loading="lazy" />
+							<img src="./images/svgs/java-14.svg" loading="lazy" />
 							<span class="name">Java</span>
 						</div>
 						<!-- <div class="skill">
@@ -195,6 +203,10 @@
 							<img src="./images/svgs/github.svg" class="sizeUp" loading="lazy" />
 							<span class="name">Github</span>
 						</div>
+                        <div class="skill">
+							<img src="./images/svgs/gitlab.svg" loading="lazy" />
+							<span class="name">Gitlab</span>
+						</div>
 						<div class="skill">
 							<img src="./images/svgs/firebase.svg" loading="lazy" />
 							<span class="name">Firebase</span>
@@ -215,9 +227,17 @@
 							<img src="./images/svgs/db.svg" class="sizeUp" loading="lazy" />
 							<span class="name">SQL/NoSQL</span>
 						</div>
-                  <div class="skill">
+                        <div class="skill">
 							<img src="./images/svgs/linux.svg" loading="lazy" />
 							<span class="name">Linux</span>
+						</div>
+                        <div class="skill">
+							<img src="./images/svgs/adobe-illustrator-cc-icon.svg" loading="lazy" />
+							<span class="name">Illustrator</span>
+						</div>
+                        <div class="skill">
+							<img src="./images/svgs/openai.svg" class="logo-invert" loading="lazy" />
+							<span class="name">Generative AI</span>
 						</div>
 					</div>
 				</section>
@@ -275,12 +295,8 @@
             if (Date.now() - start > 500) {
                extra = 0;
             }
-            console.log("Load complete");
             setTimeout(() => {
-               document.querySelector(".load").style.visibility = "hidden";
-               document.querySelector(".load").style.opacity = "0";
                document.querySelector(".profile-image").setAttribute("src", "./images/landing card/profile-square.jpg");
-               console.log("Timeout expired");
             }, extra);
          });
       </script>

@@ -1,9 +1,8 @@
-import { Roundabout } from "/javascript/roundabout.min.js";
+import Roundabout from "/javascript/roundabout.min.js";
 
 new Roundabout({
    parent: ".roundabout-example",
    transitionFunction: "linear",
-   transition: 1000,
    pages: [
       {
          backgroundImage: "../images/numbers/0.png"

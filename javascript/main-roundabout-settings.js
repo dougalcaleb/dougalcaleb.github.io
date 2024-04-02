@@ -1,4 +1,4 @@
-import { Roundabout } from "./roundabout.min.js";
+import Roundabout from "./roundabout.min.js";
 import { RoundaboutScripter } from "./roundabout-scripting.min.js";
 
 const main = new Roundabout({
@@ -7,76 +7,65 @@ const main = new Roundabout({
    pagesToShow: 3,
    pageSpacing: 25,
    swipeThreshold: 150,
-   lazyLoad: "lazy-hidden",
+    lazyLoad: "lazy-hidden",
+   loadTimeout: 5000,
    breakpoints: [
       {
          width: 500,
          swipeThreshold: 60,
          swipeSpeedThreshold: 300,
       }
-   ],
-   interpolate: [
-      {
-         value: "height",
-         between: [
-            [0, 80],
-            [1, 100],
-         ],
-         unit: "calc($% - 40px)",
-      },
-      { 
-         value: "height",
-         between: [
-            [1, 100],
-            [2, 80],
-         ],
-         unit: "calc($% - 40px)",
-      },
-      // {
-      //    value: "filter",
-      //    between: [
-      //       [0, 50],
-      //       [1, 100],
-      //    ],
-      //    unit: "brightness($%)",
-      // },
-      // {
-      //    value: "filter",
-      //    between: [
-      //       [1, 100],
-      //       [2, 30],
-      //    ],
-      //    unit: "brightness($%)",
-      // },
-      {
-         value: "filter",
-         between: [
-            [1, 0],
-            [2, 2],
-         ],
-         unit: "blur($px)",
-      },
-      {
-         value: "filter",
-         between: [
-            [0, 2],
-            [1, 0],
-         ],
-         unit: "blur($px)",
-      },
+    ],
+    interpolate: [
+        {
+            values: {
+                0: 80,
+                1: 100
+            },
+            property: "height",
+            unit: "calc($% - 40px)"
+        },
+        {
+            values: {
+                1: 100,
+                2: 80
+            },
+            property: "height",
+            unit: "calc($% - 40px)"
+        },
+        {
+            values: {
+                1: 0,
+                2: 2
+            },
+            property: "filter",
+            unit: "blur($px)"
+        },
+        {
+            values: {
+                0: 2,
+                1: 0
+            },
+            property: "filter",
+            unit: "blur($px)"
+        },
    ],
    pages: [
-      {
-         backgroundImage: "./images/carousel/projects/todo.png",
-         // html: "simple to-do"
-      },
+    //   {
+    //      backgroundImage: "./images/carousel/projects/todo.png",
+    //      // html: "simple to-do"
+       //   },
+       {
+        backgroundImage: "./images/carousel/projects/bubbles.png",
+        // html: "bubbles"
+        },
       {
          backgroundImage: "./images/carousel/projects/roundabout.png",
          // html: "roundabout"
       },
       {
 
-         backgroundImage: "./images/carousel/projects/spigot-status-bot.png",
+         backgroundImage: "./images/carousel/projects/spigot-status-bot-wide.png",
       },
       {
          backgroundImage: "./images/carousel/projects/triangles-2.png",
@@ -102,10 +91,7 @@ const main = new Roundabout({
          backgroundImage: "./images/carousel/projects/angulargolf.png",
          // html: "angular golf scorecard"
       },
-      {
-         backgroundImage: "./images/carousel/projects/bubbles.png",
-         // html: "bubbles"
-      },
+      
    ]
 });
 
@@ -143,17 +129,28 @@ const desc = new Roundabout({
    keys: false,
    transition: 200,
    pages: [
-      {
-         html: `
-         <div class="content-wrap">
-            <h3 class="desc-title">Simple To-Do App</h3>
-            <p class="desc-body">Featuring note groups, persistent browser storage, and both text and checklist items, this to-do app is a simple way to keep track of things.</p>
-            <h4 class="desc-skills-title">Skills:</h4>
-            <div class="desc-skills">${skills.js + skills.html + skills.css}</div>
-            <a href="https://dougalcaleb.github.io/portfolio/todo-app" target="_blank"><button class="border-button">View ${exBtn}</button></a>
-         </div>
-         `
-      },
+    //   {
+    //      html: `
+    //      <div class="content-wrap">
+    //         <h3 class="desc-title">Simple To-Do App</h3>
+    //         <p class="desc-body">Featuring note groups, persistent browser storage, and both text and checklist items, this to-do app is a simple way to keep track of things.</p>
+    //         <h4 class="desc-skills-title">Skills:</h4>
+    //         <div class="desc-skills">${skills.js + skills.html + skills.css}</div>
+    //         <a href="https://dougalcaleb.github.io/portfolio/todo-app" target="_blank"><button class="border-button">View ${exBtn}</button></a>
+    //      </div>
+    //      `
+       //   },
+       {
+        html: `
+        <div class="content-wrap">
+           <h3 class="desc-title">Reactive Bubbles</h3>
+           <p class="desc-body">This field of bubbles will react to your mouse movements as you swipe through it. This has been modified and used on the landing page of this site!</p>
+           <h4 class="desc-skills-title">Skills:</h4>
+           <div class="desc-skills">${skills.js + skills.html + skills.css}</div>
+           <a href="https://dougalcaleb.github.io/portfolio/bubbles/" target="_blank"><button class="border-button">View ${exBtn}</button></a>
+        </div>
+        `
+     },
       {
          html: `
          <div class="content-wrap">
@@ -240,17 +237,7 @@ const desc = new Roundabout({
          </div>
          `
       },
-      {
-         html: `
-         <div class="content-wrap">
-            <h3 class="desc-title">Reactive Bubbles</h3>
-            <p class="desc-body">Lots of fun to play with, this field of bubbles will react to your mouse movements as you swipe through it. This has been modified and used on the landing page of this site!</p>
-            <h4 class="desc-skills-title">Skills:</h4>
-            <div class="desc-skills">${skills.js + skills.html + skills.css}</div>
-            <a href="https://dougalcaleb.github.io/portfolio/bubbles/" target="_blank"><button class="border-button">View ${exBtn}</button></a>
-         </div>
-         `
-      },
+      
    ]
 });
 
