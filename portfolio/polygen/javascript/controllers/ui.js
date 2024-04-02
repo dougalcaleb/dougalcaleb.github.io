@@ -136,6 +136,7 @@ export default class UI {
 			el.classList.remove("btn-active");
 		});
 		document.querySelector(`.type-${Store.Preview.activeLayer.settings.type}`).classList.add("btn-active");
+		UI.#DisplayCorrectUI(Store.Preview.activeLayer.settings.type);
 	}
 
 
@@ -143,15 +144,22 @@ export default class UI {
 	//	Private Methods
 	//==================================
 
-	static #DisplayCorrectUI() {
-		for (let a = 0; a < document.querySelectorAll(".fortype-1").length; a++) {
-			if (!document.querySelectorAll(".fortype-1")[a].classList.contains("fortype-0")) {
-				document.querySelectorAll(".fortype-1")[a].style.height = "0px";
-			}
-		}
-		for (let a = 0; a < document.querySelectorAll(".fortype-2").length; a++) {
-			document.querySelectorAll(".fortype-2")[a].style.height = "0px";
-		}
+	static #DisplayCorrectUI(activeType = 0) {
+		// Hide all type-specific UI elements
+		document.querySelectorAll(".fortype-0").forEach((el) => {
+			el.style.height = "0px";
+		});
+		document.querySelectorAll(".fortype-1").forEach((el) => {
+			el.style.height = "0px";
+		});
+		document.querySelectorAll(".fortype-2").forEach((el) => {
+			el.style.height = "0px";
+		});
+
+		// Show the correct type-specific UI elements
+		document.querySelectorAll(`.fortype-${activeType}`).forEach((el) => {
+			el.style.height = "";
+		});
 	}
 
 	// Populate different repetitive elements of the UI like buttons and palettes
@@ -465,6 +473,7 @@ export default class UI {
 		document.querySelector(".layer-add").addEventListener("click", () => {
 			const newLayer = Store.Preview.NewLayer();
 			UI.AddLayer(newLayer);
+			UI.SetUIToLayer(newLayer);
 			Store.Preview.SelectLayer(newLayer.id);
 		});
 
