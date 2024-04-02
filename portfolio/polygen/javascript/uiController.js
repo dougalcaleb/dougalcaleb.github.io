@@ -1,5 +1,6 @@
 import { DEFAULTS } from "./globals.js"
 import { Preview } from "./previewController.js";
+import { GradientEditorPopup } from "./modules/gradientEditorPopup.js";
 
 let DataStore, PreviewLayer, EditLayer;
 
@@ -16,10 +17,34 @@ export class Controls {
 
 		// Color palettes
 		this.defaultPalettes = [
-			["#f3e1af", "#f09c3d", "#f0693d", "#f03d72", "#9f3df0", "#3d81f0", "#037ac4"],
-			["#e7e98b", "#8be9d2", "#73b5dd", "#1074b1", "#014e7e"],
-			["#787878", "#454545", "#333333", "#454545", "#787878"],
-			["#011fb7", "#5c01b7", "#3b0e67"],
+			[
+				{ color: "#f3e1af", stop: 0 },
+				{ color: "#f09c3d", stop: 0.16 },
+				{ color: "#f0693d", stop: 0.33},
+				{ color: "#f03d72", stop: 0.5 },
+				{ color: "#9f3df0", stop: 0.66 },
+				{ color: "#3d81f0", stop: 0.83 },
+				{ color: "#037ac4", stop: 1 }
+			],
+			[
+				{ color: "#e7e98b", stop: 0 },
+				{ color: "#8be9d2", stop: 0.25 },
+				{ color: "#73b5dd", stop: 0.5 },
+				{ color: "#1074b1", stop: 0.75 },
+				{ color: "#014e7e", stop: 1 }
+			],
+			[
+				{ color: "#787878", stop: 0 },
+				{ color: "#454545", stop: 0.25 },
+				{ color: "#333333", stop: 0.5 },
+				{ color: "#454545", stop: 0.75 },
+				{ color: "#787878", stop: 1 }
+			],
+			[
+				{ color: "#011fb7", stop: 0 },
+				{ color: "#5c01b7", stop: 0.5 },
+				{ color: "#3b0e67", stop: 1 }
+			],
 		];
 		this.palettes = [];
 		
@@ -126,7 +151,26 @@ export class Controls {
 			this.addPalette(startingPalettes[a], false);
 		}
 
+		for (let a = 0; a < DataStore.layers.length; a++) {
+			this.addLayer(a);
+		}
+
 		localStorage.setItem(this.savePalettesAs, JSON.stringify(this.palettes));
+	}
+
+	addLayer(index) {
+		const template = document.getElementById("layer-template").content.children[0];
+		const newLayer = template.cloneNode(true);
+		document.querySelector(".vertex-layer").appendChild(newLayer);
+		newLayer.querySelector(".layer-name").innerText = DataStore.layers[index].name;
+		newLayer.querySelector(".layer-btn-wrap .layer-visible").addEventListener("click", () => {
+			newLayer.classList.add("layer-inactive");
+			newLayer.classList.remove("layer-active");
+		});
+		newLayer.querySelector(".layer-btn-wrap .layer-hidden").addEventListener("click", () => {
+			newLayer.classList.add("layer-active");
+			newLayer.classList.remove("layer-inactive");
+		});
 	}
 
 	// Add a color palette
@@ -140,7 +184,7 @@ export class Controls {
 		for (let b = 0; b < colors.length; b++) {
 			let el = document.createElement("DIV");
 			el.classList.add("palette-color");
-			el.style.background = colors[b];
+			el.style.background = colors[b].color;
 			palette.appendChild(el);
 		}
 		let opts = document.createElement("DIV");
@@ -155,22 +199,29 @@ export class Controls {
 		document.querySelector(".control-palettes").appendChild(wrap);
 
 		// Create the edit pop up modal
-		opts.children[0].addEventListener("click", async () => {
-			let newColors = await DataStore.Modal.modal("Edit Color Palette", this.palettes[pos]);
-			DataStore.Modal.destroy();
-			if (newColors.length != 0) {
-				this.palettes[pos] = newColors;
-				localStorage.setItem(this.savePalettesAs, JSON.stringify(this.palettes));
-				while (palette.childElementCount > 0) {
-					palette.removeChild(palette.children[0]);
-				}
-				for (let a = 0; a < newColors.length; a++) {
-					let el = document.createElement("DIV");
-					el.classList.add("palette-color");
-					el.style.background = newColors[a];
-					palette.appendChild(el);
-				}
-			}
+      opts.children[0].addEventListener("click", async (event) => {
+         try {
+            let newColors = await new GradientEditorPopup({x: event.clientX + 50, y: event.clientY, centerY: true, centerX: false }, this.palettes[pos]).colorSet;
+            if (newColors.length != 0) {
+               this.palettes[pos] = newColors;
+               localStorage.setItem(this.savePalettesAs, JSON.stringify(this.palettes));
+               while (palette.childElementCount > 0) {
+                  palette.removeChild(palette.children[0]);
+               }
+               for (let a = 0; a < newColors.length; a++) {
+                  let el = document.createElement("DIV");
+                  el.classList.add("palette-color");
+                  el.style.background = newColors[a].color;
+                  palette.appendChild(el);
+               }
+               DataStore.settings.colors = this.palettes[pos];
+               this.updateSettings(DataStore.settings, false);
+            }
+         } catch (e) {
+            if (e !== "Cancel") {
+               console.warn(e);
+            }
+         }
 		});
 
 		// Add its event listener for selecting
@@ -341,6 +392,11 @@ export class Controls {
 		document.querySelector(".vertex-color-snap").addEventListener("click", () => {
 			EditLayer.colorSnap();
 		});
+
+		document.querySelector(".vertex-manual-drag").addEventListener("click", (event) => {
+			event.target.classList.toggle("btn-active");
+			EditLayer.vertexDrag();
+		});
 	}
 
 	// Event listeners for keypresses
@@ -362,18 +418,18 @@ export class Controls {
 	// Event listeners for range sliders
 	rangeListeners() {
 		// general - vertex variance and cell size
-		document.querySelector(".i-variance").addEventListener("input", () => {
-			DataStore.settings.vvar = document.querySelector(".i-variance").value;
+		document.querySelector(".i-variance").addEventListener("input", (event) => {
+			DataStore.settings.vvar = event.target.value;
 			this.updateSettings(DataStore.settings);
 		});
-		document.querySelector(".i-verts").addEventListener("input", () => {
-			DataStore.settings.csize = document.querySelector(".i-verts").value;
+		document.querySelector(".i-verts").addEventListener("input", (event) => {
+			DataStore.settings.csize = event.target.value;
 			this.updateSettings(DataStore.settings);
 		});
 
 		// linear gradient
-		document.querySelector(".i-0-rotation").addEventListener("input", () => {
-			DataStore.settings.rot = document.querySelector(".i-0-rotation").value;
+		document.querySelector(".i-0-rotation").addEventListener("input", (event) => {
+			DataStore.settings.rot = event.target.value;
 			this.updateSettings(DataStore.settings, false);
 			if (document.querySelector(".rot-snap.btn-active")) {
 				document.querySelector(".rot-snap.btn-active").classList.remove("btn-active");
@@ -381,26 +437,26 @@ export class Controls {
 		});
 
 		// radial gradient
-		document.querySelector(".i-1-posx").addEventListener("input", () => {
-			DataStore.settings.posx = document.querySelector(".i-1-posx").value;
+		document.querySelector(".i-1-posx").addEventListener("input", (event) => {
+			DataStore.settings.posx = event.target.value;
 			this.updateSettings(DataStore.settings, false);
 		});
-		document.querySelector(".i-1-posy").addEventListener("input", () => {
-			DataStore.settings.posy = document.querySelector(".i-1-posy").value;
+		document.querySelector(".i-1-posy").addEventListener("input", (event) => {
+			DataStore.settings.posy = event.target.value;
 			this.updateSettings(DataStore.settings, false);
 		});
-		document.querySelector(".i-1-inrad").addEventListener("input", () => {
-			DataStore.settings.irad = document.querySelector(".i-1-inrad").value;
+		document.querySelector(".i-1-inrad").addEventListener("input", (event) => {
+			DataStore.settings.irad = event.target.value;
 			this.updateSettings(DataStore.settings, false);
 		});
-		document.querySelector(".i-1-outrad").addEventListener("input", () => {
-			DataStore.settings.orad = document.querySelector(".i-1-outrad").value;
+		document.querySelector(".i-1-outrad").addEventListener("input", (event) => {
+			DataStore.settings.orad = event.target.value;
 			this.updateSettings(DataStore.settings, false);
 		});
 
 		// brightness variance
-		document.querySelector(".i-bright-variance").addEventListener("input", () => {
-			DataStore.settings.bvar = document.querySelector(".i-bright-variance").value;
+		document.querySelector(".i-bright-variance").addEventListener("input", (event) => {
+			DataStore.settings.bvar = event.target.value;
 			this.updateSettings(DataStore.settings, false);
 		});
 		document.querySelector(".lighten").addEventListener("click", () => {
@@ -413,8 +469,14 @@ export class Controls {
 		});
 
 		// outline
-		document.querySelector(".i-outline").addEventListener("input", () => {
-			DataStore.settings.lineOp = parseFloat(document.querySelector(".i-outline").value);
+		document.querySelector(".i-outline").addEventListener("input", (event) => {
+			DataStore.settings.lineOp = parseFloat(event.target.value);
+			this.updateSettings(DataStore.settings, false);
+		});
+
+		// proportional falloff (tools)
+		document.querySelector(".prop-falloff").addEventListener("input", (event) => {
+			DataStore.settings.propFalloff = parseInt(event.target.value);
 			this.updateSettings(DataStore.settings, false);
 		});
 	}
@@ -425,17 +487,17 @@ export class Controls {
 		let wDimDebounce = null;
 
 		// outline color picker
-		document.querySelector(".i-outline-color").addEventListener("input", () => {
-			document.querySelector(".outline-color-wrap").style.background = document.querySelector(".i-outline-color").value;
+		document.querySelector(".i-outline-color").addEventListener("input", (event) => {
+			document.querySelector(".outline-color-wrap").style.background = event.target.value;
 			DataStore.settings.line = document.querySelector(".i-outline-color").value;
 			this.updateSettings(DataStore.settings, false);
 		});
 
 		// dimensions
-		document.querySelector(".image-height").addEventListener("input", () => {
+		document.querySelector(".image-height").addEventListener("input", (event) => {
 			clearTimeout(hDimDebounce);
 			hDimDebounce = setTimeout(() => {
-				DataStore.settings.y = document.querySelector(".image-height").value;
+				DataStore.settings.y = event.target.value;
 				if (DataStore.settings.y !== "0" && DataStore.settings.y !== undefined && DataStore.settings.y !== "") {
 					this.updateSettings(DataStore.settings);
 				} else {
@@ -443,10 +505,10 @@ export class Controls {
 				}
 			}, DEFAULTS.inputs.debounce);
 		});
-		document.querySelector(".image-width").addEventListener("input", () => {
+		document.querySelector(".image-width").addEventListener("input", (event) => {
 			clearTimeout(wDimDebounce);
 			wDimDebounce = setTimeout(() => {
-				DataStore.settings.x = document.querySelector(".image-width").value;
+				DataStore.settings.x = event.target.value;
 				if (DataStore.settings.x !== "0" && DataStore.settings.x !== undefined && DataStore.settings.x !== "") {
 					this.updateSettings(DataStore.settings);
 				} else {
@@ -456,12 +518,18 @@ export class Controls {
 		});
 
 		// add color palette
-		document.querySelector(".palette-add").addEventListener("click", async () => {
-			let colors = await DataStore.Modal.modal("New Color Palette");
-			DataStore.Modal.destroy();
-			if (colors.length != 0) {
-				this.addPalette(colors);
-			}
+      document.querySelector(".palette-add").addEventListener("click", async (event) => {
+         try {
+            let colors = await new GradientEditorPopup({x: event.clientX + 50, y: event.clientY, centerY: true, centerX: false }).colorSet;
+            if (colors.length != 0) {
+               this.addPalette(colors);
+            }
+         } catch (e) {
+            if (e !== "Cancel") {
+               console.warn(e);
+            }
+         }
+         
 		});
 
 		// download image

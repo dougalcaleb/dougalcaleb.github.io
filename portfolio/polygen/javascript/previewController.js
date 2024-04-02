@@ -33,6 +33,7 @@ export class Preview {
 			drawNearestVert: false,
 			drawAllNearestVerts: false,
 			drawAllCheckedVerts: false,
+			drawVertexCoords: false,
 		};
 
 		// These are accessed externally by the brush mode
@@ -67,7 +68,7 @@ export class Preview {
 
 		// Clear canvas for new draw. Prevents contamination of colors between changes
 		this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-		DataStore.EditLayer.clean();
+		DataStore.EditLayer.clean(false);
 
 		// Set canvas dimensions
 		if (DataStore.settings.mode != "image") {
@@ -107,11 +108,18 @@ export class Preview {
 	}
 
 	// Replace existing vertices with newly calculated vertices. Used by edit mode Recalculate Vertices functionality
-	replaceVertices(newVerts) {
+	replaceVertices(newVerts, redraw = true) {
 		for (let [key, value] of Object.entries(newVerts)) {
-			this.verts[value.id[0]][value.id[1]] = value.coord;
+			if (!!value.delta) {
+				this.verts[value.id[1]][value.id[0]][0] = value.delta[0] + value.coord[0];
+				this.verts[value.id[1]][value.id[0]][1] = value.delta[1] + value.coord[1];
+			} else {
+				this.verts[value.id[1]][value.id[0]] = value.coord;
+			}
 		}
-		this.draw(false);
+		if (redraw) {
+			this.draw(false);
+		}
 	}
 
 	// Generates and returns the verticies
@@ -164,6 +172,15 @@ export class Preview {
 				this.ctx.arc(this.verts[a][b][0], this.verts[a][b][1], 5, 0, Math.PI * 2);
 				this.ctx.fill();
 			}
+		}
+	}
+
+	debugDrawListOfVerts(verts, drawData = null) {
+		this.ctx.fillStyle = drawData?.color || "red";
+		for (let [id, data] of Object.entries(verts)) {
+			this.ctx.beginPath();
+			this.ctx.arc(data.coord[0], data.coord[1], drawData?.size || 5, 0, Math.PI * 2);
+			this.ctx.fill();
 		}
 	}
 
@@ -265,9 +282,8 @@ export class Preview {
 
 		// Add color stops
 		for (let a = 0; a < DataStore.settings.colors.length; a++) {
-			let pos = (1 / (DataStore.settings.colors.length - 1)) * a;
-			gradient.addColorStop(pos, DataStore.settings.colors[a]);
-			gradData.stops.push([pos, DataStore.settings.colors[a]]);
+			gradient.addColorStop(DataStore.settings.colors[a].stop, DataStore.settings.colors[a].color);
+			gradData.stops.push([DataStore.settings.colors[a].stop, DataStore.settings.colors[a].color]);
 		}
 
 		// Draw
@@ -294,6 +310,12 @@ export class Preview {
 				// Skip over edges
 				if (!this.verts[a + 1] || !this.verts[a][b + 1] || !this.verts[a + 1][b + 1]) {
 					continue;
+				}
+
+				if (this.debug.drawVertexCoords) {
+					this.ctx.fillStyle = "black";
+					this.ctx.font = "20px serif"
+					this.ctx.fillText(`(${b},${a})`, this.verts[a][b][0] - 40, this.verts[a][b][1])
 				}
 				
 				// top left to bottom right distance

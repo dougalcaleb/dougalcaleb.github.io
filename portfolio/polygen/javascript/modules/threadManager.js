@@ -3,10 +3,14 @@ export class Thread {
 	static supported = true;
 	static openWorkers = {};
 
-	constructor() {
+	constructor(threadName = null) {
 		this.callback = null;
 		this.worker = null;
 		this.workerName = null;
+
+		if (threadName != null) {
+			open(threadName);
+		}
 	}
 
 	open(workerName) {
