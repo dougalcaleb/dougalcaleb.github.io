@@ -42,6 +42,7 @@ export default class Canvas {
 			return;
 		} else if (options.compiler) {
 			this._isCompileCanvas = true;
+			this._ignoreThrottle = true;
 			this._canvasElement = document.createElement("canvas");
 			this._canvasElement.width = Store.settings.x;
 			this._canvasElement.height = Store.settings.y;
