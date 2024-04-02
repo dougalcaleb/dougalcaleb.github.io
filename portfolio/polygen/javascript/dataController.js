@@ -18,7 +18,26 @@ export class Store {
 			x: 1920,
 			y: 1080,
 			colors: [],
+			propFalloff: 4 
 		};
+
+		this.layers = [ // Layer[]
+			{
+				name: "layer1",
+				vertices: null,
+				layer: 0,
+			},
+			{
+				name: "layer2",
+				vertices: null,
+				layer: 1,
+			},
+			{
+				name: "layer3",
+				vertices: null,
+				layer: 2,
+			},
+		]
 	}
 
 	// Updates settings
@@ -27,19 +46,19 @@ export class Store {
 		return this.settings;
 	}
 
-	// updates this.objname. Always overwrites.
+	// Updates this.objname. Always overwrites.
 	set(objName, settings) {
 		this[objName] = Object.assign(this[objName] || {}, settings);
 	}
 
-	// returns this.objName
+	// Returns this.objName
 	get(objName) {
 		return this[objName];
 	}
 
 	// Creates a reference to other classes to avoid circular dependencies but allow inter-class side effects
 	route(objName, objRef) {
-		if (this[objName]) throw new Error(`Data Store routing rrror: Attempting to overwrite route ${objName}`);
+		if (this[objName]) throw new Error(`Data Store routing error: Attempting to overwrite route ${objName}`);
 
 		this[objName] = objRef;
 

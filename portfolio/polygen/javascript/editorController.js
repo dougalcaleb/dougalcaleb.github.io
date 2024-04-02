@@ -34,6 +34,18 @@ export class Editor {
 			points: [],
 		};
 
+		this.drag = {
+			DragEvent: new AbortController(),
+			MouseEvent: new AbortController(),
+			active: false,
+			dragStart: { x: null, y: null },
+			vertices: {},
+			lastRedraw: null,
+			redrawDelay: 15,
+			neighbors: {},
+			maxVertexIndex: 0,
+		}
+
 		this.selectedVertices = {};
 	}
 
@@ -59,7 +71,8 @@ export class Editor {
 			selectedVerts: this.selectedVertices,
 			allVerts: DataStore.PreviewLayer.verts,
 			radius: DataStore.PreviewLayer.vertexMeta.dist,
-			canvas: DataStore.PreviewLayer.imageData
+			canvas: DataStore.PreviewLayer.imageData,
+			propFalloff: DataStore.settings.propFalloff,
 		});
 
 		let currentLine = {
@@ -122,13 +135,13 @@ export class Editor {
 		
 		for (let [key, value] of Object.entries(this.selectedVertices)) {
 			let dist = DataStore.PreviewLayer.vertexMeta.dist;
-			let vertX = dist * value.id[1];
-			let vertY = dist * value.id[0];
+			let vertX = dist * value.id[0];
+			let vertY = dist * value.id[1];
 			let xVari = Math.random() * DataStore.settings.vvar * dist - (DataStore.settings.vvar * dist) / 2;
 			let yVari = Math.random() * DataStore.settings.vvar * dist - (DataStore.settings.vvar * dist) / 2;
 			recalculated.push({
 				id: value.id,
-				coords: [vertX + xVari - DataStore.PreviewLayer.vertexMeta.xShift, vertY + yVari - DataStore.PreviewLayer.vertexMeta.yShift]
+				coord: [vertX + xVari - DataStore.PreviewLayer.vertexMeta.xShift, vertY + yVari - DataStore.PreviewLayer.vertexMeta.yShift]
 			});
 		}
 
@@ -267,7 +280,7 @@ export class Editor {
 				// Calculate if vertex is actually inside circle
 				let diff = (Math.hypot(dx, dy));
 				if (diff < (this.brush.size)  / this.canvasCompressionRatio) {
-					let data = [[nearestY + a, nearestX + b], DataStore.PreviewLayer.verts[nearestY + a][nearestX + b]]
+					let data = [[nearestX + b, nearestY + a], DataStore.PreviewLayer.verts[nearestY + a][nearestX + b]]
 					nearbyVerts.push(data);
 
 					// Debug: draw verts inside circle
@@ -337,11 +350,116 @@ export class Editor {
 		}
 	}
 
+	vertexDrag() {
+		this.drag.active = !this.drag.active;
+		if (this.drag.active) {
+			this.deactivateBrush();
+			this.prepareVertexDrag();
+		} else {
+			this.endCanvasDrag();
+		}
+	}
+
+	prepareVertexDrag() {
+		this.canvas.style.cursor = "grab";
+		this.drag.vertices = structuredClone(this.selectedVertices);
+		this.drag.neighbors = this.getNeighbors();
+		DataStore.PreviewLayer.debugDrawListOfVerts(this.drag.neighbors);
+		this.canvas.addEventListener("mousedown", (downEvent) => {
+			this.drag.dragStart = { x: downEvent.clientX, y: downEvent.clientY };
+			this.canvas.addEventListener("mousemove", (dragEvent) => {
+				this.manualDrag(dragEvent);
+			}, { signal: this.drag.DragEvent.signal });
+		}, { signal: this.drag.MouseEvent.signal });
+
+		this.canvas.addEventListener("mouseup", (event) => {
+			this.endCanvasDrag();
+		}, { signal: this.drag.MouseEvent.signal });
+	}
+
+	//? IDEA: if this gets too heavy, just draw the vertices on the edit layer and then redraw the preview on release
+	//? IDEA: if edge vertices are detected to enter the frame because of extreme falloff, generate a new line of vertices on that edge
+
+	// Handler for manually dragging vertices. Handles selected vertices and proportional falloff
+	manualDrag(mouseEvent) {
+		for (const id of Object.keys(this.selectedVertices)) {
+
+			let offsetX = (mouseEvent.clientX - this.drag.dragStart.x) / this.canvasCompressionRatio;
+			let offsetY = (mouseEvent.clientY - this.drag.dragStart.y) / this.canvasCompressionRatio;
+
+			this.drag.vertices[id].coord = [
+				this.selectedVertices[id].coord[0] + offsetX,
+				this.selectedVertices[id].coord[1] + offsetY
+			];
+
+			for (let [nID, data] of Object.entries(this.drag.neighbors)) {
+				let prop = (this.drag.maxVertexIndex - data.index + 1) / this.drag.maxVertexIndex;
+				this.drag.neighbors[nID].delta = [offsetX * prop, offsetY * prop];
+			}
+		}
+
+		// Throttle the redraw since that's the most expensive part of this operation by far
+		let now = Date.now();
+		if (now - this.drag.lastRedraw > this.drag.redrawDelay) {
+			DataStore.PreviewLayer.replaceVertices(this.drag.vertices, false);
+			DataStore.PreviewLayer.replaceVertices(this.drag.neighbors);
+			this.drag.lastRedraw = Date.now();
+		}
+	}
+
+	getNeighbors() {
+		const neighbors = {};
+
+		for (const [id, vertex] of Object.entries(this.selectedVertices)) {
+			let startX = Math.max(vertex.id[0] - DataStore.settings.propFalloff + 1, 0);
+			let startY = Math.max(vertex.id[1] - DataStore.settings.propFalloff + 1, 0);
+			let endX = Math.min(vertex.id[0] + DataStore.settings.propFalloff, DataStore.PreviewLayer.verts[0].length - 1);
+			let endY = Math.min(vertex.id[1] + DataStore.settings.propFalloff, DataStore.PreviewLayer.verts.length - 1);
+			
+			for (let x = startX; x < endX; x++) {
+				for (let y = startY; y < endY; y++) {
+					if (!!this.selectedVertices[`${x},${y}`]) {
+						continue;
+					}
+
+					// get distance from vertex (trim vertices that aren't in a circle)
+					let d = Math.sqrt(
+						Math.abs(vertex.coord[0] - DataStore.PreviewLayer.verts[y][x][0]) ** 2  +
+						Math.abs(vertex.coord[1] - DataStore.PreviewLayer.verts[y][x][1]) ** 2
+					);
+
+					if (d > (DataStore.settings.propFalloff - 1) * DataStore.PreviewLayer.vertexMeta.dist) {
+						continue;
+					}
+
+					// nth point away from the origin (roughly)
+					let idx = Math.max(1, Math.round(Math.sqrt((vertex.id[0] - x) ** 2 + (vertex.id[1] - y) ** 2)));
+
+					this.drag.maxVertexIndex = idx > this.drag.maxVertexIndex ? idx : this.drag.maxVertexIndex;
+
+					// If the neighbor is already found, avoid overwrite and ensure the index is the lowest possible value
+					if (!!neighbors[`${x},${y}`]) {
+						neighbors[`${x},${y}`].index = idx < neighbors[`${x},${y}`].index ? idx : neighbors[`${x},${y}`].index;
+					} else {
+						neighbors[`${x},${y}`] = { id: [x, y], coord: structuredClone(DataStore.PreviewLayer.verts[y][x]), index: idx, delta: [] };
+					}
+				}
+			}
+		}
+		return neighbors;
+	}
+
+	endCanvasDrag() {
+		this.canvas.style.cursor = "default";
+		this.drag.DragEvent.abort();
+		this.drag.DragEvent = new AbortController();
+	}
+
 	// Helper function to wipe the edit layer
-	clean() {
+	clean(resetSelectedVerts = true) {
 		if (this.isClean) return;
 
-		this.selectedVertices = {};
+		if (resetSelectedVerts) this.selectedVertices = {};
 		this.ctx.clearRect(0, 0, DataStore.settings.x, DataStore.settings.y);
 	}
 }

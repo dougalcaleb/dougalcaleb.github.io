@@ -3,8 +3,9 @@
 	<head>
 		<title>Polygen</title>
 		<link rel="stylesheet" type="text/css" href="css/style.css" />
-		<link rel="stylesheet" type="text/css" media="screen and (min-width: 501px)" href="css/desktop.css" />
-		<link rel="stylesheet" type="text/css" media="screen and (max-width: 500px)" href="css/mobile.css" />
+		<link rel="stylesheet" type="text/css" href="css/popup.css" />
+		<link rel="stylesheet" type="text/css" href="css/loader.css" />
+		<link rel="stylesheet" type="text/css" href="css/desktop.css" />
 
 		<link rel="shortcut icon" href="./images/icon.png" type="image/x-icon" />
 
@@ -20,18 +21,32 @@
 				<p class="logo-text">POLYGEN</p>
 			</div>
 			<div class="download">
-				DOWNLOAD AS PNG
+				EXPORT
 				<svg viewBox="0 0 24 24">
 					<path fill="currentColor" d="M5,20H19V18H5M19,9H15V3H9V9H5L12,16L19,9Z" />
 				</svg>
+
+				
+				<div class="download-dropdown">
+					<div class="download-as-png">PNG
+						<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+							<path fill="currentColor" d="M19,19H5V5H19M19,3H5A2,2 0 0,0 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5A2,2 0 0,0 19,3M13.96,12.29L11.21,15.83L9.25,13.47L6.5,17H17.5L13.96,12.29Z" />
+						</svg>
+					</div>
+					<div class="download-as-svg">SVG
+						<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+							<path fill="currentColor" d="M14 2H6C4.89 2 4 2.9 4 4V20C4 21.11 4.89 22 6 22H18C19.11 22 20 21.11 20 20V8L14 2M18 20H6V4H13V9H18V20M9.54 15.65L11.63 17.74L10.35 19L7 15.65L10.35 12.3L11.63 13.56L9.54 15.65M17 15.65L13.65 19L12.38 17.74L14.47 15.65L12.38 13.56L13.65 12.3L17 15.65Z" />
+						</svg>
+					</div>
+				</div>
 			</div>
 		</header>
 
 		<div class="controls">
-			<div class="control control-buttons choose-panel">
-				<div class="control-btn-wrap">
+			<div class="control control-tabs">
+				<div class="control-tab-wrap">
 					<div class="choose-properties btn-active">Properties</div>
-					<div class="choose-tools">Tools</div>
+					<div class="choose-tools">Editor</div>
 				</div>
 			</div>
 
@@ -55,13 +70,16 @@
 						<div class="vertex-color-snap">Move to Color Boundary</div>
 					</div>
 					<div class="control control-btn-wrap">
-						<div class="vertex-manual-drag">Manual Edit [u]</div>
+						<div class="vertex-manual-drag">Manual Edit</div>
+					</div>
+					<div class="control control-btn-wrap">
+						<div class="vertex-anchor">Anchor Vertices</div>
 					</div>
 				</div>
 
 				<div class="control control-range vertex-prop-falloff">
-					<p>PROPORTIONAL FALLOFF [u]</p>
-					<input type="range" class="prop-falloff" min="0" max="100" step="1" value="0" />
+					<p>PROPORTIONAL FALLOFF</p>
+					<input type="range" class="prop-falloff control-slider" min="0" max="10" step="1" value="4" />
 				</div>
 
 				<div class="control control-inputs settings-undo-stack">
@@ -77,22 +95,42 @@
 						<input type="color" value="#ffffff" class="v-outline-color" />
 					</div>
 				</div>
+
+				<div class="control control-list vertex-layer">
+					<p>LAYERS</p>
+					<template id="layer-template">
+						<div class="vertex-layer layer-active layer-wrap">
+							<span class="layer-name"></span>
+							<div class="layer-btn-wrap">
+								<svg class="layer-visible" viewBox="0 0 24 24"><title>Hide Layer</title><path fill="currentColor" d="M12,9A3,3 0 0,0 9,12A3,3 0 0,0 12,15A3,3 0 0,0 15,12A3,3 0 0,0 12,9M12,17A5,5 0 0,1 7,12A5,5 0 0,1 12,7A5,5 0 0,1 17,12A5,5 0 0,1 12,17M12,4.5C7,4.5 2.73,7.61 1,12C2.73,16.39 7,19.5 12,19.5C17,19.5 21.27,16.39 23,12C21.27,7.61 17,4.5 12,4.5Z" /></svg>
+								<svg class="layer-hidden" viewBox="0 0 24 24"><title>Show Layer</title><path fill="currentColor" d="M11.83,9L15,12.16C15,12.11 15,12.05 15,12A3,3 0 0,0 12,9C11.94,9 11.89,9 11.83,9M7.53,9.8L9.08,11.35C9.03,11.56 9,11.77 9,12A3,3 0 0,0 12,15C12.22,15 12.44,14.97 12.65,14.92L14.2,16.47C13.53,16.8 12.79,17 12,17A5,5 0 0,1 7,12C7,11.21 7.2,10.47 7.53,9.8M2,4.27L4.28,6.55L4.73,7C3.08,8.3 1.78,10 1,12C2.73,16.39 7,19.5 12,19.5C13.55,19.5 15.03,19.2 16.38,18.66L16.81,19.08L19.73,22L21,20.73L3.27,3M12,7A5,5 0 0,1 17,12C17,12.64 16.87,13.26 16.64,13.82L19.57,16.75C21.07,15.5 22.27,13.86 23,12C21.27,7.61 17,4.5 12,4.5C10.6,4.5 9.26,4.75 8,5.2L10.17,7.35C10.74,7.13 11.35,7 12,7Z" /></svg>
+								<svg class="layer-delete" viewBox="0 0 24 24"><title>Delete Layer</title><path fill="currentColor" d="M9,3V4H4V6H5V19A2,2 0 0,0 7,21H17A2,2 0 0,0 19,19V6H20V4H15V3H9M9,8H11V17H9V8M13,8H15V17H13V8Z" /></svg>
+							</div>
+						</div>
+					</template>
+					<div class="layer-add">
+						<svg viewBox="0 0 24 24">
+							<path fill="currentColor" d="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z" />
+						</svg>
+					</div>
+				</div>
 			</div>
 
 			<div class="panel panel-image-properties">
+
 				<div class="control control-inputs dimensions">
 					<p>DIMENSIONS</p>
 					<div class="control-input-wrap">
-						<input type="number" class="image-width" placeholder="Width" value="1920" />
-						<input type="number" class="image-height" placeholder="Height" value="1080" />
+						<input type="number" class="image-dimensions image-width" placeholder="Width" value="1920" />
+						<input type="number" class="image-dimensions image-height" placeholder="Height" value="1080" />
 					</div>
 				</div>
 				<div class="control control-btns type">
 					<p>TYPE</p>
 					<div class="control-btn-wrap">
-						<div class="type-btn type-0 btn-active">Linear</div>
-						<div class="type-btn type-1">Radial</div>
-						<div class="type-btn type-2">Image</div>
+						<div class="type-btn type-linear type-0 btn-active">Linear</div>
+						<div class="type-btn type-radial type-1">Radial</div>
+						<div class="type-btn type-image type-2">Image</div>
 					</div>
 				</div>
 
@@ -105,15 +143,15 @@
 
 				<div class="control control-range variance">
 					<p>VERTEX VARIANCE</p>
-					<input type="range" class="i-variance" min="0" max="1.5" step="0.01" value="0.5" />
+					<input type="range" class="i-variance control-slider" min="0" max="1" step="0.01" value="0.4" />
 				</div>
 				<div class="control control-range verts">
 					<p>CELL SIZE</p>
-					<input type="range" class="i-verts" min="50" max="195" step="0.5" value="185" />
+					<input type="range" class="i-verts control-slider" min="30" max="200" step="0.5" value="100" />
 				</div>
 				<div class="control control-range bright-variance">
 					<p>BRIGHTNESS VARIANCE</p>
-					<input type="range" class="i-bright-variance" min="0" max="255" step="1" value="0" />
+					<input type="range" class="i-bright-variance control-slider" min="0" max="255" step="1" value="0" />
 				</div>
 				<div class="control control-btns brightness-mode">
 					<p>BRIGHTNESS VARIANCE MODE</p>
@@ -125,7 +163,7 @@
 
 				<div class="control control-range grad-rotation fortype-0">
 					<p>GRADIENT ROTATION</p>
-					<input type="range" class="i-0-rotation" min="0" max="360" step="1" value="0" />
+					<input type="range" class="i-0-rotation control-slider" min="0" max="360" step="1" value="0" />
 				</div>
 				<div class="control control-btns grad-rotation-snap fortype-0">
 					<p>GRADIENT ROTATION SNAP</p>
@@ -145,19 +183,19 @@
 
 				<div class="control control-range grad-posx fortype-1">
 					<p>GRADIENT POSITION X</p>
-					<input type="range" class="i-1-posx" min="0" max="1" step="0.01" value="0.5" />
+					<input type="range" class="i-1-posx control-slider" min="0" max="1" step="0.01" value="0.5" />
 				</div>
 				<div class="control control-range grad-posy fortype-1">
 					<p>GRADIENT POSITION Y</p>
-					<input type="range" class="i-1-posy" min="0" max="1" step="0.01" value="0.5" />
+					<input type="range" class="i-1-posy control-slider" min="0" max="1" step="0.01" value="0.5" />
 				</div>
 				<div class="control control-range grad-outrad fortype-1">
 					<p>GRADIENT OUTER RADIUS</p>
-					<input type="range" class="i-1-outrad" min="0" max="1" step="0.01" value="0.5" />
+					<input type="range" class="i-1-outrad control-slider" min="0" max="1" step="0.01" value="0.5" />
 				</div>
 				<div class="control control-range grad-inrad fortype-1">
 					<p>GRADIENT INNER RADIUS</p>
-					<input type="range" class="i-1-inrad" min="0" max="0.25" step="0.01" value="0" />
+					<input type="range" class="i-1-inrad control-slider" min="0" max="0.25" step="0.01" value="0" />
 				</div>
 				<div class="control control-color outline-color">
 					<p>OUTLINE COLOR</p>
@@ -167,9 +205,9 @@
 				</div>
 				<div class="control control-range outline-opacity">
 					<p>OUTLINE OPACITY</p>
-					<input type="range" class="i-outline" min="0" max="1" step="0.01" value="0" />
+					<input type="range" class="i-outline control-slider" min="0" max="1" step="0.01" value="0" />
 				</div>
-				<div class="control control-palettes">
+				<div class="control control-palettes fortype-0 fortype-1">
 					<p>COLOR PALETTE</p>
 					<div class="palette-add">
 						<svg viewBox="0 0 24 24">
@@ -181,25 +219,79 @@
 		</div>
 
 		<div class="preview">
-			<canvas id="canvas-main" class="main-canvas"></canvas>
-			<canvas id="canvas-edit" class="main-canvas"></canvas>
-
-			
 			<div class="loader-wrap">
-				<!-- <canvas id="loader"></canvas> -->
-				<!-- <div id="loader-html">
-					<div class="loader-tri"></div>
-					<div class="loader-tri"></div>
-					<div class="loader-tri"></div>
-					<div class="loader-tri"></div>
-				</div> -->
 				<div id="loader-title">Processing Image</div>
-				<div id="loader-progress">
-					<!-- <span>Smoothing Image... (3s)</span>
-					<span>Converted to Grayscale (74ms)</span> -->
-				</div>
+				<div id="loader-progress"></div>
 			</div>
 		</div>
+
+		<template id="gradient-editor-popup">
+			<div class="popup-bg">
+				<div class="popup gradient-editor-popup">
+					<div class="popup-title">
+						<span class="popup-title-text">[POPUP TITLE]</span>
+						<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="popup-close">
+							<title>Close</title>
+							<path fill="currentColor" d="M20 6.91L17.09 4L12 9.09L6.91 4L4 6.91L9.09 12L4 17.09L6.91 20L12 14.91L17.09 20L20 17.09L14.91 12L20 6.91Z" />
+						</svg>
+					</div>
+					<div class="popup-body">
+						<div class="gradient-editor-body-wrap">
+							<canvas class="gradient-editor-preview"></canvas>
+							<div class="gradient-editor-stop-wrap">
+								<input type="range" class="popup-add-color-stop" step="0.01" min="0" max="1" title="Add New Color Stop">
+							</div>
+						</div>
+					</div>
+		
+					<div class="popup-button-wrap">
+                        <button class="popup-space-stops">Even Spacing</button>
+						<button class="popup-cancel">Cancel</button>
+						<button class="popup-save">Save</button>
+					</div>
+				</div>
+			</div>
+		</template>
+
+		<template id="confirm-popup">
+			<div class="popup-bg">
+				<div class="popup">
+					<div class="popup-title">
+						<span class="popup-title-text">[POPUP TITLE]</span>
+						<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="popup-close">
+							<title>Close</title>
+							<path fill="currentColor" d="M20 6.91L17.09 4L12 9.09L6.91 4L4 6.91L9.09 12L4 17.09L6.91 20L12 14.91L17.09 20L20 17.09L14.91 12L20 6.91Z" />
+						</svg>
+					</div>
+					<div class="popup-body">
+						<p class="popup-body-text"></p>
+					</div>
+					<div class="popup-button-wrap">
+						<button class="popup-cancel">Cancel</button>
+						<button class="popup-save">OK</button>
+					</div>
+				</div>
+			</div>
+		</template>
+
+		<template id="popup-color-picker-stop-edit">
+			<div id="popup-stop-controls-wrap">
+				<div class="popup-color-picker-wrap">
+					<svg xmlns="http://www.w3.org/2000/svg" class="popup-color-picker-bucket-icon" viewBox="0 -1 24 20"><title>Select Color</title><path fill="currentColor" d="M19,11.5C19,11.5 17,13.67 17,15A2,2 0 0,0 19,17A2,2 0 0,0 21,15C21,13.67 19,11.5 19,11.5M5.21,10L10,5.21L14.79,10M16.56,8.94L7.62,0L6.21,1.41L8.59,3.79L3.44,8.94C2.85,9.5 2.85,10.47 3.44,11.06L8.94,16.56C9.23,16.85 9.62,17 10,17C10.38,17 10.77,16.85 11.06,16.56L16.56,11.06C17.15,10.47 17.15,9.5 16.56,8.94Z" /></svg>
+					<input type="color" class="popup-color-picker-input">
+				</div>
+				<div class="popup-color-stop-delete">
+					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>Delete Color Stop</title><path fill="currentColor" d="M20.37,8.91L19.37,10.64L7.24,3.64L8.24,1.91L11.28,3.66L12.64,3.29L16.97,5.79L17.34,7.16L20.37,8.91M6,19V7H11.07L18,11V19A2,2 0 0,1 16,21H8A2,2 0 0,1 6,19M8,19H16V12.2L10.46,9H8V19Z" /></svg>
+				</div>
+			</div>
+		</template>
+
+		<template style="display: none" id="_JS_TEMPLATES">
+			<template id="PALETTE_CONTROLS">
+				<svg viewBox="0 0 24 24"><path fill="currentColor" d="M20.71,7.04C21.1,6.65 21.1,6 20.71,5.63L18.37,3.29C18,2.9 17.35,2.9 16.96,3.29L15.12,5.12L18.87,8.87M3,17.25V21H6.75L17.81,9.93L14.06,6.18L3,17.25Z" /></svg>
+			</template>
+		</template>
+
 	</body>
 
 	<script src="javascript/script.js" type="module"></script>

@@ -1,5 +1,3 @@
-"use strict"
-
 export const DEFAULTS = {
 	ui: {
 		csize: [5, 200],
@@ -12,5 +10,8 @@ export const DEFAULTS = {
 	inputs: {
 		debounce: 500,
 		previewRedrawDelay: 50,
-	},
+   },
+   limits: {
+      colorStops: 15,
+   }
 };
