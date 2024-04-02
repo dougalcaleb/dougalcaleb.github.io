@@ -71,7 +71,9 @@ export default class Layer {
 
 		// Distance between vertices and the edges of the canvas
 		const xShift = (Store.settings.x - this.settings.cellSize * (xCount - 1)) / 2;
-        const yShift = (Store.settings.y - this.settings.cellSize * (yCount - 1)) / 2;
+		const yShift = (Store.settings.y - this.settings.cellSize * (yCount - 1)) / 2;
+		
+		const halfCell = this.settings.cellSize / 2;
         
 		// Create vertex placements
 		for (let y = 0; y < yCount; y++) {
@@ -84,7 +86,7 @@ export default class Layer {
                 } else if (x == xCount - 1) {
 					vertex.x = Store.settings.x;
 				} else {
-					const xVariance = this._posRand.Next() * this.settings.variance * this.settings.cellSize * this._dirRand.Next(); // * Utils.randPosNeg()
+					const xVariance = Math.min(this._posRand.Next() * this.settings.variance * this.settings.cellSize, halfCell) * this._dirRand.Next();
 					vertex.x = ~~((this.settings.cellSize * x) + xShift + xVariance);
 				}
 
@@ -93,7 +95,7 @@ export default class Layer {
                 } else if (y == yCount - 1) {
 					vertex.y = Store.settings.y;
 				} else {
-					const yVariance = this._posRand.Next() * this.settings.variance * this.settings.cellSize * this._dirRand.Next(); //  * Utils.randPosNeg()
+					const yVariance = Math.min(this._posRand.Next() * this.settings.variance * this.settings.cellSize, halfCell) * this._dirRand.Next();
 					vertex.y = ~~((this.settings.cellSize * y) + yShift + yVariance);
                 }
 
@@ -110,9 +112,7 @@ export default class Layer {
 	// Generates initial grid-based triangle polygons
 	InitialPolygons() {
 		for (let y = 0; y < this.#arranged.length; y++) {
-			const row = this.#arranged[y];
-			for (let x = 0; x < row.length; x++) {
-				const vertex = this.#arranged[y][x];
+			for (let x = 0; x < this.#arranged[y].length; x++) {
 				const verts = this.#arranged;
 				
 				// Skip over bottom and right edges
@@ -121,9 +121,9 @@ export default class Layer {
 				}
 
 				// top left to bottom right distance
-				const tlbrLength = Math.hypot(verts[y + 1][x + 1].x - vertex.x, verts[y + 1][x].y - vertex.y).toFixed(2);
+				const tlbrLength = Utils.Round(Math.hypot(verts[y + 1][x + 1].x - verts[y][x].x, verts[y + 1][x + 1].y - verts[y][x].y), 2);
 				// top right to bottom left distance
-				const trblLength = Math.hypot(verts[y][x + 1].x - vertex.x, verts[y + 1][x + 1].y - vertex.y).toFixed(2);
+				const trblLength = Utils.Round(Math.hypot(verts[y][x + 1].x - verts[y + 1][x].x, verts[y][x + 1].y - verts[y + 1][x].y), 2);
 
 				// Decide which way the triangle points
 				let tri;
@@ -139,10 +139,10 @@ export default class Layer {
 				let poly1 = null;
 				let poly2 = null;
 				if (tri == 0) {
+					// Bottom left triangle
+					poly1 = new Polygon([verts[y][x], verts[y + 1][x], verts[y + 1][x + 1]], this);
 					// Upper right triangle
-					poly1 = new Polygon([verts[y][x], verts[y][x + 1], verts[y + 1][x + 1]], this);
-					// Lower left triangle
-					poly2 = new Polygon([verts[y][x], verts[y + 1][x], verts[y + 1][x + 1]], this);
+					poly2 = new Polygon([verts[y][x], verts[y][x + 1], verts[y + 1][x + 1]], this);
 				} else {
 					// Upper left triangle
 					poly1 = new Polygon([verts[y][x], verts[y][x + 1], verts[y + 1][x]], this);

@@ -65,6 +65,10 @@ export default class Utils {
 		});
 	}
 
+	static Round(value, places) {
+		return +(Math.round(value + "e+" + places) + "e-" + places);
+	}
+
 	// Seedable random number generator
 	// https://stackoverflow.com/questions/521295/seeding-the-random-number-generator-in-javascript
 	static sfc32(a, b, c, d) {
