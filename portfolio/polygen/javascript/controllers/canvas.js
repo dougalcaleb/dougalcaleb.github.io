@@ -289,15 +289,16 @@ export default class Canvas {
 			const img = new Image();
 			img.src = fr.result;
 			img.onload = () => {
-				this._canvasElement.width = img.width;
-				this._canvasElement.height = img.height;
 				document.querySelector(".image-height").value = img.height;
 				document.querySelector(".image-width").value = img.width;
 				this.imgSrc = img;
-				Store.Preview.imageData = img;
-				this._imgToCanvas();
-				Store.settings.setFromImg(img.width, img.height);
-				Store.Preview.setAngles();
+                if (Store.Preview.usingImgCount === 1) {
+                    this._canvasElement.width = img.width;
+				    this._canvasElement.height = img.height;
+                    Store.settings.setFromImg(img.width, img.height);
+                    Store.Preview.setAngles();
+                }
+                this._imgToCanvas();
 				onDone();
 			};
 		};
@@ -308,7 +309,8 @@ export default class Canvas {
 		if (!this._isRefCanvas) {
 			console.error("The canvas you are trying to draw on is not a reference canvas. Use a reference canvas to draw images.");
 			return;
-		}
+        }
+        this.ctx.clearRect(0, 0, this._canvasElement.width, this._canvasElement.height);
 		this.ctx.drawImage(source, 0, 0);
 		if (this.#willReadFrequently) {
 			this._imageData = this.ctx.getImageData(0, 0, this._canvasElement.width, this._canvasElement.height);

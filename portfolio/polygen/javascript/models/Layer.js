@@ -13,7 +13,9 @@ export default class Layer {
 	vertices = [];
 	polygons = [];
 	id = null;
-	uiElement = null;
+    uiElement = null;
+    _posRand = null;
+    _dirRand = null;
 	
 	settings = null;
 	
@@ -29,7 +31,9 @@ export default class Layer {
 		this.canvas._canvasElement.style.zIndex = this.#index + 1;
 		this.name = "Layer " + (this.index + 1);
 		this.settings = new LayerSettings(this.Redraw.bind(this));
-		this.id = Utils.UUID();
+        this.id = Utils.UUID();
+        this._posRand = new Utils.Random();
+        this._dirRand = new Utils.Random(1);
 	}
 
 	static Swap(layer1, layer2) {
@@ -57,15 +61,18 @@ export default class Layer {
 		this.canvas._canvasElement.remove();
 	}
 
-	Fill() {
+    Fill() {
+        this._dirRand.Reset();
+        this._posRand.Reset();
+
 		// Number of vertices in each direction
 		const xCount = Math.ceil(Store.settings.x / this.settings.cellSize) + 1;
 		const yCount = Math.ceil(Store.settings.y / this.settings.cellSize) + 1;
 
 		// Distance between vertices and the edges of the canvas
-		const xShift = (Store.settings.x - this.settings.cellSize * (xCount-1)) / 2;
-		const yShift = (Store.settings.y - this.settings.cellSize * (yCount - 1)) / 2;
-
+		const xShift = (Store.settings.x - this.settings.cellSize * (xCount - 1)) / 2;
+        const yShift = (Store.settings.y - this.settings.cellSize * (yCount - 1)) / 2;
+        
 		// Create vertex placements
 		for (let y = 0; y < yCount; y++) {
 			const row = [];
@@ -74,21 +81,24 @@ export default class Layer {
 
 				if (x === 0) {
 					vertex.x = 0;
-				} else if (x == xCount - 1) {
+                } else if (x == xCount - 1) {
 					vertex.x = Store.settings.x;
 				} else {
-					const xVariance = Math.random() * this.settings.variance * this.settings.cellSize * Utils.randPosNeg();
+					const xVariance = this._posRand.Next() * this.settings.variance * this.settings.cellSize * this._dirRand.Next(); // * Utils.randPosNeg()
 					vertex.x = ~~((this.settings.cellSize * x) + xShift + xVariance);
 				}
 
 				if (y === 0) {
 					vertex.y = 0;
-				} else if (y == yCount - 1) {
+                } else if (y == yCount - 1) {
 					vertex.y = Store.settings.y;
 				} else {
-					const yVariance = Math.random() * this.settings.variance * this.settings.cellSize * Utils.randPosNeg();
+					const yVariance = this._posRand.Next() * this.settings.variance * this.settings.cellSize * this._dirRand.Next(); //  * Utils.randPosNeg()
 					vertex.y = ~~((this.settings.cellSize * y) + yShift + yVariance);
-				}
+                }
+
+                vertex.posX = x;
+                vertex.posY = y;
 
 				this.vertices.push(vertex);
 				row.push(vertex);

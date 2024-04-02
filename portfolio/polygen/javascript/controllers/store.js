@@ -73,9 +73,7 @@ export default class Store {
 			{ color: "#ae5656", stop: 0.5 },
 			{ color: "#7c2f2f", stop: 0.75 },
 			{ color: "#671b1b", stop: 1 }
-		])
-		//! BUG: custom palettes overwrite default ones? something wrong with the whole localstorage thing
-		//! ALSO could be an issue: gradient editor adds extra stops randomly?
+        ])
 	];
 	static palettes = [];
 	static htmlTemplates = {};
@@ -131,7 +129,7 @@ export default class Store {
 			if (confirm) {
 				const img = await window.showOpenFilePicker({types: [{description: "Image", accept: {"image/*": [".png", ".jpeg", ".jpg"]}}]});
 				const file = await img[0].getFile();
-				Store.Preview.activeLayer.canvas.DrawImage(file);
+				Store.Preview.activeLayer.DrawImage(file);
 			} else {
 				return;
 			}

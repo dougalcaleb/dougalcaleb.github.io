@@ -65,53 +65,52 @@ export default class Utils {
 		});
 	}
 
-	// Create a convex hull from a set of vertices (Andrew's Monotone Chain algorithm)
-	static createPolygon(vertices) {
-		function orientation(p, q, r) {
-			const val = (q.y - p.y) * (r.x - q.x) - (q.x - p.x) * (r.y - q.y);
-			if (val === 0) {
-				return 0; // colinear
-			}
-			return val > 0 ? 1 : 2; // clockwise or counterclockwise
-		}
-
-		function convexHull(points) {
-			const n = points.length;
-			if (n < 3) {
-				return null; // Convex hull not possible with less than 3 points
-			}
-
-			// Sort points x-first, y-second
-			points.sort((a, b) => {
-				if (a.x !== b.x) {
-					return a.x - b.x;
-				}
-				return a.y - b.y;
-			});
-
-			const hull = [];
-
-			// Lower hull
-			for (const p of points) {
-				while (hull.length >= 2 && orientation(hull[hull.length - 2], hull[hull.length - 1], p) !== 2) {
-					hull.pop();
-				}
-				hull.push(p);
-			}
-
-			// Upper hull
-			const upperHullStart = hull.length;
-			for (let i = n - 2; i >= 0; i--) {
-				const p = points[i];
-				while (hull.length >= upperHullStart + 1 && orientation(hull[hull.length - 2], hull[hull.length - 1], p) !== 2) {
-					hull.pop();
-				}
-				hull.push(p);
-			}
-
-			return hull;
-		}
-
-		return convexHull(vertices);
+	// Seedable random number generator
+	// https://stackoverflow.com/questions/521295/seeding-the-random-number-generator-in-javascript
+	static sfc32(a, b, c, d) {
+		return function () {
+			a |= 0;
+			b |= 0;
+			c |= 0;
+			d |= 0;
+			let t = (((a + b) | 0) + d) | 0;
+			d = (d + 1) | 0;
+			a = b ^ (b >>> 9);
+			b = (c + (c << 3)) | 0;
+			c = (c << 21) | (c >>> 11);
+			c = (c + t) | 0;
+			return (t >>> 0) / 4294967296;
+		};
 	}
+
+	static Random = class {
+		_seed = null;
+		_func = null;
+		_nestedFunc = null;
+		_mode = null;
+
+		constructor(mode = 0) {
+			this._mode = mode;
+			this._seed = [Date.now() * Math.random(), Date.now() * Math.random(), Date.now() * Math.random(), Date.now() * Math.random()];
+			if (this._mode === 0) {
+				this._func = Utils.sfc32(...this._seed);
+			} else if (this._mode === 1) {
+				this._nestedFunc = Utils.sfc32(...this._seed);
+				this._func = () => (this._nestedFunc() < 0.5 ? -1 : 1);
+			}
+		}
+
+		Next() {
+			return this._func();
+		}
+
+		Reset() {
+			if (this._mode === 0) {
+				this._func = Utils.sfc32(...this._seed);
+			} else if (this._mode === 1) {
+				this._nestedFunc = Utils.sfc32(...this._seed);
+				this._func = () => (this._nestedFunc() < 0.5 ? -1 : 1);
+			}
+		}
+	};
 }
