@@ -166,7 +166,10 @@ export default class Layer {
 		}
 		this.#imageFileHandle = file;
 		this.refCanvas.DrawImage(file, () => {
+			this.vertices = [];
+			this.#arranged = [];
 			this.Fill();
+			this.polygons = [];
 			this.InitialPolygons();
 		});
 	}
