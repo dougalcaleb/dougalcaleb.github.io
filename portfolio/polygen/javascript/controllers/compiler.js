@@ -32,9 +32,9 @@ export default class Compiler {
 				});
 				const fillColor = Utils.rgbToHex(polygon.color);
 				current += `z" fill="${fillColor}" `;
-				const lineColor = (layer.settings.lineOpacity === 0 ? fillColor : layer.settings.lineColor);
+				const lineColor = (layer.settings.lineWeight === 0 ? fillColor : layer.settings.lineColor);
 				current += `stroke="${lineColor}" `;
-				const lineWidth = (layer.settings.lineOpacity === 0 ? 1 : ~~(layer.settings.lineOpacity * 2));
+				const lineWidth = (layer.settings.lineWeight === 0 ? 1 : layer.settings.lineWeight);
 				current += `stroke-width="${lineWidth}" />`
 				parts.push(current);
 			});

@@ -105,7 +105,7 @@ export default class UI {
 	static SetUIToLayer(layer) {
 		document.querySelector(".i-variance").value = layer.settings.variance;
 		document.querySelector(".i-verts").value = layer.settings.cellSize;
-		document.querySelector(".i-outline").value = layer.settings.lineOpacity;
+		document.querySelector(".i-outline").value = layer.settings.lineWeight;
 		document.querySelector(".i-outline-color").value = layer.settings.lineColor;
 		document.querySelector(".i-0-rotation").value = layer.settings.gradRotation;
 		document.querySelector(".i-1-posx").value = layer.settings.radialX;
@@ -122,7 +122,7 @@ export default class UI {
 			document.querySelector(".darken").classList.add("btn-active");
 		}
 		document.querySelector(".i-outline-color").value = layer.settings.lineColor;
-		document.querySelector(".i-outline").value = layer.settings.lineOpacity;
+		document.querySelector(".i-outline").value = layer.settings.lineWeight;
 		document.querySelector(".i-variance").value = layer.settings.variance;
 		document.querySelectorAll(".palette").forEach((el) => {
 			el.classList.remove("active-palette");
@@ -412,7 +412,7 @@ export default class UI {
 
 		// outline
 		document.querySelector(".i-outline").addEventListener("input", (event) => {
-			Store.Preview.activeLayer.settings.lineOpacity = parseFloat(event.target.value);
+			Store.Preview.activeLayer.settings.lineWeight = parseFloat(event.target.value);
 		});
 
 		// proportional falloff (tools)
