@@ -182,6 +182,9 @@
 	}
 	.control-btn-wrap {
 		display: flex;
+		.btn-wrap-spacer {
+			visibility: hidden;
+		}
 		div {
 			font-family: ext.$theme-font-button;
 			color: ext.$theme-blue-light;

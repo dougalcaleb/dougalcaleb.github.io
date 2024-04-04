@@ -190,6 +190,9 @@ $name - variable
 .controls .control-btn-wrap {
   display: flex;
 }
+.controls .control-btn-wrap .btn-wrap-spacer {
+  visibility: hidden;
+}
 .controls .control-btn-wrap div {
   font-family: "Miriam Libre", "Segoe UI", sans-serif, monospace;
   color: #00b7ff;
