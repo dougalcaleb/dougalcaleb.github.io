@@ -144,7 +144,8 @@ export default class UI {
 	//	Private Methods
 	//==================================
 
-	static #DisplayCorrectUI(activeType = 0) {
+	static #DisplayCorrectUI(activeType = "linear") {
+		activeType = (activeType === "linear" ? 0 : (activeType === "radial" ? 1 : 2));
 		// Hide all type-specific UI elements
 		document.querySelectorAll(".fortype-0").forEach((el) => {
 			el.style.height = "0px";
