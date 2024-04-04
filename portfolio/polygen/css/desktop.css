@@ -139,6 +139,20 @@ $name - variable
   opacity: 0;
   width: 100%;
 }
+.controls .control-range .control-range-flex-wrap {
+  display: flex;
+}
+.controls .control-range .control-range-flex-wrap div {
+  margin-left: 10px;
+  height: 20px;
+  width: 20px;
+}
+.controls .control-range .control-range-flex-wrap div svg {
+  height: inherit;
+  width: inherit;
+  color: #00b7ff;
+  cursor: pointer;
+}
 .controls .control-file button {
   position: relative;
   background: #191919;

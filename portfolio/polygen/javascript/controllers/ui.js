@@ -493,6 +493,10 @@ export default class UI {
 			downloader.click();
 		});
 
+		document.querySelector(".variance-reseed").addEventListener("click", () => {
+			Store.Preview.activeLayer.Reseed();
+		});
+
 		window.addEventListener("resize", () => {
 			Store.Preview.pixelRatio = Store.settings.x / Store.Preview.layers[0].canvas._canvasElement.offsetWidth;
 		});

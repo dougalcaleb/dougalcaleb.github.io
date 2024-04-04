@@ -57,6 +57,14 @@ export default class Layer {
 		this.canvas._canvasElement.style.visibility = value ? "visible" : "hidden";
 	}
 
+	Reseed() {
+		this._posRand = new Utils.Random();
+		this._dirRand = new Utils.Random(1);
+		this.Fill();
+		this.polygons = [];
+		this.InitialPolygons();
+	}
+
 	Delete() {
 		this.canvas._canvasElement.remove();
 	}

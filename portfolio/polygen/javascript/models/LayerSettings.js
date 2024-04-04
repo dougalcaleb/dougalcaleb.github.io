@@ -6,7 +6,7 @@ export default class LayerSettings {
 	#colorRand = 0;			// random color variance
 	#colorMode = -1;		// -1 = darken 1 = lighten
 	#lineColor = "#ffffff"; // polygon outline color
-	#lineOpacity = 0;		// polygon outline opacity
+	#lineWeight = 0;		// polygon outline weight
 	#gradient = null;		// color gradient
 	#gradRotation = 0;		// gradient rotation
 	#radialX = 0.5;			// radial gradient center x
@@ -54,9 +54,9 @@ export default class LayerSettings {
 		this.#redrawCallback();
 	}
 
-	get lineOpacity() { return this.#lineOpacity; }
-	set lineOpacity(value) {
-		this.#lineOpacity = value;
+	get lineWeight() { return this.#lineWeight; }
+	set lineWeight(value) {
+		this.#lineWeight = value;
 		this.#redrawCallback();
 	}
 
