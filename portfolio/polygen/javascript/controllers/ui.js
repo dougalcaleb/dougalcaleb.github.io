@@ -315,31 +315,31 @@ export default class UI {
 		});
 
 		// selection brush toggle
-		document.querySelector(".brush-btn").addEventListener("click", () => {
-			if (!Store.Editor.brush.active) {
-				Store.Editor.brush.active = true;
-				Store.Editor.activateBrush();
-			} else {
-				Store.Editor.deactivateBrush();
-			}
-		});
+		// document.querySelector(".brush-btn").addEventListener("click", () => {
+		// 	if (!Store.Editor.brush.active) {
+		// 		Store.Editor.brush.active = true;
+		// 		Store.Editor.activateBrush();
+		// 	} else {
+		// 		Store.Editor.deactivateBrush();
+		// 	}
+		// });
 
-		document.querySelector(".deselect-vertices").addEventListener("click", () => {
-			Store.Editor.clean();
-		});
+		// document.querySelector(".deselect-vertices").addEventListener("click", () => {
+		// 	Store.Editor.clean();
+		// });
 
-		document.querySelector(".vertex-recalc").addEventListener("click", () => {
-			Store.Editor.recalculateSelected();
-		});
+		// document.querySelector(".vertex-recalc").addEventListener("click", () => {
+		// 	Store.Editor.recalculateSelected();
+		// });
 
-		document.querySelector(".vertex-color-snap").addEventListener("click", () => {
-			Store.Editor.colorSnap();
-		});
+		// document.querySelector(".vertex-color-snap").addEventListener("click", () => {
+		// 	Store.Editor.colorSnap();
+		// });
 
-		document.querySelector(".vertex-manual-drag").addEventListener("click", (event) => {
-			event.target.classList.toggle("btn-active");
-			Store.Editor.vertexDrag();
-		});
+		// document.querySelector(".vertex-manual-drag").addEventListener("click", (event) => {
+		// 	event.target.classList.toggle("btn-active");
+		// 	Store.Editor.vertexDrag();
+		// });
 	}
 
 	// Event listeners for keypresses
