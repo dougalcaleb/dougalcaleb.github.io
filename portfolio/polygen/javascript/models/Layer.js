@@ -1,7 +1,7 @@
 import Canvas from "../controllers/canvas.js";
 import Store from "../controllers/store.js";
 import LayerSettings from "./LayerSettings.js";
-import Vertex from "./vertex.js";
+import Vertex from "./Vertex.js";
 import Utils from "../modules/utility.js";
 import Polygon from "./Polygon.js";
 import DebugUtils from "../modules/debug.js";
@@ -11,6 +11,7 @@ export default class Layer {
 	canvas = null;
 	refCanvas = null;
 	vertices = [];
+	vertexMap = {};
 	polygons = [];
 	id = null;
     uiElement = null;
@@ -57,13 +58,21 @@ export default class Layer {
 		this.canvas._canvasElement.style.visibility = value ? "visible" : "hidden";
 	}
 
+	Reseed() {
+		this._posRand = new Utils.Random();
+		this._dirRand = new Utils.Random(1);
+		this.Fill();
+		this.polygons = [];
+		this.InitialPolygons();
+	}
+
 	Delete() {
 		this.canvas._canvasElement.remove();
 	}
 
     Fill() {
         this._dirRand.Reset();
-        this._posRand.Reset();
+		this._posRand.Reset();
 
 		// Number of vertices in each direction
 		const xCount = Math.ceil(Store.settings.x / this.settings.cellSize) + 1;
@@ -100,7 +109,9 @@ export default class Layer {
                 }
 
                 vertex.posX = x;
-                vertex.posY = y;
+				vertex.posY = y;
+				
+				this.vertexMap[`${x}-${y}`] = vertex;
 
 				this.vertices.push(vertex);
 				row.push(vertex);
@@ -167,6 +178,7 @@ export default class Layer {
 		this.#imageFileHandle = file;
 		this.refCanvas.DrawImage(file, () => {
 			this.vertices = [];
+			this.vertexMap = {};
 			this.#arranged = [];
 			this.Fill();
 			this.polygons = [];
@@ -184,6 +196,7 @@ export default class Layer {
 		if (generateNewVertices) {
 			Store.Preview.AddUndoState(this.index);
 			this.vertices = [];
+			this.vertexMap = {};
 			this.#arranged = [];
 			if (redrawRef) {
 				this.DrawReference();

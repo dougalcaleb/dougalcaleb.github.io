@@ -1,8 +1,10 @@
 import Store from "./store.js";
 import GradientEditorPopup from "../modules/gradientEditorPopup.js";
+import infoPopup from "../modules/infoPopup.js";
 import Gradient from "../models/Gradient.js";
 import Utils from "../modules/utility.js";
 import Compiler from "./compiler.js";
+import Editor from "./editor.js";
 
 export default class UI {
 	constructor() { }
@@ -76,7 +78,18 @@ export default class UI {
 	static AddLayer(layer) {
 		const template = document.getElementById("layer-template").content.children[0];
 		const newLayer = template.cloneNode(true);
-		document.querySelector(".vertex-layer").appendChild(newLayer);
+		const layerWrap = document.querySelector(".vertex-layer");
+		let inserted = false;
+		for (let node of layerWrap.childNodes) {
+			if (node.classList?.contains("vertex-layer")) {
+				layerWrap.insertBefore(newLayer, node);
+				inserted = true;
+				break;
+			}
+		}
+		if (!inserted) {
+			layerWrap.appendChild(newLayer);
+		}
 		newLayer.querySelector(".layer-name").innerText = layer.name;
 		newLayer.addEventListener("click", function (event) {
 			if ((event.target !== this) && !event.target.classList.contains("layer-name")) return;
@@ -105,7 +118,7 @@ export default class UI {
 	static SetUIToLayer(layer) {
 		document.querySelector(".i-variance").value = layer.settings.variance;
 		document.querySelector(".i-verts").value = layer.settings.cellSize;
-		document.querySelector(".i-outline").value = layer.settings.lineOpacity;
+		document.querySelector(".i-outline").value = layer.settings.lineWeight;
 		document.querySelector(".i-outline-color").value = layer.settings.lineColor;
 		document.querySelector(".i-0-rotation").value = layer.settings.gradRotation;
 		document.querySelector(".i-1-posx").value = layer.settings.radialX;
@@ -122,7 +135,7 @@ export default class UI {
 			document.querySelector(".darken").classList.add("btn-active");
 		}
 		document.querySelector(".i-outline-color").value = layer.settings.lineColor;
-		document.querySelector(".i-outline").value = layer.settings.lineOpacity;
+		document.querySelector(".i-outline").value = layer.settings.lineWeight;
 		document.querySelector(".i-variance").value = layer.settings.variance;
 		document.querySelectorAll(".palette").forEach((el) => {
 			el.classList.remove("active-palette");
@@ -136,6 +149,7 @@ export default class UI {
 			el.classList.remove("btn-active");
 		});
 		document.querySelector(`.type-${Store.Preview.activeLayer.settings.type}`).classList.add("btn-active");
+		UI.#DisplayCorrectUI(Store.Preview.activeLayer.settings.type);
 	}
 
 
@@ -143,15 +157,23 @@ export default class UI {
 	//	Private Methods
 	//==================================
 
-	static #DisplayCorrectUI() {
-		for (let a = 0; a < document.querySelectorAll(".fortype-1").length; a++) {
-			if (!document.querySelectorAll(".fortype-1")[a].classList.contains("fortype-0")) {
-				document.querySelectorAll(".fortype-1")[a].style.height = "0px";
-			}
-		}
-		for (let a = 0; a < document.querySelectorAll(".fortype-2").length; a++) {
-			document.querySelectorAll(".fortype-2")[a].style.height = "0px";
-		}
+	static #DisplayCorrectUI(activeType = "linear") {
+		activeType = (activeType === "linear" ? 0 : (activeType === "radial" ? 1 : 2));
+		// Hide all type-specific UI elements
+		document.querySelectorAll(".fortype-0").forEach((el) => {
+			el.style.height = "0px";
+		});
+		document.querySelectorAll(".fortype-1").forEach((el) => {
+			el.style.height = "0px";
+		});
+		document.querySelectorAll(".fortype-2").forEach((el) => {
+			el.style.height = "0px";
+		});
+
+		// Show the correct type-specific UI elements
+		document.querySelectorAll(`.fortype-${activeType}`).forEach((el) => {
+			el.style.height = "";
+		});
 	}
 
 	// Populate different repetitive elements of the UI like buttons and palettes
@@ -305,31 +327,8 @@ export default class UI {
 			Store.Preview.activeLayer.settings.gradRotation = Utils.radToDeg(-1 * Store.idealAngle);
 		});
 
-		// selection brush toggle
-		document.querySelector(".brush-btn").addEventListener("click", () => {
-			if (!Store.Editor.brush.active) {
-				Store.Editor.brush.active = true;
-				Store.Editor.activateBrush();
-			} else {
-				Store.Editor.deactivateBrush();
-			}
-		});
-
-		document.querySelector(".deselect-vertices").addEventListener("click", () => {
-			Store.Editor.clean();
-		});
-
-		document.querySelector(".vertex-recalc").addEventListener("click", () => {
-			Store.Editor.recalculateSelected();
-		});
-
-		document.querySelector(".vertex-color-snap").addEventListener("click", () => {
-			Store.Editor.colorSnap();
-		});
-
-		document.querySelector(".vertex-manual-drag").addEventListener("click", (event) => {
-			event.target.classList.toggle("btn-active");
-			Store.Editor.vertexDrag();
+		document.querySelector("#editor-deselect-all").addEventListener("click", () => {
+			Editor.ClearSelection();
 		});
 	}
 
@@ -404,7 +403,7 @@ export default class UI {
 
 		// outline
 		document.querySelector(".i-outline").addEventListener("input", (event) => {
-			Store.Preview.activeLayer.settings.lineOpacity = parseFloat(event.target.value);
+			Store.Preview.activeLayer.settings.lineWeight = parseFloat(event.target.value);
 		});
 
 		// proportional falloff (tools)
@@ -465,6 +464,7 @@ export default class UI {
 		document.querySelector(".layer-add").addEventListener("click", () => {
 			const newLayer = Store.Preview.NewLayer();
 			UI.AddLayer(newLayer);
+			UI.SetUIToLayer(newLayer);
 			Store.Preview.SelectLayer(newLayer.id);
 		});
 
@@ -484,8 +484,25 @@ export default class UI {
 			downloader.click();
 		});
 
+		document.querySelector(".variance-reseed").addEventListener("click", () => {
+			Store.Preview.activeLayer.Reseed();
+		});
+
 		window.addEventListener("resize", () => {
 			Store.Preview.pixelRatio = Store.settings.x / Store.Preview.layers[0].canvas._canvasElement.offsetWidth;
+			Editor.RefreshSaved();
+		});
+
+		document.querySelector("#editor-selected-color").addEventListener("input", (event) => {
+			Editor._selectionColor = event.target.value;
+			event.target.parentNode.style.background = event.target.value;
+		});
+
+		document.querySelector(".help-info svg").addEventListener("click", () => {
+			new infoPopup({
+				title: "Editor help",
+				body: Store.htmlTemplates["EDITOR_HELP_BODY"]
+			});
 		});
 	}
 }

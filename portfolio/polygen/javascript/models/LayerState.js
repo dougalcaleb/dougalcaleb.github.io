@@ -1,4 +1,4 @@
-import Vertex from "./vertex.js";
+import Vertex from "./Vertex.js";
 import Polygon from "./Polygon.js";
 
 export default class LayerState {

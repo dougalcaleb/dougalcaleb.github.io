@@ -3,9 +3,10 @@ export default class Defaults {
 	
 	static UI = {
 		CELL_SIZE: [5, 200],
-		BRUSH_INDICATOR_COLOR: "rgba(0,0,0,0.5)",
-		BRUSH_INDICATOR_WEIGHT: 3,
-		BRUSH_DRAW_COLOR: "rgba(255,255,255,0.3)",
+		EDITOR_SELECTION_DASH: [8, 8],
+		EDITOR_SELECTION_WEIGHT: 2,
+		EDITOR_DRAG_THRESHOLD: 2,
+		EDITOR_VERTEX_SIZE: 3,
 		SELECTED_VERTEX: { COLOR: "rgba(255,255,255,1)", SIZE: 5 },
 		SELECTION_BRUSH_KEYBINDS: { "b": true, " ": true },
 		UNDO_KEYBINDS: { "CTRL": "Control", "Z": "z" },
