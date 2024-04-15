@@ -27,7 +27,6 @@ export default class Store {
 		Store.Preview.overlayLayer.index = 100;
 
 		Store.Preview.pixelRatio = Store.settings.x / Store.Preview.layers[0].canvas._canvasElement.offsetWidth;
-
 		Store.SavePalettes();
 	}
 

@@ -327,7 +327,6 @@ export default class UI {
 			Store.Preview.activeLayer.settings.gradRotation = Utils.radToDeg(-1 * Store.idealAngle);
 		});
 
-
 		document.querySelector("#editor-deselect-all").addEventListener("click", () => {
 			Editor.ClearSelection();
 		});
