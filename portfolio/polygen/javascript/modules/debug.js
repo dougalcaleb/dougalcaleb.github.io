@@ -1,10 +1,13 @@
 export default class DebugUtils {
 	constructor() { }
 	
-	static drawPoints(ctx, vertices, textFn = null) {
+	static drawPoints(ctx, vertices, clearBeforeDraw = true, color = "red", textFn = null) {
 		// DebugUtils.drawPoints(this.canvas.ctx, this.vertices);
+		if (clearBeforeDraw) {
+			ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+		}
 		for (const vertex of vertices) {
-			ctx.fillStyle = "red";
+			ctx.fillStyle = color;
 			ctx.beginPath();
 			ctx.arc(vertex.x, vertex.y, 5, 0, Math.PI * 2);
 			ctx.fill();

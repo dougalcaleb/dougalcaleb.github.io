@@ -65,6 +65,14 @@ export default class Utils {
 		});
 	}
 
+	static PointDistance(v1, v2) {
+		return Math.sqrt(Math.pow(v2.x - v1.x, 2) + Math.pow(v2.y - v1.y, 2));
+	}
+
+	static PointDistanceSqr(v1, v2) {
+		return Math.pow(v2.x - v1.x, 2) + Math.pow(v2.y - v1.y, 2);
+	}
+
 	static Round(value, places) {
 		return +(Math.round(value + "e+" + places) + "e-" + places);
 	}

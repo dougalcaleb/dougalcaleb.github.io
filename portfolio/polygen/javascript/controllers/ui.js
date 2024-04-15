@@ -3,6 +3,7 @@ import GradientEditorPopup from "../modules/gradientEditorPopup.js";
 import Gradient from "../models/Gradient.js";
 import Utils from "../modules/utility.js";
 import Compiler from "./compiler.js";
+import Editor from "./editor.js";
 
 export default class UI {
 	constructor() { }
@@ -314,32 +315,10 @@ export default class UI {
 			Store.Preview.activeLayer.settings.gradRotation = Utils.radToDeg(-1 * Store.idealAngle);
 		});
 
-		// selection brush toggle
-		// document.querySelector(".brush-btn").addEventListener("click", () => {
-		// 	if (!Store.Editor.brush.active) {
-		// 		Store.Editor.brush.active = true;
-		// 		Store.Editor.activateBrush();
-		// 	} else {
-		// 		Store.Editor.deactivateBrush();
-		// 	}
-		// });
 
-		// document.querySelector(".deselect-vertices").addEventListener("click", () => {
-		// 	Store.Editor.clean();
-		// });
-
-		// document.querySelector(".vertex-recalc").addEventListener("click", () => {
-		// 	Store.Editor.recalculateSelected();
-		// });
-
-		// document.querySelector(".vertex-color-snap").addEventListener("click", () => {
-		// 	Store.Editor.colorSnap();
-		// });
-
-		// document.querySelector(".vertex-manual-drag").addEventListener("click", (event) => {
-		// 	event.target.classList.toggle("btn-active");
-		// 	Store.Editor.vertexDrag();
-		// });
+		document.querySelector("#editor-deselect-all").addEventListener("click", () => {
+			Editor.ClearSelection();
+		});
 	}
 
 	// Event listeners for keypresses
@@ -500,6 +479,12 @@ export default class UI {
 
 		window.addEventListener("resize", () => {
 			Store.Preview.pixelRatio = Store.settings.x / Store.Preview.layers[0].canvas._canvasElement.offsetWidth;
+			Editor.RefreshSaved();
+		});
+
+		document.querySelector("#editor-selected-color").addEventListener("input", (event) => {
+			Editor._selectionColor = event.target.value;
+			event.target.parentNode.style.background = event.target.value;
 		});
 	}
 }
