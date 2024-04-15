@@ -5,7 +5,7 @@
 .popup-bg {
 	height: 100%;
 	width: 100%;
-	z-index: 5;
+	z-index: 100;
 	position: fixed;
 	background: rgba(255, 255, 255, 0.3);
 }
@@ -216,4 +216,30 @@
 	text-align: center;
 	line-height: 22px;
 	font-size: min(2vw, 18px);
+}
+
+// info popup specific
+
+.popup.info-popup {
+	height: max-content;
+	.popup-body {
+		height: max-content;
+		max-height: 80vh;
+		overflow-y: auto;
+		display: block;
+		.popup-body-text {
+			text-align: initial;
+			margin-top: 0;
+			padding: 10px;
+			width: calc(100% - 20px);
+		}
+	}
+	.popup-button-wrap {
+		width: calc(100% - 40px);
+		padding-bottom: 10px;
+		padding-top: 10px;
+		bottom: -100%;
+		background: inherit;
+		position: relative;
+	}
 }

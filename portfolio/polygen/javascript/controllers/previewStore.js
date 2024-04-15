@@ -4,6 +4,7 @@ import Stack from "../models/Stack.js";
 import LayerState from "../models/LayerState.js";
 import Layer from "../models/Layer.js";
 import UI from "./ui.js";
+import Editor from "./editor.js";
 
 export default class PreviewStore {
 	constructor() {}
@@ -69,6 +70,10 @@ export default class PreviewStore {
 		document.querySelector(".layer-selected")?.classList.remove("layer-selected");
 		this.activeLayer.uiElement.classList.add("layer-selected");
 		UI.SetUIToLayer(this.activeLayer);
+		Editor.RefreshSaved();
+		if (this.#usingImgCount === 0) {
+			this.pixelRatio = Store.settings.x / this.layers[0].canvas._canvasElement.offsetWidth;
+		}
 	}
 
 	RemoveLayer(identifier) {

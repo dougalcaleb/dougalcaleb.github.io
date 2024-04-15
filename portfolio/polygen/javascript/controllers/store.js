@@ -26,6 +26,7 @@ export default class Store {
 		Store.Preview.overlayLayer.name = "OVERLAY";
 		Store.Preview.overlayLayer.index = 100;
 
+		Store.Preview.pixelRatio = Store.settings.x / Store.Preview.layers[0].canvas._canvasElement.offsetWidth;
 		Store.SavePalettes();
 	}
 
@@ -49,7 +50,7 @@ export default class Store {
 		new Gradient([
 			{ color: "#787878", stop: 0 },
 			{ color: "#454545", stop: 0.25 },
-			{ color: "#333333", stop: 0.5 },
+			{ color: "#a5e8a1", stop: 0.5 },
 			{ color: "#454545", stop: 0.75 },
 			{ color: "#787878", stop: 1 }
 		]),
