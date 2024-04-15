@@ -78,7 +78,18 @@ export default class UI {
 	static AddLayer(layer) {
 		const template = document.getElementById("layer-template").content.children[0];
 		const newLayer = template.cloneNode(true);
-		document.querySelector(".vertex-layer").appendChild(newLayer);
+		const layerWrap = document.querySelector(".vertex-layer");
+		let inserted = false;
+		for (let node of layerWrap.childNodes) {
+			if (node.classList?.contains("vertex-layer")) {
+				layerWrap.insertBefore(newLayer, node);
+				inserted = true;
+				break;
+			}
+		}
+		if (!inserted) {
+			layerWrap.appendChild(newLayer);
+		}
 		newLayer.querySelector(".layer-name").innerText = layer.name;
 		newLayer.addEventListener("click", function (event) {
 			if ((event.target !== this) && !event.target.classList.contains("layer-name")) return;
