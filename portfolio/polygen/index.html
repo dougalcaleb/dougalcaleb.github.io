@@ -51,8 +51,14 @@
 			</div>
 
 			<div class="panel panel-image-tools">
+				<div class="help-info">
+					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+						<title>Help</title>
+						<path fill="currentColor" d="M11 9H13V7H11V9M14 17V15H13V11H10V13H11V15H10V17H14M5 3H19C20.1 3 21 3.89 21 5V19C21 19.53 20.79 20.04 20.41 20.41C20.04 20.79 19.53 21 19 21H5C4.47 21 3.96 20.79 3.59 20.41C3.21 20.04 3 19.53 3 19V5C3 3.89 3.89 3 5 3M19 19V5H5V19H19Z" />
+					</svg>
+				</div>
 				<div class="control control-btns brush-toggle">
-					<p>TOOLS</p>
+					<p class="control-header-reduce-mtop">TOOLS</p>
 					<div class="control-btn-wrap btn-wrap-no-bottom-margin">
 						<div class="tool tool-select" title="Select vertices">
 							<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -319,6 +325,26 @@
 		<template style="display: none" id="_JS_TEMPLATES">
 			<template id="PALETTE_CONTROLS">
 				<svg viewBox="0 0 24 24"><path fill="currentColor" d="M20.71,7.04C21.1,6.65 21.1,6 20.71,5.63L18.37,3.29C18,2.9 17.35,2.9 16.96,3.29L15.12,5.12L18.87,8.87M3,17.25V21H6.75L17.81,9.93L14.06,6.18L3,17.25Z" /></svg>
+			</template>
+			<template id="EDITOR_HELP_BODY">
+				<div class="help-text">
+					<p>Use the tools here to make adjustments to vertices.</p>
+					<br/>
+					<h3>TOOLS</h3>
+					<p><span class="help-section">Select Vertices:</span> Draw a selection rectangle. Hold SHIFT or CTRL to add to the existing selection. Press either button to highlight the current selection. Click away to hide the selection.</p>
+					<p><span class="help-section">Clear vertex selection:</span> Deselect all selected vertices.</p>
+					<p><span class="help-section">Move vertices:</span> Drag the selection. Use the proportional falloff slider to adjust the radius from the mouse of vertices that are affected by the drag movement.</p>
+					<p><span class="help-section">Move vertices to nearby color boundaries:</span> Uses a software line detection algorithm to detect lines in the underlying gradient or image, and moves vertices to detected lines if close enough. Best used with high-contrast images. Images with high resolutions will be slow.</p>
+					<p><span class="help-section">Add vertices:</span> Create custom vertices. Note that you must create new, custom polygons instead of editing the vertex count of existing ones.</p>
+					<p><span class="help-section">Delete selected vertices:</span> Delete the vertices in the selection and dissolve their corresponding polygons.</p>
+					<p><span class="help-section">Recalculate vertex position:</span> Regenerates selected vertices with a new random offset. Note that this will be overridden by changing the general vertex variance.</p>
+
+					<h3>OTHER</h3>
+					<p><span class="help-section">Proportional falloff:</span> Adjust the radius from the mouse of vertices that are affected by manually dragging.</p>
+					<p><span class="help-section">Undo limit:</span> Set the number of vertex states to save to be able to revert to. Press "CTRL + Z" to undo.</p>
+					<p><span class="help-section">Selection color:</span> Set the color of the selection box and the displayed vertices.</p>
+					<p><span class="help-section">Layers:</span> Use layers to create different canvases with unique settings. Best used by deleting vertices of higher layers to allow lower layers to be visible.</p>
+				</div>
 			</template>
 		</template>
 

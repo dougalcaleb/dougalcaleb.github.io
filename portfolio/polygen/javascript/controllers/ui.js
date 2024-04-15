@@ -1,5 +1,6 @@
 import Store from "./store.js";
 import GradientEditorPopup from "../modules/gradientEditorPopup.js";
+import infoPopup from "../modules/infoPopup.js";
 import Gradient from "../models/Gradient.js";
 import Utils from "../modules/utility.js";
 import Compiler from "./compiler.js";
@@ -485,6 +486,13 @@ export default class UI {
 		document.querySelector("#editor-selected-color").addEventListener("input", (event) => {
 			Editor._selectionColor = event.target.value;
 			event.target.parentNode.style.background = event.target.value;
+		});
+
+		document.querySelector(".help-info svg").addEventListener("click", () => {
+			new infoPopup({
+				title: "Editor help",
+				body: Store.htmlTemplates["EDITOR_HELP_BODY"]
+			});
 		});
 	}
 }
