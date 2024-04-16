@@ -6,12 +6,10 @@ export default class SettingsStore {
 	#settings = {
 		x: 1920,
 		y: 1080,
-		propFalloff: 4 
 	};
 
 	get x() { return this.#settings.x; }
 	get y() { return this.#settings.y; }
-	get propFalloff() { return this.#settings.propFalloff; }
 
 	set x(value) {
 		this.#settings.x = value;
@@ -29,7 +27,6 @@ export default class SettingsStore {
 		Store.Preview.pixelRatio = this.#settings.x /  Store.Preview.layers[0].canvas._canvasElement.offsetWidth;
 		this.#RegenerateAll();
 	}
-	set propFalloff(value) { this.#settings.propFalloff = value; }
 
 	setFromImg(x, y) {
 		this.#settings.x = x;

@@ -1,19 +1,11 @@
 export default class EditorStore {
 	constructor() { }
-	
-	brush = {
-		FollowEvent: new AbortController(),
-		indOn: true,
-		size: 100,
-		sizeStep: 5,
-		minSize: 5,
-		maxSize: 100,
-		posX: null,
-		posY: null,
-		drawing: false,
-		active: false,
-		points: [],
-	};
+
+	selection = [];
+	#propFalloff = 0;
+
+	get propFalloff() { return this.#propFalloff; }
+	set propFalloff(value) { this.#propFalloff = value; }
 
 	activateBrush() {
 		console.warn("activateBrush not implemented");
