@@ -4,14 +4,16 @@ import LayerSettings from "./LayerSettings.js";
 import Vertex from "./Vertex.js";
 import Utils from "../modules/utility.js";
 import Polygon from "./Polygon.js";
+import ListMap from "./ListMap.js";
 import DebugUtils from "../modules/debug.js";
 
 export default class Layer {
 	name = "";
 	canvas = null;
 	refCanvas = null;
-	vertices = [];
-	vertexMap = {};
+	vertices = [];  // All vertices
+	vertexMap = {}; // ID: Vertex
+	anchorMap = {}; // x-y: Vertex[] (ListMap)
 	polygons = [];
 	id = null;
     uiElement = null;
@@ -34,7 +36,8 @@ export default class Layer {
 		this.settings = new LayerSettings(this.Redraw.bind(this));
         this.id = Utils.UUID();
         this._posRand = new Utils.Random();
-        this._dirRand = new Utils.Random(1);
+		this._dirRand = new Utils.Random(1);
+		this.anchorMap = new ListMap();
 	}
 
 	static Swap(layer1, layer2) {
@@ -111,7 +114,8 @@ export default class Layer {
                 vertex.posX = x;
 				vertex.posY = y;
 				
-				this.vertexMap[`${x}-${y}`] = vertex;
+				this.vertexMap[vertex.id] = vertex;
+				this.anchorMap[`${x}-${y}`] = vertex;
 
 				this.vertices.push(vertex);
 				row.push(vertex);
@@ -179,6 +183,7 @@ export default class Layer {
 		this.refCanvas.DrawImage(file, () => {
 			this.vertices = [];
 			this.vertexMap = {};
+			this.anchorMap = new ListMap();
 			this.#arranged = [];
 			this.Fill();
 			this.polygons = [];
@@ -197,6 +202,7 @@ export default class Layer {
 			Store.Preview.AddUndoState(this.index);
 			this.vertices = [];
 			this.vertexMap = {};
+			this.anchorMap = new ListMap();
 			this.#arranged = [];
 			if (redrawRef) {
 				this.DrawReference();
@@ -214,10 +220,26 @@ export default class Layer {
 
 	UpdateVertices(vertices) {
 		vertices.forEach((vertex) => {
-			this.vertexMap[`${vertex.posX}-${vertex.posY}`].x = vertex.x;
-			this.vertexMap[`${vertex.posX}-${vertex.posY}`].y = vertex.y;
+			this.vertexMap[vertex.id].x = vertex.x;
+			this.vertexMap[vertex.id].y = vertex.y;
 		});
 
 		this.Redraw(false, false);
+	}
+
+	UpdateCustomPolygon(polygon) {
+		this.polygons[this.polygons.length - 1] = polygon;
+		this.Redraw(false, false);
+	}
+
+	AddCustomPolygon(polygon) {
+		this.polygons.push(polygon);
+		this.Redraw(false, false);
+	}
+
+	AddVertex(vertex) {
+		this.vertices.push(vertex);
+		this.anchorMap[`${vertex.posX}-${vertex.posY}`] = vertex;
+		this.vertexMap[vertex.id] = vertex;
 	}
 }

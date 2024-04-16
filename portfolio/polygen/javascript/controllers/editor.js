@@ -2,6 +2,7 @@ import Store from "./store.js";
 import Utils from "../modules/utility.js";
 import Defaults from "./internalDefaultStore.js";
 import Vertex from "../models/Vertex.js";
+import Polygon from "../models/Polygon.js";
 import DebugUtils from "../modules/debug.js";
 
 const Tools = {
@@ -20,6 +21,7 @@ export default class Editor {
 	static _abortControllers = {
 		selection: null,
 		move: null,
+		add: null,
 	};
 
 	static _selection = {
@@ -40,6 +42,10 @@ export default class Editor {
 		moving: false,
 		vertexMap: [],
 		verticesBeforeMove: {}
+	};
+	static _add = {
+		activeVertices: [],
+		activePolygon: null
 	};
 	
 	static Init() {
@@ -102,20 +108,22 @@ export default class Editor {
 			point: null,
 			distance: Infinity
 		}
-		const vMap = Store.Preview.activeLayer.vertexMap;
+		const vMap = Store.Preview.activeLayer.anchorMap;
 		const xCount = Math.ceil(Store.settings.x / Store.Preview.activeLayer.settings.cellSize) + 1;
 		const yCount = Math.ceil(Store.settings.y / Store.Preview.activeLayer.settings.cellSize) + 1;
 
 		anchorSquare.forEach(anchor => {
 			if (anchor.x < 0 || anchor.y < 0 || anchor.x >= xCount || anchor.y >= yCount) return;
 
-			let distance = Utils.PointDistanceSqr(vMap[anchor.x + "-" + anchor.y], { x, y });
-			if (distance < nearest.distance) {
-				nearest = {
-					point: vMap[anchor.x + "-" + anchor.y],
-					distance
+			vMap[anchor.x + "-" + anchor.y].forEach(vertex => {
+				let distance = Utils.PointDistanceSqr(vertex, { x, y });
+				if (distance < nearest.distance) {
+					nearest = {
+						point: vertex,
+						distance
+					}
 				}
-			}
+			});			
 		});
 
 		return nearest.point;
@@ -175,10 +183,11 @@ export default class Editor {
 		const vInBox = [];
 		for (let y = topLeftAnchor.y; y < bottomRightAnchor.y; y++) {
 			for (let x = topLeftAnchor.x; x < bottomRightAnchor.x; x++) {
-				const vertex = Store.Preview.activeLayer.vertexMap[x + "-" + y];
-				if (vertex && vertex.x >= topLeft.x && vertex.x <= bottomRight.x && vertex.y >= topLeft.y && vertex.y <= bottomRight.y) {
-					vInBox.push(vertex);
-				}
+				Store.Preview.activeLayer.anchorMap[x + "-" + y].forEach((vertex) => {
+					if (vertex && vertex.x >= topLeft.x && vertex.x <= bottomRight.x && vertex.y >= topLeft.y && vertex.y <= bottomRight.y) {
+						vInBox.push(vertex);
+					}
+				});
 			}
 		}
 
@@ -364,7 +373,44 @@ export default class Editor {
 		document.querySelector("#editor-move").classList.remove("btn-active");
 	}
 
-	static AddTool() { }
+	static AddTool() {
+		if (this._activeTool === Tools.ADD) {
+			this.DeactivateAddTool();
+			return;
+		} else if (this._activeTool === Tools.SELECTION) {
+			this.DeactivateSelectionTool();
+		} else if (this._activeTool === Tools.MOVE) {
+			this.DeactivateMoveTool();
+		}
+
+		this._activeTool = Tools.ADD;
+		this._abortControllers.add = new AbortController();
+
+		this._canvas.addEventListener("click", (event) => {
+			const coord = this.GetCanvasPosition(event.clientX, event.clientY);
+			const nearestAnchor = {
+				x: Math.round(coord.x / Store.Preview.activeLayer.settings.cellSize),
+				y: Math.round(coord.y / Store.Preview.activeLayer.settings.cellSize)
+			};
+			const vertex = new Vertex(coord.x, coord.y, nearestAnchor.x, nearestAnchor.y);
+			this._add.activeVertices.push(vertex);
+			this._add.activePolygon = new Polygon(this._add.activeVertices, Store.Preview.activeLayer);
+			Store.Preview.activeLayer.AddVertex(vertex);
+			if (this._add.activeVertices.length === 1) {
+				Store.Preview.activeLayer.AddCustomPolygon(this._add.activePolygon);
+			} else {
+				Store.Preview.activeLayer.UpdateCustomPolygon(this._add.activePolygon);
+			}
+		}, { signal: this._abortControllers.add.signal });
+
+		document.querySelector("#editor-add").classList.add("btn-active");
+	}
 	
-	static DeactivateAddTool() { }
+	static DeactivateAddTool() {
+		this._activeTool = null;
+		this._abortControllers.add.abort();
+		this._add.activeVertices = [];
+		this._add.activePolygon = null;
+		document.querySelector("#editor-add").classList.remove("btn-active");
+	}
 }

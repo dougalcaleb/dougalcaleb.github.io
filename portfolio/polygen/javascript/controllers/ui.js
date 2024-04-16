@@ -336,6 +336,9 @@ export default class UI {
 		document.querySelector("#editor-move").addEventListener("click", () => {
 			Editor.MoveTool();
 		});
+		document.querySelector("#editor-add").addEventListener("click", () => {
+			Editor.AddTool();
+		});
 	}
 
 	// Event listeners for keypresses

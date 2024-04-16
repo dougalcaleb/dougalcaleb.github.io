@@ -65,7 +65,7 @@
 								<path fill="currentColor" d="M13,17H17V13H19V17H23V19H19V23H17V19H13V17M11,17V19H9V17H11M7,17V19H5V17H7M19,9V11H17V9H19M19,5V7H17V5H19M15,5V7H13V5H15M11,5V7H9V5H11M7,5V7H5V5H7M7,13V15H5V13H7M7,9V11H5V9H7Z" />
 							</svg>
 						</div>
-						<div class="tool tool-add-vertex" title="Add vertices">
+						<div class="tool tool-add-vertex" id="editor-add" title="New polygon">
 							<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
 								<path fill="currentColor" d="M17,15.7V13H19V17L10,21L3,14L7,5H11V7H8.3L5.4,13.6L10.4,18.6L17,15.7M22,5V7H19V10H17V7H14V5H17V2H19V5H22Z" />
 							</svg>
@@ -334,7 +334,7 @@
 					<br/>
 					<h3>TOOLS</h3>
 					<p><span class="help-section">Select Vertices:</span> Draw a selection rectangle. Hold SHIFT or CTRL to add to the existing selection. Press either button to highlight the current selection. Click away to hide the selection.</p>
-					<p><span class="help-section">Add vertices:</span> Create custom vertices. Note that you must create new, custom polygons instead of editing the vertex count of existing ones.</p>
+					<p><span class="help-section">New polygon:</span> Create a custom polygon. The new polygon's vertices cannot be edited after exiting the tool, though they can be moved or deleted with the other tools. This tool cannot edit other existing polygons.</p>
 					<p><span class="help-section">Move vertices:</span> Drag the selection. Use the proportional falloff slider to adjust the radius from the mouse of vertices that are affected by the drag movement.</p>
 					<h3>ACTIONS</h3>
 					<p><span class="help-section">Clear vertex selection:</span> Deselect all selected vertices.</p>
