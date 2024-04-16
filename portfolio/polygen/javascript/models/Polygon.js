@@ -9,8 +9,12 @@ export default class Polygon {
 	constructor(vertices, parentLayer = null) {
 		this.vertices = vertices;
 		this._parentLayer = parentLayer;
+		this.id = Utils.UUID();
 		if (this.vertices.length > 2) {
 			this.vertices = Polygon.createPolygon(vertices);
+			this.vertices.forEach((vertex) => {
+				vertex.polygons.push(this);
+			});
 		}
 	}
 
@@ -75,7 +79,7 @@ export default class Polygon {
 	AddVertex(vertex) {
 		this.vertices.push(vertex);
 		if (this.vertices.length > 2) {
-			this.vertices = Utils.createPolygon(this.vertices);
+			this.vertices = Polygon.createPolygon(this.vertices);
 		}
 	}
 	
@@ -95,15 +99,15 @@ export default class Polygon {
 		return { x: x / this.vertices.length, y: y / this.vertices.length };
 	}
 
-	GetNeighborsOfVertex(vertex) {
-		const neighbors = [];
-		for (let i = 0; i < this.vertices.length; i++) {
-			if (this.vertices[i] == vertex) {
-				neighbors.push(this.vertices[i - 1]);
-				neighbors.push(this.vertices[i + 1]);
-				break;
-			}
-		}
-		return neighbors;
-	}
+	// GetNeighborsOfVertex(vertex) {
+	// 	const neighbors = [];
+	// 	for (let i = 0; i < this.vertices.length; i++) {
+	// 		if (this.vertices[i] == vertex) {
+	// 			neighbors.push(this.vertices[i - 1]);
+	// 			neighbors.push(this.vertices[i + 1]);
+	// 			break;
+	// 		}
+	// 	}
+	// 	return neighbors;
+	// }
 }

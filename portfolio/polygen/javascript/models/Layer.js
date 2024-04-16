@@ -224,17 +224,22 @@ export default class Layer {
 			this.vertexMap[vertex.id].y = vertex.y;
 		});
 
-		this.Redraw(false, false);
+		this.Redraw();
 	}
 
 	UpdateCustomPolygon(polygon) {
+		// Since we're overwriting the polygon, the old one is lost 
+		// and we need to remove its reference from the vertices that claimed it
+		this.polygons[this.polygons.length - 1].vertices.forEach((vertex) => {
+			vertex.polygons = vertex.polygons.filter((poly) => poly.id != polygon.id);
+		});
 		this.polygons[this.polygons.length - 1] = polygon;
-		this.Redraw(false, false);
+		this.Redraw();
 	}
 
 	AddCustomPolygon(polygon) {
 		this.polygons.push(polygon);
-		this.Redraw(false, false);
+		this.Redraw();
 	}
 
 	AddVertex(vertex) {

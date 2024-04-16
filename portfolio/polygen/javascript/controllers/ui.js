@@ -339,6 +339,9 @@ export default class UI {
 		document.querySelector("#editor-add").addEventListener("click", () => {
 			Editor.AddTool();
 		});
+		document.querySelector("#editor-delete").addEventListener("click", () => {
+			Editor.DeleteSelection();
+		});
 	}
 
 	// Event listeners for keypresses

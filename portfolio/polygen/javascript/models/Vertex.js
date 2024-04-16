@@ -40,10 +40,10 @@ export default class Vertex {
 		return newSet;
 	}
 
-	GetNeighbors() {
-		this.neighbors = [];
-		this.polygons.forEach((polygon) => {
-			this.neighbors.push(...polygon.GetNeighborsOfVertex(this));
-		});
-	}
+	// GetNeighbors() {
+	// 	this.neighbors = [];
+	// 	this.polygons.forEach((polygon) => {
+	// 		this.neighbors.push(...polygon.GetNeighborsOfVertex(this));
+	// 	});
+	// }
 }

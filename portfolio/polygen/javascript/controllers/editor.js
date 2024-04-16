@@ -413,4 +413,16 @@ export default class Editor {
 		this._add.activePolygon = null;
 		document.querySelector("#editor-add").classList.remove("btn-active");
 	}
+
+	static DeleteSelection() {
+		Store.Editor.selection.forEach(vertex => {
+			Store.Preview.activeLayer.vertexMap[vertex.id] = null;
+			Store.Preview.activeLayer.anchorMap[vertex.posX + "-" + vertex.posY] =
+				Store.Preview.activeLayer.anchorMap[vertex.posX + "-" + vertex.posY].filter(v => v.id !== vertex.id);
+			Store.Preview.activeLayer.vertices = Store.Preview.activeLayer.vertices.filter(v => v.id !== vertex.id);
+			Store.Preview.activeLayer.polygons = Store.Preview.activeLayer.polygons.filter(p => !p.vertices.includes(vertex));
+		});
+		Store.Preview.activeLayer.Redraw();
+		this.ClearSelection();
+	}
 }
