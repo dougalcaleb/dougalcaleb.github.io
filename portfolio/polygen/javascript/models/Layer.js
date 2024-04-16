@@ -211,4 +211,13 @@ export default class Layer {
 			this.canvas.DrawPolygons();
 		}
 	}
+
+	UpdateVertices(vertices) {
+		vertices.forEach((vertex) => {
+			this.vertexMap[`${vertex.posX}-${vertex.posY}`].x = vertex.x;
+			this.vertexMap[`${vertex.posX}-${vertex.posY}`].y = vertex.y;
+		});
+
+		this.Redraw(false, false);
+	}
 }

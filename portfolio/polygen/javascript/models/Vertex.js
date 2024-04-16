@@ -24,6 +24,22 @@ export default class Vertex {
 		return newSet;
 	}
 
+	static CopySetAsCoordMap(vertexSet) {
+		const newSet = {};
+		vertexSet.forEach((vertex) => {
+			newSet[`${vertex.posX}-${vertex.posY}`] = new Vertex(vertex.x, vertex.y);
+		});
+		return newSet;
+	}
+
+	static CopySetAsIdMap(vertexSet) {
+		const newSet = {};
+		vertexSet.forEach((vertex) => {
+			newSet[vertex.id] = new Vertex(vertex.x, vertex.y);
+		});
+		return newSet;
+	}
+
 	GetNeighbors() {
 		this.neighbors = [];
 		this.polygons.forEach((polygon) => {

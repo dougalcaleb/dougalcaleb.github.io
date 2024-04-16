@@ -220,7 +220,6 @@ export default class UI {
 			document.querySelector(".choose-properties").classList.add("btn-active");
 			document.querySelector(".panel-image-tools").style.display = "none";
 			document.querySelector(".panel-image-properties").style.display = "inline";
-			//! EditLayer.deactivateBrush();
 		});
 		document.querySelector(".choose-tools").addEventListener("click", () => {
 			Store.activePage = 1;
@@ -331,6 +330,12 @@ export default class UI {
 		document.querySelector("#editor-deselect-all").addEventListener("click", () => {
 			Editor.ClearSelection();
 		});
+		document.querySelector("#editor-select").addEventListener("click", () => {
+			Editor.SelectionTool();
+		});
+		document.querySelector("#editor-move").addEventListener("click", () => {
+			Editor.MoveTool();
+		});
 	}
 
 	// Event listeners for keypresses
@@ -409,7 +414,7 @@ export default class UI {
 
 		// proportional falloff (tools)
 		document.querySelector(".prop-falloff").addEventListener("input", (event) => {
-			Store.settings.propFalloff = parseInt(event.target.value);
+			Store.Editor.propFalloff = parseInt(event.target.value);
 		});
 	}
 
@@ -495,7 +500,7 @@ export default class UI {
 		});
 
 		document.querySelector("#editor-selected-color").addEventListener("input", (event) => {
-			Editor._selectionColor = event.target.value;
+			Editor._selection.color = event.target.value;
 			event.target.parentNode.style.background = event.target.value;
 		});
 
