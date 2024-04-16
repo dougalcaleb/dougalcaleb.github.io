@@ -25,6 +25,7 @@ export default class Store {
 		Store.Preview.overlayLayer = new Layer();
 		Store.Preview.overlayLayer.name = "OVERLAY";
 		Store.Preview.overlayLayer.index = 100;
+		Store.globalLayerCount--;
 
 		Store.Preview.pixelRatio = Store.settings.x / Store.Preview.layers[0].canvas._canvasElement.offsetWidth;
 
@@ -80,6 +81,7 @@ export default class Store {
 	static palettes = [];
 	static htmlTemplates = {};
 	static activePage = 0;
+	static globalLayerCount = 0;
 
 	static #savePalettesAs = "polygen-saved-palettes";
 

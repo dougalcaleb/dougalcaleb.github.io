@@ -32,7 +32,7 @@ export default class Layer {
 		this.canvas = new Canvas({ parentLayer: this });
 		this.refCanvas = new Canvas({ offscreenCanvas: true, willReadFrequently: true, parentLayer: this });
 		this.canvas._canvasElement.style.zIndex = this.#index + 1;
-		this.name = "Layer " + (this.index + 1);
+		this.name = "Layer " + (++Store.globalLayerCount);
 		this.settings = new LayerSettings(this.Redraw.bind(this));
         this.id = Utils.UUID();
         this._posRand = new Utils.Random();
