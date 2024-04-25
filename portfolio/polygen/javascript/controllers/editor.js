@@ -115,7 +115,7 @@ export default class Editor {
 		anchorSquare.forEach(anchor => {
 			if (anchor.x < 0 || anchor.y < 0 || anchor.x >= xCount || anchor.y >= yCount) return;
 
-			vMap[anchor.x + "-" + anchor.y].forEach(vertex => {
+			vMap.get(anchor.x + "-" + anchor.y).forEach(vertex => {
 				let distance = Utils.PointDistanceSqr(vertex, { x, y });
 				if (distance < nearest.distance) {
 					nearest = {
@@ -183,7 +183,7 @@ export default class Editor {
 		const vInBox = [];
 		for (let y = topLeftAnchor.y; y < bottomRightAnchor.y; y++) {
 			for (let x = topLeftAnchor.x; x < bottomRightAnchor.x; x++) {
-				Store.Preview.activeLayer.anchorMap[x + "-" + y].forEach((vertex) => {
+				Store.Preview.activeLayer.anchorMap.get(x + "-" + y).forEach((vertex) => {
 					if (vertex && vertex.x >= topLeft.x && vertex.x <= bottomRight.x && vertex.y >= topLeft.y && vertex.y <= bottomRight.y) {
 						vInBox.push(vertex);
 					}
@@ -417,8 +417,7 @@ export default class Editor {
 	static DeleteSelection() {
 		Store.Editor.selection.forEach(vertex => {
 			Store.Preview.activeLayer.vertexMap[vertex.id] = null;
-			Store.Preview.activeLayer.anchorMap[vertex.posX + "-" + vertex.posY] =
-				Store.Preview.activeLayer.anchorMap[vertex.posX + "-" + vertex.posY].filter(v => v.id !== vertex.id);
+			Store.Preview.activeLayer.anchorMap.delete(vertex.posX + "-" + vertex.posY, Store.Preview.activeLayer.anchorMap.get(vertex.posX + "-" + vertex.posY).indexOf(vertex));
 			Store.Preview.activeLayer.vertices = Store.Preview.activeLayer.vertices.filter(v => v.id !== vertex.id);
 			Store.Preview.activeLayer.polygons = Store.Preview.activeLayer.polygons.filter(p => !p.vertices.includes(vertex));
 		});

@@ -1,4 +1,5 @@
 import Store from "./store.js";
+import Editor from "./editor.js";
 
 export default class SettingsStore {
 	constructor() { }
@@ -31,8 +32,13 @@ export default class SettingsStore {
 	setFromImg(x, y) {
 		this.#settings.x = x;
 		this.#settings.y = y;
-		Store.Preview.pixelRatio = this.#settings.x / Store.Preview.layers[0].canvas._canvasElement.offsetWidth;
+		Store.Preview.overlayLayer.canvas._canvasElement.width = x;
+		Store.Preview.overlayLayer.canvas._canvasElement.height = y;
+		Store.Preview.pixelRatio = this.#settings.x / Store.Preview.overlayLayer.canvas._canvasElement.offsetWidth;
+		console.log(Store.Preview.overlayLayer.canvas._canvasElement.offsetWidth);
+		console.log(Store.Preview.pixelRatio);
 		this.#RegenerateAll();
+		Editor.RefreshSaved();
 	}
 
 	#RegenerateAll() {

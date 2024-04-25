@@ -115,7 +115,7 @@ export default class Layer {
 				vertex.posY = y;
 				
 				this.vertexMap[vertex.id] = vertex;
-				this.anchorMap[`${x}-${y}`] = vertex;
+				this.anchorMap.add(`${x}-${y}`, vertex);
 
 				this.vertices.push(vertex);
 				row.push(vertex);
@@ -244,7 +244,7 @@ export default class Layer {
 
 	AddVertex(vertex) {
 		this.vertices.push(vertex);
-		this.anchorMap[`${vertex.posX}-${vertex.posY}`] = vertex;
+		this.anchorMap.add(`${vertex.posX}-${vertex.posY}`, vertex);
 		this.vertexMap[vertex.id] = vertex;
 	}
 }
