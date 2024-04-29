@@ -86,6 +86,9 @@ export default class Editor {
 	static #Setup() {
 		document.querySelector(".choose-properties").addEventListener("click", (event) => {
 			this.ClearSelection();
+			this.DeactivateSelectionTool();
+			this.DeactivateMoveTool();
+			this.DeactivateAddTool();
 		});
 	}
 
@@ -282,7 +285,7 @@ export default class Editor {
 
 	static DeactivateSelectionTool() {
 		this._activeTool = null;
-		this._abortControllers.selection.abort();
+		this._abortControllers.selection?.abort();
 		document.querySelector("#editor-select").classList.remove("btn-active");
 	}
 
@@ -376,7 +379,7 @@ export default class Editor {
 
 	static DeactivateMoveTool() {
 		this._activeTool = null;
-		this._abortControllers.move.abort();
+		this._abortControllers.move?.abort();
 		document.querySelector("#editor-move").classList.remove("btn-active");
 	}
 
@@ -415,7 +418,7 @@ export default class Editor {
 	
 	static DeactivateAddTool() {
 		this._activeTool = null;
-		this._abortControllers.add.abort();
+		this._abortControllers.add?.abort();
 		this._add.activeVertices = [];
 		this._add.activePolygon = null;
 		document.querySelector("#editor-add").classList.remove("btn-active");
