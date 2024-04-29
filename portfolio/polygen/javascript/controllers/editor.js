@@ -53,6 +53,7 @@ export default class Editor {
 		this._canvas = Store.Preview.overlayLayer.canvas._canvasElement;
 		this.#GetCommon();
 		this.#KeyListeners();
+		this.#Setup();
 	}
 
 	static RefreshSaved() {
@@ -80,6 +81,12 @@ export default class Editor {
 
 	static #GetCommon() {
 		this._boundingRect = Store.Preview.activeLayer.canvas._canvasElement.getBoundingClientRect();
+	}
+
+	static #Setup() {
+		document.querySelector(".choose-properties").addEventListener("click", (event) => {
+			this.ClearSelection();
+		});
 	}
 
 	// Gets the nearest vertex (taking randomness into account) given a canvas coordinate
@@ -423,5 +430,41 @@ export default class Editor {
 		});
 		Store.Preview.activeLayer.Redraw();
 		this.ClearSelection();
+	}
+
+	static RecalculateSelection() {
+		// Number of vertices in each direction
+		const xCount = Math.ceil(Store.settings.x / Store.Preview.activeLayer.settings.cellSize) + 1;
+		const yCount = Math.ceil(Store.settings.y / Store.Preview.activeLayer.settings.cellSize) + 1;
+
+		// Distance between vertices and the edges of the canvas
+		const xShift = (Store.settings.x - Store.Preview.activeLayer.settings.cellSize * (xCount - 1)) / 2;
+		const yShift = (Store.settings.y - Store.Preview.activeLayer.settings.cellSize * (yCount - 1)) / 2;
+	
+		const halfCell = Store.Preview.activeLayer.settings.cellSize / 2;
+
+		Store.Editor.selection.forEach(vertex => {			
+			if (vertex.posX === 0) {
+				vertex.x = 0;
+			} else if (vertex.posX == xCount - 1) {
+				vertex.x = Store.settings.x;
+			} else {
+				const xVariance = Math.min(Store.Preview.activeLayer._posRand.Next() * Store.Preview.activeLayer.settings.variance * Store.Preview.activeLayer.settings.cellSize, halfCell) * Store.Preview.activeLayer._dirRand.Next();
+				vertex.x = ~~((Store.Preview.activeLayer.settings.cellSize * vertex.posX) + xShift + xVariance);
+			}
+
+			if (vertex.posY === 0) {
+				vertex.y = 0;
+			} else if (vertex.posY == yCount - 1) {
+				vertex.y = Store.settings.y;
+			} else {
+				const yVariance = Math.min(Store.Preview.activeLayer._posRand.Next() * Store.Preview.activeLayer.settings.variance * Store.Preview.activeLayer.settings.cellSize, halfCell) * Store.Preview.activeLayer._dirRand.Next();
+				vertex.y = ~~((Store.Preview.activeLayer.settings.cellSize * vertex.posY) + yShift + yVariance);
+			}
+		});
+
+		Store.Preview.activeLayer.Redraw();
+		this._ctx.clearRect(0, 0, this._ctx.canvas.width, this._ctx.canvas.height);
+		this.DrawSelectionPoints();
 	}
 }

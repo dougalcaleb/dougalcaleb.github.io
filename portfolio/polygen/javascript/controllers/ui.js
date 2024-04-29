@@ -342,6 +342,9 @@ export default class UI {
 		document.querySelector("#editor-delete").addEventListener("click", () => {
 			Editor.DeleteSelection();
 		});
+		document.querySelector("#editor-recalculate").addEventListener("click", () => {
+			Editor.RecalculateSelection();
+		});
 	}
 
 	// Event listeners for keypresses
