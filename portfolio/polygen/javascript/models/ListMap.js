@@ -5,23 +5,22 @@
 
 export default class ListMap {
 	constructor() {
-		this._list = new Proxy({}, ListMap.GetSetHandler);
-		return this._list;
+		this._list = {};
 	}
 
-	static GetSetHandler = {
-		get: function (target, prop) {
-			return target[prop];
-		},
-	
-		set: function (target, prop, value) {
-			if (target[prop] === undefined) {
-				target[prop] = [value];
-				return true;
-			} else {
-				target[prop].push(value);
-				return true;
-			}
+	delete(key, index = 0) {
+		this._list[key].splice(index, 1);
+	}
+
+	add(key, value) {
+		if (this._list[key] === undefined) {
+			this._list[key] = [value];
+		} else {
+			this._list[key].push(value);
 		}
-	};
+	}
+	
+	get(id) {
+		return this._list[id];
+	}
 }
