@@ -32,7 +32,7 @@ export default class Layer {
 		this.canvas = new Canvas({ parentLayer: this });
 		this.refCanvas = new Canvas({ offscreenCanvas: true, willReadFrequently: true, parentLayer: this });
 		this.canvas._canvasElement.style.zIndex = this.#index + 1;
-		this.name = "Layer " + (this.index + 1);
+		this.name = "Layer " + (++Store.globalLayerCount);
 		this.settings = new LayerSettings(this.Redraw.bind(this));
         this.id = Utils.UUID();
         this._posRand = new Utils.Random();
@@ -115,7 +115,7 @@ export default class Layer {
 				vertex.posY = y;
 				
 				this.vertexMap[vertex.id] = vertex;
-				this.anchorMap[`${x}-${y}`] = vertex;
+				this.anchorMap.add(`${x}-${y}`, vertex);
 
 				this.vertices.push(vertex);
 				row.push(vertex);
@@ -224,22 +224,27 @@ export default class Layer {
 			this.vertexMap[vertex.id].y = vertex.y;
 		});
 
-		this.Redraw(false, false);
+		this.Redraw();
 	}
 
 	UpdateCustomPolygon(polygon) {
+		// Since we're overwriting the polygon, the old one is lost 
+		// and we need to remove its reference from the vertices that claimed it
+		this.polygons[this.polygons.length - 1].vertices.forEach((vertex) => {
+			vertex.polygons = vertex.polygons.filter((poly) => poly.id != polygon.id);
+		});
 		this.polygons[this.polygons.length - 1] = polygon;
-		this.Redraw(false, false);
+		this.Redraw();
 	}
 
 	AddCustomPolygon(polygon) {
 		this.polygons.push(polygon);
-		this.Redraw(false, false);
+		this.Redraw();
 	}
 
 	AddVertex(vertex) {
 		this.vertices.push(vertex);
-		this.anchorMap[`${vertex.posX}-${vertex.posY}`] = vertex;
+		this.anchorMap.add(`${vertex.posX}-${vertex.posY}`, vertex);
 		this.vertexMap[vertex.id] = vertex;
 	}
 }

@@ -53,6 +53,7 @@ export default class Editor {
 		this._canvas = Store.Preview.overlayLayer.canvas._canvasElement;
 		this.#GetCommon();
 		this.#KeyListeners();
+		this.#Setup();
 	}
 
 	static RefreshSaved() {
@@ -80,6 +81,15 @@ export default class Editor {
 
 	static #GetCommon() {
 		this._boundingRect = Store.Preview.activeLayer.canvas._canvasElement.getBoundingClientRect();
+	}
+
+	static #Setup() {
+		document.querySelector(".choose-properties").addEventListener("click", (event) => {
+			this.ClearSelection();
+			this.DeactivateSelectionTool();
+			this.DeactivateMoveTool();
+			this.DeactivateAddTool();
+		});
 	}
 
 	// Gets the nearest vertex (taking randomness into account) given a canvas coordinate
@@ -115,7 +125,7 @@ export default class Editor {
 		anchorSquare.forEach(anchor => {
 			if (anchor.x < 0 || anchor.y < 0 || anchor.x >= xCount || anchor.y >= yCount) return;
 
-			vMap[anchor.x + "-" + anchor.y].forEach(vertex => {
+			vMap.get(anchor.x + "-" + anchor.y).forEach(vertex => {
 				let distance = Utils.PointDistanceSqr(vertex, { x, y });
 				if (distance < nearest.distance) {
 					nearest = {
@@ -183,7 +193,7 @@ export default class Editor {
 		const vInBox = [];
 		for (let y = topLeftAnchor.y; y < bottomRightAnchor.y; y++) {
 			for (let x = topLeftAnchor.x; x < bottomRightAnchor.x; x++) {
-				Store.Preview.activeLayer.anchorMap[x + "-" + y].forEach((vertex) => {
+				Store.Preview.activeLayer.anchorMap.get(x + "-" + y).forEach((vertex) => {
 					if (vertex && vertex.x >= topLeft.x && vertex.x <= bottomRight.x && vertex.y >= topLeft.y && vertex.y <= bottomRight.y) {
 						vInBox.push(vertex);
 					}
@@ -275,7 +285,7 @@ export default class Editor {
 
 	static DeactivateSelectionTool() {
 		this._activeTool = null;
-		this._abortControllers.selection.abort();
+		this._abortControllers.selection?.abort();
 		document.querySelector("#editor-select").classList.remove("btn-active");
 	}
 
@@ -369,7 +379,7 @@ export default class Editor {
 
 	static DeactivateMoveTool() {
 		this._activeTool = null;
-		this._abortControllers.move.abort();
+		this._abortControllers.move?.abort();
 		document.querySelector("#editor-move").classList.remove("btn-active");
 	}
 
@@ -408,9 +418,56 @@ export default class Editor {
 	
 	static DeactivateAddTool() {
 		this._activeTool = null;
-		this._abortControllers.add.abort();
+		this._abortControllers.add?.abort();
 		this._add.activeVertices = [];
 		this._add.activePolygon = null;
 		document.querySelector("#editor-add").classList.remove("btn-active");
+	}
+
+	static DeleteSelection() {
+		Store.Editor.selection.forEach(vertex => {
+			Store.Preview.activeLayer.vertexMap[vertex.id] = null;
+			Store.Preview.activeLayer.anchorMap.delete(vertex.posX + "-" + vertex.posY, Store.Preview.activeLayer.anchorMap.get(vertex.posX + "-" + vertex.posY).indexOf(vertex));
+			Store.Preview.activeLayer.vertices = Store.Preview.activeLayer.vertices.filter(v => v.id !== vertex.id);
+			Store.Preview.activeLayer.polygons = Store.Preview.activeLayer.polygons.filter(p => !p.vertices.includes(vertex));
+		});
+		Store.Preview.activeLayer.Redraw();
+		this.ClearSelection();
+	}
+
+	static RecalculateSelection() {
+		// Number of vertices in each direction
+		const xCount = Math.ceil(Store.settings.x / Store.Preview.activeLayer.settings.cellSize) + 1;
+		const yCount = Math.ceil(Store.settings.y / Store.Preview.activeLayer.settings.cellSize) + 1;
+
+		// Distance between vertices and the edges of the canvas
+		const xShift = (Store.settings.x - Store.Preview.activeLayer.settings.cellSize * (xCount - 1)) / 2;
+		const yShift = (Store.settings.y - Store.Preview.activeLayer.settings.cellSize * (yCount - 1)) / 2;
+	
+		const halfCell = Store.Preview.activeLayer.settings.cellSize / 2;
+
+		Store.Editor.selection.forEach(vertex => {			
+			if (vertex.posX === 0) {
+				vertex.x = 0;
+			} else if (vertex.posX == xCount - 1) {
+				vertex.x = Store.settings.x;
+			} else {
+				const xVariance = Math.min(Store.Preview.activeLayer._posRand.Next() * Store.Preview.activeLayer.settings.variance * Store.Preview.activeLayer.settings.cellSize, halfCell) * Store.Preview.activeLayer._dirRand.Next();
+				vertex.x = ~~((Store.Preview.activeLayer.settings.cellSize * vertex.posX) + xShift + xVariance);
+			}
+
+			if (vertex.posY === 0) {
+				vertex.y = 0;
+			} else if (vertex.posY == yCount - 1) {
+				vertex.y = Store.settings.y;
+			} else {
+				const yVariance = Math.min(Store.Preview.activeLayer._posRand.Next() * Store.Preview.activeLayer.settings.variance * Store.Preview.activeLayer.settings.cellSize, halfCell) * Store.Preview.activeLayer._dirRand.Next();
+				vertex.y = ~~((Store.Preview.activeLayer.settings.cellSize * vertex.posY) + yShift + yVariance);
+			}
+		});
+
+		Store.Preview.activeLayer.Redraw();
+		this._ctx.clearRect(0, 0, this._ctx.canvas.width, this._ctx.canvas.height);
+		this.DrawSelectionPoints();
 	}
 }
