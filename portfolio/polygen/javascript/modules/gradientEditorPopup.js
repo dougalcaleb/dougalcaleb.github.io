@@ -85,7 +85,7 @@ export default class GradientEditorPopup {
 		this.currentStopControlElement = document.getElementById("popup-color-picker-stop-edit").content.children[0].cloneNode(true);
 
 		document.body.appendChild(this.currentStopControlElement);
-		this.currentStopControlElement.style = `transform: translate(${pos.x}px, ${pos.y}px); z-index: 10; position: relative;`;
+		this.currentStopControlElement.style = `transform: translate(${pos.x}px, ${pos.y}px); z-index: 100; position: relative;`;
 		document.querySelector(".popup-color-picker-wrap").style.background = this.colorsBySliderID[String(stopID)].color;
 
 		document.querySelector(".popup-color-picker-input").value = this.colorsBySliderID[String(stopID)].color;
