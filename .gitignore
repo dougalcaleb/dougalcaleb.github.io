@@ -5,4 +5,4 @@ debug.log
 ignore/
 *.ignore.*
 *-old*
-# *.ai
+*.ai
