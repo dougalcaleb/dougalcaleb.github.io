@@ -1,6 +1,7 @@
 <template>
-	<div>
-		
+	<div class="flex p-8">
+		<Button icon="save">Some Clickable Text</Button>
+		<Button icon="save"></Button>
 	</div>
 </template>
 

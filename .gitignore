@@ -6,6 +6,7 @@ ignore/
 *.ignore.*
 *-old*
 *.ai
+*.zip
 
 # Logs
 logs
