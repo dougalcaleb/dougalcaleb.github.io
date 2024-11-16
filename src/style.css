@@ -78,3 +78,39 @@
 	src: url("/assets/fonts/UbuntuMono-Light.ttf");
 	font-weight: lighter;
 }
+
+@font-face {
+	font-family: "Metropolis";
+	src: url("/assets/fonts/Metropolis-Regular.ttf");
+	font-weight: normal;
+}
+
+@font-face {
+	font-family: "Metropolis";
+	src: url("/assets/fonts/Metropolis-Light.ttf");
+	font-weight: lighter;
+}
+
+@font-face {
+	font-family: "Metropolis";
+	src: url("/assets/fonts/Metropolis-Medium.ttf");
+	font-weight: medium;
+}
+
+@font-face {
+	font-family: "Poppins";
+	src: url("/assets/fonts/Poppins-Regular.ttf");
+	font-weight: normal;
+}
+
+@font-face {
+	font-family: "Poppins";
+	src: url("/assets/fonts/Poppins-Light.ttf");
+	font-weight: lighter;
+}
+
+@font-face {
+	font-family: "Poppins";
+	src: url("/assets/fonts/Poppins-bold.ttf");
+	font-weight: bold;
+}

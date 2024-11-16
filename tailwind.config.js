@@ -36,6 +36,13 @@ export default {
 		},
 		fontFamily: {
 			title: [
+				'Poppins',
+				'Miriam Libre',
+				'system-ui',
+				'-apple-system',
+				'sans-serif',
+			],
+			subtitle: [
 				"Miriam Libre",
 				"system-ui",
 				"-apple-system",
@@ -46,6 +53,10 @@ export default {
 				"system-ui",
 				"-apple-system",
 				"sans-serif",
+			],
+			mono: [
+				'Ubuntu Mono',
+				'monospace',
 			],
 			sans: [
 				"Inter",
@@ -63,10 +74,9 @@ export default {
 				"Cambria",
 				"Times New Roman",
 				"Times",
-				"serif"
+				"serif",
 			],
 		},
-		extend: {}
 	},
 	plugins: [],
 };

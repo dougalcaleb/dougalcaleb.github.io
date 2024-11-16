@@ -1,21 +1,23 @@
 <template>
 	<div class="flex p-8">
-		<Button icon="save">Some Clickable Text</Button>
-		<Button icon="save"></Button>
+		<Placeholder v-if="isProd" />
+		This is dev
 	</div>
 </template>
 
 <script>
+import Placeholder from './Placeholder.vue';
+
 export default {
 	components: {
-		
+		Placeholder,
 	},
 	props: {
 		
 	},
 	data() {
 		return {
-			
+			isProd: import.meta.env.PROD,
 		}
 	},
 	computed: {
