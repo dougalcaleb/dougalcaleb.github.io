@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<div 
-			class="h-full bg-gray-1 w-0 sm:w-20 flex flex-col items-center justify-between hover:w-48 transition-all duration-700 z-20 relative"
+			class="h-full bg-gray-1 w-0 sm:w-20 flex flex-col items-center justify-between hover:w-48 transition-all duration-200 z-20 relative overflow-hidden"
 			@mouseover="hovering = true"
 			@mouseleave="hovering = false"
 		>
@@ -10,68 +10,37 @@
 				<img src="/assets/images/profile-square.jpg" alt="Profile Image">
 			</div>
 
-			<div class="grid transition-all duration-700" :style="sidebarIconStyle">
-				<div class="contents py-2">
-					<Icon icon="fa/home" iconColor="white" :size="6" class="pr-2" />
-					<div class="font-title text-white font-bold mt-1 overflow-hidden transition-all duration-700">Welcome</div>
+			<div class="grid transition-all duration-200" :style="sidebarIconStyle">
+				<div class="contents cursor-pointer text-white hover:text-purple-4">
+					<Icon icon="fa/home" :size="6" class="pr-2 py-4 transition-all" />
+					<div class="font-title font-bold mt-1 overflow-hidden transition-all duration-100 py-4">Welcome</div>
 				</div>
 				
-
-				<Icon icon="fa/star" iconColor="white" :size="6" class="pr-2" />
-				<div class="font-title text-white font-bold mt-1 overflow-hidden transition-all duration-700">Featured</div>
-
-				<Icon icon="fa/code-file" iconColor="white" :size="6" class="pr-2" />
-				<div class="font-title text-white font-bold mt-1 overflow-hidden transition-all duration-700">Experience</div>
-
-				<Icon icon="fa/id-badge" iconColor="white" :size="6" class="pr-2" />
-				<div class="font-title text-white font-bold mt-1 overflow-hidden transition-all duration-700">About</div>
-
-				<Icon icon="fa/send" iconColor="white" :size="6" class="pr-2" />
-				<div class="font-title text-white font-bold mt-1 overflow-hidden transition-all duration-700">Contact</div>
-
-
-				<!-- <div class="flex items-center cursor-pointer py-4">
-					<Icon icon="fa/star" iconColor="white" :size="6" class="pr-2" />
-					<Transition name="bgFade">
-						<div 
-							v-show="hovering"
-							class="font-title text-white font-bold mt-1"
-						>Featured</div>
-					</Transition>
+				<div class="contents cursor-pointer text-white hover:text-purple-4">
+					<Icon icon="fa/star" :size="6" class="pr-2 py-4 transition-all" />
+					<div class="font-title font-bold mt-1 overflow-hidden transition-all duration-100 py-4">Featured</div>
 				</div>
-				<div class="flex items-center cursor-pointer py-4">
-					<Icon icon="fa/code-file" iconColor="white" :size="6" class="pr-2" />
-					<Transition name="bgFade">
-						<div 
-							v-show="hovering"
-							class="font-title text-white font-bold mt-1"
-						>Experience</div>
-					</Transition>
+
+				<div class="contents cursor-pointer text-white hover:text-purple-4">
+					<Icon icon="fa/code-file" :size="6" class="pr-2 py-4 transition-all" />
+					<div class="font-title font-bold mt-1 overflow-hidden transition-all duration-100 py-4">Experience</div>
 				</div>
-				<div class="flex items-center cursor-pointer py-4">
-					<Icon icon="fa/id-badge" iconColor="white" :size="6" class="pr-2" />
-					<Transition name="bgFade">
-						<div 
-							v-show="hovering"
-							class="font-title text-white font-bold mt-1"
-						>About</div>
-					</Transition>
+				
+				<div class="contents cursor-pointer text-white hover:text-purple-4">
+					<Icon icon="fa/id-badge" :size="6" class="pr-2 py-4 transition-all" />
+					<div class="font-title font-bold mt-1 overflow-hidden transition-all duration-100 py-4">About</div>
 				</div>
-				<div class="flex items-center cursor-pointer py-4">
-					<Icon icon="fa/send" iconColor="white" :size="6" class="pr-2" />
-					<Transition name="bgFade">
-						<div 
-							v-show="hovering"
-							class="font-title text-white font-bold mt-1"
-						>Contact</div>
-					</Transition>
-				</div> -->
+
+				<div class="contents cursor-pointer text-white hover:text-purple-4">
+					<Icon icon="fa/send" :size="6" class="pr-2 py-4 transition-all" />
+					<div class="font-title font-bold mt-1 overflow-hidden transition-all duration-100 py-4">Contact</div>
+				</div>
 			</div>
 
 			<div class="flex flex-col items-center pb-2">
 				<div class="border-t-2 border-gray-7 mb-2 w-6"></div>
-				<Icon icon="fa/github" iconColor="white" :size="6" class="p-2 cursor-pointer" />
-				<Icon icon="fa/linkedin" iconColor="white" :size="6" class="p-2 cursor-pointer" />
+				<Icon icon="fa/github" :size="6" class="p-2 cursor-pointer text-white hover:text-purple-4 duration-200" />
+				<Icon icon="fa/linkedin" :size="6" class="p-2 cursor-pointer text-white hover:text-purple-4 duration-200" />
 			</div>
 			
 		</div>
