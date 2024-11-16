@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<div 
-			class="h-full bg-gray-1 w-0 sm:w-20 flex flex-col items-center justify-between hover:w-48 transition-all duration-200 z-20 relative"
+			class="h-full bg-gray-1 w-0 sm:w-20 flex flex-col items-center justify-between hover:w-48 transition-all duration-700 z-20 relative"
 			@mouseover="hovering = true"
 			@mouseleave="hovering = false"
 		>
@@ -10,17 +10,27 @@
 				<img src="/assets/images/profile-square.jpg" alt="Profile Image">
 			</div>
 
-			<div>
-				<div class="flex items-center cursor-pointer py-4">
+			<div class="grid transition-all duration-700" :style="sidebarIconStyle">
+				<div class="contents py-2">
 					<Icon icon="fa/home" iconColor="white" :size="6" class="pr-2" />
-					<Transition name="bgFade">
-						<div 
-							v-show="hovering"
-							class="font-title text-white font-bold mt-1"
-						>Welcome</div>
-					</Transition>
+					<div class="font-title text-white font-bold mt-1 overflow-hidden transition-all duration-700">Welcome</div>
 				</div>
-				<div class="flex items-center cursor-pointer py-4">
+				
+
+				<Icon icon="fa/star" iconColor="white" :size="6" class="pr-2" />
+				<div class="font-title text-white font-bold mt-1 overflow-hidden transition-all duration-700">Featured</div>
+
+				<Icon icon="fa/code-file" iconColor="white" :size="6" class="pr-2" />
+				<div class="font-title text-white font-bold mt-1 overflow-hidden transition-all duration-700">Experience</div>
+
+				<Icon icon="fa/id-badge" iconColor="white" :size="6" class="pr-2" />
+				<div class="font-title text-white font-bold mt-1 overflow-hidden transition-all duration-700">About</div>
+
+				<Icon icon="fa/send" iconColor="white" :size="6" class="pr-2" />
+				<div class="font-title text-white font-bold mt-1 overflow-hidden transition-all duration-700">Contact</div>
+
+
+				<!-- <div class="flex items-center cursor-pointer py-4">
 					<Icon icon="fa/star" iconColor="white" :size="6" class="pr-2" />
 					<Transition name="bgFade">
 						<div 
@@ -55,11 +65,11 @@
 							class="font-title text-white font-bold mt-1"
 						>Contact</div>
 					</Transition>
-				</div>
+				</div> -->
 			</div>
 
 			<div class="flex flex-col items-center pb-2">
-				<div class="border-t-2 border-gray-7 mb-2 w-2/3"></div>
+				<div class="border-t-2 border-gray-7 mb-2 w-6"></div>
 				<Icon icon="fa/github" iconColor="white" :size="6" class="p-2 cursor-pointer" />
 				<Icon icon="fa/linkedin" iconColor="white" :size="6" class="p-2 cursor-pointer" />
 			</div>
@@ -90,7 +100,11 @@ export default {
 		}
 	},
 	computed: {
-		
+		sidebarIconStyle() {
+			return this.hovering
+				? 'grid-template-columns: max-content 6rem'
+				: 'grid-template-columns: max-content 0';
+		}
 	},
 	methods: {
 		
