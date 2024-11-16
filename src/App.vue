@@ -1,16 +1,26 @@
 <template>
-	<div class="flex p-8 bg-gray-5">
-		<Placeholder v-if="isProd" />
+	<Placeholder v-if="isProd" />
+	<div 
+		v-else
+		class="flex h-full w-full"
+	>
 
+		<Sidebar />
+
+		<MainBody />
 	</div>
 </template>
 
 <script>
+import MainBody from './components/views/main/MainBody.vue';
+import Sidebar from './components/views/main/Sidebar.vue';
 import Placeholder from './Placeholder.vue';
 
 export default {
 	components: {
 		Placeholder,
+		Sidebar,
+		MainBody,
 	},
 	props: {
 		
