@@ -1,7 +1,7 @@
 <template>
-	<div class="flex p-8">
+	<div class="flex p-8 bg-gray-5">
 		<Placeholder v-if="isProd" />
-		This is dev
+
 	</div>
 </template>
 
@@ -25,7 +25,7 @@ export default {
 	},
 	methods: {
 		
-	}
+	},
 }
 </script>
 
