@@ -1,5 +1,5 @@
 <template>
-	<div :class="['rounded-md text-white py-3 font-title font-bold w-max h-max cursor-pointer m-2', rootClasses]" @click="$emit('click')">
+	<div :class="['rounded-md text-white py-3 font-title font-bold w-max h-max cursor-pointer m-2 duration-100 transition', rootClasses]" @click="$emit('click')">
 		<div class="flex items-center h-full">
 			<div :class="[{'mr-3': Boolean(icon) && $slots.default}]">
 				<slot></slot> 
@@ -44,15 +44,15 @@ export default {
 
 			switch (this.variant) {
 				case "general":
-					classes += "bg-purple-3";
+					classes += "bg-purple-3 hover:bg-purple-2";
 					break;
 				case "action":
-					classes += "bg-blue-1";
+					classes += "bg-blue-1 hover:bg-blue-0";
 					break;
 			}
 
 			if (this.$slots.default) {
-				classes += " px-5";
+				classes += " px-8";
 			} else {
 				classes += " px-4";
 			}
