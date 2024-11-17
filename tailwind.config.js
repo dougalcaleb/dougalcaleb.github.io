@@ -23,7 +23,7 @@ export default {
 			"purple-2": "hsl(267, 40%, 34%)",
 			"purple-3": "hsl(265, 40%, 39%)",
 			"purple-4": "hsl(271, 41%, 56%)",
-			"purple-5": "hsl(272, 41%, 92%)",
+			"purple-5": "hsl(272, 41%, 70%)",
 			"green-0": 	"hsl(138, 51%, 38%)",
 			"green-1": 	"hsl(137, 50%, 43%)",
 			"green-2": 	"hsl(138, 47%, 64%)",
