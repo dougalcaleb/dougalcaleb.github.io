@@ -1,9 +1,6 @@
 <template>
-	<Placeholder v-if="isProd" />
-	<div 
-		v-else
-		class="flex h-full w-full"
-	>
+	<Placeholder />
+	<div class="flex h-full w-full">
 
 		<Sidebar />
 
