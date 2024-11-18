@@ -1,5 +1,5 @@
 <template>
-	<Placeholder />
+	<Placeholder v-if="isProd" />
 	<div class="flex h-full w-full">
 
 		<Sidebar />
