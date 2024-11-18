@@ -1,6 +1,9 @@
 <template>
-	<div class="h-full w-full left-0 top-0 z-50 bg-gray-1 absolute flex items-center">
-		<p class="font-title text-white w-full font-bold text-center text-xl">This website is being upgraded. Please check back again soon.</p>
+	<div class="flex justify-center absolute top-0 w-full z-50">
+		<div class="w-78 h-max bg-gray-4 text-white font-subtitle font-bold mt-8 shadow-lg shadow-gray-0 rounded-md py-4 px-12">
+			<p class="text-center">This site is currently under construction!</p>
+			<p class="text-center">Please check back soon for the full thing.</p>
+		</div>
 	</div>
 </template>
 
