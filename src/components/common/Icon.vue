@@ -1,8 +1,9 @@
 <template>
 	<div>
-		<svg v-if="icon" :class="iconClasses" :style="{ color: finalIconColor }">
+		<svg v-if="iconColor" :class="iconClasses" :style="{ color: finalIconColor }">
 			<use :xlink:href="iconPath"></use>
 		</svg>
+		<img v-else :src="iconPath" :class="iconClasses" />
 	</div>
 </template>
 
@@ -21,7 +22,7 @@ export default {
 			default: 8,
 		},
 		iconColor: {
-			type: String,
+			type: [String, null],
 			default: "currentColor",
 		},
 	},
