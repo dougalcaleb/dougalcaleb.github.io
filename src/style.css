@@ -81,20 +81,26 @@
 
 @font-face {
 	font-family: "Metropolis";
-	src: url("/assets/fonts/Metropolis-Regular.ttf");
+	src: url("/assets/fonts/Metropolis-Regular.otf");
 	font-weight: normal;
 }
 
 @font-face {
 	font-family: "Metropolis";
-	src: url("/assets/fonts/Metropolis-Light.ttf");
+	src: url("/assets/fonts/Metropolis-Light.otf");
 	font-weight: lighter;
 }
 
 @font-face {
 	font-family: "Metropolis";
-	src: url("/assets/fonts/Metropolis-Medium.ttf");
+	src: url("/assets/fonts/Metropolis-Medium.otf");
 	font-weight: medium;
+}
+
+@font-face {
+	font-family: "Metropolis";
+	src: url("/assets/fonts/Metropolis-SemiBold.otf");
+	font-weight: bold;
 }
 
 @font-face {
@@ -122,4 +128,6 @@
 
 body, html {
 	margin: 0;
+	scroll-behavior: smooth;
+	background: black;
 }

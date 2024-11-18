@@ -33,6 +33,8 @@ export default {
 			"yellow-0": "hsl(36, 98%, 52%)",
 			"yellow-1": "hsl(36, 99%, 56%)",
 			"yellow-2": "hsl(36, 99%, 64%)",
+			"ls-blue-dark": "hsl(213, 52%, 38%)",
+			"ls-blue-light": "hsl(210, 50%, 59%)",
 		},
 		fontFamily: {
 			title: [
@@ -46,6 +48,12 @@ export default {
 				"Miriam Libre",
 				"system-ui",
 				"-apple-system",
+				"sans-serif",
+			],
+			ls: [
+				"Metropolis",
+				"Miriam Libre",
+				"Poppins",
 				"sans-serif",
 			],
 			body: [
@@ -79,8 +87,8 @@ export default {
 		},
 	},
 	safelist: [
-		'h-1', 'h-2', 'h-3', 'h-4', 'h-5', 'h-6', 'h-7', 'h-8', 'h-9', 'h-10',
-		'w-1', 'w-2', 'w-3', 'w-4', 'w-5', 'w-6', 'w-7', 'w-8', 'w-9', 'w-10',
+		'h-1', 'h-2', 'h-3', 'h-4', 'h-5', 'h-6', 'h-7', 'h-8', 'h-9', 'h-10', 'h-16', 'h-20',
+		'w-1', 'w-2', 'w-3', 'w-4', 'w-5', 'w-6', 'w-7', 'w-8', 'w-9', 'w-10', 'w-16', 'w-20'
 	],
 	plugins: [],
 };
