@@ -16,10 +16,6 @@ export default {
 			type: String,
 			default: "",
 		},
-		onLoad: {
-			type: Function,
-			default: () => {},
-		},
 	},
 	data() {
 		return {
@@ -32,12 +28,16 @@ export default {
 	methods: {
 		imgLoaded() {
 			this.$refs['img'].src = this.src;
-			this.onLoad();
-		}
+			this.$emit("loaded");
+		},
+		imgError() {
+			this.$emit("error");
+		},
 	},
 	created() {
 		this.imgObj = new Image();
 		this.imgObj.onload = this.imgLoaded;
+		this.imgObj.onerror = this.imgError;
 		this.imgObj.src = this.src;
 	}
 }
