@@ -41,7 +41,6 @@
 			</div>
 
 			<p class="text-white font-body sm:px-4 pt-8 sm:text-lg">
-				{{ isDarkTheme ? 'dark theme' : 'light theme' }}
 				Learning Suite is a fully-featured Learning Management
 				System (LMS) built entirely in-house at Brigham Young 
 				University. It provides full functionality for instructors to 
