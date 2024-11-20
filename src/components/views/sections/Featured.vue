@@ -7,23 +7,26 @@
 
 		<div class="relative w-full mt-8" ref="imgWrapper">
 			<LazyImage 
-				src="/assets/images/ls-grader.png" 
+				:src="imgSources[0]" 
 				alt="Learning Suite Screenshot" 
 				class="absolute box-shadow-0 rounded-md w-10/12 md:w-1/2 left-0 md:left-6 top-0 origin-center"
-				:onLoad="imageLoaded"
+				@loaded="imageLoaded"
+				@error="imageLoaded"
 			/>
 			<LazyImage
-				src="/assets/images/ls-courselist.png"
+				:src="imgSources[1]"
 				alt="Learning Suite Screenshot"
 				class="absolute box-shadow-1 rounded-md w-10/12 md:w-1/2 left-0 top-0 right-0 mx-auto origin-center translate-y-1/3"
-				:onLoad="imageLoaded"
+				@loaded="imageLoaded"
+				@error="imageLoaded"
 			/>
 			<LazyImage
-				src="/assets/images/ls-assignments.png"
+				:src="imgSources[2]"
 				alt="Learning Suite Screenshot"
 				class="absolute box-shadow-2 rounded-md w-10/12 md:w-1/2 right-0 md:right-6 top-0 origin-center"
 				style="transform: translateY(66.66%)"
-				:onLoad="imageLoaded"
+				@loaded="imageLoaded"
+				@error="imageLoaded"
 			/>
 		</div>
 
@@ -38,6 +41,7 @@
 			</div>
 
 			<p class="text-white font-body sm:px-4 pt-8 sm:text-lg">
+				{{ isDarkTheme ? 'dark theme' : 'light theme' }}
 				Learning Suite is a fully-featured Learning Management
 				System (LMS) built entirely in-house at Brigham Young 
 				University. It provides full functionality for instructors to 
@@ -73,9 +77,10 @@
 import Icon from '../../common/Icon.vue';
 import LazyImage from '../../common/LazyImage.vue';
 import ScreenSize from '../../mixins/ScreenSize';
+import ColorTheme from '../../mixins/ColorTheme';
 
 export default {
-	mixins: [ScreenSize],
+	mixins: [ColorTheme, ScreenSize],
 	components: {
 		LazyImage,
 		Icon,
@@ -86,7 +91,15 @@ export default {
 			imagesLoaded: 0,
 		};
 	},
-	computed: {},
+	computed: {
+		imgSources() {
+			return [
+				`/assets/images/gradebook-${this.isDarkTheme ? 'dark' : 'light'}.png`,
+				`/assets/images/dialog-${this.isDarkTheme ? 'dark' : 'light'}.png`,
+				`/assets/images/assignments-${this.isDarkTheme ? 'dark' : 'light'}.png`,
+			];
+		}
+	},
 	methods: {
 		imageLoaded() {
 			this.imagesLoaded++;
@@ -106,14 +119,14 @@ export default {
 					bottom = Math.max(bottom, rect.bottom - featuredSectionRect.top);
 				}
 
-				// featuredSection.style.height = `calc(${bottom}px)`;
 				this.$refs['textContent'].style.marginTop = `${bottom}px`;
 			});
 		},
 	},
 	mounted() {
-		// TODO:
-		// get actual images
+		this.watchForThemeSwitch((isDark) => {
+			this.imagesLoaded = 0;
+		});
 	},
 };
 </script>
