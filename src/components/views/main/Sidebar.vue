@@ -43,7 +43,7 @@
 				<Icon icon="fa/linkedin" :size="6" class="p-2 cursor-pointer text-white hover:text-purple-5 duration-200" />
 				<div class="border-t-2 border-gray-7 my-2 w-6"></div>
 				<Icon 
-					:icon="dark ? 'fa/moon' : 'fa/sun'" 
+					:icon="isDarkTheme ? 'fa/moon' : 'fa/sun'" 
 					:size="6" 
 					class="p-2 cursor-pointer text-white hover:text-purple-5 duration-200" 
 					@click="switchTheme()"

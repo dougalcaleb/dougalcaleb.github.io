@@ -1,7 +1,16 @@
+import { defaultStore } from "../state/store";
+import { mapStores } from "pinia";
+
 export default {
 	data() {
 		return {
-			dark: false
+			executeOnThemeSwitch: [],
+		}
+	},
+	computed: {
+		...mapStores(defaultStore),
+		isDarkTheme() {
+			return this.defaultStore.isDarkTheme;
 		}
 	},
 	methods: {
@@ -13,13 +22,16 @@ export default {
 				localStorage.setItem("theme", "light");
 				document.documentElement.classList.remove("dark");
 			}
-			this.dark = dark;
+			this.defaultStore.isDarkTheme = dark;
 		},
 		switchTheme() {
-			this.setTheme(!this.dark);
+			this.setTheme(!this.defaultStore.isDarkTheme);
+		},
+		watchForThemeSwitch(callback) {
+			this.executeOnThemeSwitch.push(callback);
 		}
 	},
-	mounted() {
-		this.dark = localStorage.getItem("theme") === "dark";
+	beforeMount() {
+		this.defaultStore.isDarkTheme = localStorage.getItem("theme") === "dark";
 	}
 }
