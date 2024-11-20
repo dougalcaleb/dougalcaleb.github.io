@@ -5,7 +5,7 @@
 				<slot></slot> 
 			</div>
 
-			<Icon :icon="icon" :size="5" :iconColor="iconColor" />
+			<Icon v-if="icon" :icon="icon" :size="5" :iconColor="iconColor" />
 		</div>
 	</div>
 </template>
