@@ -5,7 +5,7 @@
 				<slot></slot> 
 			</div>
 
-			<Icon v-if="icon" :icon="icon" :size="5" :iconColor="iconColor" />
+			<Icon v-if="icon" :icon="icon" :size="iconSize" :iconColor="iconColor" />
 		</div>
 	</div>
 </template>
@@ -30,6 +30,10 @@ export default {
 		iconColor: {
 			type: String,
 			default: "currentColor",
+		},
+		iconSize: {
+			type: Number,
+			default: 5
 		}
 	},
 	data() {

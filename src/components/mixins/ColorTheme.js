@@ -11,6 +11,9 @@ export default {
 		...mapStores(defaultStore),
 		isDarkTheme() {
 			return this.defaultStore.isDarkTheme;
+		},
+		darkThemeString() {
+			return this.isDarkTheme ? "dark" : "light";
 		}
 	},
 	methods: {
