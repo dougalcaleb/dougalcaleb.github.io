@@ -1,46 +1,46 @@
 <template>
 	<div 
-		class="w-full h-max relative left-0 bg-gray-3 pl-8 sm:pl-32 pr-8 sm:pr-12 pt-8 sm:pt-20"
+		class="w-full h-max relative left-0 dark:bg-gray-3 bg-gray-9 pl-8 sm:pl-32 pr-8 sm:pr-12 pt-8 sm:pt-20"
 		ref="sectionWrapper"
 	>
-		<h1 class="font-title text-2xl sm:text-4xl text-white font-bold">FEATURED</h1>
+		<h1 class="font-title text-2xl sm:text-4xl dark:text-white text-gray-1 font-bold">FEATURED</h1>
 
 		<div class="relative w-full mt-8" ref="imgWrapper">
 			<LazyImage 
 				:src="imgSources[0]" 
 				alt="Learning Suite Screenshot" 
-				class="absolute box-shadow-0 rounded-md w-10/12 md:w-1/2 left-0 md:left-6 top-0 origin-center"
+				:class="['absolute rounded-md w-10/12 md:w-1/2 left-0 md:left-6 top-0 origin-center', `box-shadow-0-${this.darkThemeString}`]"
 				@loaded="imageLoaded"
 				@error="imageLoaded"
 			/>
 			<LazyImage
 				:src="imgSources[1]"
 				alt="Learning Suite Screenshot"
-				class="absolute box-shadow-1 rounded-md w-10/12 md:w-1/2 left-0 top-0 right-0 mx-auto origin-center translate-y-1/3"
+				:class="['absolute rounded-md w-10/12 md:w-1/2 left-0 top-0 right-0 mx-auto origin-center translate-y-1/3', `box-shadow-1-${this.darkThemeString}`]"
 				@loaded="imageLoaded"
 				@error="imageLoaded"
 			/>
 			<LazyImage
 				:src="imgSources[2]"
 				alt="Learning Suite Screenshot"
-				class="absolute box-shadow-2 rounded-md w-10/12 md:w-1/2 right-0 md:right-6 top-0 origin-center"
+				:class="['absolute rounded-md w-10/12 md:w-1/2 right-0 md:right-6 top-0 origin-center', `box-shadow-2-${this.darkThemeString}`]"
 				style="transform: translateY(66.66%)"
 				@loaded="imageLoaded"
 				@error="imageLoaded"
 			/>
 		</div>
 
-		<div ref="textContent" class="w-full px-6">
+		<div ref="textContent" class="w-full sm:px-6">
 			<div class="flex items-center">
 				<Icon icon="brand/learningsuite" :iconColor="null" :size="['sm', 'xs'].includes(screenSize) ? 20 : 16" />
 				<div class="flex flex-col ml-4">
 					<p class="font-ls text-ls-blue-light font-bold sm:text-2xl">LEARNING</p>
 					<p class="font-ls text-ls-blue-light font-bold sm:text-2xl">SUITE</p>
 				</div>
-				<div class="h-1 w-full bg-ls-blue-dark ml-6 sm:ml-16"></div>
+				<div class="h-1 w-full bg-ls-blue-light dark:bg-ls-blue-dark ml-6 sm:ml-12"></div>
 			</div>
 
-			<p class="text-white font-body sm:px-4 pt-8 sm:text-lg">
+			<p class="text-gray-1 dark:text-white font-body sm:px-4 pt-2 sm:pt-8 sm:text-lg">
 				Learning Suite is a fully-featured Learning Management
 				System (LMS) built entirely in-house at Brigham Young 
 				University. It provides full functionality for instructors to 
@@ -93,9 +93,9 @@ export default {
 	computed: {
 		imgSources() {
 			return [
-				`/assets/images/gradebook-${this.isDarkTheme ? 'dark' : 'light'}.png`,
-				`/assets/images/dialog-${this.isDarkTheme ? 'dark' : 'light'}.png`,
-				`/assets/images/assignments-${this.isDarkTheme ? 'dark' : 'light'}.png`,
+				`/assets/images/gradebook-${this.darkThemeString}.png`,
+				`/assets/images/dialog-${this.darkThemeString}.png`,
+				`/assets/images/assignments-${this.darkThemeString}.png`,
 			];
 		}
 	},
@@ -131,13 +131,23 @@ export default {
 </script>
 
 <style scoped>
-.box-shadow-0 {
+.box-shadow-0-dark {
 	box-shadow: 0px 0px 10px 5px rgba(0,0,0,0.6);
 }
-.box-shadow-1 {
+.box-shadow-1-dark {
 	box-shadow: 0px 0px 15px 10px rgba(0,0,0,0.6);
 }
-.box-shadow-2 {
+.box-shadow-2-dark {
 	box-shadow: 0px 0px 20px 15px rgba(0,0,0,0.6);
+}
+
+.box-shadow-0-light {
+	box-shadow: 0px 0px 10px 5px rgba(100,100,100,0.6);
+}
+.box-shadow-1-light {
+	box-shadow: 0px 0px 15px 10px rgba(100,100,100,0.6);
+}
+.box-shadow-2-light {
+	box-shadow: 0px 0px 20px 15px rgba(100,100,100,0.6);
 }
 </style>
