@@ -241,6 +241,10 @@ export default {
 
 		RoundaboutScripter.onScroll(this.roundaboutInstances[0], (dist) => {
 			RoundaboutScripter.scroll(this.roundaboutInstances[1], dist);
+			if (this.isMobile || this.isTablet) {
+				const bbox = document.querySelector(".roundabout-1-visible-page-0 .desc_content_wrap").getBoundingClientRect();
+				this.$emit("scroll", bbox.bottom);
+			}
 		});
 	}
 }
