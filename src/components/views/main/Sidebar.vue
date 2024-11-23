@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<div 
-			:class="['h-full bg-white dark:bg-gray-1 w-0 sm:w-20 flex flex-col items-center justify-between hover:w-48 transition-all duration-200 z-40 fixed overflow-hidden', {'w-48': hovering}]"
+			:class="['h-full bg-gray-10 dark:bg-gray-1 w-0 sm:w-20 flex flex-col items-center justify-between hover:w-48 transition-all duration-200 z-40 fixed overflow-hidden', {'w-48': hovering}]"
 			@mouseover="hovering = true"
 			@mouseleave="hovering = false"
 		>

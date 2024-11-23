@@ -1,6 +1,6 @@
 <template>
 	<div 
-		class="w-full h-max relative left-0 dark:bg-gray-3 bg-gray-9 pl-8 sm:pl-32 pr-8 sm:pr-12 pt-8 sm:pt-20"
+		class="w-full h-max relative left-0 dark:bg-gray-3 bg-white pl-8 sm:pl-32 pr-8 sm:pr-12 pt-8 sm:pt-20"
 		ref="sectionWrapper"
 	>
 		<h1 class="font-title text-2xl sm:text-4xl dark:text-white text-gray-1 font-bold">FEATURED</h1>

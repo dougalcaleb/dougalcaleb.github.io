@@ -44,7 +44,7 @@ export default {
 	},
 	computed: {
 		backgroundImage() {
-			return `background-image: url('assets/images/poly-${this.darkThemeString}.png')`;
+			return `background-image: url('assets/images/poly-${this.darkThemeString}.svg')`;
 		},
 		shadowTextClass() {
 			let classStr = 'landing_text_shadow_' + this.darkThemeString;
@@ -65,14 +65,14 @@ export default {
 	@apply font-subtitle text-gray-3 dark:text-white font-bold text-3xl sm:text-7xl sm:py-2;
 }
 .landing_text_shadow_light {
-	text-shadow: 0.5rem 0.5rem theme(colors.gray-7); 
+	text-shadow: 0.4rem 0.4rem theme(colors.gray-8); 
 }
 .landing_text_shadow_dark {
 	text-shadow: 0.5rem 0.5rem theme(colors.gray-0);
 }
 
 .m_landing_text_shadow_light {
-	text-shadow: 0.125rem 0.25rem theme(colors.gray-7); 
+	text-shadow: 0.125rem 0.25rem theme(colors.gray-8); 
 }
 .m_landing_text_shadow_dark {
 	text-shadow: 0.125rem 0.25rem theme(colors.gray-0);
