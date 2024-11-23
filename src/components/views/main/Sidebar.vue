@@ -47,6 +47,8 @@
 					:size="6" 
 					:class="['p-2 cursor-pointer text-gray-2 dark:text-white hover:text-purple-5 duration-200', {'mb-12': isMobile}]" 
 					@click="switchTheme()"
+					hoverText="Toggle Theme"
+					hoverDirection="right"
 				/>
 			</div>
 			
