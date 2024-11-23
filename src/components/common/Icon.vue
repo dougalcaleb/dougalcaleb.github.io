@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div :title="hoverText">
 		<svg v-if="iconColor" :class="iconClasses" :style="{ color: finalIconColor }">
 			<use :xlink:href="iconPath"></use>
 		</svg>
@@ -24,6 +24,10 @@ export default {
 		iconColor: {
 			type: [String, null],
 			default: "currentColor",
+		},
+		hoverText: {
+			type: String,
+			default: "",
 		},
 	},
 	data() {

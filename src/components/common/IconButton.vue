@@ -1,5 +1,5 @@
 <template>
-	<div :class="['rounded-md text-white py-3 font-title font-bold w-max h-max cursor-pointer m-2 duration-100 transition', rootClasses]" @click="$emit('click')">
+	<div :class="['rounded-md text-white py-3 font-title font-bold w-max h-max cursor-pointer duration-100 transition', rootClasses]" @click="$emit('click')">
 		<div class="flex items-center h-full">
 			<div :class="[{'mr-3': Boolean(icon) && $slots.default}]">
 				<slot></slot> 
