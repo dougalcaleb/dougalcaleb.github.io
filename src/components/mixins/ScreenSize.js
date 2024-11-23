@@ -12,6 +12,11 @@ export default {
 			screenSize: this.getScreenSize(),
 		};
 	},
+	computed: {
+		isMobile() {
+			return ['sm', 'xs'].includes(this.screenSize);
+		}
+	},
 	methods: {
 		getScreenSize() {
 			const width = window.innerWidth;

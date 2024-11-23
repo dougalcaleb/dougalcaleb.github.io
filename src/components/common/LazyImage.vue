@@ -16,10 +16,6 @@ export default {
 			type: String,
 			default: "",
 		},
-		onLoad: {
-			type: Function,
-			default: () => {},
-		},
 	},
 	data() {
 		return {
@@ -30,15 +26,23 @@ export default {
 		
 	},
 	methods: {
-		imgLoaded() {
-			this.$refs['img'].src = this.src;
-			this.onLoad();
+		loadImage() {
+			this.imgObj = new Image();
+			this.imgObj.onload = () => {
+				this.$refs['img'].src = this.src;
+				this.$emit("loaded");
+			};
+			this.imgObj.onerror = () => this.$emit("error");;
+			this.imgObj.src = this.src;
 		}
 	},
 	created() {
-		this.imgObj = new Image();
-		this.imgObj.onload = this.imgLoaded;
-		this.imgObj.src = this.src;
+		this.loadImage();
+	},
+	watch: {
+		src() {
+			this.loadImage();
+		}
 	}
 }
 </script>
