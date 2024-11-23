@@ -32,7 +32,7 @@
 
 		<div ref="textContent" class="w-full sm:px-6">
 			<div class="flex items-center">
-				<Icon icon="brand/learningsuite" :iconColor="null" :size="['sm', 'xs'].includes(screenSize) ? 10 : 14" />
+				<Icon icon="brand/learningsuite" :iconColor="null" :size="isMobile ? 10 : 14" />
 				<div class="flex flex-col ml-4">
 					<p class="font-ls text-ls-blue-light font-bold text-xl sm:text-3xl -mb-1 mt-1">LEARNING</p>
 					<p class="font-ls text-ls-blue-light font-bold text-xl sm:text-3xl -mt-1">SUITE</p>
