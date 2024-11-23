@@ -32,12 +32,11 @@
 
 		<div ref="textContent" class="w-full sm:px-6">
 			<div class="flex items-center">
-				<Icon icon="brand/learningsuite" :iconColor="null" :size="['sm', 'xs'].includes(screenSize) ? 20 : 16" />
+				<Icon icon="brand/learningsuite" :iconColor="null" :size="['sm', 'xs'].includes(screenSize) ? 10 : 14" />
 				<div class="flex flex-col ml-4">
-					<p class="font-ls text-ls-blue-light font-bold sm:text-2xl">LEARNING</p>
-					<p class="font-ls text-ls-blue-light font-bold sm:text-2xl">SUITE</p>
+					<p class="font-ls text-ls-blue-light font-bold text-xl sm:text-3xl -mb-1 mt-1">LEARNING</p>
+					<p class="font-ls text-ls-blue-light font-bold text-xl sm:text-3xl -mt-1">SUITE</p>
 				</div>
-				<div class="h-1 w-full bg-ls-blue-light dark:bg-ls-blue-dark ml-6 sm:ml-12"></div>
 			</div>
 
 			<p class="text-gray-1 dark:text-white font-body sm:px-4 pt-2 sm:pt-8 sm:text-lg">
@@ -118,7 +117,7 @@ export default {
 					bottom = Math.max(bottom, rect.bottom - featuredSectionRect.top);
 				}
 
-				this.$refs['textContent'].style.marginTop = `${bottom}px`;
+				this.$refs['textContent'].style.marginTop = `${bottom -25}px`;
 			});
 		},
 	},
