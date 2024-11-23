@@ -1,9 +1,7 @@
 <template>
 	<Placeholder v-if="isProd" />
-	<div class="flex h-full w-full">
-
+	<div class="flex h-max w-full">
 		<Sidebar />
-
 		<MainBody />
 	</div>
 </template>
