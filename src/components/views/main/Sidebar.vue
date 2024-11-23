@@ -6,7 +6,7 @@
 			@mouseleave="hovering = false"
 		>
 
-			<div class="w-auto max-w-28 h-28 rounded-b-md overflow-hidden">
+			<div class="w-28 sm:w-auto max-w-28 h-28 rounded-b-md overflow-hidden">
 				<img src="/assets/images/profile-square.jpg" alt="Profile Image">
 			</div>
 
@@ -37,15 +37,15 @@
 				</div>
 			</div>
 
-			<div class="flex flex-col items-center pb-2 invisible sm:visible">
-				<div class="border-t-2 border-gray-7 mb-2 w-6"></div>
-				<Icon icon="fa/github" :size="6" class="p-2 cursor-pointer text-gray-2 dark:text-white hover:text-purple-5 duration-200" />
-				<Icon icon="fa/linkedin" :size="6" class="p-2 cursor-pointer text-gray-2 dark:text-white hover:text-purple-5 duration-200" />
-				<div class="border-t-2 border-gray-7 my-2 w-6"></div>
+			<div class="flex flex-col items-center pb-2">
+				<div v-if="!isMobile" class="border-t-2 border-gray-7 mb-2 w-6"></div>
+				<Icon v-if="!isMobile" icon="fa/github" :size="6" class="p-2 cursor-pointer text-gray-2 dark:text-white hover:text-purple-5 duration-200" />
+				<Icon v-if="!isMobile" icon="fa/linkedin" :size="6" class="p-2 cursor-pointer text-gray-2 dark:text-white hover:text-purple-5 duration-200" />
+				<div v-if="!isMobile" class="border-t-2 border-gray-7 my-2 w-6"></div>
 				<Icon 
 					:icon="isDarkTheme ? 'fa/moon' : 'fa/sun'" 
 					:size="6" 
-					class="p-2 cursor-pointer text-gray-2 dark:text-white hover:text-purple-5 duration-200" 
+					:class="['p-2 cursor-pointer text-gray-2 dark:text-white hover:text-purple-5 duration-200', {'mb-12': isMobile}]" 
 					@click="switchTheme()"
 				/>
 			</div>
@@ -56,14 +56,8 @@
 			<Icon icon="fa/bars" :size="6" @click="hovering = !hovering" />
 			<div class="flex flex-row items-center">
 				<Icon icon="fa/github" :size="6" />
-				<Icon icon="fa/linkedin" :size="6" class="mx-6" />
-				<div class="border-l-2 border-gray-7 h-6"></div>
-				<Icon 
-					:icon="isDarkTheme ? 'fa/moon' : 'fa/sun'" 
-					:size="6" 
-					class="pl-6 cursor-pointer duration-200" 
-					@click="switchTheme()"
-				/>
+				<Icon icon="fa/linkedin" :size="6" class="ml-6" />
+				
 			</div>
 		</div>
 
@@ -80,9 +74,10 @@
 <script>
 import Icon from '../../common/Icon.vue';
 import ColorTheme from '../../mixins/ColorTheme';
+import ScreenSize from '../../mixins/ScreenSize';
 
 export default {
-	mixins: [ColorTheme],
+	mixins: [ColorTheme, ScreenSize],
 	components: {
 		Icon,
 	},
