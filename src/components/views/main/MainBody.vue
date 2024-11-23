@@ -1,5 +1,5 @@
 <template>
-	<div class="w-full h-screen fixed overflow-y-auto pb-12 bg-gray-2">
+	<div class="w-full h-max pb-12 bg-gray-10 dark:bg-gray-2">
 		<Landing />
 		<Featured />
 	</div>
