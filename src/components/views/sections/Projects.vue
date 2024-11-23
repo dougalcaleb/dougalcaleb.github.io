@@ -1,21 +1,21 @@
 <template>
 	<div
-		class="w-full h-max relative left-0 dark:bg-gray-3 bg-white pl-8 sm:pl-32 pr-8 sm:pr-12 pt-8 sm:pt-20"	
+		class="w-full h-max relative left-0 dark:bg-gray-3 bg-white px-2 sm:px-8 sm:pl-32 sm:pr-12 pt-8 sm:pt-20"	
 	>
 
-		<h1 class="font-title text-2xl sm:text-4xl dark:text-white text-gray-1 font-bold">PROJECTS</h1>
+		<h1 class="font-title text-2xl px-6 sm:px-0 sm:text-4xl dark:text-white text-gray-1 font-bold">PROJECTS</h1>
 
 		<div class="grid xl:grid-cols-2">
-			<div id="image-carousel-wrapper" class="relative p-8 grid image_grid_cols dark:text-white text-gray-1">
+			<div id="image-carousel-wrapper" class="relative py-8 xl:px-8 grid image_grid_cols dark:text-white text-gray-1">
 				<div class="flex flex-col justify-center">
-					<Icon icon="fa/chevron-left" class="mx-2 cursor-pointer" :size="12" @click="scrollCarousel('l')"/>
+					<Icon icon="fa/chevron-left" class="xl:mx-2 cursor-pointer" :size="isMobile ? 8 : 12" @click="scrollCarousel('l')"/>
 				</div>
-				<div id="image-carousel-parent" class="xl_height"></div>
+				<div id="image-carousel-parent" :class="[isMobile ? 'h-48' : 'xl_height']"></div>
 				<div class="flex flex-col justify-center">
-					<Icon icon="fa/chevron-right" class="mx-2 cursor-pointer" :size="12" @click="scrollCarousel('r')"/>
+					<Icon icon="fa/chevron-right" class="xl:mx-2 cursor-pointer" :size="isMobile ? 8 : 12" @click="scrollCarousel('r')"/>
 				</div>
 			</div>
-			<div id="description-carousel-wrapper" class="relative xl_height p-8">
+			<div id="description-carousel-wrapper" :class="['relative xl:p-8', isMobile ? 'xl_height px-6' : 'xl_height']">
 				<div id="description-template">
 					<div>
 						<div class="desc_content_wrap">
@@ -182,8 +182,10 @@ import Roundabout from '../../../modules/roundabout/roundabout.min';
 import RoundaboutScripter from '../../../modules/roundabout/roundabout-scripting.min';
 import Icon from '../../common/Icon.vue';
 import IconButton from '../../common/IconButton.vue';
+import ScreenSize from '../../mixins/ScreenSize';
 
 export default {
+	mixins: [ScreenSize],
 	components: {
 		Icon,
 		IconButton,
