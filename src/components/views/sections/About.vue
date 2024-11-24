@@ -65,7 +65,7 @@
 			<p>Linux</p>
 			<Icon icon="brand/illustrator" :iconColor="null" hoverText="Illustrator" class="p-2 py-4" />
 			<p>Illustrator</p>
-			<Icon icon="brand/genai" :iconColor="null" hoverText="Generative AI" class="p-2 py-4" />
+			<Icon icon="brand/genai" hoverText="Generative AI" class="p-2 py-4" />
 			<p>Generative AI</p>
 
 		</div>
