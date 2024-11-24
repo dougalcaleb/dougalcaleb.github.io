@@ -3,7 +3,7 @@
 		class="w-full h-max relative left-0 dark:bg-gray-3 bg-white px-8 sm:pl-32 sm:pr-12 pt-8 sm:pt-20"	
 	>
 
-		<h1 class="font-title text-2xl sm:px-0 sm:text-4xl dark:text-white text-gray-1 font-bold">ABOUT</h1>
+		<h1 class="font-title text-2xl sm:px-0 sm:text-4xl dark:text-white text-gray-1 font-bold" id="about_header">ABOUT</h1>
 		
 		<p class="text-gray-1 dark:text-white font-body sm:px-4 pt-2 sm:pt-8 sm:text-lg">
 			Hey! I’m Caleb. I’m a Utah-based programmer currently attending Brigham Young University pursuing a Master’s degree in 
