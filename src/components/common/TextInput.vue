@@ -1,8 +1,8 @@
 <template>
-	<div class="bg-gray-1 flex items-center">
+	<div class="bg-gray-9 dark:bg-gray-1 flex items-center">
 		<label 
 			v-if="leftText"
-			class="text-sm font-title font-bold text-gray-7 pl-4 mt-px text-md text-nowrap" 
+			class="text-sm font-title font-bold text-gray-4 dark:text-gray-7 pl-4 mt-px text-md text-nowrap" 
 			@click="$refs['input'].focus()">
 			{{ leftText }}
 		</label>
@@ -10,7 +10,7 @@
 			v-if="textarea"
 			:value="modelValue"
 			:placeholder="placeholder" 
-			:class="['bg-gray-1 p-4 outline-none text-white font-body text-md w-full', resize ? 'resize-y' : 'resize-none']" 
+			:class="['bg-gray-9 dark:bg-gray-1 p-4 outline-none text-gray-4 dark:text-white font-body text-md w-full', resize ? 'resize-y' : 'resize-none', {'lightmode_textarea': !isDarkTheme}]" 
 			:maxlength="maxlength"
 			:rows="rows"
 			:type="inputType"
@@ -25,7 +25,7 @@
 			:type="inputType" 
 			:name="inputName"
 			:placeholder="placeholder" 
-			class="bg-gray-1 p-4 outline-none text-white font-body text-md w-full" 
+			class="bg-gray-9 dark:bg-gray-1 p-4 outline-none text-gray-4 dark:text-white font-body text-md w-full" 
 			:maxlength="maxlength"
 			ref="input"
 			@input="handleInput"
@@ -35,7 +35,10 @@
 </template>
 
 <script>
+import ColorTheme from '../mixins/ColorTheme';
+
 export default {
+	mixins: [ColorTheme],
 	components: {
 		
 	},
@@ -93,5 +96,7 @@ export default {
 </script>
 
 <style scoped>
-
+.lightmode_textarea::placeholder {
+	@apply text-gray-4;
+}
 </style>
