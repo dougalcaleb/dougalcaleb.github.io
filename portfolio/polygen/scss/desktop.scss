@@ -1,0 +1,426 @@
+@use "ext";
+
+.choose-panel {
+	padding-top: 10px;
+}
+
+.panel-image-tools {
+	display: none;
+
+	.brush-btn {
+		svg {
+			height: 20px;
+			width: 20px;
+			color: ext.$theme-white;
+		}
+	}
+}
+
+.controls {
+	width: max(20vw, 240px);
+	height: calc(100vh - max(50px, 5vh));
+	position: absolute;
+	left: 0;
+	top: max(50px, 5vh);
+	background: ext.$theme-black-light;
+	box-shadow: 5px 0px 10px black;
+	z-index: 2;
+	overflow-y: auto;
+	padding-bottom: 50px;
+	box-sizing: border-box;
+	.control {
+		width: 90%;
+		transition: 0.2s;
+		position: relative;
+		margin: auto;
+		overflow: hidden;
+		p {
+			font-family: ext.$theme-font-subtitle;
+			color: ext.$theme-white;
+			font-size: 12px;
+			margin-bottom: 15px;
+			margin-top: 35px;
+		}
+		p.control-header-reduce-mtop {
+			margin-top: 10px;
+		}
+	}
+	.control-tabs {
+		width: 100%;
+	}
+	.control-palettes {
+		.active-palette {
+			margin-top: 30px;
+			.palette-colors {
+				border: 3px solid ext.$theme-blue-light;
+				box-sizing: border-box;
+				border-radius: 3px;
+			}
+		}
+		.active-palette::after {
+			content: "ACTIVE:";
+			font-family: ext.$theme-font-paragraph;
+			color: ext.$theme-white;
+			font-size: 10px;
+			position: absolute;
+			top: -15px;
+		}
+		.palette-add {
+			width: 100%;
+			height: 30px;
+			position: relative;
+			background: ext.$theme-black-medium;
+			cursor: pointer;
+			margin-bottom: 15px;
+			&:hover {
+				background: ext.$theme-gray;
+			}
+			svg {
+				@extend %center;
+				height: 20px;
+				width: 20px;
+				color: ext.$theme-blue-light;
+			}
+		}
+		.palette {
+			width: 100%;
+			height: 30px;
+			position: relative;
+			margin-bottom: 15px;
+			&:hover .palette-colors {
+				width: calc(100% - 30px);
+			}
+			.palette-colors {
+				width: 100%;
+				height: 30px;
+				display: flex;
+				transition: 0.2s;
+				position: relative;
+				z-index: 2;
+				.palette-color {
+					flex: 1;
+				}
+			}
+			.palette-options {
+				height: 30px;
+				background: ext.$theme-black-medium;
+				right: 0;
+				top: 0;
+				z-index: 1;
+				position: absolute;
+				width: 30px;
+				svg {
+					height: 20px;
+					width: 20px;
+					color: ext.$theme-blue-light;
+					@extend %center;
+					cursor: pointer;
+				}
+			}
+		}
+	}
+	.control-color {
+		div {
+			width: 100%;
+			background: white;
+			height: 30px;
+			input {
+				height: 30px;
+				opacity: 0;
+				width: 100%;
+			}
+		}
+	}
+	.control-range {
+		.control-range-flex-wrap {
+			display: flex;
+			div {
+				margin-left: 10px;
+				height: 20px;
+				width: 20px;
+				svg {
+					height: inherit;
+					width: inherit;
+					color: ext.$theme-blue-light;
+					cursor: pointer;
+				}
+			}
+		}
+	}
+	.control-file {
+		button {
+			position: relative;
+			background: ext.$theme-black-medium;
+			outline: none;
+			border: none;
+			color: ext.$theme-blue-light;
+			font-family: ext.$theme-font-button;
+			padding: 10px;
+			padding-left: 20px;
+			padding-right: 20px;
+			cursor: pointer;
+		}
+		input {
+			outline: none;
+			font-family: ext.$theme-font-paragraph;
+			opacity: 1;
+			position: absolute;
+			z-index: 5;
+		}
+	}
+	.control-input-wrap {
+		display: flex;
+		justify-content: space-between;
+		input {
+			outline: none;
+			border: none;
+			font-family: ext.$theme-font-paragraph;
+			width: 40%;
+			padding: 10px;
+			border-radius: 5px;
+		}
+	}
+	.control-btn-wrap:not(.btn-wrap-no-bottom-margin) {
+		margin-bottom: 15px;
+	}
+	.control-btn-wrap {
+		display: flex;
+		.btn-wrap-spacer {
+			visibility: hidden;
+		}
+		div {
+			font-family: ext.$theme-font-button;
+			color: ext.$theme-blue-light;
+			cursor: pointer;
+			flex: 1;
+			text-align: center;
+			position: relative;
+			background: purple;
+			line-height: 40px;
+			height: 40px;
+			background: ext.$theme-black-medium;
+			z-index: 2;
+			&:hover {
+				background: ext.$theme-gray;
+			}
+			svg {
+				@extend %center;
+				height: 30px;
+				width: 30px;
+			}
+			&.btn-active {
+				background: ext.$theme-blue-light;
+				color: white;
+			}
+		}
+	}
+
+	.control-tab-wrap {
+		display: flex;
+		div {
+			font-family: ext.$theme-font-button;
+			color: ext.$theme-white;
+			cursor: pointer;
+			flex: 1;
+			text-align: center;
+			position: relative;
+			line-height: 40px;
+			height: 40px;
+			background: ext.$theme-black-medium;
+			z-index: 2;
+			&:hover {
+				background: ext.$theme-gray;
+			}
+			svg {
+				@extend %center;
+				height: 30px;
+				width: 30px;
+			}
+			&.btn-active {
+				background: ext.$theme-black-light;
+				color: ext.$theme-blue-light;
+				box-shadow: 0px 0px 5px 5px #111;
+				z-index: 3;
+			}
+		}
+	}
+
+	.control-toggle-wrap {
+		display: flex;
+		margin-bottom: 15px;
+		text-wrap: wrap;
+		div {
+			font-family: ext.$theme-font-button;
+			color: ext.$theme-blue-light;
+			cursor: pointer;
+			flex: 1;
+			text-align: left;
+			text-wrap: wrap;
+			position: relative;
+			line-height: 40px;
+			height: 40px;
+			z-index: 2;
+			&::before {
+				content: '';
+				@extend %center-y;
+				height: 30px;
+				right: 5px;
+				background: ext.$theme-black-dark;
+				width: 50px;
+				border-radius: 50px;
+			}
+			&::after {
+				content: '';
+				@extend %center-y;
+				height: 22px;
+				right: 28px;
+				background: ext.$theme-gray;
+				width: 22px;
+				border-radius: 100%;
+				transition: 0.2s;
+			}
+			svg {
+				@extend %center;
+				height: 30px;
+				width: 30px;
+			}
+			&.btn-active {
+				&::after {
+					content: '';
+					right: 10px;
+					background: ext.$theme-blue-light;
+				}
+			}
+		}
+	}
+
+	.control-list {
+		.layer-add {
+			width: 100%;
+			height: 30px;
+			position: relative;
+			background: ext.$theme-black-medium;
+			cursor: pointer;
+			margin-bottom: 15px;
+			&:hover {
+				background: ext.$theme-gray;
+			}
+			svg {
+				@extend %center;
+				height: 20px;
+				width: 20px;
+				color: ext.$theme-blue-light;
+			}
+		}
+		.layer-active .layer-btn-wrap {
+			.layer-visible {
+				display: inline;
+			}
+			.layer-hidden {
+				display: none;
+			}
+		}
+		.layer-inactive .layer-btn-wrap {
+			.layer-visible {
+				display: none;
+			}
+			.layer-hidden {
+				display: inline;
+			}
+		}
+		.layer-wrap:not(.layer-selected) {
+			border: 3px solid ext.$theme-black-medium;
+		}
+		.layer-selected {
+			border-radius: 2px;
+			box-sizing: border-box;
+			border: 3px solid ext.$theme-blue-light;
+		}
+		div {
+			width: 100%;
+			background: ext.$theme-black-medium;
+			box-sizing: border-box;
+			font-family: ext.$theme-font-button;
+			color: ext.$theme-blue-light;
+			display: flex;
+			justify-content: flex-end;
+			align-items: center;
+			padding: 5px;
+			svg:hover {
+				color: white;
+			}
+			
+			span {
+				flex: 3;
+				padding-left: 10px;
+			}
+			.layer-btn-wrap {
+				flex: 0;
+				background: rgba(0,0,0,0);
+				svg {
+					cursor: pointer;
+					height: 25px;
+				}
+				.layer-delete {
+					margin-left: 5px;
+				}
+			}
+		}
+	}
+}
+
+.preview {
+	width: calc(100vw - max(20vw, 240px));
+	height: calc(100vh - max(50px, 5vh));
+	position: absolute;
+	right: 0;
+	top: max(50px, 5vh);
+	background: ext.$theme-black-medium;
+	z-index: 1;
+	.main-canvas {
+		max-width: 90%;
+		max-height: 90%;
+		@extend %center;
+	}
+	#canvas-main {
+		box-shadow: 0px 0px 20px black;
+		background: ext.$theme-black-light;
+	}
+}
+
+.compile-canvas {
+	display: none;
+}
+
+.help-info {
+	width: 90%;
+	margin: auto;
+	margin-top: 10px;
+	svg {
+		cursor: pointer;
+		color: ext.$theme-blue-light;
+		height: 30px;
+	}
+}
+
+.help-text {
+	padding: 10px;
+	font-family: ext.$theme-font-paragraph;
+	color: ext.$theme-white;
+	p {
+		padding: 0;
+		margin-top: 0;
+		margin-bottom: 15px;
+		font-size: 1rem;
+	}
+	h3 {
+		margin-top: 0;
+		padding-bottom: 8px;
+		border-bottom: 2px solid ext.$theme-blue-light;
+		width: 100%;
+	}
+	.help-section {
+		// text-decoration: underline;
+		color: ext.$theme-blue-light;
+	}
+}
