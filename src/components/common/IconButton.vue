@@ -51,7 +51,7 @@ export default {
 					classes += "bg-purple-3 hover:bg-purple-2";
 					break;
 				case "action":
-					classes += "bg-blue-1 hover:bg-blue-0";
+					classes += "bg-green-1 hover:bg-green-0";
 					break;
 			}
 
