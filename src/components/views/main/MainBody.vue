@@ -1,9 +1,10 @@
 <template>
-	<div class="w-full h-max pb-12 bg-gray-10 dark:bg-gray-2">
+	<div class="w-full h-max bg-gray-10 dark:bg-gray-2">
 		<Landing />
 		<Featured />
 		<Projects @scroll="showcaseBottom = arguments[0]"/>
 		<About :showcaseBottom="showcaseBottom" />
+		<Contact />
 	</div>
 </template>
 
@@ -12,6 +13,7 @@ import Landing from '../sections/Landing.vue';
 import Featured from '../sections/Featured.vue';
 import Projects from '../sections/Projects.vue';
 import About from '../sections/About.vue';
+import Contact from '../sections/Contact.vue';
 
 export default {
 	components: {
@@ -19,6 +21,7 @@ export default {
 		Featured,
 		Projects,
 		About,
+		Contact,
 	},
 	props: {
 		

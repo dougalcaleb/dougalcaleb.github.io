@@ -13,18 +13,23 @@
 			:class="['bg-gray-1 p-4 outline-none text-white font-body text-md w-full', resize ? 'resize-y' : 'resize-none']" 
 			:maxlength="maxlength"
 			:rows="rows"
+			:type="inputType"
+			:name="inputName"
 			ref="input"
 			@input="handleInput"
+			:disabled="disabled"
 		></textarea>
 		<input 
 			v-else
 			:value="modelValue"
-			type="text" 
+			:type="inputType" 
+			:name="inputName"
 			:placeholder="placeholder" 
 			class="bg-gray-1 p-4 outline-none text-white font-body text-md w-full" 
 			:maxlength="maxlength"
 			ref="input"
 			@input="handleInput"
+			:disabled="disabled"
 		>
 	</div>
 </template>
@@ -63,6 +68,12 @@ export default {
 			type: Number,
 			default: 4,
 		},
+		inputType: {
+			type: String,
+			default: "text"
+		},
+		inputName: String,
+		disabled: Boolean
 	},
 	emits: ["update:modelValue"],
 	data() {
