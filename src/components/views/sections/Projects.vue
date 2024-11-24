@@ -39,11 +39,11 @@
 								Now you can always keep tabs on the health of your Minecraft server, in Discord, from anywhere! Over the several times I've used this for my friends'
 								Minecraft worlds, I've learned a lot about networking and server hosting, and what goes into maintaining servers.
 							</p>
-							<div class="flex mt-8">
+							<div class="flex mt-8 text-gray-1 dark:text-white">
 								<Icon icon="brand/node" :iconColor="null" hoverText="NodeJS" class="mr-1" />
 								<Icon icon="brand/java" :iconColor="null" hoverText="Java" class="mr-1" />
-								<Icon icon="brand/raspberrypi" :iconColor="null" hoverText="Raspberry Pi" class="mr-1" />
-								<Icon icon="brand/api" :iconColor="null" hoverText="APIs" class="mr-1" />
+								<Icon icon="brand/raspberrypi" hoverText="Raspberry Pi" class="mr-1" />
+								<Icon icon="brand/api" hoverText="APIs" class="mr-1" />
 							</div>
 							<a href="https://github.com/dougalcaleb/spigot-status-bot" target="_blank" class="flex w-max">
 								<IconButton icon="fa/external" :iconSize="5" class="mt-8">Repository</IconButton>
@@ -74,7 +74,7 @@
 							<p class="desc_body">An easy to use, extremely configurable, and responsive carousel plugin for the web. I built this during my junior-senior years of
 								high school, and it ended up being taught to my Web Development 3 class for two days as part of the class curriculum. This carousel was made with Roundabout!
 							</p>
-							<div class="flex mt-8 text-white">
+							<div class="flex mt-8 text-gray-1 dark:text-white">
 								<Icon icon="brand/js" :iconColor="null" hoverText="Javascript" class="mr-2" />
 								<Icon icon="brand/html" :iconColor="null" hoverText="HTML5" class="mr-2" />
 								<Icon icon="brand/css" :iconColor="null" hoverText="CSS3" class="mr-2" />
@@ -93,7 +93,7 @@
 								downloadable in PNG or SVG format. From this project, I learned a lot about canvas drawing, image processing, and UI/UX design.
 								 The background of the landing page on this site uses this!
 							</p>
-							<div class="flex mt-8 text-white">
+							<div class="flex mt-8 text-gray-1 dark:text-white">
 								<Icon icon="brand/js" :iconColor="null" hoverText="Javascript" class="mr-2" />
 								<Icon icon="brand/html" :iconColor="null" hoverText="HTML5" class="mr-2" />
 								<Icon icon="brand/css" :iconColor="null" hoverText="CSS3" class="mr-2" />
@@ -109,7 +109,7 @@
 							<p class="desc_body">In my junior year of high school, I was asked to design and build a webpage for our school spirit store. While it isn't live anymore, it served
 								as a catalog for all of the school's available spirit items. This was my first live project!
 							</p>
-							<div class="flex mt-8 text-white">
+							<div class="flex mt-8 text-gray-1 dark:text-white">
 								<Icon icon="brand/js" :iconColor="null" hoverText="Javascript" class="mr-2" />
 								<Icon icon="brand/html" :iconColor="null" hoverText="HTML5" class="mr-2" />
 								<Icon icon="brand/css" :iconColor="null" hoverText="CSS3" class="mr-2" />
@@ -123,7 +123,7 @@
 								of enemies while trying to protect and upgrade the ancient monolith. This my final project for my high school Game Development class, and 
 								features full support for both keyboard and controller, utilizes a powerful particle system, and incorporates a low-poly 3D environment viewed from an isometric angle.
 							</p>
-							<div class="flex mt-8 text-white">
+							<div class="flex mt-8 text-gray-1 dark:text-white">
 								<Icon icon="brand/csharp" :iconColor="null" hoverText="C#" class="mr-2" />
 								<Icon icon="brand/unity" :iconColor="null" hoverText="Unity3D" />
 							</div>
@@ -135,13 +135,13 @@
 							<p class="desc_body">Using React and Firebase, this simple chat app features login capabilities for identifying users, persistent and low-latency cloud storage, and seperate message channels.
 								While most of my experience in front-end frameworks is in Vue (like this site!), I have some additional experience in React and Angular, like this project.
 							</p>
-							<div class="flex mt-8 text-white">
+							<div class="flex mt-8 text-gray-1 dark:text-white">
 								<Icon icon="brand/react" :iconColor="null" hoverText="React" class="mr-2" />
 								<Icon icon="brand/js" :iconColor="null" hoverText="Javascript" class="mr-2" />
 								<Icon icon="brand/firebase" :iconColor="null" hoverText="Google Firebase" class="mr-2" />
 								<Icon icon="brand/git" :iconColor="null" hoverText="Git" class="mr-2" />
 								<Icon icon="fa/github" hoverText="Github" class="mr-2" />
-								<Icon icon="brand/api" :iconColor="null" hoverText="Public APIs" class="mr-2" />
+								<Icon icon="brand/api" hoverText="Public APIs" class="mr-2" />
 							</div>
 						</div>
 					</div>
@@ -151,7 +151,7 @@
 							<p class="desc_body">This field of bubbles will react to your mouse movements as you swipe through it. This was one of my earlier complete projects as I started to move away
 								from basic experimentation of Javascript.
 							</p>
-							<div class="flex mt-8 text-white">
+							<div class="flex mt-8 text-gray-1 dark:text-white">
 								<Icon icon="brand/js" :iconColor="null" hoverText="Javascript" class="mr-2" />
 								<Icon icon="brand/html" :iconColor="null" hoverText="HTML5" class="mr-2" />
 								<Icon icon="brand/css" :iconColor="null" hoverText="CSS3" class="mr-2" />
@@ -164,7 +164,7 @@
 							<p class="desc_body">Built over the course of a week for Brackeys Game Jam 2021.1 along with two friends, this game has a unique take on the wave fighting genre, 
 								where you must prevent an army of enemies from amassing enough allies to defeat you.
 							</p>
-							<div class="flex mt-8 text-white">
+							<div class="flex mt-8 text-gray-1 dark:text-white">
 								<Icon icon="brand/csharp" :iconColor="null" hoverText="C#" class="mr-2" />
 								<Icon icon="brand/unity" :iconColor="null" hoverText="Unity3D" />
 							</div>
