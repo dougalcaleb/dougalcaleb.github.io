@@ -98,7 +98,7 @@
 								<Icon icon="brand/html" :iconColor="null" hoverText="HTML5" class="mr-2" />
 								<Icon icon="brand/css" :iconColor="null" hoverText="CSS3" class="mr-2" />
 							</div>
-							<a href="" target="_blank">
+							<a href="/portfolio/polygen/index.html" target="_blank">
 								<IconButton icon="fa/external" :iconSize="5" class="mt-8">Visit</IconButton>
 							</a>
 						</div>
@@ -156,6 +156,9 @@
 								<Icon icon="brand/html" :iconColor="null" hoverText="HTML5" class="mr-2" />
 								<Icon icon="brand/css" :iconColor="null" hoverText="CSS3" class="mr-2" />
 							</div>
+							<a href="/portfolio/bubbles/index.html" target="_blank">
+								<IconButton icon="fa/external" :iconSize="5" class="mt-8">Visit</IconButton>
+							</a>
 						</div>
 					</div>
 					<div>

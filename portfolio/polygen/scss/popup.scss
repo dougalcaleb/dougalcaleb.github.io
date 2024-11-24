@@ -1,0 +1,245 @@
+@use "ext";
+
+// Elements
+
+.popup-bg {
+	height: 100%;
+	width: 100%;
+	z-index: 100;
+	position: fixed;
+	background: rgba(255, 255, 255, 0.3);
+}
+
+.popup {
+	transform: translate(300px, 300px);
+	height: min(30vw, 300px);
+	width: min(50vw, 500px);
+	background: ext.$theme-gray;
+	border-radius: 5px;
+	box-shadow: 0px 0px 15px rgba(0, 0, 0, 1);
+	position: absolute;
+	.popup-body {
+		width: 100%;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		position: relative;
+		align-items: center;
+		height: calc(95% - min(5vw, 50px) - 40px);
+		font-family: ext.$theme-font-paragraph;
+		color: ext.$theme-white;
+	}
+	.popup-title {
+		background: ext.$theme-black-light;
+		width: 100%;
+		border-top-left-radius: 5px;
+		border-top-right-radius: 5px;
+		height: min(5vw, 50px);
+		display: flex;
+		flex-direction: row;
+  		justify-content: space-between;
+		padding: 0px 15px;
+		box-sizing: border-box;
+		align-items: center;
+		cursor: move;
+		.popup-title-text {
+			font-family: ext.$theme-font-title;
+			color: ext.$theme-white;
+			font-size: min(2vw, 20px);
+		}
+		svg {
+			position: relative;
+			right: 0;
+			height: min(2vw, 28px);
+			color: ext.$theme-red-light;
+			cursor: pointer;
+		}
+	}
+	.popup-button-wrap {
+		position: absolute;
+		display: flex;
+		justify-content: flex-end;
+		width: 90%;
+		bottom: 5%;
+		left: 0;
+		right: 0;
+		margin: auto;
+		button {
+			border: none;
+			font-family: ext.$theme-font-button;
+			background: ext.$theme-black-light;
+			padding: 6px 25px;
+			border-radius: 5px;
+			font-size: max(10px, min(0.8vw, 15px));
+			cursor: pointer;
+			margin-left: 10px;
+		}
+		.popup-save {
+			color: ext.$theme-blue-light;
+		}
+		.popup-cancel {
+			color: ext.$theme-red-light;
+		}
+        .popup-space-stops {
+            color: ext.$theme-blue-light;
+            justify-self: flex-start;
+            margin-right: auto;
+            margin-left: 0;
+        }
+	}
+}
+
+#popup-stop-controls-wrap {
+	border: 1px solid ext.$theme-blue-light;
+	padding: 5px;
+	background: ext.$theme-black-medium;
+	border-radius: 5px;
+	height: 50px;
+	width: 100px;
+	display: flex;
+	div {
+		flex: 1;
+		position: relative;
+		input {
+			height: 100%;
+			width: 100%;
+			z-index: 10;
+			position: relative;
+			opacity: 0;
+			cursor: pointer;
+		}
+		svg {
+			height: 60%;
+			@extend %center;
+			filter: saturate(0) grayscale(1) brightness(0.7) contrast(1000%) invert(1);
+			cursor: pointer;
+		}
+	}
+}
+
+// Temp Classes
+
+.popup-stop-selected {
+	&::-webkit-slider-thumb {
+		border: 2px solid white;
+	}
+	&::-moz-range-thumb {
+		border: 2px solid white;
+	}
+}
+
+// Gradient editor specific
+
+.gradient-editor-popup input[type="range"]:not(.popup-add-color-stop) {
+	width: 100%;
+	position: absolute;
+	// top: calc(50% + 5px);
+	appearance: none;
+	background: transparent;
+	&::-webkit-slider-runnable-track {
+		appearance: none;
+		border-radius: 100px;
+		height: 0px;
+		background: ext.$theme-gray;
+	}
+	&::-moz-range-track {
+		appearance: none;
+		background: transparent;
+	}
+	&::-moz-range-thumb {
+		border: none;
+		height: 15px;
+		width: 15px;
+	}
+}
+
+.gradient-editor-body-wrap {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-evenly;
+	width: 100%;
+	height: 90%;
+	align-items: center;
+	.gradient-editor-stop-wrap {
+		width: 80%;
+		position: relative;
+		margin: 0;
+		left: 0;
+		right: 0;
+		height: 25px;
+	}
+	.gradient-editor-preview {
+		width: 80%;
+		align-self: center;
+		height: 50%;
+		border-radius: 3px;
+	}
+	.popup-range-stop {
+		// individial color stops
+		--thumb-color: white;
+		margin: 0;
+		&::-webkit-slider-thumb {
+			appearance: none;
+			height: max(12px, min(1vw, 18px));
+			width: max(12px, min(1vw, 18px));
+			border-radius: 100%;
+			background: var(--thumb-color);
+		}
+	}
+	.popup-add-color-stop {
+		// input used to capture 'add' events
+		width: 100%;
+		height: 25px;
+		cursor: copy;
+		appearance: none;
+		background: transparent;
+		position: absolute;
+		margin: 0;
+		&::-webkit-slider-runnable-track {
+			appearance: none;
+			background: transparent;
+		}
+		&::-webkit-slider-thumb {
+			appearance: none;
+			border-radius: 0;
+			height: max(1vw, 10px);
+			width: max(1vw, 10px);
+			background: transparent;
+		}
+	}	
+}
+
+// Confirm popup specific
+
+.popup-body-text {
+	width: 70%;
+	text-align: center;
+	line-height: 22px;
+	font-size: min(2vw, 18px);
+}
+
+// info popup specific
+
+.popup.info-popup {
+	height: max-content;
+	.popup-body {
+		height: max-content;
+		max-height: 80vh;
+		overflow-y: auto;
+		display: block;
+		.popup-body-text {
+			text-align: initial;
+			margin-top: 0;
+			padding: 10px;
+			width: calc(100% - 20px);
+		}
+	}
+	.popup-button-wrap {
+		width: calc(100% - 40px);
+		padding-bottom: 10px;
+		padding-top: 10px;
+		bottom: -100%;
+		background: inherit;
+		position: relative;
+	}
+}
