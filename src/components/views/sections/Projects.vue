@@ -84,6 +84,9 @@
 							<a href="https://github.com/dougalcaleb/roundabout" target="_blank" class="flex w-max">
 								<IconButton icon="fa/external" :iconSize="5" class="mt-8">Repository</IconButton>
 							</a>
+							<a href="/roundabout/docs.html" target="_blank" class="flex w-max">
+								<IconButton icon="fa/external" :iconSize="5" class="mt-4">Docs</IconButton>
+							</a>
 						</div>
 					</div>
 					<div>
@@ -207,6 +210,7 @@ export default {
 				keys: false,
 				scrollwheel: true,
 				lazyLoad: "lazy-hidden",
+				swipeThreshold: 100,
 				pages: [
 					{ backgroundImage: "/assets/images/projects-slider/physics2d.png" },
 					{ backgroundImage: "/assets/images/projects-slider/spigot-status-bot-wide.png" },
