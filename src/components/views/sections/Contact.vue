@@ -1,6 +1,6 @@
 <template>
 	<div 
-		class="w-full h-max relative left-0 dark:bg-gray-3 bg-white px-8 sm:pl-32 sm:pr-12 pt-8 sm:pt-20"	
+		class="w-full h-max relative left-0 dark:bg-gray-3 bg-white px-8 sm:pl-32 sm:pr-12 pb-8 sm:pb-0 pt-8 sm:pt-20"	
 	>
 
 		<h1 class="font-title text-2xl sm:px-0 sm:text-4xl dark:text-white text-gray-1 font-bold">CONTACT</h1>
@@ -23,8 +23,8 @@
 
 			<IconButton variant="action" class="my-4" @click="submitForm">Send</IconButton>
 			
-			<a :href="`mail${aParts[0]}:${aParts[1]}${aParts[2]}@${aParts[3]}.com`">
-				<IconButton icon="fa/external" class="my-4">Open in your mail client</IconButton>
+			<a :href="`mail${aParts[0]}:${aParts[1]}${aParts[2]}@${aParts[3]}.com`" class="flex w-max">
+				<IconButton icon="fa/external">Open in your mail client</IconButton>
 			</a>
 		</div>
 		

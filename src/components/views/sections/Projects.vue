@@ -27,7 +27,7 @@
 							<div class="flex mt-8">
 								<Icon icon="brand/js" :iconColor="null" hoverText="Javascript" />
 							</div>
-							<a href="https://github.com/dougalcaleb/Physics2D" target="_blank">
+							<a href="https://github.com/dougalcaleb/Physics2D" target="_blank" class="flex w-max">
 								<IconButton icon="fa/external" :iconSize="5" class="mt-8">Repository</IconButton>
 							</a>
 						</div>
@@ -45,7 +45,7 @@
 								<Icon icon="brand/raspberrypi" :iconColor="null" hoverText="Raspberry Pi" class="mr-1" />
 								<Icon icon="brand/api" :iconColor="null" hoverText="APIs" class="mr-1" />
 							</div>
-							<a href="https://github.com/dougalcaleb/spigot-status-bot" target="_blank">
+							<a href="https://github.com/dougalcaleb/spigot-status-bot" target="_blank" class="flex w-max">
 								<IconButton icon="fa/external" :iconSize="5" class="mt-8">Repository</IconButton>
 							</a>
 						</div>
@@ -63,7 +63,7 @@
 								<Icon icon="brand/csharp" :iconColor="null" hoverText="C#" class="mr-2" />
 								<Icon icon="brand/unity" :iconColor="null" hoverText="Unity" />
 							</div>
-							<a href="https://dougalcaleb.itch.io/alchemy-ascension" target="_blank">
+							<a href="https://dougalcaleb.itch.io/alchemy-ascension" target="_blank" class="flex w-max">
 								<IconButton icon="fa/external" :iconSize="5" class="mt-8">Play in browser</IconButton>
 							</a>
 						</div>
@@ -81,7 +81,7 @@
 								<Icon icon="brand/git" :iconColor="null" hoverText="Git" class="mr-2" />
 								<Icon icon="fa/github" hoverText="Github" />
 							</div>
-							<a href="https://github.com/dougalcaleb/roundabout" target="_blank">
+							<a href="https://github.com/dougalcaleb/roundabout" target="_blank" class="flex w-max">
 								<IconButton icon="fa/external" :iconSize="5" class="mt-8">Repository</IconButton>
 							</a>
 						</div>
