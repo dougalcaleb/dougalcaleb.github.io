@@ -11,36 +11,50 @@
 			</div>
 
 			<div class="grid transition-all duration-200" :style="sidebarIconStyle">
-				<div class="contents cursor-pointer text-gray-2 dark:text-white hover:text-purple-5">
-					<Icon icon="fa/home" :size="6" class="pr-2 py-4 transition-all" />
-					<div class="font-title font-bold mt-1 overflow-hidden transition-all duration-100 py-4">Welcome</div>
-				</div>
+				<a href="#landing" class="contents">
+					<div class="contents cursor-pointer text-gray-2 dark:text-white hover:text-purple-5">
+						<Icon icon="fa/home" :size="6" class="pr-2 py-4 transition-all" />
+						<div class="font-title font-bold mt-1 overflow-hidden transition-all duration-100 py-4">Welcome</div>
+					</div>
+				</a>
 				
-				<div class="contents cursor-pointer text-gray-2 dark:text-white hover:text-purple-5">
-					<Icon icon="fa/star" :size="6" class="pr-2 py-4 transition-all" />
-					<div class="font-title font-bold mt-1 overflow-hidden transition-all duration-100 py-4">Featured</div>
-				</div>
-
-				<div class="contents cursor-pointer text-gray-2 dark:text-white hover:text-purple-5">
-					<Icon icon="fa/code-file" :size="6" class="pr-2 py-4 transition-all" />
-					<div class="font-title font-bold mt-1 overflow-hidden transition-all duration-100 py-4">Experience</div>
-				</div>
+				<a href="#featured_header" class="contents">
+					<div class="contents cursor-pointer text-gray-2 dark:text-white hover:text-purple-5">
+						<Icon icon="fa/star" :size="6" class="pr-2 py-4 transition-all" />
+						<div class="font-title font-bold mt-1 overflow-hidden transition-all duration-100 py-4">Featured</div>
+					</div>
+				</a>
 				
-				<div class="contents cursor-pointer text-gray-2 dark:text-white hover:text-purple-5">
-					<Icon icon="fa/id-badge" :size="6" class="pr-2 py-4 transition-all" />
-					<div class="font-title font-bold mt-1 overflow-hidden transition-all duration-100 py-4">About</div>
-				</div>
+				<a href="#projects_header" class="contents">
+					<div class="contents cursor-pointer text-gray-2 dark:text-white hover:text-purple-5">
+						<Icon icon="fa/code-file" :size="6" class="pr-2 py-4 transition-all" />
+						<div class="font-title font-bold mt-1 overflow-hidden transition-all duration-100 py-4">Projects</div>
+					</div>
+				</a>
+				
+				<a href="#about_header" class="contents">
+					<div class="contents cursor-pointer text-gray-2 dark:text-white hover:text-purple-5">
+						<Icon icon="fa/id-badge" :size="6" class="pr-2 py-4 transition-all" />
+						<div class="font-title font-bold mt-1 overflow-hidden transition-all duration-100 py-4">About</div>
+					</div>
+				</a>
 
-				<div class="contents cursor-pointer text-gray-2 dark:text-white hover:text-purple-5">
-					<Icon icon="fa/send" :size="6" class="pr-2 py-4 transition-all" />
-					<div class="font-title font-bold mt-1 overflow-hidden transition-all duration-100 py-4">Contact</div>
-				</div>
+				<a href="#contact_header" class="contents">
+					<div class="contents cursor-pointer text-gray-2 dark:text-white hover:text-purple-5">
+						<Icon icon="fa/send" :size="6" class="pr-2 py-4 transition-all" />
+						<div class="font-title font-bold mt-1 overflow-hidden transition-all duration-100 py-4">Contact</div>
+					</div>
+				</a>
 			</div>
 
 			<div class="flex flex-col items-center pb-2">
 				<div v-if="!isMobile" class="border-t-2 border-gray-7 mb-2 w-6"></div>
-				<Icon v-if="!isMobile" icon="fa/github" :size="6" class="p-2 cursor-pointer text-gray-2 dark:text-white hover:text-purple-5 duration-200" />
-				<Icon v-if="!isMobile" icon="fa/linkedin" :size="6" class="p-2 cursor-pointer text-gray-2 dark:text-white hover:text-purple-5 duration-200" />
+				<a href="https://github.com/dougalcaleb" target="_blank">
+					<Icon v-if="!isMobile" icon="fa/github" :size="6" class="p-2 cursor-pointer text-gray-2 dark:text-white hover:text-purple-5 duration-200" />
+				</a>
+				<a href="https://www.linkedin.com/in/caleb-dougal/" target="_blank">
+					<Icon v-if="!isMobile" icon="fa/linkedin" :size="6" class="p-2 cursor-pointer text-gray-2 dark:text-white hover:text-purple-5 duration-200" />
+				</a>
 				<div v-if="!isMobile" class="border-t-2 border-gray-7 my-2 w-6"></div>
 				<Icon 
 					:icon="isDarkTheme ? 'fa/moon' : 'fa/sun'" 
@@ -57,9 +71,12 @@
 		<div class="h-10 sm:h-0 bg-gray-10 dark:bg-gray-0 w-full z-40 fixed bottom-0 flex justify-between items-center text-gray-2 dark:text-white px-6 overflow-hidden">
 			<Icon icon="fa/bars" :size="6" @click="hovering = !hovering" />
 			<div class="flex flex-row items-center">
-				<Icon icon="fa/github" :size="6" />
-				<Icon icon="fa/linkedin" :size="6" class="ml-6" />
-				
+				<a href="https://github.com/dougalcaleb" target="_blank">
+					<Icon icon="fa/github" :size="6" />
+				</a>
+				<a href="https://www.linkedin.com/in/caleb-dougal/" target="_blank">
+					<Icon icon="fa/linkedin" :size="6" class="ml-6" />
+				</a>
 			</div>
 		</div>
 

@@ -3,7 +3,7 @@
 		class="w-full h-max relative left-0 dark:bg-gray-3 bg-white pl-8 sm:pl-32 pr-8 sm:pr-12 pt-8 sm:pt-20"
 		ref="sectionWrapper"
 	>
-		<h1 class="font-title text-2xl sm:text-4xl dark:text-white text-gray-1 font-bold">FEATURED</h1>
+		<h1 class="font-title text-2xl sm:text-4xl dark:text-white text-gray-1 font-bold" id="featured_header">FEATURED</h1>
 
 		<div class="relative w-full mt-8" ref="imgWrapper">
 			<LazyImage 

@@ -3,7 +3,7 @@
 		class="w-full h-max relative left-0 dark:bg-gray-3 bg-white px-2 sm:px-8 sm:pl-32 sm:pr-12 pt-8 sm:pt-20"	
 	>
 
-		<h1 class="font-title text-2xl px-6 sm:px-0 sm:text-4xl dark:text-white text-gray-1 font-bold">PROJECTS</h1>
+		<h1 class="font-title text-2xl px-6 sm:px-0 sm:text-4xl dark:text-white text-gray-1 font-bold" id="projects_header">PROJECTS</h1>
 
 		<div class="grid xl:grid-cols-2">
 			<div id="image-carousel-wrapper" class="relative py-8 xl:px-8 grid image_grid_cols dark:text-white text-gray-1">

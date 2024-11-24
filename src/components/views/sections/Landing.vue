@@ -4,6 +4,8 @@
 		:style="backgroundImage"
 	>
 
+		<div class="invisible absolute top-0 left-0" id="landing"></div>
+
 		<div class="pl-8 sm:pl-40">
 			<p :class="['landing_text', shadowTextClass]">Hello!</p>
 			<p :class="['landing_text', shadowTextClass]">I'm Caleb,</p>
@@ -11,9 +13,12 @@
 			<p :class="['landing_text', shadowTextClass]">and web developer.</p>
 
 			<div class="flex mt-6 flex-wrap">
-				<IconButton class="mr-4 sm:mr-2 ml-0">
-					<p class="text-md sm:text-lg">Contact</p>
-				</IconButton>
+				<a href="#contact_header">
+					<IconButton class="mr-4 sm:mr-2 ml-0">
+						<p class="text-md sm:text-lg">Contact</p>
+					</IconButton>
+				</a>
+				
 				<IconButton class="ml-0 sm:ml-2" icon="fa/download" :iconSize="isMobile ? 4 : 5">
 					<p class="text-md sm:text-lg">Resumé</p>
 				</IconButton>
