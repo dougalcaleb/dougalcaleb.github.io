@@ -83,7 +83,7 @@
 		<Transition name="bgFade">
 			<div 
 				v-show="hovering"
-				class="w-full h-full absolute z-30 bg-gray-7 left-0 top-0 opacity-40"
+				class="w-full h-full fixed z-30 bg-gray-7 left-0 top-0 opacity-40"
 				@click="hovering = false"
 			></div>
 		</Transition>

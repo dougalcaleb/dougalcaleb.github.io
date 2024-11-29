@@ -6,7 +6,7 @@
 
 		<div class="invisible absolute top-0 left-0" id="landing"></div>
 
-		<div class="pl-8 sm:pl-40">
+		<div class="px-8 sm:pl-40">
 			<p :class="['landing_text', shadowTextClass]">Hello!</p>
 			<p :class="['landing_text', shadowTextClass]">I'm Caleb,</p>
 			<p :class="['landing_text', shadowTextClass]">a programmer</p>
@@ -14,7 +14,7 @@
 
 			<div class="flex mt-6 flex-wrap">
 				<a href="#contact_header">
-					<IconButton class="mr-4 sm:mr-2 ml-0">
+					<IconButton class="mr-4 mb-4 sm:mr-2 ml-0">
 						<p class="text-md sm:text-lg">Contact</p>
 					</IconButton>
 				</a>
