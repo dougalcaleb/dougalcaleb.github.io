@@ -39,6 +39,8 @@ jobs:
         run: npm ci
       - name: Build
         run: npm run build
+      - name: Copy portfolio folder
+        run: cp -r ./portfolio ./dist/portfolio
       - name: Setup Pages
         uses: actions/configure-pages@v4
       - name: Upload artifact
