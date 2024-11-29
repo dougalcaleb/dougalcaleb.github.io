@@ -210,7 +210,7 @@ export default {
 				keys: false,
 				scrollwheel: true,
 				lazyLoad: "lazy-hidden",
-				swipeThreshold: 100,
+				swipeThreshold: 50,
 				pages: [
 					{ backgroundImage: "/assets/images/projects-slider/physics2d.png" },
 					{ backgroundImage: "/assets/images/projects-slider/spigot-status-bot-wide.png" },

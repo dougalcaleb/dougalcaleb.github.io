@@ -1,11 +1,11 @@
 <template>
 	<div 
-		class="w-full h-max relative left-0 dark:bg-gray-3 bg-white px-8 sm:pl-32 sm:pr-12 pt-8 sm:pt-20"	
+		class="w-full h-max relative left-0 dark:bg-gray-3 bg-white px-6 sm:pl-32 sm:pr-12 pt-8 sm:pt-20"	
 	>
 
 		<h1 class="font-title text-2xl sm:px-0 sm:text-4xl dark:text-white text-gray-1 font-bold" id="about_header">ABOUT</h1>
 		
-		<p class="text-gray-1 dark:text-white font-body sm:px-4 pt-2 sm:pt-8 sm:text-lg">
+		<p class="text-gray-1 dark:text-white font-body sm:px-4 pt-4 sm:pt-8 sm:text-lg">
 			Hey! I’m Caleb. I’m a Utah-based programmer currently attending Brigham Young University pursuing a Master’s degree in 
 			Computer Science. 
 			<br class="p-4" /><br/>
@@ -27,45 +27,45 @@
 		</p>
 
 		<div :class="['grid skill_grid text-gray-1 dark:text-white pt-8 sm:px-4', isMobile ? 'grid_2' : 'grid_3']">
-			<Icon icon="brand/js" :iconColor="null" hoverText="Javascript" class="p-2 py-4"/>
+			<Icon icon="brand/js" :iconColor="null" hoverText="Javascript" class="px-2 py-4"/>
 			<p>Javascript</p>
-			<Icon icon="brand/html" :iconColor="null" hoverText="HTML5" class="p-2 py-4"/>
+			<Icon icon="brand/html" :iconColor="null" hoverText="HTML5" class="px-2 py-4"/>
 			<p>HTML5</p>
-			<Icon icon="brand/css" :iconColor="null" hoverText="CSS / SCSS / SASS" class="p-2 py-4"/>
+			<Icon icon="brand/css" :iconColor="null" hoverText="CSS / SCSS / SASS" class="px-2 py-4"/>
 			<p>CSS / SCSS / SASS</p>
-			<Icon icon="brand/ts" :iconColor="null" hoverText="Typescript" class="p-2 py-4"/>
+			<Icon icon="brand/ts" :iconColor="null" hoverText="Typescript" class="px-2 py-4"/>
 			<p>Typescript</p>
-			<Icon icon="brand/csharp" :iconColor="null" hoverText="C#" class="p-2 py-4"/>
+			<Icon icon="brand/csharp" :iconColor="null" hoverText="C#" class="px-2 py-4"/>
 			<p>C#</p>
-			<Icon icon="brand/c++" :iconColor="null" hoverText="C++" class="p-2 py-4"/>
+			<Icon icon="brand/c++" :iconColor="null" hoverText="C++" class="px-2 py-4"/>
 			<p>C++</p>
-			<Icon icon="brand/python" :iconColor="null" hoverText="Python" class="p-2 py-4"/>
+			<Icon icon="brand/python" :iconColor="null" hoverText="Python" class="px-2 py-4"/>
 			<p>Python</p>
-			<Icon icon="brand/java" :iconColor="null" hoverText="Java" class="p-2 py-4"/>
+			<Icon icon="brand/java" :iconColor="null" hoverText="Java" class="px-2 py-4"/>
 			<p>Java</p>
-			<Icon icon="brand/vue" :iconColor="null" hoverText="Vue" class="p-2 py-4" />
+			<Icon icon="brand/vue" :iconColor="null" hoverText="Vue" class="px-2 py-4" />
 			<p>Vue (Vue 2 and Vue 3)</p>
-			<Icon icon="brand/php" :iconColor="null" hoverText="PHP" class="p-2 py-4" />
+			<Icon icon="brand/php" :iconColor="null" hoverText="PHP" class="px-2 py-4" />
 			<p>PHP</p>
-			<Icon icon="brand/node" :iconColor="null" hoverText="NodeJS" class="p-2 py-4" />
+			<Icon icon="brand/node" :iconColor="null" hoverText="NodeJS" class="px-2 py-4" />
 			<p>NodeJS</p>
-			<Icon icon="brand/unity" :iconColor="null" hoverText="Unity3D" class="p-2 py-4" />
+			<Icon icon="brand/unity" :iconColor="null" hoverText="Unity3D" class="px-2 py-4" />
 			<p>Unity3D</p>
-			<Icon icon="brand/git" :iconColor="null" hoverText="Git" class="p-2 py-4" />
+			<Icon icon="brand/git" :iconColor="null" hoverText="Git" class="px-2 py-4" />
 			<p>Git</p>
-			<Icon icon="fa/github" hoverText="Github" class="p-2 py-4" />
+			<Icon icon="fa/github" hoverText="Github" class="px-2 py-4" />
 			<p>Github</p>
-			<Icon icon="brand/gitlab" :iconColor="null" hoverText="Gitlab" class="p-2 py-4" />
+			<Icon icon="brand/gitlab" :iconColor="null" hoverText="Gitlab" class="px-2 py-4" />
 			<p>Gitlab</p>
-			<Icon icon="brand/firebase" :iconColor="null" hoverText="Google Firebase" class="p-2 py-4" />
+			<Icon icon="brand/firebase" :iconColor="null" hoverText="Google Firebase" class="px-2 py-4" />
 			<p>Google Firebase</p>
-			<Icon icon="brand/docker" :iconColor="null" hoverText="Docker" class="p-2 py-4" />
+			<Icon icon="brand/docker" :iconColor="null" hoverText="Docker" class="px-2 py-4" />
 			<p>Docker</p>
-			<Icon icon="brand/linux" :iconColor="null" hoverText="Linux" class="p-2 py-4" />
+			<Icon icon="brand/linux" :iconColor="null" hoverText="Linux" class="px-2 py-4" />
 			<p>Linux</p>
-			<Icon icon="brand/illustrator" :iconColor="null" hoverText="Illustrator" class="p-2 py-4" />
+			<Icon icon="brand/illustrator" :iconColor="null" hoverText="Illustrator" class="px-2 py-4" />
 			<p>Illustrator</p>
-			<Icon icon="brand/genai" hoverText="Generative AI" class="p-2 py-4" />
+			<Icon icon="brand/genai" hoverText="Generative AI" class="px-2 py-4" />
 			<p>Generative AI</p>
 
 		</div>
