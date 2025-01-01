@@ -19,6 +19,24 @@
 				<div id="description-template">
 					<div>
 						<div class="desc_content_wrap">
+							<h3 class="desc_title">Corruption's Edge</h3>
+							<p class="desc_body">
+								This game was built entirely from scratch in two days for the MelonJam 2024 game jam on itch.io. 
+								Our goal was to create a simple but highly polished game that was satisfying to play, fully fleshed out, and clear to players.
+								The game features extremely responsive controls, a dynamic camera system, an original soundtrack, and a simple but appealing art style.
+								Additionally, despite being a two-day project, I am proud of my extremely clean code organization, which helped me to iterate and collaborate quickly and easily.
+							</p>
+							<div class="flex mt-8">
+								<Icon icon="brand/csharp" :iconColor="null" hoverText="C#" class="mr-2" />
+								<Icon icon="brand/unity" :iconColor="null" hoverText="Unity" />
+							</div>
+							<a href="https://theexception.itch.io/corruptionsedge" target="_blank" class="flex w-max">
+								<IconButton icon="fa/external" :iconSize="5" class="mt-8">Play in browser</IconButton>
+							</a>
+						</div>
+					</div>
+					<div>
+						<div class="desc_content_wrap">
 							<h3 class="desc_title">Physics2D</h3>
 							<p class="desc_body">I built this 2D physics engine with the intent of putting to use everything I had learned about data structures and algorithms from my University courses. 
 								While this is still a WIP project, it does feature a highly optimized and efficient core, and I intend on building this out into a small plugin that 
@@ -53,7 +71,7 @@
 					<div>
 						<div class="desc_content_wrap">
 							<h3 class="desc_title">Alchemy Ascension</h3>
-							<p class="desc_body">This game was built over a 3-day weekend by me and a friend as part of an Itch.io game jam focused on speedrunning with a theme of "Ascend".
+							<p class="desc_body">This game was built over a 3-day weekend by me and a friend as part of an itch.io game jam focused on speedrunning with a theme of "Ascend".
 								Playing as a wizard whose ultimate goal is ascending to godhood, you must learn how to quickly gather your potion ingredients - either peacefully
 								or by force. With responsive controls, charming pixel art, and over a dozen potions to brew, you must find the quickest way to achieve your goal. 
 								<br/> <br/>
@@ -212,6 +230,7 @@ export default {
 				lazyLoad: "lazy-hidden",
 				swipeThreshold: 50,
 				pages: [
+					{ backgroundImage: "/assets/images/projects-slider/polarity.png" },
 					{ backgroundImage: "/assets/images/projects-slider/physics2d.png" },
 					{ backgroundImage: "/assets/images/projects-slider/spigot-status-bot-wide.png" },
 					{ backgroundImage: "/assets/images/projects-slider/alchemy-ascension.png" },
