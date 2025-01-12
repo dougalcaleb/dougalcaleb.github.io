@@ -53,6 +53,9 @@ export default {
 				case "action":
 					classes += "bg-green-1 hover:bg-green-0";
 					break;
+				case "cancel":
+					classes += "bg-red-1 hover:bg-red-0";
+					break;
 			}
 
 			if (this.$slots.default) {

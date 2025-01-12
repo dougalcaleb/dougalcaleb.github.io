@@ -179,7 +179,7 @@ and all visible pages gain the class ".roundabout-[UNIQUE ID]-visible-page-[NTH 
 }
 
 /* Game jam pixel art images */
-.roundabout-0-page-0, .roundabout-0-page-3 {
+.roundabout-0-page-1, .roundabout-0-page-3 {
 	image-rendering: pixelated;
   	image-rendering: crisp-edges;
 }

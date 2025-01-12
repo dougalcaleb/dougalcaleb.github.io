@@ -6,7 +6,19 @@
 
 		<div class="invisible absolute top-0 left-0" id="landing"></div>
 
-		<div class="px-8 sm:pl-40">
+		<canvas id="physics2d-canvas" class="h-full w-full absolute"></canvas>
+
+		<div class="absolute right-0 top-0">
+			<IconButton 
+				class="m-4 w-6 opacity-20 hover:opacity-100"
+				:icon="simRunning ? 'fa/pause' : 'fa/play'"
+				:variant="simRunning ? 'cancel' : 'action'"
+				@mousedown="togglePhysicsSim"
+				:title="simRunning ? 'Pause physics sim' : 'Resume physics sim'"
+			/>
+		</div>
+
+		<div class="px-8 sm:pl-40 z-20">
 			<p :class="['landing_text', shadowTextClass]">Hello!</p>
 			<p :class="['landing_text', shadowTextClass]">I'm Caleb,</p>
 			<p :class="['landing_text', shadowTextClass]">a programmer</p>
@@ -47,7 +59,7 @@ export default {
 	},
 	data() {
 		return {
-			
+			simRunning: true,
 		}
 	},
 	computed: {
@@ -63,7 +75,17 @@ export default {
 		}
 	},
 	methods: {
-		
+		togglePhysicsSim() {
+			if (this.simRunning) {
+				window.pausePhysics2D();
+			} else {
+				window.resumePhysics2D();
+			}
+			this.simRunning = !this.simRunning;
+		}
+	},
+	mounted() {
+		window.onLandingPageLoad();
 	}
 }
 </script>

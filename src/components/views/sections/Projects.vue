@@ -19,6 +19,21 @@
 				<div id="description-template">
 					<div>
 						<div class="desc_content_wrap">
+							<h3 class="desc_title">Physics2D</h3>
+							<p class="desc_body">I built this 2D physics engine with the intent of putting to use everything I had learned about data structures and algorithms from my University courses. 
+								While this is still a WIP project, it does feature a highly optimized and efficient core, and I intend on building this out into a small plugin that 
+								can be used to create simple interactive experiences in-browser. This is currently in use on this site for the physics simulation on the landing page.
+							</p>
+							<div class="flex mt-8">
+								<Icon icon="brand/js" :iconColor="null" hoverText="Javascript" />
+							</div>
+							<a href="https://github.com/dougalcaleb/Physics2D" target="_blank" class="flex w-max">
+								<IconButton icon="fa/external" :iconSize="5" class="mt-8">Repository</IconButton>
+							</a>
+						</div>
+					</div>
+					<div>
+						<div class="desc_content_wrap">
 							<h3 class="desc_title">Corruption's Edge</h3>
 							<p class="desc_body">
 								This game was built entirely from scratch in two days for the MelonJam 2024 game jam on itch.io. 
@@ -32,21 +47,6 @@
 							</div>
 							<a href="https://theexception.itch.io/corruptionsedge" target="_blank" class="flex w-max">
 								<IconButton icon="fa/external" :iconSize="5" class="mt-8">Play in browser</IconButton>
-							</a>
-						</div>
-					</div>
-					<div>
-						<div class="desc_content_wrap">
-							<h3 class="desc_title">Physics2D</h3>
-							<p class="desc_body">I built this 2D physics engine with the intent of putting to use everything I had learned about data structures and algorithms from my University courses. 
-								While this is still a WIP project, it does feature a highly optimized and efficient core, and I intend on building this out into a small plugin that 
-								can be used to create simple interactive experiences in-browser.
-							</p>
-							<div class="flex mt-8">
-								<Icon icon="brand/js" :iconColor="null" hoverText="Javascript" />
-							</div>
-							<a href="https://github.com/dougalcaleb/Physics2D" target="_blank" class="flex w-max">
-								<IconButton icon="fa/external" :iconSize="5" class="mt-8">Repository</IconButton>
 							</a>
 						</div>
 					</div>
@@ -230,8 +230,8 @@ export default {
 				lazyLoad: "lazy-hidden",
 				swipeThreshold: 50,
 				pages: [
-					{ backgroundImage: "/assets/images/projects-slider/polarity.png" },
 					{ backgroundImage: "/assets/images/projects-slider/physics2d.png" },
+					{ backgroundImage: "/assets/images/projects-slider/polarity.png" },
 					{ backgroundImage: "/assets/images/projects-slider/spigot-status-bot-wide.png" },
 					{ backgroundImage: "/assets/images/projects-slider/alchemy-ascension.png" },
 					{ backgroundImage: "/assets/images/projects-slider/roundabout.png" },
