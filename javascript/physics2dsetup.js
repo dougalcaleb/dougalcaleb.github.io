@@ -1,5 +1,5 @@
-import Physics2D from './physics2d.js';
-import { Point, Polygon, PolygonType } from './physics2d.js';
+import Physics2D from '../public/javascript/physics2d/physics2d.js';
+import { Point, Polygon, PolygonType } from '../public/javascript/physics2d/physics2d.js';
 
 window.onLandingPageLoad = () => {
 	
