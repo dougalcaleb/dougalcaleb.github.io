@@ -36,9 +36,9 @@
 						<div class="desc_content_wrap">
 							<h3 class="desc_title">Corruption's Edge</h3>
 							<p class="desc_body">
-								This game was built entirely from scratch in two days for the MelonJam 2024 game jam on itch.io. 
+								This game was built entirely from scratch in two days for the MelonJam 2024 game jam on itch.io, and ended up winning 3rd place in its category.
 								Our goal was to create a simple but highly polished game that was satisfying to play, fully fleshed out, and clear to players.
-								The game features extremely responsive controls, a dynamic camera system, an original soundtrack, and a simple but appealing art style.
+								The game features extremely responsive controls, a dynamic camera system, an original soundtrack, and an invitingly simple art style.
 								Additionally, despite being a two-day project, I am proud of my extremely clean code organization, which helped me to iterate and collaborate quickly and easily.
 							</p>
 							<div class="flex mt-8">
