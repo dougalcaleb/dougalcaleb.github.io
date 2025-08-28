@@ -31,7 +31,7 @@
 					</IconButton>
 				</a>
 				
-				<a href="/assets/files/Resume August 2023.pdf" download="Caleb Dougal's Resume">
+				<a href="/assets/files/Resume August 2025.pdf" download="Caleb Dougal's Resume">
 					<IconButton class="ml-0 sm:ml-2" icon="fa/download" :iconSize="isMobile ? 4 : 5">
 						<p class="text-md sm:text-lg">Resumé</p>
 					</IconButton>
