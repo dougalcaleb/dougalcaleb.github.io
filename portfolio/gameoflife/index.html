@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Game of Life</title>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+</head>
+<body>
+
+   <div class="wrap">
+      <div class="controls">
+         <h1 class="title">GAME OF LIFE</h1>
+         <div class="control-row">
+            <p class="row-title">SIMULATION DIMENSIONS</p>
+            <div class="control-col">
+               <p>HEIGHT</p>
+               <input type="number" class="game-height" value="40">
+            </div>
+            <div class="control-col">
+               <p>WIDTH</p>
+               <input type="number" class="game-width" value="40">
+            </div>
+         </div>
+         <div class="control-row">
+            <div class="row-title">SEED</div>
+            <div class="control-col">
+               <input type="number" class="game-seed">
+            </div>
+         </div>
+         <div class="control-row">
+            <div class="row-title">TIMESTEP</div>
+            <div class="control-col">
+               <input type="number" class="game-timestep" value="100">
+            </div>
+         </div>
+         <div class="control-row">
+            <div class="row-title">GAME</div>
+            <button class="game-play-pause">Run Simulation</button>
+            <button class="game-step">Step</button>
+            <button class="game-clear">Clear</button>
+         </div>
+         <div class="control-row">
+            <div class="row-title">GAME STATUS</div>
+            <p class="game-coords">Mouse: (0,0)</p>
+            <p class="game-generation">Generation: 0</p>
+         </div>
+      </div>
+      <div class="game">
+         <canvas></canvas>
+      </div>
+   </div>
+
+</body>
+
+<script src="javascript/script.js"></script>
+
+</html>

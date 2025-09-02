@@ -111,6 +111,20 @@
 					</div>
 					<div>
 						<div class="desc_content_wrap">
+							<h3 class="desc_title">Conway's Game of Life</h3>
+							<p class="desc_body">
+								The classic Game of Life, built in a single afternoon. Create your own automatons by clicking to toggle cells.
+							</p>
+							<div class="flex mt-8">
+								<Icon icon="brand/js" :iconColor="null" hoverText="Javascript" class="mr-2" />
+							</div>
+							<a href="/portfolio/gameoflife/index.html" target="_blank">
+								<IconButton icon="fa/external" :iconSize="5" class="mt-8">Visit</IconButton>
+							</a>
+						</div>
+					</div>
+					<div>
+						<div class="desc_content_wrap">
 							<h3 class="desc_title">Polygen</h3>
 							<p class="desc_body">Revamped in version 2.0, this is an easy-to-use tool for creating low-poly gradients and images, 
 								downloadable in PNG or SVG format. From this project, I learned a lot about canvas drawing, image processing, and UI/UX design.
@@ -236,6 +250,7 @@ export default {
 					{ backgroundImage: "/assets/images/projects-slider/Vibe+Syntax.png" },
 					{ backgroundImage: "/assets/images/projects-slider/spigot-status-bot-wide.png" },
 					{ backgroundImage: "/assets/images/projects-slider/roundabout.png" },
+					{ backgroundImage: "/assets/images/projects-slider/gameoflife.png" },
 					{ backgroundImage: "/assets/images/projects-slider/polygen.png" },
 					{ backgroundImage: "/assets/images/projects-slider/stormcenter.png" },
 					{ backgroundImage: "/assets/images/projects-slider/gamedevfinal.png" },
