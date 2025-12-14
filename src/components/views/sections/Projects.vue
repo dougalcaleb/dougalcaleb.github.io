@@ -19,6 +19,33 @@
 				<div id="description-template">
 					<div>
 						<div class="desc_content_wrap">
+							<h3 class="desc_title">Parallel</h3>
+							<p class="desc_body">
+								My most expansive solo project to date! Parallel has a little bit of everything. It's a mobile-first React-based social-media-like web app,
+								built on a full AWS stack, including EC2, DynamoDB, Cognito, S3, IAM, and Route 53, as well as other tech like Google Cloud services,
+								Google Maps integrations, ExpressJS, Tailwind, and Vite.
+								<br/><br/>
+								The site has now been converted to a static mockup, but you can still click through it below!
+							</p>
+							<div class="flex mt-8 text-gray-1 dark:text-white">
+								<Icon icon="brand/react" :iconColor="null" hoverText="React"  class="mr-2"/>
+								<Icon icon="brand/node" :iconColor="null" hoverText="NodeJS"  class="mr-2"/>
+								<Icon icon="brand/aws" :iconColor="null" hoverText="Amazon Web Services"  class="mr-2"/>
+								<Icon icon="brand/googlecloud" :iconColor="null" hoverText="Google Cloud"  class="mr-2"/>
+								<Icon icon="brand/api" hoverText="Public APIs"  class="mr-2"/>
+								<Icon icon="brand/tailwind" :iconColor="null" hoverText="TailwindCSS"  class="mr-2"/>
+								<Icon icon="brand/genai" hoverText="Generative AI"  class="mr-2"/>
+							</div>
+							<a href="/portfolio/parallel/" target="_blank" class="flex w-max">
+								<IconButton icon="fa/external" :iconSize="5" class="mt-8">Visit</IconButton>
+							</a>
+							<a href="https://github.com/dougalcaleb/cs260-startup" target="_blank" class="flex w-max">
+								<IconButton icon="fa/external" :iconSize="5" class="mt-4">Repository</IconButton>
+							</a>
+						</div>
+					</div>
+					<div>
+						<div class="desc_content_wrap">
 							<h3 class="desc_title">Physics2D</h3>
 							<p class="desc_body">I built this 2D physics engine with the intent of putting to use everything I had learned about data structures and algorithms from my University courses. 
 								While this is still a WIP project, it does feature a highly optimized and efficient core, and I intend on building this out into a small plugin that 
@@ -212,6 +239,7 @@ export default {
 				lazyLoad: "lazy-hidden",
 				swipeThreshold: 50,
 				pages: [
+					{ backgroundImage: "/assets/images/projects-slider/parallel.png" },
 					{ backgroundImage: "/assets/images/projects-slider/physics2d.png" },
 					{ backgroundImage: "/assets/images/projects-slider/spigot-status-bot-wide.png" },
 					{ backgroundImage: "/assets/images/projects-slider/alchemy-ascension.png" },
