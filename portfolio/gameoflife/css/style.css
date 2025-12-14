@@ -1,0 +1,112 @@
+/*
+%name - reusable styles (used @extend %name)
+@mixin name - function (used @include name(param))
+$name - variable
+*/
+@import url("https://fonts.googleapis.com/css2?family=Miriam+Libre:wght@700&family=Montserrat:wght@500&family=Ubuntu&display=swap");
+.game canvas {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+}
+
+* {
+  user-select: none;
+}
+
+body {
+  margin: 0;
+}
+
+.wrap {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  display: flex;
+}
+
+.controls {
+  background: #282828;
+  flex: 1;
+  box-shadow: 5px 0px 5px #0a0a0a;
+  position: relative;
+  z-index: 2;
+}
+.controls .title {
+  text-align: center;
+  color: #e8e8e8;
+  font-family: "Miriam Libre", "Segoe UI", sans-serif, monospace;
+}
+.controls .control-row {
+  display: flex;
+  justify-content: space-evenly;
+  padding-top: 35px;
+  position: relative;
+  margin-bottom: 35px;
+}
+.controls .control-row button {
+  border-radius: 5px;
+  border: 3px solid #006b8c;
+  color: #e8e8e8;
+  font-family: "Miriam Libre", "Segoe UI", sans-serif, monospace;
+  background: transparent;
+  outline: none;
+  padding: 10px;
+  padding-left: 20px;
+  padding-right: 20px;
+  cursor: pointer;
+}
+.controls .control-row .row-title {
+  text-align: center;
+  font-family: "Montserrat";
+  position: absolute;
+  top: 0;
+  color: #006b8c;
+  margin: 0;
+}
+.controls .control-row > p {
+  font-family: "Ubuntu", sans-serif;
+  color: #e8e8e8;
+  margin: 0px;
+}
+.controls .control-row .control-col {
+  flex: 1;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+}
+.controls .control-row .control-col p {
+  margin: 5px;
+  font-family: "Ubuntu", sans-serif;
+  color: #e8e8e8;
+}
+.controls .control-row .control-col input {
+  border-radius: 5px;
+  border: none;
+  outline: none;
+  font-family: "Ubuntu", sans-serif;
+  width: 70%;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.game {
+  background: #191919;
+  flex: 4;
+  position: relative;
+}
+.game p {
+  margin-left: 15px;
+  color: white;
+  font-family: "Ubuntu", sans-serif;
+}
+.game canvas {
+  max-width: 90%;
+  max-height: 90%;
+  box-shadow: 0px 0px 15px #0a0a0a;
+}
