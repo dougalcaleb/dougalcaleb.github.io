@@ -48,14 +48,37 @@
 						<div class="desc_content_wrap">
 							<h3 class="desc_title">Physics2D</h3>
 							<p class="desc_body">I built this 2D physics engine with the intent of putting to use everything I had learned about data structures and algorithms from my University courses. 
+								<br/><br/>
 								While this is still a WIP project, it does feature a highly optimized and efficient core, and I intend on building this out into a small plugin that 
-								can be used to create simple interactive experiences in-browser.
+								can be used to create simple interactive experiences in-browser. This is currently in use on this site for the physics simulation on the landing page.
 							</p>
 							<div class="flex mt-8">
 								<Icon icon="brand/js" :iconColor="null" hoverText="Javascript" />
 							</div>
 							<a href="https://github.com/dougalcaleb/Physics2D" target="_blank" class="flex w-max">
 								<IconButton icon="fa/external" :iconSize="5" class="mt-8">Repository</IconButton>
+							</a>
+						</div>
+					</div>
+					<div>
+						<div class="desc_content_wrap">
+							<h3 class="desc_title">Vibe & Syntax</h3>
+							<p class="desc_body">
+								Vibe and Syntax is an experimental project that a friend and I are working on. We've done game development together for years, and we've now taken it to the next level.
+								<br/> <br/>
+								We compete in game jams - timed competitions in which hundreds or thousands of people each build a game around a theme. We've done jams with constraints ranging from two weeks down to a single hour.
+								<br/> <br/>
+								Having built over a dozen games in this way, we've become very good at planning, collaborating, and working under pressure.
+								<br/> <br/>
+								Check out our Itch.io portfolio by clicking the button!
+							</p>
+							<div class="flex mt-8 text-gray-1 dark:text-white">
+								<Icon icon="brand/csharp" :iconColor="null" hoverText="C#" class="mr-2" />
+								<Icon icon="brand/unity" :iconColor="null" hoverText="Unity" class="mr-2" />
+								<Icon icon="fa/people-group" hoverText="Collaboration" />
+							</div>
+							<a href="https://vibe-and-syntax.itch.io/" target="_blank" class="flex w-max">
+								<IconButton icon="fa/external" :iconSize="5" class="mt-8">View on Itch.io</IconButton>
 							</a>
 						</div>
 					</div>
@@ -77,14 +100,11 @@
 							</a>
 						</div>
 					</div>
-					<div>
+					<!-- <div>
 						<div class="desc_content_wrap">
-							<h3 class="desc_title">Alchemy Ascension</h3>
-							<p class="desc_body">This game was built over a 3-day weekend by me and a friend as part of an Itch.io game jam focused on speedrunning with a theme of "Ascend".
-								Playing as a wizard whose ultimate goal is ascending to godhood, you must learn how to quickly gather your potion ingredients - either peacefully
-								or by force. With responsive controls, charming pixel art, and over a dozen potions to brew, you must find the quickest way to achieve your goal. 
-								<br/> <br/>
-								Can you beat 60 seconds?
+							<h3 class="desc_title">Vibe and Syntax</h3>
+							<p class="desc_body">
+								
 							</p>
 							<div class="flex mt-8">
 								<Icon icon="brand/csharp" :iconColor="null" hoverText="C#" class="mr-2" />
@@ -94,7 +114,7 @@
 								<IconButton icon="fa/external" :iconSize="5" class="mt-8">Play in browser</IconButton>
 							</a>
 						</div>
-					</div>
+					</div> -->
 					<div>
 						<div class="desc_content_wrap">
 							<h3 class="desc_title">Roundabout</h3>
@@ -113,6 +133,20 @@
 							</a>
 							<a href="/roundabout/docs.html" target="_blank" class="flex w-max">
 								<IconButton icon="fa/external" :iconSize="5" class="mt-4">Docs</IconButton>
+							</a>
+						</div>
+					</div>
+					<div>
+						<div class="desc_content_wrap">
+							<h3 class="desc_title">Conway's Game of Life</h3>
+							<p class="desc_body">
+								The classic Game of Life, built in a single afternoon. Create your own automatons by clicking to toggle cells.
+							</p>
+							<div class="flex mt-8">
+								<Icon icon="brand/js" :iconColor="null" hoverText="Javascript" class="mr-2" />
+							</div>
+							<a href="/portfolio/gameoflife/index.html" target="_blank">
+								<IconButton icon="fa/external" :iconSize="5" class="mt-8">Visit</IconButton>
 							</a>
 						</div>
 					</div>
@@ -191,7 +225,7 @@
 							</a>
 						</div>
 					</div>
-					<div>
+					<!-- <div>
 						<div class="desc_content_wrap">
 							<h3 class="desc_title">Stronger Together</h3>
 							<p class="desc_body">Built over the course of a week for Brackeys Game Jam 2021.1 along with two friends, this game has a unique take on the wave fighting genre, 
@@ -202,7 +236,7 @@
 								<Icon icon="brand/unity" :iconColor="null" hoverText="Unity3D" />
 							</div>
 						</div>
-					</div>
+					</div> -->
 				</div>
 			</div>
 		</div>
@@ -241,15 +275,15 @@ export default {
 				pages: [
 					{ backgroundImage: "/assets/images/projects-slider/parallel.png" },
 					{ backgroundImage: "/assets/images/projects-slider/physics2d.png" },
+					{ backgroundImage: "/assets/images/projects-slider/Vibe+Syntax.png" },
 					{ backgroundImage: "/assets/images/projects-slider/spigot-status-bot-wide.png" },
-					{ backgroundImage: "/assets/images/projects-slider/alchemy-ascension.png" },
 					{ backgroundImage: "/assets/images/projects-slider/roundabout.png" },
+					{ backgroundImage: "/assets/images/projects-slider/gameoflife.png" },
 					{ backgroundImage: "/assets/images/projects-slider/polygen.png" },
 					{ backgroundImage: "/assets/images/projects-slider/stormcenter.png" },
 					{ backgroundImage: "/assets/images/projects-slider/gamedevfinal.png" },
 					{ backgroundImage: "/assets/images/projects-slider/react-chat.png" },
 					{ backgroundImage: "/assets/images/projects-slider/bubbles.png" },
-					{ backgroundImage: "/assets/images/projects-slider/stronger-together.png" },
 				]
 			},
 			descriptionCarouselSettings: {

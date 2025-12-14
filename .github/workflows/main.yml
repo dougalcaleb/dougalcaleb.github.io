@@ -41,6 +41,10 @@ jobs:
         run: npm run build
       - name: Copy portfolio folder
         run: cp -r ./portfolio ./dist/portfolio
+      - name: Copy Roundabout folder
+        run: cp -r ./roundabout ./dist/roundabout
+      - name: Copy Javascript resources folder
+        run: cp -r ./javascript ./dist/javascript
       - name: Setup Pages
         uses: actions/configure-pages@v4
       - name: Upload artifact

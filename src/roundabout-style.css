@@ -178,11 +178,11 @@ and all visible pages gain the class ".roundabout-[UNIQUE ID]-visible-page-[NTH 
    */
 }
 
-/* Alchemy Ascension image */
-.roundabout-0-page-2 {
+/* Game jam pixel art images */
+/* .roundabout-0-page-1, .roundabout-0-page-3 {
 	image-rendering: pixelated;
   	image-rendering: crisp-edges;
-}
+} */
 
 /* Description carousel transitions */
 .roundabout-1-visible-page-0 .desc_content_wrap {
