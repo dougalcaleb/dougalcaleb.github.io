@@ -29,7 +29,10 @@
 		</p>
 
 		<div
-			:class="['grid skill_grid gap-4 text-gray-1 dark:text-white pt-8 sm:px-4', isMobile ? 'grid_2' : 'grid_3']"
+			:class="[
+				'grid skill_grid gap-2 sm:gap-4 text-gray-1 dark:text-white pt-8 sm:px-4',
+				isMobile ? 'grid_2' : 'grid_3',
+			]"
 		>
 			<template v-for="skill in skills" :key="skill.icon">
 				<div class="flex items-center bg-gray-10 dark:bg-gray-2 rounded-lg px-2">
