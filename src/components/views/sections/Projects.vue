@@ -340,7 +340,6 @@ export default {
 				navigation: false,
 				buttons: false,
 				keys: false,
-				scrollwheel: true,
 				lazyLoad: "lazy-hidden",
 				swipeThreshold: 50,
 				pages: [
