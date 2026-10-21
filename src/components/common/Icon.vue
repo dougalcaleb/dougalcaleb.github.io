@@ -1,14 +1,19 @@
 <template>
 	<div :title="hoverText">
-		<svg v-if="iconColor" :class="iconClasses" :style="{ color: finalIconColor }">
-			<use :xlink:href="iconPath"></use>
+		<svg v-if="iconColor" :style="{ ...sizeStyle, color: finalIconColor }">
+			<use :href="iconPath"></use>
 		</svg>
-		<img v-else :src="iconPath" :class="iconClasses" />
+		<img v-else :src="iconPath" :style="sizeStyle" />
 	</div>
 </template>
 
 <script>
-import tailwindConfig from '../../../tailwind.config';
+// Not inlined as data: URIs, since <use> can't reference fragments inside them
+const iconUrls = import.meta.glob("@/assets/icons/**/*.svg", {
+	query: "?no-inline",
+	import: "default",
+	eager: true,
+});
 
 export default {
 	components: {},
@@ -30,31 +35,27 @@ export default {
 			default: "",
 		},
 	},
-	data() {
-		return {
-			customColors: new Set(),
-		};
-	},
 	computed: {
 		iconPath() {
-			return `assets/icons/${this.icon}.svg#icon`;
+			const url = iconUrls[`/src/assets/icons/${this.icon}.svg`];
+			if (!url) {
+				console.warn(`Icon not found: ${this.icon}`);
+				return "";
+			}
+			return `${url}#icon`;
 		},
-		iconClasses() {
-			return `h-${this.size} w-${this.size}`;
+		sizeStyle() {
+			// Same scale as Tailwind's h-*/w-* utilities (0.25rem per step)
+			const size = `${this.size * 0.25}rem`;
+			return { width: size, height: size };
 		},
 		finalIconColor() {
-			if (this.customColors.has(this.iconColor)) {
-				return tailwindConfig.theme.colors[this.iconColor];
+			// Theme color names (e.g. "purple-3") resolve to their Tailwind variable; anything else is used as-is
+			if (/^[a-z]+(-[a-z0-9]+)*$/i.test(this.iconColor)) {
+				return `var(--color-${this.iconColor}, ${this.iconColor})`;
 			}
 			return this.iconColor;
-		}
+		},
 	},
-	methods: {},
-	created() {
-		this.customColors = new Set(Object.keys(tailwindConfig.theme.colors));
-	}
 };
 </script>
-
-<style scoped>
-</style>

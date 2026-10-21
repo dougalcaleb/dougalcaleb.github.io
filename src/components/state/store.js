@@ -1,4 +1,4 @@
-import { defineStore } from "pinia"
+import { defineStore } from "pinia";
 
 export const defaultStore = defineStore("default", {
 	state: () => ({
@@ -12,10 +12,6 @@ export const defaultStore = defineStore("default", {
 			this.isDarkTheme = dark;
 		},
 	},
-	getters: {
-		
-	},
-	actions: {
-
-	},
+	getters: {},
+	actions: {},
 });

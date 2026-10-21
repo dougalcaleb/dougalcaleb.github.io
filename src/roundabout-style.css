@@ -22,13 +22,12 @@ Main wrapper
 }
 
 #image-carousel {
-	box-shadow: 0px 0px 15px 10px rgba(100,100,100,0.6);
+	box-shadow: 0px 0px 15px 10px rgba(100, 100, 100, 0.6);
 }
 
 .dark #image-carousel {
-	box-shadow: 0px 0px 15px 10px rgba(0,0,0,0.6);
+	box-shadow: 0px 0px 15px 10px rgba(0, 0, 0, 0.6);
 }
-
 
 /*
 ==================================
@@ -65,7 +64,8 @@ Next and Previous buttons
 */
 /* Both buttons also gain the class ".roundabout-scroll-btn" */
 
-.roundabout-btn-next, .roundabout-btn-prev {
+.roundabout-btn-next,
+.roundabout-btn-prev {
 	position: absolute;
 	top: 0;
 	bottom: 0;
@@ -74,10 +74,11 @@ Next and Previous buttons
 	width: 80px;
 	cursor: pointer;
 	color: #fff;
-   z-index: 2;
+	z-index: 2;
 }
 
-.roundabout-btn-next svg, .roundabout-btn-prev svg {
+.roundabout-btn-next svg,
+.roundabout-btn-prev svg {
 	position: absolute;
 	left: 0;
 	right: 0;
@@ -107,12 +108,12 @@ Navigation
 	right: 0;
 	margin: auto;
 	display: flex;
-   flex-wrap: wrap;
+	flex-wrap: wrap;
 	justify-content: space-evenly;
 	bottom: 0;
 	height: 40px;
 	width: 25%;
-   z-index: 2;
+	z-index: 2;
 }
 
 .roundabout-nav-btn {
@@ -126,11 +127,11 @@ Navigation
 }
 
 .roundabout-inactive-nav-btn {
-   background: transparent;
+	background: transparent;
 }
 
 .roundabout-active-nav-btn {
-   background: #fff;
+	background: #fff;
 }
 
 /* All nav buttons gain 5 classes: 
@@ -159,20 +160,19 @@ Pages
 
 /* Page wrap also gains the class ".roundabout-[UNIQUE ID]-page-wrap" */
 .roundabout-page-wrap {
-   /* Cannot change: "position", "height", "width", and "left" */
-   
+	/* Cannot change: "position", "height", "width", and "left" */
 }
 
 /* Each page also gains the classes ".roundabout-[UNIQUE ID]-page-[NTH PAGE]" and ".roundabout-[UNIQUE ID]-page", 
 and all visible pages gain the class ".roundabout-[UNIQUE ID]-visible-page-[NTH VISIBLE PAGE] */
 .roundabout-page {
-   height: 100%;
-   background-position: center center;
-   background-size: cover;
-   
-   /* Cannot change: "width", "position", "background", "z-index", and "left" */
+	height: 100%;
+	background-position: center center;
+	background-size: cover;
 
-   /* NOTE: when giving any Roundabout page element a transition, be sure to give transition ONLY to the properties that need it.
+	/* Cannot change: "width", "position", "background", "z-index", and "left" */
+
+	/* NOTE: when giving any Roundabout page element a transition, be sure to give transition ONLY to the properties that need it.
       Roundabout uses transitions of 0 to accomplish seamless position adjustments. See the Mozilla documentation for examples:
       https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Transitions/Using_CSS_transitions#multiple_animated_properties_example
    */

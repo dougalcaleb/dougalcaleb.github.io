@@ -14,10 +14,10 @@ export default {
 	},
 	computed: {
 		isMobile() {
-			return ['sm', 'xs'].includes(this.screenSize);
+			return ["sm", "xs"].includes(this.screenSize);
 		},
 		isTablet() {
-			return ['sm', 'md', 'lg'].includes(this.screenSize);
+			return ["sm", "md", "lg"].includes(this.screenSize);
 		},
 	},
 	methods: {

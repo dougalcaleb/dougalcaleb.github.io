@@ -1,47 +1,50 @@
 <template>
 	<div class="bg-gray-9 dark:bg-gray-1 flex items-center">
-		<label 
+		<label
 			v-if="leftText"
-			class="text-sm font-title font-bold text-gray-4 dark:text-gray-7 pl-4 mt-px text-md text-nowrap" 
-			@click="$refs['input'].focus()">
+			class="text-sm font-title font-bold text-gray-4 dark:text-gray-7 pl-4 mt-px text-md text-nowrap"
+			@click="$refs['input'].focus()"
+		>
 			{{ leftText }}
 		</label>
-		<textarea 
+		<textarea
 			v-if="textarea"
+			ref="input"
 			:value="modelValue"
-			:placeholder="placeholder" 
-			:class="['bg-gray-9 dark:bg-gray-1 p-4 outline-none text-gray-4 dark:text-white font-body text-md w-full', resize ? 'resize-y' : 'resize-none', {'lightmode_textarea': !isDarkTheme}]" 
+			:placeholder="placeholder"
+			:class="[
+				'bg-gray-9 dark:bg-gray-1 p-4 outline-hidden text-gray-4 dark:text-white font-body text-md w-full',
+				resize ? 'resize-y' : 'resize-none',
+				{ lightmode_textarea: !isDarkTheme },
+			]"
 			:maxlength="maxlength"
 			:rows="rows"
 			:type="inputType"
 			:name="inputName"
-			ref="input"
-			@input="handleInput"
 			:disabled="disabled"
+			@input="handleInput"
 		></textarea>
-		<input 
+		<input
 			v-else
-			:value="modelValue"
-			:type="inputType" 
-			:name="inputName"
-			:placeholder="placeholder" 
-			class="bg-gray-9 dark:bg-gray-1 p-4 outline-none text-gray-4 dark:text-white font-body text-md w-full" 
-			:maxlength="maxlength"
 			ref="input"
-			@input="handleInput"
+			:value="modelValue"
+			:type="inputType"
+			:name="inputName"
+			:placeholder="placeholder"
+			class="bg-gray-9 dark:bg-gray-1 p-4 outline-hidden text-gray-4 dark:text-white font-body text-md w-full"
+			:maxlength="maxlength"
 			:disabled="disabled"
-		>
+			@input="handleInput"
+		/>
 	</div>
 </template>
 
 <script>
-import ColorTheme from '../mixins/ColorTheme';
+import ColorTheme from "@/components/mixins/ColorTheme";
 
 export default {
+	components: {},
 	mixins: [ColorTheme],
-	components: {
-		
-	},
 	props: {
 		modelValue: {
 			type: String,
@@ -73,29 +76,27 @@ export default {
 		},
 		inputType: {
 			type: String,
-			default: "text"
+			default: "text",
 		},
 		inputName: String,
-		disabled: Boolean
+		disabled: Boolean,
 	},
 	emits: ["update:modelValue"],
 	data() {
-		return {
-			
-		}
+		return {};
 	},
-	computed: {
-		
-	},
+	computed: {},
 	methods: {
 		handleInput(event) {
 			this.$emit("update:modelValue", event.target.value);
-		}
-	}
-}
+		},
+	},
+};
 </script>
 
 <style scoped>
+@reference "@/style.css";
+
 .lightmode_textarea::placeholder {
 	@apply text-gray-4;
 }

@@ -1,8 +1,14 @@
 <template>
-	<div :class="['rounded-md text-white py-3 font-title font-bold w-max h-max cursor-pointer duration-100 transition', rootClasses]" @click="$emit('click')">
+	<div
+		:class="[
+			'rounded-md text-white py-3 font-title font-bold w-max h-max cursor-pointer duration-100 transition',
+			rootClasses,
+		]"
+		@click="$emit('click')"
+	>
 		<div class="flex items-center h-full">
-			<div :class="[{'mr-3': Boolean(icon) && $slots.default}]">
-				<slot></slot> 
+			<div :class="[{ 'mr-3': Boolean(icon) && $slots.default }]">
+				<slot></slot>
 			</div>
 
 			<Icon v-if="icon" :icon="icon" :size="iconSize" :iconColor="iconColor" />
@@ -11,7 +17,7 @@
 </template>
 
 <script>
-import Icon from './Icon.vue';
+import Icon from "@/components/common/Icon.vue";
 
 export default {
 	components: {
@@ -33,16 +39,13 @@ export default {
 		},
 		iconSize: {
 			type: Number,
-			default: 5
-		}
+			default: 5,
+		},
 	},
 	data() {
 		return {};
 	},
 	computed: {
-		iconPath() {
-			return `assets/icons/fontawesome/${this.icon}.svg`;
-		},
 		rootClasses() {
 			let classes = "";
 
@@ -71,6 +74,4 @@ export default {
 };
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

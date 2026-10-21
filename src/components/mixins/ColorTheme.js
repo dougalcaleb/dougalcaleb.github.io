@@ -1,11 +1,11 @@
-import { defaultStore } from "../state/store";
+import { defaultStore } from "@/components/state/store";
 import { mapStores } from "pinia";
 
 export default {
 	data() {
 		return {
 			executeOnThemeSwitch: [],
-		}
+		};
 	},
 	computed: {
 		...mapStores(defaultStore),
@@ -14,7 +14,7 @@ export default {
 		},
 		darkThemeString() {
 			return this.isDarkTheme ? "dark" : "light";
-		}
+		},
 	},
 	methods: {
 		setTheme(dark) {
@@ -32,9 +32,9 @@ export default {
 		},
 		watchForThemeSwitch(callback) {
 			this.executeOnThemeSwitch.push(callback);
-		}
+		},
 	},
 	beforeMount() {
 		this.defaultStore.isDarkTheme = localStorage.getItem("theme") === "dark";
-	}
-}
+	},
+};

@@ -1,12 +1,10 @@
 <template>
-	<img :alt="alt" ref="img" >
+	<img ref="img" :alt="alt" />
 </template>
 
 <script>
 export default {
-	components: {
-		
-	},
+	components: {},
 	props: {
 		src: {
 			type: String,
@@ -20,33 +18,29 @@ export default {
 	data() {
 		return {
 			imgObj: null,
-		}
+		};
 	},
-	computed: {
-		
+	computed: {},
+	watch: {
+		src() {
+			this.loadImage();
+		},
+	},
+	created() {
+		this.loadImage();
 	},
 	methods: {
 		loadImage() {
 			this.imgObj = new Image();
 			this.imgObj.onload = () => {
-				this.$refs['img'].src = this.src;
+				this.$refs["img"].src = this.src;
 				this.$emit("loaded");
 			};
-			this.imgObj.onerror = () => this.$emit("error");;
+			this.imgObj.onerror = () => this.$emit("error");
 			this.imgObj.src = this.src;
-		}
+		},
 	},
-	created() {
-		this.loadImage();
-	},
-	watch: {
-		src() {
-			this.loadImage();
-		}
-	}
-}
+};
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

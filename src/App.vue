@@ -6,33 +6,23 @@
 </template>
 
 <script>
-import MainBody from './components/views/main/MainBody.vue';
-import Sidebar from './components/views/main/Sidebar.vue';
-import Placeholder from './Placeholder.vue';
+import MainBody from "@/components/views/main/MainBody.vue";
+import Sidebar from "@/components/views/main/Sidebar.vue";
 
 export default {
 	components: {
-		Placeholder,
 		Sidebar,
 		MainBody,
 	},
-	props: {
-		
-	},
+	props: {},
 	data() {
 		return {
 			isProd: import.meta.env.PROD,
-		}
+		};
 	},
-	computed: {
-		
-	},
-	methods: {
-		
-	},
-}
+	computed: {},
+	methods: {},
+};
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

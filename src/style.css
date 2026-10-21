@@ -1,124 +1,122 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+/* Only scan the app for class names, not the static sub-sites in public/ */
+@import "tailwindcss" source(none);
+@source "./";
+@source "../index.html";
 
-/* @font-face {
-	font-family: "Miriam Libre";
-	src: url("../fonts/MiriamLibre-Regular.ttf");
-	font-weight: normal;
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme static {
+	--color-*: initial;
+	--color-gray-0: hsl(0, 0%, 3%);
+	--color-gray-1: hsl(0, 0%, 10%);
+	--color-gray-2: hsl(0, 0%, 12%);
+	--color-gray-3: hsl(0, 0%, 16%);
+	--color-gray-4: hsl(0, 0%, 19%);
+	--color-gray-5: hsl(0, 0%, 24%);
+	--color-gray-6: hsl(0, 0%, 39%);
+	--color-gray-7: hsl(0, 0%, 52%);
+	--color-gray-8: hsl(0, 0%, 70%);
+	--color-gray-9: hsl(0, 0%, 80%);
+	--color-gray-10: hsl(0, 0%, 90%);
+	--color-white: hsl(0, 0%, 98%);
+	--color-blue-0: hsl(194, 100%, 27%);
+	--color-blue-1: hsl(197, 100%, 36%);
+	--color-blue-2: hsl(197, 100%, 50%);
+	--color-purple-0: hsl(268, 41%, 23%);
+	--color-purple-1: hsl(271, 41%, 28%);
+	--color-purple-2: hsl(267, 40%, 34%);
+	--color-purple-3: hsl(265, 40%, 39%);
+	--color-purple-4: hsl(271, 41%, 56%);
+	--color-purple-5: hsl(272, 41%, 70%);
+	--color-green-0: hsl(138, 51%, 38%);
+	--color-green-1: hsl(137, 50%, 43%);
+	--color-green-2: hsl(138, 47%, 64%);
+	--color-red-0: hsl(10, 65%, 41%);
+	--color-red-1: hsl(10, 65%, 48%);
+	--color-red-2: hsl(10, 65%, 56%);
+	--color-yellow-0: hsl(36, 98%, 52%);
+	--color-yellow-1: hsl(36, 99%, 56%);
+	--color-yellow-2: hsl(36, 99%, 64%);
+	--color-ls-blue-dark: hsl(213, 52%, 38%);
+	--color-ls-blue-light: hsl(210, 50%, 59%);
+
+	--font-*: initial;
+	--font-title: "Poppins", "Miriam Libre", system-ui, -apple-system, sans-serif;
+	--font-subtitle: "Miriam Libre", system-ui, -apple-system, sans-serif;
+	--font-ls: "Metropolis", "Miriam Libre", "Poppins", sans-serif;
+	--font-body: "Ubuntu", system-ui, -apple-system, sans-serif;
+	--font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+	--font-sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+	--font-serif: Georgia, Cambria, "Times New Roman", Times, serif;
 }
 
+/*
+ * Ubuntu and Metropolis intentionally have no 400 face: normal-weight text resolves to Medium (500),
+ * and Poppins to Light (300). This keeps the look the site was designed with.
+ */
 @font-face {
 	font-family: "Miriam Libre";
-	src: url("../fonts/MiriamLibre-Bold.ttf");
-	font-weight: bold;
-}
-
-@font-face {
-	font-family: "Miriam Libre";
-	src: url("../fonts/MiriamLibre-Medium.ttf");
-	font-weight: medium;
-} */
-
-@font-face {
-	font-family: "Miriam Libre";
-	src: url("/assets/fonts/MiriamLibre.ttf");
+	src: url("@/assets/fonts/MiriamLibre.woff2") format("woff2");
+	font-weight: 400 700;
+	font-display: swap;
 }
 
 @font-face {
 	font-family: "Ubuntu";
-	src: url("/assets/fonts/Ubuntu-Regular.ttf");
-	font-weight: normal;
-}
-
-@font-face {
-	font-family: "Ubuntu";
-	src: url("/assets/fonts/Ubuntu-Bold.ttf");
-	font-weight: bold;
-}
-
-@font-face {
-	font-family: "Ubuntu";
-	src: url("/assets/fonts/Ubuntu-Italic.ttf");
+	src: url("@/assets/fonts/Ubuntu-Italic.woff2") format("woff2");
+	font-weight: 400;
 	font-style: italic;
+	font-display: swap;
 }
 
 @font-face {
 	font-family: "Ubuntu";
-	src: url("/assets/fonts/Ubuntu-Light.ttf");
-	font-weight: lighter;
+	src: url("@/assets/fonts/Ubuntu-Medium.woff2") format("woff2");
+	font-weight: 500;
+	font-display: swap;
 }
 
 @font-face {
 	font-family: "Ubuntu";
-	src: url("/assets/fonts/Ubuntu-Medium.ttf");
-	font-weight: medium;
-}
-
-@font-face {
-	font-family: "Ubuntu Mono";
-	src: url("/assets/fonts/UbuntuMono-Regular.ttf");
-	font-weight: normal;
-}
-
-@font-face {
-	font-family: "Ubuntu Mono";
-	src: url("/assets/fonts/UbuntuMono-Bold.ttf");
-	font-weight: bold;
-}
-
-@font-face {
-	font-family: "Ubuntu Mono";
-	src: url("/assets/fonts/UbuntuMono-Italic.ttf");
-	font-style: italic;
-}
-
-@font-face {
-	font-family: "Ubuntu Mono";
-	src: url("/assets/fonts/UbuntuMono-Light.ttf");
-	font-weight: lighter;
+	src: url("@/assets/fonts/Ubuntu-Bold.woff2") format("woff2");
+	font-weight: 700;
+	font-display: swap;
 }
 
 @font-face {
 	font-family: "Metropolis";
-	src: url("/assets/fonts/Metropolis-Regular.otf");
-	font-weight: normal;
+	src: url("@/assets/fonts/Metropolis-Medium.woff2") format("woff2");
+	font-weight: 500;
+	font-display: swap;
 }
 
 @font-face {
 	font-family: "Metropolis";
-	src: url("/assets/fonts/Metropolis-Light.otf");
-	font-weight: lighter;
-}
-
-@font-face {
-	font-family: "Metropolis";
-	src: url("/assets/fonts/Metropolis-Medium.otf");
-	font-weight: medium;
-}
-
-@font-face {
-	font-family: "Metropolis";
-	src: url("/assets/fonts/Metropolis-SemiBold.otf");
-	font-weight: bold;
+	src: url("@/assets/fonts/Metropolis-SemiBold.woff2") format("woff2");
+	font-weight: 600;
+	font-display: swap;
 }
 
 @font-face {
 	font-family: "Poppins";
-	src: url("/assets/fonts/Poppins-Regular.ttf");
-	font-weight: normal;
+	src: url("@/assets/fonts/Poppins-Light.woff2") format("woff2");
+	font-weight: 300;
+	font-display: swap;
 }
 
 @font-face {
 	font-family: "Poppins";
-	src: url("/assets/fonts/Poppins-Light.ttf");
-	font-weight: lighter;
+	src: url("@/assets/fonts/Poppins-Bold.woff2") format("woff2");
+	font-weight: 700;
+	font-display: swap;
 }
 
-@font-face {
-	font-family: "Poppins";
-	src: url("/assets/fonts/Poppins-Bold.ttf");
-	font-weight: bold;
+@layer base {
+	/* Tailwind v3's placeholder color (v4 defaults to a translucent currentColor) */
+	input::placeholder,
+	textarea::placeholder {
+		color: #9ca3af;
+	}
 }
 
 #app {
@@ -126,7 +124,8 @@
 	width: 100vw;
 }
 
-body, html {
+body,
+html {
 	margin: 0;
 	scroll-behavior: smooth;
 	background: black;

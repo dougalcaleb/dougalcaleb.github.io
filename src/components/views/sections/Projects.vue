@@ -1,40 +1,65 @@
 <template>
-	<div
-		class="w-full h-max relative left-0 dark:bg-gray-3 bg-white px-2 sm:px-8 sm:pl-32 sm:pr-12 pt-8 sm:pt-20"	
-	>
-
-		<h1 class="font-title text-2xl px-6 sm:px-0 sm:text-4xl dark:text-white text-gray-1 font-bold" id="projects_header">PROJECTS</h1>
+	<div class="w-full h-max relative left-0 dark:bg-gray-3 bg-white px-2 sm:px-8 sm:pl-32 sm:pr-12 pt-8 sm:pt-20">
+		<h1
+			id="projects_header"
+			class="font-title text-2xl px-6 sm:px-0 sm:text-4xl dark:text-white text-gray-1 font-bold"
+		>
+			PROJECTS
+		</h1>
 
 		<div class="grid xl:grid-cols-2">
-			<div id="image-carousel-wrapper" class="relative py-8 xl:px-8 grid image_grid_cols dark:text-white text-gray-1">
+			<div
+				id="image-carousel-wrapper"
+				class="relative py-8 xl:px-8 grid image_grid_cols dark:text-white text-gray-1"
+			>
 				<div class="flex flex-col justify-center">
-					<Icon icon="fa/chevron-left" class="xl:mx-2 cursor-pointer" :size="isMobile ? 8 : 12" @click="scrollCarousel('l')"/>
+					<Icon
+						icon="fa/chevron-left"
+						class="xl:mx-2 cursor-pointer"
+						:size="isMobile ? 8 : 12"
+						@click="scrollCarousel('l')"
+					/>
 				</div>
 				<div id="image-carousel-parent" :class="[isMobile ? 'h-48' : 'xl_height']"></div>
 				<div class="flex flex-col justify-center">
-					<Icon icon="fa/chevron-right" class="xl:mx-2 cursor-pointer" :size="isMobile ? 8 : 12" @click="scrollCarousel('r')"/>
+					<Icon
+						icon="fa/chevron-right"
+						class="xl:mx-2 cursor-pointer"
+						:size="isMobile ? 8 : 12"
+						@click="scrollCarousel('r')"
+					/>
 				</div>
 			</div>
-			<div id="description-carousel-wrapper" :class="['relative xl:p-8', isMobile ? 'xl_height px-6' : 'xl_height']">
+			<div
+				id="description-carousel-wrapper"
+				:class="['relative xl:p-8', isMobile ? 'xl_height px-6' : 'xl_height']"
+			>
 				<div id="description-template">
 					<div>
 						<div class="desc_content_wrap">
 							<h3 class="desc_title">Parallel</h3>
 							<p class="desc_body">
-								My most expansive solo project to date! Parallel has a little bit of everything. It's a mobile-first React-based social-media-like web app,
-								built on a full AWS stack, including EC2, DynamoDB, Cognito, S3, IAM, and Route 53, as well as other tech like Google Cloud services,
-								Google Maps integrations, ExpressJS, Tailwind, and Vite.
-								<br/><br/>
-								The site has now been converted to a static mockup, but you can still click through it below!
+								My most expansive solo project to date! Parallel has a little bit of everything. It's a
+								mobile-first React-based social-media-like web app, built on a full AWS stack, including
+								EC2, DynamoDB, Cognito, S3, IAM, and Route 53, as well as other tech like Google Cloud
+								services, Google Maps integrations, ExpressJS, Tailwind, and Vite.
+								<br /><br />
+								The site has now been converted to a static mockup, but you can still click through it
+								below!
 							</p>
 							<div class="flex mt-8 text-gray-1 dark:text-white">
-								<Icon icon="brand/react" :iconColor="null" hoverText="React"  class="mr-2"/>
-								<Icon icon="brand/node" :iconColor="null" hoverText="NodeJS"  class="mr-2"/>
-								<Icon icon="brand/aws" :iconColor="null" hoverText="Amazon Web Services"  class="mr-2"/>
-								<Icon icon="brand/googlecloud" :iconColor="null" hoverText="Google Cloud"  class="mr-2"/>
-								<Icon icon="brand/api" hoverText="Public APIs"  class="mr-2"/>
-								<Icon icon="brand/tailwind" :iconColor="null" hoverText="TailwindCSS"  class="mr-2"/>
-								<Icon icon="brand/genai" hoverText="Generative AI"  class="mr-2"/>
+								<Icon icon="brand/react" :iconColor="null" hoverText="React" class="mr-2" />
+								<Icon icon="brand/node" :iconColor="null" hoverText="NodeJS" class="mr-2" />
+								<Icon icon="brand/aws" :iconColor="null" hoverText="Amazon Web Services" class="mr-2" />
+								<Icon
+									icon="brand/googlecloud"
+									:iconColor="null"
+									hoverText="Google Cloud"
+									class="mr-2"
+								/>
+								<Icon icon="brand/api" hoverText="Public APIs" class="mr-2" />
+								<Icon icon="brand/tailwind" :iconColor="null" hoverText="TailwindCSS" class="mr-2" />
+								<Icon icon="brand/genai" hoverText="Generative AI" class="mr-2" />
 							</div>
 							<a href="/portfolio/parallel/" target="_blank" class="flex w-max">
 								<IconButton icon="fa/external" :iconSize="5" class="mt-8">Visit</IconButton>
@@ -47,10 +72,13 @@
 					<div>
 						<div class="desc_content_wrap">
 							<h3 class="desc_title">Physics2D</h3>
-							<p class="desc_body">I built this 2D physics engine with the intent of putting to use everything I had learned about data structures and algorithms from my University courses. 
-								<br/><br/>
-								While this is still a WIP project, it does feature a highly optimized and efficient core, and I intend on building this out into a small plugin that 
-								can be used to create simple interactive experiences in-browser. This is currently in use on this site for the physics simulation on the landing page.
+							<p class="desc_body">
+								I built this 2D physics engine with the intent of putting to use everything I had
+								learned about data structures and algorithms from my University courses. <br /><br />
+								While this is still a WIP project, it does feature a highly optimized and efficient
+								core, and I intend on building this out into a small plugin that can be used to create
+								simple interactive experiences in-browser. This is currently in use on this site for the
+								physics simulation on the landing page.
 							</p>
 							<div class="flex mt-8">
 								<Icon icon="brand/js" :iconColor="null" hoverText="Javascript" />
@@ -64,12 +92,19 @@
 						<div class="desc_content_wrap">
 							<h3 class="desc_title">Vibe & Syntax</h3>
 							<p class="desc_body">
-								Vibe and Syntax is an experimental project that a friend and I are working on. We've done game development together for years, and we've now taken it to the next level.
-								<br/> <br/>
-								We compete in game jams - timed competitions in which hundreds or thousands of people each build a game around a theme. We've done jams with constraints ranging from two weeks down to a single hour.
-								<br/> <br/>
-								Having built over a dozen games in this way, we've become very good at planning, collaborating, and working under pressure.
-								<br/> <br/>
+								Vibe and Syntax is an experimental project that a friend and I are working on. We've
+								done game development together for years, and we've now taken it to the next level.
+								<br />
+								<br />
+								We compete in game jams - timed competitions in which hundreds or thousands of people
+								each build a game around a theme. We've done jams with constraints ranging from two
+								weeks down to a single hour.
+								<br />
+								<br />
+								Having built over a dozen games in this way, we've become very good at planning,
+								collaborating, and working under pressure.
+								<br />
+								<br />
 								Check out our Itch.io portfolio by clicking the button!
 							</p>
 							<div class="flex mt-8 text-gray-1 dark:text-white">
@@ -85,9 +120,12 @@
 					<div>
 						<div class="desc_content_wrap">
 							<h3 class="desc_title">Minecraft Server Status Bot</h3>
-							<p class="desc_body">Hook this plugin up to your own Minecraft server in just a few minutes and feel your server administration stress drop to zero. 
-								Now you can always keep tabs on the health of your Minecraft server, in Discord, from anywhere! Over the several times I've used this for my friends'
-								Minecraft worlds, I've learned a lot about networking and server hosting, and what goes into maintaining servers.
+							<p class="desc_body">
+								Hook this plugin up to your own Minecraft server in just a few minutes and feel your
+								server administration stress drop to zero. Now you can always keep tabs on the health of
+								your Minecraft server, in Discord, from anywhere! Over the several times I've used this
+								for my friends' Minecraft worlds, I've learned a lot about networking and server
+								hosting, and what goes into maintaining servers.
 							</p>
 							<div class="flex mt-8 text-gray-1 dark:text-white">
 								<Icon icon="brand/node" :iconColor="null" hoverText="NodeJS" class="mr-1" />
@@ -95,7 +133,11 @@
 								<Icon icon="brand/raspberrypi" hoverText="Raspberry Pi" class="mr-1" />
 								<Icon icon="brand/api" hoverText="APIs" class="mr-1" />
 							</div>
-							<a href="https://github.com/dougalcaleb/spigot-status-bot" target="_blank" class="flex w-max">
+							<a
+								href="https://github.com/dougalcaleb/spigot-status-bot"
+								target="_blank"
+								class="flex w-max"
+							>
 								<IconButton icon="fa/external" :iconSize="5" class="mt-8">Repository</IconButton>
 							</a>
 						</div>
@@ -118,8 +160,11 @@
 					<div>
 						<div class="desc_content_wrap">
 							<h3 class="desc_title">Roundabout</h3>
-							<p class="desc_body">An easy to use, extremely configurable, and responsive carousel plugin for the web. I built this during my junior-senior years of
-								high school, and it ended up being taught to my Web Development 3 class for two days as part of the class curriculum. This carousel was made with Roundabout!
+							<p class="desc_body">
+								An easy to use, extremely configurable, and responsive carousel plugin for the web. I
+								built this during my junior-senior years of high school, and it ended up being taught to
+								my Web Development 3 class for two days as part of the class curriculum. This carousel
+								was made with Roundabout!
 							</p>
 							<div class="flex mt-8 text-gray-1 dark:text-white">
 								<Icon icon="brand/js" :iconColor="null" hoverText="Javascript" class="mr-2" />
@@ -140,7 +185,8 @@
 						<div class="desc_content_wrap">
 							<h3 class="desc_title">Conway's Game of Life</h3>
 							<p class="desc_body">
-								The classic Game of Life, built in a single afternoon. Create your own automatons by clicking to toggle cells.
+								The classic Game of Life, built in a single afternoon. Create your own automatons by
+								clicking to toggle cells.
 							</p>
 							<div class="flex mt-8">
 								<Icon icon="brand/js" :iconColor="null" hoverText="Javascript" class="mr-2" />
@@ -153,9 +199,11 @@
 					<div>
 						<div class="desc_content_wrap">
 							<h3 class="desc_title">Polygen</h3>
-							<p class="desc_body">Revamped in version 2.0, this is an easy-to-use tool for creating low-poly gradients and images, 
-								downloadable in PNG or SVG format. From this project, I learned a lot about canvas drawing, image processing, and UI/UX design.
-								 The background of the landing page on this site uses this!
+							<p class="desc_body">
+								Revamped in version 2.0, this is an easy-to-use tool for creating low-poly gradients and
+								images, downloadable in PNG or SVG format. From this project, I learned a lot about
+								canvas drawing, image processing, and UI/UX design. The background of the landing page
+								on this site uses this!
 							</p>
 							<div class="flex mt-8 text-gray-1 dark:text-white">
 								<Icon icon="brand/js" :iconColor="null" hoverText="Javascript" class="mr-2" />
@@ -170,8 +218,10 @@
 					<div>
 						<div class="desc_content_wrap">
 							<h3 class="desc_title">Storm Center</h3>
-							<p class="desc_body">In my junior year of high school, I was asked to design and build a webpage for our school spirit store. While it isn't live anymore, it served
-								as a catalog for all of the school's available spirit items. This was my first live project!
+							<p class="desc_body">
+								In my junior year of high school, I was asked to design and build a webpage for our
+								school spirit store. While it isn't live anymore, it served as a catalog for all of the
+								school's available spirit items. This was my first live project!
 							</p>
 							<div class="flex mt-8 text-gray-1 dark:text-white">
 								<Icon icon="brand/js" :iconColor="null" hoverText="Javascript" class="mr-2" />
@@ -183,9 +233,12 @@
 					<div>
 						<div class="desc_content_wrap">
 							<h3 class="desc_title">Isometry</h3>
-							<p class="desc_body">This game, built in Unity, is an entertaining survival experience, letting you survive a constant onslaught 
-								of enemies while trying to protect and upgrade the ancient monolith. This my final project for my high school Game Development class, and 
-								features full support for both keyboard and controller, utilizes a powerful particle system, and incorporates a low-poly 3D environment viewed from an isometric angle.
+							<p class="desc_body">
+								This game, built in Unity, is an entertaining survival experience, letting you survive a
+								constant onslaught of enemies while trying to protect and upgrade the ancient monolith.
+								This my final project for my high school Game Development class, and features full
+								support for both keyboard and controller, utilizes a powerful particle system, and
+								incorporates a low-poly 3D environment viewed from an isometric angle.
 							</p>
 							<div class="flex mt-8 text-gray-1 dark:text-white">
 								<Icon icon="brand/csharp" :iconColor="null" hoverText="C#" class="mr-2" />
@@ -196,13 +249,21 @@
 					<div>
 						<div class="desc_content_wrap">
 							<h3 class="desc_title">React Chat App</h3>
-							<p class="desc_body">Using React and Firebase, this simple chat app features login capabilities for identifying users, persistent and low-latency cloud storage, and seperate message channels.
-								While most of my experience in front-end frameworks is in Vue (like this site!), I have some additional experience in React and Angular, like this project.
+							<p class="desc_body">
+								Using React and Firebase, this simple chat app features login capabilities for
+								identifying users, persistent and low-latency cloud storage, and seperate message
+								channels. While most of my experience in front-end frameworks is in Vue (like this
+								site!), I have some additional experience in React and Angular, like this project.
 							</p>
 							<div class="flex mt-8 text-gray-1 dark:text-white">
 								<Icon icon="brand/react" :iconColor="null" hoverText="React" class="mr-2" />
 								<Icon icon="brand/js" :iconColor="null" hoverText="Javascript" class="mr-2" />
-								<Icon icon="brand/firebase" :iconColor="null" hoverText="Google Firebase" class="mr-2" />
+								<Icon
+									icon="brand/firebase"
+									:iconColor="null"
+									hoverText="Google Firebase"
+									class="mr-2"
+								/>
 								<Icon icon="brand/git" :iconColor="null" hoverText="Git" class="mr-2" />
 								<Icon icon="fa/github" hoverText="Github" class="mr-2" />
 								<Icon icon="brand/api" hoverText="Public APIs" class="mr-2" />
@@ -212,8 +273,10 @@
 					<div>
 						<div class="desc_content_wrap">
 							<h3 class="desc_title">Reactive Bubbles</h3>
-							<p class="desc_body">This field of bubbles will react to your mouse movements as you swipe through it. This was one of my earlier complete projects as I started to move away
-								from basic experimentation of Javascript.
+							<p class="desc_body">
+								This field of bubbles will react to your mouse movements as you swipe through it. This
+								was one of my earlier complete projects as I started to move away from basic
+								experimentation of Javascript.
 							</p>
 							<div class="flex mt-8 text-gray-1 dark:text-white">
 								<Icon icon="brand/js" :iconColor="null" hoverText="Javascript" class="mr-2" />
@@ -240,26 +303,34 @@
 				</div>
 			</div>
 		</div>
-		
 	</div>
 </template>
 
 <script>
-import Roundabout from '../../../modules/roundabout/roundabout.min';
-import RoundaboutScripter from '../../../modules/roundabout/roundabout-scripting.min';
-import Icon from '../../common/Icon.vue';
-import IconButton from '../../common/IconButton.vue';
-import ScreenSize from '../../mixins/ScreenSize';
+import parallelImg from "@/assets/images/projects-slider/parallel.webp";
+import physics2dImg from "@/assets/images/projects-slider/physics2d.webp";
+import vibeSyntaxImg from "@/assets/images/projects-slider/Vibe+Syntax.webp";
+import spigotStatusBotWideImg from "@/assets/images/projects-slider/spigot-status-bot-wide.webp";
+import roundaboutImg from "@/assets/images/projects-slider/roundabout.webp";
+import gameoflifeImg from "@/assets/images/projects-slider/gameoflife.webp";
+import polygenImg from "@/assets/images/projects-slider/polygen.webp";
+import stormcenterImg from "@/assets/images/projects-slider/stormcenter.webp";
+import gamedevfinalImg from "@/assets/images/projects-slider/gamedevfinal.webp";
+import reactChatImg from "@/assets/images/projects-slider/react-chat.webp";
+import bubblesImg from "@/assets/images/projects-slider/bubbles.webp";
+import Roundabout from "@/modules/roundabout/roundabout.min";
+import RoundaboutScripter from "@/modules/roundabout/roundabout-scripting.min";
+import Icon from "@/components/common/Icon.vue";
+import IconButton from "@/components/common/IconButton.vue";
+import ScreenSize from "@/components/mixins/ScreenSize";
 
 export default {
-	mixins: [ScreenSize],
 	components: {
 		Icon,
 		IconButton,
 	},
-	props: {
-		
-	},
+	mixins: [ScreenSize],
+	props: {},
 	data() {
 		return {
 			roundaboutInstances: [null, null],
@@ -273,18 +344,18 @@ export default {
 				lazyLoad: "lazy-hidden",
 				swipeThreshold: 50,
 				pages: [
-					{ backgroundImage: "/assets/images/projects-slider/parallel.png" },
-					{ backgroundImage: "/assets/images/projects-slider/physics2d.png" },
-					{ backgroundImage: "/assets/images/projects-slider/Vibe+Syntax.png" },
-					{ backgroundImage: "/assets/images/projects-slider/spigot-status-bot-wide.png" },
-					{ backgroundImage: "/assets/images/projects-slider/roundabout.png" },
-					{ backgroundImage: "/assets/images/projects-slider/gameoflife.png" },
-					{ backgroundImage: "/assets/images/projects-slider/polygen.png" },
-					{ backgroundImage: "/assets/images/projects-slider/stormcenter.png" },
-					{ backgroundImage: "/assets/images/projects-slider/gamedevfinal.png" },
-					{ backgroundImage: "/assets/images/projects-slider/react-chat.png" },
-					{ backgroundImage: "/assets/images/projects-slider/bubbles.png" },
-				]
+					{ backgroundImage: parallelImg },
+					{ backgroundImage: physics2dImg },
+					{ backgroundImage: vibeSyntaxImg },
+					{ backgroundImage: spigotStatusBotWideImg },
+					{ backgroundImage: roundaboutImg },
+					{ backgroundImage: gameoflifeImg },
+					{ backgroundImage: polygenImg },
+					{ backgroundImage: stormcenterImg },
+					{ backgroundImage: gamedevfinalImg },
+					{ backgroundImage: reactChatImg },
+					{ backgroundImage: bubblesImg },
+				],
 			},
 			descriptionCarouselSettings: {
 				template: "#description-template",
@@ -293,17 +364,10 @@ export default {
 				keys: false,
 				type: "gallery",
 				transition: 200,
-			}
-		}
+			},
+		};
 	},
-	computed: {
-		
-	},
-	methods: {
-		scrollCarousel(direction) {
-			RoundaboutScripter.throttledScroll(this.roundaboutInstances[0], direction === 'l' ? -1 : 1);
-		}
-	},
+	computed: {},
 	mounted() {
 		this.roundaboutInstances[0] = new Roundabout(this.imageCarouselSettings);
 		this.roundaboutInstances[1] = new Roundabout(this.descriptionCarouselSettings);
@@ -311,20 +375,29 @@ export default {
 		RoundaboutScripter.onScroll(this.roundaboutInstances[0], (dist) => {
 			RoundaboutScripter.scroll(this.roundaboutInstances[1], dist);
 			if (this.isMobile || this.isTablet) {
-				const bbox = document.querySelector(".roundabout-1-visible-page-0 .desc_content_wrap").getBoundingClientRect();
+				const bbox = document
+					.querySelector(".roundabout-1-visible-page-0 .desc_content_wrap")
+					.getBoundingClientRect();
 				this.$emit("scroll", bbox.bottom);
 			}
 		});
-	}
-}
+	},
+	methods: {
+		scrollCarousel(direction) {
+			RoundaboutScripter.throttledScroll(this.roundaboutInstances[0], direction === "l" ? -1 : 1);
+		},
+	},
+};
 </script>
 
 <style scoped>
+@reference "@/style.css";
+
 .desc_title {
-	@apply font-subtitle dark:text-white text-gray-1 font-bold text-3xl
+	@apply font-subtitle dark:text-white text-gray-1 font-bold text-3xl;
 }
 .desc_body {
-	@apply font-body dark:text-gray-10 text-gray-1 text-lg mt-4
+	@apply font-body dark:text-gray-10 text-gray-1 text-lg mt-4;
 }
 .xl_height {
 	height: 40rem;
