@@ -39,14 +39,18 @@
 						<div class="desc_content_wrap">
 							<h3 class="desc_title">TTE Server Manager (TTESM)</h3>
 							<p class="desc_body">
-								A small blurb does not do this project justice. TTESM is an ongoing months-long collaboration on a management console for a
-								small fleet of Terraria game servers. It allows admins and moderators to run games, moderate players, manage files, view logs,
-								configure plugins, etc. all from the comfort of a web browser. There's also 
-								<a class="text-blue-2" target="_blank" href="https://github.com/The-Terraria-Experiment">an entire set of repos</a> related to this project.
-								<br/><br/>
-								It's built entirely on AWS with plenty of CI/CD, security features, optimizations, and scalability. It uses just about all the major AWS services,
-								along with plenty of niche ones.
-								<br/><br/>
+								A small blurb does not do this project justice. TTESM is an ongoing months-long
+								collaboration on a management console for a small fleet of Terraria game servers. It
+								allows admins and moderators to run games, moderate players, manage files, view logs,
+								configure plugins, etc. all from the comfort of a web browser. There's also
+								<a class="text-blue-2" target="_blank" href="https://github.com/The-Terraria-Experiment"
+									>an entire set of repos</a
+								>
+								related to this project. <br /><br />
+								It's built entirely on AWS with plenty of CI/CD, security features, optimizations, and
+								scalability. It uses just about all the major AWS services, along with plenty of niche
+								ones.
+								<br /><br />
 								It's also the precursor to an even larger similar project that's in development...
 							</p>
 							<div class="flex mt-8 text-gray-1 dark:text-white">
@@ -55,7 +59,11 @@
 								<Icon icon="brand/node" :iconColor="null" hoverText="NodeJS" class="mr-2" />
 								<Icon icon="brand/genai" hoverText="Generative AI" class="mr-2" />
 							</div>
-							<a href="https://github.com/The-Terraria-Experiment/tte-server-manager" target="_blank" class="flex w-max">
+							<a
+								href="https://github.com/The-Terraria-Experiment/tte-server-manager"
+								target="_blank"
+								class="flex w-max"
+							>
 								<IconButton icon="fa/external" :iconSize="5" class="mt-4">Repository</IconButton>
 							</a>
 						</div>
@@ -64,10 +72,10 @@
 						<div class="desc_content_wrap">
 							<h3 class="desc_title">Parallel</h3>
 							<p class="desc_body">
-								Parallel has a little bit of everything. It's a
-								mobile-first React-based social-media-like web app, built on a full AWS stack, including
-								EC2, DynamoDB, Cognito, S3, IAM, and Route 53, as well as other tech like Google Cloud
-								services, Google Maps integrations, ExpressJS, Tailwind, and Vite.
+								Parallel has a little bit of everything. It's a mobile-first React-based
+								social-media-like web app, built on a full AWS stack, including EC2, DynamoDB, Cognito,
+								S3, IAM, and Route 53, as well as other tech like Google Cloud services, Google Maps
+								integrations, ExpressJS, Tailwind, and Vite.
 								<br /><br />
 								The site has now been converted to a static mockup, but you can still click through it
 								below!
