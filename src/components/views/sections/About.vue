@@ -35,7 +35,7 @@
 			]"
 		>
 			<template v-for="skill in skills" :key="skill.icon">
-				<div class="flex items-center bg-gray-10 dark:bg-gray-2 rounded-lg px-2">
+				<div class="flex items-center bg-gray-10 dark:bg-gray-2 rounded-lg px-2 border border-gray-5">
 					<Icon
 						:icon="skill.icon"
 						:iconColor="skill.themed ? undefined : null"
@@ -62,6 +62,7 @@ const skills = [
 	{ icon: "brand/csharp", name: "C#" },
 	{ icon: "brand/c++", name: "C++" },
 	{ icon: "brand/python", name: "Python" },
+	{ icon: "brand/aws", name: "AWS" },
 	{ icon: "brand/java", name: "Java" },
 	{ icon: "brand/vue", name: "Vue", hoverText: "Vue" },
 	{ icon: "brand/react", name: "React", hoverText: "React" },
