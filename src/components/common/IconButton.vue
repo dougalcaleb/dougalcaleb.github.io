@@ -1,7 +1,7 @@
 <template>
 	<div
 		:class="[
-			'rounded-md text-white py-3 font-title font-bold w-max h-max cursor-pointer duration-100 transition',
+			'rounded-md text-white py-3 font-title font-bold w-max h-max cursor-pointer duration-100 transition border',
 			rootClasses,
 		]"
 		@click="$emit('click')"
@@ -51,13 +51,13 @@ export default {
 
 			switch (this.variant) {
 				case "general":
-					classes += "bg-purple-3 hover:bg-purple-2";
+					classes += "bg-purple-3 hover:bg-purple-2 border-purple-4";
 					break;
 				case "action":
-					classes += "bg-green-1 hover:bg-green-0";
+					classes += "bg-green-1 hover:bg-green-0 border-green-2";
 					break;
 				case "cancel":
-					classes += "bg-red-1 hover:bg-red-0";
+					classes += "bg-red-1 hover:bg-red-0 border-red-2";
 					break;
 			}
 

@@ -14,7 +14,7 @@
 
 			<div class="grid transition-all duration-200" :style="sidebarIconStyle">
 				<a href="#landing" class="contents">
-					<div class="contents cursor-pointer text-gray-2 dark:text-white hover:text-purple-5">
+					<div class="contents cursor-pointer text-gray-2 dark:text-white hover:text-purple-6">
 						<Icon icon="fa/home" :size="6" class="pr-2 py-4 transition-all" />
 						<div class="font-title font-bold mt-1 overflow-hidden transition-all duration-100 py-4">
 							Welcome
@@ -23,7 +23,7 @@
 				</a>
 
 				<a href="#featured_header" class="contents">
-					<div class="contents cursor-pointer text-gray-2 dark:text-white hover:text-purple-5">
+					<div class="contents cursor-pointer text-gray-2 dark:text-white hover:text-purple-6">
 						<Icon icon="fa/star" :size="6" class="pr-2 py-4 transition-all" />
 						<div class="font-title font-bold mt-1 overflow-hidden transition-all duration-100 py-4">
 							Featured
@@ -32,7 +32,7 @@
 				</a>
 
 				<a href="#projects_header" class="contents">
-					<div class="contents cursor-pointer text-gray-2 dark:text-white hover:text-purple-5">
+					<div class="contents cursor-pointer text-gray-2 dark:text-white hover:text-purple-6">
 						<Icon icon="fa/code-file" :size="6" class="pr-2 py-4 transition-all" />
 						<div class="font-title font-bold mt-1 overflow-hidden transition-all duration-100 py-4">
 							Projects
@@ -41,7 +41,7 @@
 				</a>
 
 				<a href="#about_header" class="contents">
-					<div class="contents cursor-pointer text-gray-2 dark:text-white hover:text-purple-5">
+					<div class="contents cursor-pointer text-gray-2 dark:text-white hover:text-purple-6">
 						<Icon icon="fa/id-badge" :size="6" class="pr-2 py-4 transition-all" />
 						<div class="font-title font-bold mt-1 overflow-hidden transition-all duration-100 py-4">
 							About
@@ -50,7 +50,7 @@
 				</a>
 
 				<a href="#contact_header" class="contents">
-					<div class="contents cursor-pointer text-gray-2 dark:text-white hover:text-purple-5">
+					<div class="contents cursor-pointer text-gray-2 dark:text-white hover:text-purple-6">
 						<Icon icon="fa/send" :size="6" class="pr-2 py-4 transition-all" />
 						<div class="font-title font-bold mt-1 overflow-hidden transition-all duration-100 py-4">
 							Contact
@@ -60,13 +60,13 @@
 			</div>
 
 			<div class="flex flex-col items-center pb-2">
-				<div v-if="!isMobile" class="border-t-2 border-gray-7 mb-2 w-6"></div>
+				<div v-if="!isMobile" class="border-t-2 border-gray-4 mb-2 w-6"></div>
 				<a href="https://github.com/dougalcaleb" target="_blank">
 					<Icon
 						v-if="!isMobile"
 						icon="fa/github"
 						:size="6"
-						class="p-2 cursor-pointer text-gray-2 dark:text-white hover:text-purple-5 duration-200"
+						class="p-2 cursor-pointer text-gray-2 dark:text-white hover:text-purple-6 duration-200"
 					/>
 				</a>
 				<a href="https://www.linkedin.com/in/caleb-dougal/" target="_blank">
@@ -74,15 +74,15 @@
 						v-if="!isMobile"
 						icon="fa/linkedin"
 						:size="6"
-						class="p-2 cursor-pointer text-gray-2 dark:text-white hover:text-purple-5 duration-200"
+						class="p-2 cursor-pointer text-gray-2 dark:text-white hover:text-purple-6 duration-200"
 					/>
 				</a>
-				<div v-if="!isMobile" class="border-t-2 border-gray-7 my-2 w-6"></div>
+				<div v-if="!isMobile" class="border-t-2 border-gray-4 my-2 w-6"></div>
 				<Icon
 					:icon="isDarkTheme ? 'fa/moon' : 'fa/sun'"
 					:size="6"
 					:class="[
-						'p-2 cursor-pointer text-gray-2 dark:text-white hover:text-purple-5 duration-200',
+						'p-2 cursor-pointer text-gray-2 dark:text-white hover:text-purple-6 duration-200',
 						{ 'mb-12': isMobile },
 					]"
 					hoverText="Toggle Theme"

@@ -28,47 +28,18 @@
 			Below you’ll see many of the technologies I’m familiar with. This list is always growing!
 		</p>
 
-		<div :class="['grid skill_grid text-gray-1 dark:text-white pt-8 sm:px-4', isMobile ? 'grid_2' : 'grid_3']">
-			<Icon icon="brand/js" :iconColor="null" hoverText="Javascript" class="px-2 py-4" />
-			<p>Javascript</p>
-			<Icon icon="brand/html" :iconColor="null" hoverText="HTML5" class="px-2 py-4" />
-			<p>HTML5</p>
-			<Icon icon="brand/css" :iconColor="null" hoverText="CSS / SCSS / SASS" class="px-2 py-4" />
-			<p>CSS / SCSS / SASS</p>
-			<Icon icon="brand/ts" :iconColor="null" hoverText="Typescript" class="px-2 py-4" />
-			<p>Typescript</p>
-			<Icon icon="brand/csharp" :iconColor="null" hoverText="C#" class="px-2 py-4" />
-			<p>C#</p>
-			<Icon icon="brand/c++" :iconColor="null" hoverText="C++" class="px-2 py-4" />
-			<p>C++</p>
-			<Icon icon="brand/python" :iconColor="null" hoverText="Python" class="px-2 py-4" />
-			<p>Python</p>
-			<Icon icon="brand/java" :iconColor="null" hoverText="Java" class="px-2 py-4" />
-			<p>Java</p>
-			<Icon icon="brand/vue" :iconColor="null" hoverText="Vue" class="px-2 py-4" />
-			<p>Vue (Vue 2 and Vue 3)</p>
-			<Icon icon="brand/php" :iconColor="null" hoverText="PHP" class="px-2 py-4" />
-			<p>PHP</p>
-			<Icon icon="brand/node" :iconColor="null" hoverText="NodeJS" class="px-2 py-4" />
-			<p>NodeJS</p>
-			<Icon icon="brand/unity" :iconColor="null" hoverText="Unity3D" class="px-2 py-4" />
-			<p>Unity3D</p>
-			<Icon icon="brand/git" :iconColor="null" hoverText="Git" class="px-2 py-4" />
-			<p>Git</p>
-			<Icon icon="fa/github" hoverText="Github" class="px-2 py-4" />
-			<p>Github</p>
-			<Icon icon="brand/gitlab" :iconColor="null" hoverText="Gitlab" class="px-2 py-4" />
-			<p>Gitlab</p>
-			<Icon icon="brand/firebase" :iconColor="null" hoverText="Google Firebase" class="px-2 py-4" />
-			<p>Google Firebase</p>
-			<Icon icon="brand/docker" :iconColor="null" hoverText="Docker" class="px-2 py-4" />
-			<p>Docker</p>
-			<Icon icon="brand/linux" :iconColor="null" hoverText="Linux" class="px-2 py-4" />
-			<p>Linux</p>
-			<Icon icon="brand/illustrator" :iconColor="null" hoverText="Illustrator" class="px-2 py-4" />
-			<p>Illustrator</p>
-			<Icon icon="brand/genai" hoverText="Generative AI" class="px-2 py-4" />
-			<p>Generative AI</p>
+		<div :class="['grid skill_grid gap-4 text-gray-1 dark:text-white pt-8 sm:px-4', isMobile ? 'grid_2' : 'grid_3']">
+			<template v-for="skill in skills" :key="skill.icon">
+				<div class="flex items-center bg-gray-10 dark:bg-gray-2 rounded-lg px-2">
+					<Icon
+						:icon="skill.icon"
+						:iconColor="skill.themed ? undefined : null"
+						:hoverText="skill.hoverText ?? skill.name"
+						class="px-1 sm:px-2 py-4 shrink-0"
+					/>
+					<p class="px-2 sm:px-4 py-2">{{ skill.name }}</p>
+				</div>
+			</template>
 		</div>
 	</div>
 </template>
@@ -76,6 +47,31 @@
 <script>
 import Icon from "@/components/common/Icon.vue";
 import ScreenSize from "@/components/mixins/ScreenSize";
+
+// name: label shown beside the icon; hoverText: tooltip (defaults to name);
+// themed: true to let the icon use its default theme color instead of its brand colors
+const skills = [
+	{ icon: "brand/js", name: "Javascript" },
+	{ icon: "brand/html", name: "HTML5 / CSS3" },
+	{ icon: "brand/ts", name: "Typescript" },
+	{ icon: "brand/csharp", name: "C#" },
+	{ icon: "brand/c++", name: "C++" },
+	{ icon: "brand/python", name: "Python" },
+	{ icon: "brand/java", name: "Java" },
+	{ icon: "brand/vue", name: "Vue", hoverText: "Vue" },
+	{ icon: "brand/react", name: "React", hoverText: "React" },
+	{ icon: "brand/php", name: "PHP" },
+	{ icon: "brand/node", name: "NodeJS" },
+	{ icon: "brand/unity", name: "Unity3D" },
+	{ icon: "brand/git", name: "Git" },
+	{ icon: "fa/github", name: "Github", themed: true },
+	{ icon: "brand/gitlab", name: "Gitlab" },
+	{ icon: "brand/firebase", name: "Google Firebase" },
+	{ icon: "brand/docker", name: "Docker" },
+	{ icon: "brand/linux", name: "Linux" },
+	{ icon: "brand/illustrator", name: "Illustrator" },
+	{ icon: "brand/genai", name: "Agentic AI", themed: true },
+];
 
 export default {
 	components: {
@@ -86,7 +82,7 @@ export default {
 		showcaseBottom: Number,
 	},
 	data() {
-		return {};
+		return { skills };
 	},
 	computed: {},
 	methods: {},
@@ -97,12 +93,12 @@ export default {
 @reference "@/style.css";
 
 .skill_grid p {
-	@apply flex text-gray-1 dark:text-white font-body sm:text-lg p-4;
+	@apply flex text-gray-1 dark:text-white font-body sm:text-lg;
 }
 .grid_2 {
-	grid-template-columns: max-content 1fr max-content 1fr;
+	grid-template-columns: repeat(2, 1fr);
 }
 .grid_3 {
-	grid-template-columns: max-content 1fr max-content 1fr max-content 1fr;
+	grid-template-columns: repeat(3, 1fr);
 }
 </style>
