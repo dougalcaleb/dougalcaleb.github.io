@@ -10,7 +10,8 @@
 		"lint": "eslint .",
 		"lint:fix": "eslint . --fix",
 		"format": "prettier --write .",
-		"format:check": "prettier --check ."
+		"format:check": "prettier --check .",
+		"prepare": "husky"
 	},
 	"engines": {
 		"node": ">=22.12"
@@ -27,8 +28,17 @@
 		"eslint-config-prettier": "^10.1.8",
 		"eslint-plugin-vue": "^10.11.1",
 		"globals": "^17.13.0",
+		"husky": "^9.1.7",
+		"lint-staged": "^17.6.0",
 		"prettier": "^3.9.10",
 		"tailwindcss": "^4.3.3",
 		"vite": "^8.3.4"
+	},
+	"lint-staged": {
+		"*.{js,vue}": [
+			"eslint --fix --no-warn-ignored",
+			"prettier --write"
+		],
+		"!(*.{js,vue})": "prettier --write --ignore-unknown"
 	}
 }
