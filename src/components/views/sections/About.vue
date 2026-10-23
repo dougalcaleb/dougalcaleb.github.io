@@ -13,9 +13,9 @@
 			<br /><br />
 			In high school, I breezed through the three available web development and two game development courses, even
 			writing a plugin (which is now Roundabout) that ended up being taught and used in the top level web
-			development class. In my senior year, I attended Mountainland Technical College in Lehi, UT, and gained
-			experience with a wide variety of web and general software technologies. Following my time at MTech, I
-			interned at Verisk, working on their Xactware insurance analytics application for a summer.
+			development class. In my senior year, I attended Mountainland Technical College and gained experience with a
+			wide variety of web and general software technologies. Following my time at MTech, I interned at Verisk,
+			working on their Xactware insurance analytics application for a summer.
 			<br /><br />
 			Now, I’m attending BYU for a Master’s in Computer Science, and I’m currently employed working on BYU
 			Learning Suite, which is a custom and fully-featured LMS designed specifically for the needs of BYU students
